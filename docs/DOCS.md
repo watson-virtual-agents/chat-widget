@@ -30,7 +30,8 @@ d. Copy the 32-digit alphanumeric code that is returned in the response. Save it
     IBMClientID: 'YOUR_IBM_CLIENT_ID',
     IBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
   });
-</script>```
+</script>
+```
 
 Replace all of the parameter values except the baseURL; use that value as-is.
 
