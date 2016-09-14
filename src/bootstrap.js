@@ -67,6 +67,8 @@ function init(config) {
 		SDKconfig.XIBMClientID = config.XIBMClientID;
 	if (config.XIBMClientSecret)
 		SDKconfig.XIBMClientSecret = config.XIBMClientSecret;
+	if (config.userID)
+		SDKconfig.userID = config.userID;
 		/*
 	// TODO: , allow entering in old chatID
 	const sessionChatID = window.sessionStorage.getItem('IBMChatChatID') || null;
