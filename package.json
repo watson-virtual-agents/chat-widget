@@ -4,9 +4,9 @@
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/IBMChatClient-latest.js",
-  "scripts": {
+	"scripts": {
     "archive": "jsdoc2md \"src/index.js\" > docs/JSDOCS.md && node ./utils/archive",
-    "build": "webpack && npm run archive",
+    "build": "webpack",
     "watch": "node ./utils/dev-server.js"
   },
   "engines": {

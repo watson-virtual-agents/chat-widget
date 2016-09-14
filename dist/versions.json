@@ -5,5 +5,11 @@
     "docs": "IBMChatClient-v1.0.0.md",
     "widget": "IBMChatClient-v1.0.0.js",
     "quickstart": "IBMChatClient-v1.0.0-quickstart.md"
+  }, {
+    "version": "1.0.1",
+    "apidocs": "IBMChatClient-v1.0.1-jsdocs.md",
+    "docs": "IBMChatClient-v1.0.1.md",
+    "widget": "IBMChatClient-v1.0.1.js",
+    "quickstart": "IBMChatClient-v1.0.1-quickstart.md"
   }]
 }
