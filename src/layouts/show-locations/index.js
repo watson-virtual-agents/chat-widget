@@ -89,7 +89,7 @@ function sizeMap() {
 	}
 }
 
-function createDomArray(el, items, type) {
+function createPhoneArray(el, items) {
 	if (items) {
 		for (var i = 0; i < items.length; i++) {
 			var itemChild = document.createElement('div');
@@ -99,15 +99,7 @@ function createDomArray(el, items, type) {
 			var typeEl = itemChild.querySelector('.' + ns + '-contact-type');
 			var dataEl = itemChild.querySelector('.' + ns + '-contact-data');
 			typeEl.textContent = items[i].type;
-			if (type === 'email') {
-				const linkEl = document.createElement('a');
-				linkEl.setAttribute('href', 'mailto:' + items[i].value);
-				linkEl.setAttribute('target', '_blank');
-				linkEl.textContent = items[i].value;
-				dataEl.appendChild(linkEl);
-			} else {
-				dataEl.textContent = items[i].value;
-			}
+			dataEl.textContent = items[i].number;
 			el.appendChild(itemChild);
 		}
 	}
@@ -316,7 +308,8 @@ ShowLocations.prototype = {
 				address: el.querySelector('.' + ns + '-locations-item-data-address'),
 				address1: document.createElement('span'),
 				address2: document.createElement('span'),
-				emailPhone: el.querySelector('.' + ns + '-locations-item-data-email-phone'),
+				phone: el.querySelector('.' + ns + '-locations-item-data-phone'),
+				email: el.querySelector('.' + ns + '-locations-item-data-email'),
 				hours: el.querySelector('.' + ns + '-locations-item-data-hours'),
 				parentEl: el.querySelector('.' + ns + '-locations-item-data'),
 				hoursButton: el.querySelector('.' + ns + '-locations-item-data-hours-button'),
@@ -331,6 +324,7 @@ ShowLocations.prototype = {
 			dom.label.textContent = item.label;
 		else
 			dom.parentEl.removeChild(dom.label);
+			
 		var addresses = parseAddress(item.address.address);
 		dom.address1.textContent = addresses.address1;
 		dom.address2.textContent = addresses.address2;
@@ -340,16 +334,35 @@ ShowLocations.prototype = {
 		dom.link.setAttribute('href', 'https://maps.google.com/?q=' + encodeURIComponent(item.address.address));
 		dom.link.setAttribute('target', '_blank');
 		dom.distance.textContent = distance(item) || '';
-		createDomArray(dom.emailPhone, item.emails, 'email');
-		createDomArray(dom.emailPhone, item.phones, 'tel');
-		createHours(dom.hours, dom.moreHours, item.days);
-		dom.hoursButton.addEventListener('click', function(e) {
-			e.preventDefault();
-			dom.parentEl.removeChild(dom.hoursButton);
-			dom.moreHours.setAttribute('class', ns + '-locations-item-data-more-hours');
-			publish('focus-input');
-			publish('scroll-to-bottom');
-		});
+
+		if (item.email) {
+			const linkEl = document.createElement('a');
+			linkEl.setAttribute('href', 'mailto:' + item.email);
+			linkEl.setAttribute('target', '_blank');
+			linkEl.textContent = item.email;
+			dom.email.appendChild(linkEl);
+		} else {
+			dom.email.parentNode.removeChild(dom.email);
+		}
+
+		if (item.phones && item.phones.length > 0)
+			createPhoneArray(dom.phone, item.phones);
+		else
+			dom.phone.parentNode.removeChild(dom.phone);
+
+		if (item.days && item.days.length > 0) {
+			createHours(dom.hours, dom.moreHours, item.days);
+			dom.hoursButton.addEventListener('click', function(e) {
+				e.preventDefault();
+				dom.parentEl.removeChild(dom.hoursButton);
+				dom.moreHours.setAttribute('class', ns + '-locations-item-data-more-hours');
+				publish('focus-input');
+				publish('scroll-to-bottom');
+			});
+		} else {
+			dom.hours.parentNode.removeChild(dom.hours);
+		}
+
 		if (locationData && locationData.length > 1) {
 			dom.back.addEventListener('click', function(e) {
 				e.preventDefault();
