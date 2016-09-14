@@ -27,11 +27,12 @@ module.exports = {
 	 * @memberof IBMChat
 	 * @param {Object} config
 	 * @param {string} config.el - Takes a string representing the ID of an html element to be rendered to OR a selected element
-	 * @param {string} config.botID - the unique identifier of your Bot.
+	 * @param {string} config.botID - The unique identifier of your Virtual Agent.
+	 * @param {string} config.userID - A hashed non-identifiable (i.e. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard.
 	 * @param {string} config.baseURL='https://dev.api.ibm.com/virtualagent/development/api/v1/' - optional: specifies a different bot hosting server. The most common usecase for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request.
 	 * @param {string} config.XIBMClientID - optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request.
 	 * @param {string} config.XIBMClientSecret - optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request.
-	 * @param {Object} config.styles - optional: override default styling.
+	 * @param {Object} config.styles - optional: Override default styling.
 	 * @param {string} config.styles.background='#3d3d3d' - optional: hex code for background color
 	 * @param {string} config.styles.text='#ffffff' - optional: hex code for main text color
 	 * @param {string} config.styles.link='#ffffff' - optional: hex code for color of links in text
