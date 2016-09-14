@@ -79,10 +79,15 @@
 	padding-bottom:1em;
 }
 
-.IBMChat-map-locations-item-data-email-phone  {
+.IBMChat-map-locations-item-data-email {
+	padding-bottom:1em;
+}
+
+.IBMChat-map-locations-item-data-phone {
 	display: table;
 	max-width:400px;
 	width: 100%;
+	padding-bottom:1em;
 }
 .IBMChat-map-contact-row {
 	padding-bottom:1em;
