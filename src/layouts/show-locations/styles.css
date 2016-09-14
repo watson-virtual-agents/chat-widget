@@ -1,0 +1,155 @@
+/**
+* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+*
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+* in compliance with the License. You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under the License
+* is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+* or implied. See the License for the specific language governing permissions and limitations under
+* the License.
+*/
+
+.IBMChat-map {
+	margin-top:1em;
+}
+
+.IBMChat-map-img {
+	height:180px;
+}
+
+.IBMChat-map-img img {
+	height:180px;
+}
+
+.IBMChat-map-multiple-locations {
+	cursor: default;
+	opacity:0.3;
+}
+
+.IBMChat-map-location-active .IBMChat-map-multiple-locations {
+	opacity: 1;
+}
+
+.IBMChat-map-clickable .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
+	padding: 1em 0 1em 0;
+	cursor: pointer;
+	opacity: 1;
+}
+
+.IBMChat-map-data-section {
+	margin-top:0.5em;
+}
+
+.IBMChat-map-locations-item {
+	padding: 1em;
+	border-bottom:1px solid #505050;
+}
+
+.IBMChat-map-locations-item:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+ }
+
+.IBMChat-map-locations-item-icon {
+	padding:0.5em 0.5em 0 0;
+	text-align:center;
+	width: 64px;
+	float:left;
+}
+
+.IBMChat-map-locations-item-data {
+	float:left;
+}
+.IBMChat-map-locations-item-data-title {
+	font-weight: bold;
+	padding-bottom:0.5em;
+}
+.IBMChat-map-locations-item-data-items {
+	font-size: 0.9em;
+}
+
+.IBMChat-map-locations-item-data-section {
+	padding-bottom:1em;
+}
+
+.IBMChat-map-locations-item-data-email-phone  {
+	display: table;
+	max-width:400px;
+	width: 100%;
+}
+.IBMChat-map-contact-row {
+	padding-bottom:1em;
+}
+
+.IBMChat-map-hours-open {
+	padding-bottom:0.5em;
+}
+
+.IBMChat-map-contact-type {
+	font-style:italic;
+	font-size:0.9em;
+}
+.IBMChat-map-contact-data {
+
+}
+
+a.IBMChat-map-locations-item-data-address-link,
+a.IBMChat-map-locations-item-data-address-link:hover,
+a.IBMChat-map-locations-item-data-address-link:visited,
+a.IBMChat-map-locations-item-data-address-link:active,
+.IBMChat-map-contact-data a,
+.IBMChat-map-contact-data a:hover,
+.IBMChat-map-contact-data a:active,
+.IBMChat-map-contact-data a:visited {
+	font-weight:normal;
+	font-size:0.9em;
+}
+
+.IBMChat-map-locations-item-distance {
+	width:64px;
+	font-size:0.9em;
+}
+
+button.IBMChat-map-locations-item-data-hours-button {
+	font-size:0.9em;
+	padding: 0 1em 0 1em;
+	line-height:1.5em;
+	margin-top:1em;
+}
+
+button.IBMChat-map-locations-all {
+	font-size:0.9em;
+	padding: 0 1em 0 1em;
+	line-height:1.5em;
+}
+
+.IBMChat-map-locations-item-data-more-hours {
+	display: table;
+}
+
+.IBMChat-map-locations-item-data-more-hours.IBMChat-map-hidden {
+	display: none;
+}
+
+.IBMChat-map-days-hours {
+	display: table-row;
+}
+
+.IBMChat-map-days-hours-day, .IBMChat-map-days-hours-hours, .IBMChat-map-days-hours-closed {
+	display: table-cell;
+	margin: 0;
+	padding:0.75em 1em 0 0;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.IBMChat-map-days-hours > div:last-child {
+	padding: 0.75em 0 0 0 !important;
+}

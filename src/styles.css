@@ -1,0 +1,241 @@
+/**
+* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+*
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+* in compliance with the License. You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under the License
+* is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+* or implied. See the License for the specific language governing permissions and limitations under
+* the License.
+*/
+
+.IBMChat-outer-container {
+	max-width: 768px;
+  min-width: 288px;
+  margin: 0 auto 0 auto;
+  border: none;
+	min-height:230px;
+  height: 100%;
+  box-sizing: border-box;
+	padding:0.5em;
+	position:relative;
+	display:table;
+	width:100%;
+	text-align: left;
+}
+
+
+/* Agent Component */
+
+.IBMChat-inner-container {
+	display:table-cell;
+	height:100%;
+	vertical-align: bottom;
+}
+
+/* Chat Component */
+
+.IBMChat-chat-container {
+	display:table-row;
+	height:100%;
+}
+
+/* Messages Component */
+
+.IBMChat-messages {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height:auto;
+}
+
+.IBMChat-messages > div {
+	opacity:0.8;
+}
+
+.IBMChat-messages > div .IBMChat-watson-layout {
+	opacity:0.8;
+}
+
+.IBMChat-messages > div:last-child {
+	opacity:1;
+}
+
+.IBMChat-messages > div:last-child .IBMChat-watson-layout {
+	opacity:1;
+}
+
+.IBMChat-messages label {
+	display:block;
+	font-weight:bold;
+	text-transform: capitalize;
+	padding-bottom:0.25em;
+}
+
+.IBMChat-messages input {
+	border-radius: 0;
+	border: 0;
+	padding:0.25em;
+}
+
+.IBMChat-messages button {
+	background: none;
+	border: 0;
+	color: inherit;
+	font: inherit;
+	line-height: normal;
+	overflow: visible;
+	padding: 0;
+	-webkit-appearance: button; /* for input */
+	-webkit-user-select: none; /* for button */
+	-moz-user-select: none;
+	-ms-user-select: none;
+	border-radius: 2em;
+	cursor: pointer;
+	line-height: 2.5em;
+	margin:0;
+}
+
+.IBMChat-messages button[disabled="true"] {
+	cursor: default;
+  opacity:.8;
+}
+
+.IBMChat-messages button::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+
+/* WatsonMessage Component */
+
+.IBMChat-watson-message-container {
+	margin: 1em 0 1em 0;
+}
+
+.IBMChat-watson-message {
+	margin-right:2em;
+	padding: 0.1em;
+	padding-left: 1em;
+}
+
+.IBMChat-watson-layout {
+	margin: 0 1em 0 1em;
+}
+
+/* UserMessage Component */
+
+.IBMChat-user-message-container {
+  margin: 1em 0 1em 2em;
+}
+
+.IBMChat-user-message {
+  padding:1em;
+	margin:0 1em 0 0;
+	border-radius: 0.5em;
+}
+
+/* Input Component */
+
+.IBMChat-input-container {
+	display:table-row;
+	height:75px;
+}
+
+.IBMChat-input-form {
+	display:table-cell;
+	position:relative;
+	padding:24px 24px 0 24px;
+}
+
+.IBMChat-chat-textbox {
+  border: none;
+	border-radius: 0;
+  color: inherit;
+  background: transparent;
+  font-size:1em;
+  margin:0 0 1.625em 0;
+  padding:0 0 3px 0;
+  width:100%;
+}
+
+.IBMChat-chat-textbox[disabled='disabled'] {
+	opacity:0.5;
+}
+
+.IBMChat-input-form ::-webkit-input-placeholder {
+	opacity:1;
+}
+
+.IBMChat-chat-textbox:focus {
+  outline: none;
+  padding:0 0 2px 0;
+}
+
+/* Spinner */
+.IBMChat-input-loading {
+	z-index: 2;
+	position:absolute;
+	right: 16px;
+	top: 15px;
+	height:32px;
+	width:32px;
+}
+
+.IBMChat-ibm-spinner-start {
+	opacity:0;
+}
+
+.IBMChat-ibm-spinner {
+	fill: transparent;
+	stroke-width: 3;
+	stroke-linecap: "butt";
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+}
+
+/* initial rotation and stroke animation and infinite rotation*/
+.IBMChat-init-spin {
+	animation: init-rotate 150ms linear forwards, rotate-loop 2000ms linear infinite;
+}
+
+.IBMChat-init-spin svg circle {
+	animation: init-stroke 1000ms linear;
+}
+
+.IBMChat-end-spin svg circle {
+	display:none;
+}
+
+/* initial rotation */
+
+@keyframes init-rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(180deg);
+	}
+}
+
+/* looping rotation */
+@keyframes rotate-loop {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* initial stroke animation */
+
+@keyframes init-stroke {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

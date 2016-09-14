@@ -1,0 +1,53 @@
+/**
+* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+*
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+* in compliance with the License. You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under the License
+* is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+* or implied. See the License for the specific language governing permissions and limitations under
+* the License.
+*/
+
+.IBMChat-form-container {
+	text-align:center;
+	padding:1em;
+}
+
+.IBMChat-form-fields {
+	margin:auto;
+	text-align:left;
+	max-width:360px;
+	width:100%;
+}
+
+.IBMChat-form-fields-row {
+	padding-bottom:1.5em;
+}
+
+.IBMChat-form-fields-row input {
+	width: 100%;
+}
+
+.IBMChat-form-buttons {
+	width: 100%;
+	max-width: 360px;
+	height: 2.5em;
+	text-align:center;
+	margin:auto;
+}
+
+.IBMChat-form-buttons button {
+	line-height: 2.5em;
+	width: 100px;
+}
+
+.IBMChat-form-cancel {
+	float:left;
+}
+.IBMChat-form-submit {
+	float:right;
+}

@@ -1,0 +1,60 @@
+{
+  "name": "@watson-virtual-agent/chat-widget",
+  "version": "1.0.0",
+  "description": "Watson Virtual Agent Chat Widget",
+  "homepage": "https://github.com/watson-virtual-agents/chat-widget",
+  "main": "src/index.js",
+  "scripts": {
+    "archive": "jsdoc2md \"src/index.js\" > docs/JSDOCS.md && node ./utils/archive",
+    "build": "webpack && npm run archive",
+		"build-staging": "NODE_ENV=staging webpack && npm run archive",
+		"build-production": "NODE_ENV=production webpack && npm run archive",
+    "watch": "node ./utils/dev-server.js"
+  },
+	"engines": {
+		"node" : ">=6.0.0"
+	},
+  "keywords": [
+    "IBM",
+		"Watson",
+    "Watson Virtual Agent"
+  ],
+  "license": "Apache-2.0",
+  "author": "IBM Corp",
+	"contributors": [
+		{
+			"name" : "Ethan Winters",
+			"email" : "ewinters@us.ibm.com"
+		}
+	],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/watson-virtual-agents/chat-widget"
+  },
+  "bugs": {
+    "url": "https://github.com/watson-virtual-agents/chat-widget/issues"
+  },
+  "dependencies": {
+    "@watson-virtual-agent/client-sdk": "1.0.2",
+    "es6-promise": "3.2.1",
+    "lodash": "4.15.0"
+  },
+  "devDependencies": {
+    "eslint": "3.0.0",
+    "eslint-loader": "1.4.0",
+    "fs-extra": "0.30.0",
+    "html-webpack-plugin": "2.9.0",
+    "js-beautify": "1.6.4",
+    "jsdoc-to-markdown": "1.3.7",
+    "node-glob": "1.2.0",
+    "raw-loader": "0.5.1",
+    "source-map-loader": "0.1.5",
+    "style-loader": "0.13.1",
+    "svg-inline-loader": "0.4.1",
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
+  },
+  "directories": {
+    "doc": "./docs"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "versions": [{
+    "version": "1.0.0",
+    "apidocs": "IBMChatClient-v1.0.0-jsdocs.md",
+    "docs": "IBMChatClient-v1.0.0.md",
+    "widget": "IBMChatClient-v1.0.0.js",
+    "quickstart": "IBMChatClient-v1.0.0-quickstart.md"
+  }]
+}
