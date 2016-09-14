@@ -7,8 +7,9 @@
   "scripts": {
     "archive": "jsdoc2md \"src/index.js\" > docs/JSDOCS.md && node ./utils/archive",
     "build": "webpack && npm run archive",
-		"build-staging": "NODE_ENV=staging webpack && npm run archive",
-		"build-production": "NODE_ENV=production webpack && npm run archive",
+    "build-staging": "NODE_ENV=staging webpack && npm run archive",
+    "build-production": "NODE_ENV=production webpack && npm run archive",
+    "prepublish": "npm run build-production",
     "watch": "node ./utils/dev-server.js"
   },
 	"engines": {
