@@ -3,31 +3,36 @@
   "version": "1.0.0",
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
-  "main": "src/index.js",
+  "main": "dist/IBMChatClient-latest.js",
   "scripts": {
     "archive": "jsdoc2md \"src/index.js\" > docs/JSDOCS.md && node ./utils/archive",
     "build": "webpack && npm run archive",
-    "build-staging": "NODE_ENV=staging webpack && npm run archive",
-    "build-production": "NODE_ENV=production webpack && npm run archive",
+    "prepublish": "npm run build-production",
+    "build-staging": "better-npm-run build:staging",
+    "build-production": "better-npm-run build:production",
     "prepublish": "npm run build-production",
     "watch": "node ./utils/dev-server.js"
   },
-	"engines": {
-		"node" : ">=6.0.0"
-	},
+  "betterScripts": {
+    "build:staging": "NODE_ENV=staging webpack && npm run archive",
+    "build:production": "NODE_ENV=production webpack && npm run archive"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "keywords": [
     "IBM",
-		"Watson",
+    "Watson",
     "Watson Virtual Agent"
   ],
   "license": "Apache-2.0",
   "author": "IBM Corp",
-	"contributors": [
-		{
-			"name" : "Ethan Winters",
-			"email" : "ewinters@us.ibm.com"
-		}
-	],
+  "contributors": [
+    {
+      "name": "Ethan Winters",
+      "email": "ewinters@us.ibm.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/watson-virtual-agents/chat-widget"
@@ -41,6 +46,7 @@
     "lodash": "4.15.0"
   },
   "devDependencies": {
+    "better-npm-run": "0.0.11",
     "eslint": "3.0.0",
     "eslint-loader": "1.4.0",
     "fs-extra": "0.30.0",
