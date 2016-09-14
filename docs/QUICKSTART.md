@@ -1,62 +1,48 @@
 # Quick Start
 
-1) Determine where on the web page you want the bot's chat window to be displayed. Associate the chat window with the `<div>` HTML element that defines the target area, and then add an ID attribute to the `<div>` element so you can refer to it later. Embed and initialize the Watson Virtual Agent Chat Widget by copying the following scripts and pasting them as close to the closing `</body>` tag as possible.
+1. Determine where on the web page you want the bot's chat window to be displayed. Associate the chat window with the `<div>` HTML element that defines the target area, and then add an ID attribute to the `<div>` element so you can refer to it later.
+
+2. Get your API keys and Virtual Agent ID.
+
+- To prove that you have permission to use the Watson Virtual Agent API services, the following keys must be associated with any API calls that are made to the service from the virtual agent user interface:
+Client ID
+Client secret token
+a. Go to the IBM developerWorks API Explorer site (https://apiexplorer.rtp.raleigh.ibm.com/test/explorer/), and sign in with the same IBM ID that was used to sign up for the service subscription. Create a user name, and then click Next.
+b. Click the My APIs link, and look for the IBM Watson Virtual Agent tile. Click the key icon, and select the default key.
+c. Two keys are automatically generated. Hover over the key fields, and then click SHOW.
+d. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.
+
+- Now, generate your bot.
+a. Click the IBM Watson Virtual Agent tile, and then click Keys. Select the default key.
+b. Scroll down to the Retrieve bot call.
+c. Add '2016-09-16' as the version parameter value, and then click Test.
+d. Copy the 32-digit alphanumeric code that is returned in the response. Save it because this is the bot ID that you will need later.
+
+3. Return to this Configure page, and revise the second script:
 
 ```html
-<script src='https://dp1-bot-chat.mybluemix.net/IBMChat-v1.0.0.js'></script>
+<script src='https://dp1-bot-chat.mybluemix.net/IBMChat-v1.0.1.js'></script>
 <script>
   IBMChat.init({
     el: 'ibm_chat_root',
-    baseURL: 'https://dev.api.ibm.com/virtualagent/development/api/v1/',
+    baseURL: 'https://dev.api.ibm.com/virtualagent/run/api/v1/',
     botID: 'YOUR_BOT_ID',
     IBMClientID: 'YOUR_IBM_CLIENT_ID',
     IBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
   });
-</script>
-```
-In order to retrieve the IBMClientID and IBMClientSecret, log into to the API Manager at [https://developer.ibm.com/api/](https://developer.ibm.com/api/). The first time you log into this site, you will be prompted to enter a username. After clicking 'Next',  a linked titled 'My APIs' will appear in the top right. Find the API called 'Watson Virtual Agent' and click on the key icon to the right. A menu should expand below revealing your automatically generated API key. These figures are hidden for security. Hover over the fields to find a 'SHOW' button. After clicking this button, the IBMClientID (top field) and IBMClientSecret (bottom field) will both be visible. These values can now be used in the widget.
+</script>```
 
-Now, click on 'Watson Virtual Agent'. This page demonstrates the api calls that developers can use to interact with the bot. On the left sidebar, click 'Keys' and select the default key. Scroll down and find the 'Retrieve Bot' call. For the version parameter, enter '2016-09-16' then simply click 'Test' to retrieve your botID. This should be a 32 digit alphanumeric code following the format of '00000000-0000-0000-0000-000000000000'.
+Replace all of the parameter values except the baseURL; use that value as-is.
 
-2) Update the values of the following parameters in the second script:
+- el: Specify the ID of the element that you chose to use in Step 1.
+- botID: Add the bot ID you generated earlier.
+- IBMClientID: Add the client ID key value that you copied earlier.
+- IBMClientSecret: Add the Client secret token value that you copied earlier.
 
-- el: The ID of the element that you identified in Step 1.
-- botID: This value is automatically populated with the unique ID of your bot.
-- IBMClientID: Your IBM client ID.
-- IBMClientSecretToken: Your IBM client secret token.
+**Important: Keep the values of the IBMClientID and IBMClientSecret as private as possible.**
 
-**Important:** Do not publicize the values of IBMClientID and IBMClientSecret. They are available to the Chat Widget as configuration options for development purposes. To safeguard the values, consider having a server between the Chat Widget and the bot that will add `X-IBM-Client-Id` and `X-IBM-Client-Secret` as headers to the request when you publish your widget on a public site.
+4. Embed and initialize the Watson Virtual Agent chat widget by pasting the revised scripts into your web page. Add them as close to the closing `</body>` tag as possible to prevent the script from blocking the rest of the page from rendering, and to ensure that whichever element you associated with the script will be fully rendered by the time the script is executed.
 
-After you paste the script, the Chat Widget is associated with and rendered to an HTML element that you can hide or show and position. The widget extends to the full height and width of the element. The maximum width is 768 pixels, and the minimum height is 300 pixels.
+5. Refresh the web page and give the virtual agent a try!
 
-## Sample
-
-You can copy this HTML code block into a file, give it an .html extension, and view it in a browser to see a quick and basic example. Replace the values of the botID, IBMClientID, and IBMClientSecretToken parameters.
-
-```html
-<html>
-<head>
-<title>IBM Watson Virtual Agent Chat Widget Sample</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-<style>
-  html, body, iframe { width: 100%; height:100%; padding:0; margin:0; }
-  #ibm_chat_root { position:fixed; bottom:0; right: 20px; height: 80%; min-height:400px; width:300px; background:#000; }
-</style>
-</head>
-<body>
-<div id="ibm_chat_root"></div>
-<iframe style="width:100%; height:100%" src="http://www.ibm.com/en-us"></iframe>
-<script src='https://dp1-bot-chat.mybluemix.net/IBMChat-v1.0.0.js'></script>
-<script>
-  IBMChat.init({
-    el: 'ibm_chat_root',
-    baseURL: 'https://dev.api.ibm.com/virtualagent/development/api/v1/',
-    botID: 'YOUR_BOT_ID',
-    IBMClientID: 'YOUR_IBM_CLIENT_ID',
-    IBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
-  });
-</script>
-</body>
-</html>
-```
+The chat widget is associated with and rendered to the HTML element that you designated in step 1. You can hide or show and position that element. The widget extends to the full height and width of the element. The maximum width is 768 pixels, and the minimum height is 300 pixels.
