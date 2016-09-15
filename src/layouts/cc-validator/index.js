@@ -40,8 +40,8 @@ function CreditCard(data) {
 }
 
 CreditCard.prototype.init = function(data) {
-	this.data = data.data || {};
-	//this.data.acceptedCards = ['visa'];
+	this.data = data.message.layout.data || {};
+	this.data.acceptedCards = this.data.types;
 	this.uuid = data.uuid;
 	this.parentElement = data.element;
 	this.layoutElement = data.layoutElement;
