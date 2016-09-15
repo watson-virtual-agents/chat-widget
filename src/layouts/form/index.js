@@ -119,6 +119,11 @@ Form.prototype.hideErrors = function() {
 	}
 };
 
+Form.prototype.handleEnter = function(e) {
+	if (e.keyCode === 13)
+		this.handleSubmit();
+};
+
 Form.prototype.handleCancel = function() {
 	publish('send', {
 		silent: true,
@@ -130,6 +135,8 @@ Form.prototype.handleCancel = function() {
 Form.prototype.addListeners = function() {
 	this.cancelButton.addEventListener('click', this.handleCancel.bind(this));
 	this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
+	for (var i = 0; i < this.fields.length; i++)
+		this.fields[i].addEventListener('keypress', this.handleEnter.bind(this));
 };
 
 Form.prototype.removeAllEventListeners = function() {
@@ -137,8 +144,11 @@ Form.prototype.removeAllEventListeners = function() {
 	this.cancelButton.setAttribute('disabled', true);
 	this.submitButton.removeEventListener('click', this.handleSubmit.bind(this));
 	this.submitButton.setAttribute('disabled', true);
-	for (var j = 0; j < this.fields.length; j++)
-		this.fields[j].setAttribute('disabled', true);
+	for (var i = 0; i < this.fields.length; i++) {
+		this.fields[i].removeEventListener('keypress', this.handleEnter.bind(this));
+		this.fields[i].setAttribute('disabled', true);
+	}
+
 	this.subscribeSend.remove();
 };
 

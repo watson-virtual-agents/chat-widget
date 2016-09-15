@@ -72,6 +72,9 @@ Choose.prototype.drawButtons = function() {
 		this.el.appendChild(buttonHolder);
 		button = buttonHolder.querySelector('button');
 		button.setAttribute('data-uuid', this.uuid);
+		button.setAttribute('tabindex', i);
+		if (i === 0)
+			button.setAttribute('autofocus', true);
 		button.classList.add(inactiveClassName);
 		this.addListener(button);
 	}

@@ -27,5 +27,9 @@
     "version": "1.0.6",
     "widget": "IBMChatClient-v1.0.6.js",
     "quickstart": "IBMChatClient-v1.0.6-quickstart.md"
+  }, {
+    "version": "1.0.7",
+    "widget": "IBMChatClient-v1.0.7.js",
+    "quickstart": "IBMChatClient-v1.0.7-quickstart.md"
   }]
 }
