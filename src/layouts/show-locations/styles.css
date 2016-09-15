@@ -58,14 +58,15 @@
  }
 
 .IBMChat-map-locations-item-icon {
-	padding:0.5em 0.5em 0 0;
 	text-align:center;
-	width: 64px;
+	width: 40px;
 	float:left;
 }
 
 .IBMChat-map-locations-item-data {
 	float:left;
+	padding:0 4px 0 4px;
+	font-size:0.9em;
 }
 .IBMChat-map-locations-item-data-title {
 	font-weight: bold;

@@ -324,7 +324,7 @@ ShowLocations.prototype = {
 			dom.label.textContent = item.label;
 		else
 			dom.parentEl.removeChild(dom.label);
-			
+
 		var addresses = parseAddress(item.address.address);
 		dom.address1.textContent = addresses.address1;
 		dom.address2.textContent = addresses.address2;
@@ -361,6 +361,7 @@ ShowLocations.prototype = {
 			});
 		} else {
 			dom.hours.parentNode.removeChild(dom.hours);
+			dom.hoursButton.parentNode.removeChild(dom.hoursButton);
 		}
 
 		if (locationData && locationData.length > 1) {
