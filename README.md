@@ -1,6 +1,6 @@
 # IBM Watson Virtual Agent Chat Widget
 
-The widget is related to the [Client Bot SDK](https://github.ibm.com/watson-industry-apps/bot-client-sdk), which manages communications with a Watson Virtual Agent bot, private variables, and incoming and outgoing message event handling. The widget is built on top of the Client Bot SDK, and it contains a configurable user interface and a set of utilities. You can use it as-is, or you can customize it. Alternatively, if you want to have ultimate control of your very own chat widget, use the Client Bot SDK to build one.
+The widget is related to the [Client Bot SDK](https://github.com/watson-virtual-agents/client-sdk), which manages communications with a Watson Virtual Agent bot, private variables, and incoming and outgoing message event handling. The widget is built on top of the Client Bot SDK, and it contains a configurable user interface and a set of utilities. You can use it as-is, or you can customize it. Alternatively, if you want to have ultimate control of your very own chat widget, use the Client Bot SDK to build one.
 
 ## Getting started
 
