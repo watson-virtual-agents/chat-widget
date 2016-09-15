@@ -50,6 +50,7 @@ Form.prototype.init = function(data) {
 	this.msgElement = data.msgElement;
 	this.drawForm();
 	this.subscribeSend = subscribe('send', this.removeAllEventListeners.bind(this));
+	publish('disable-input');
 };
 
 Form.prototype.drawForm = function() {
@@ -78,25 +79,6 @@ Form.prototype.drawForm = function() {
 };
 
 Form.prototype.handleSubmit = function() {
-	/*var action = 'action:' + this.action.name;
-	if (hasSubscription(action)) {
-		var data = {};
-		for (var i = 0; i < this.fields.length; i++) {
-			var field = this.fields[i];
-			data[field.getAttribute('name')] = field.getAttribute('value');
-		}
-		publish(action, {
-			actionData: this.action.data || {},
-			formData: data
-		});
-	} else {
-		var errorMsg = 'This chat is configured incorrectly. Nothing is subscribed to ' + action;
-		publish('error', errorMsg);
-		publish('send', {
-			silent: true,
-			text: 'failure'
-		});
-	}*/
 	if (this.validateFields() === true) {
 		for (var i = 0; i < this.fields.length; i++) {
 			var field = this.fields[i];
@@ -106,6 +88,7 @@ Form.prototype.handleSubmit = function() {
 			silent: true,
 			text: 'success'
 		});
+		publish('enable-input');
 	}
 };
 
@@ -141,6 +124,7 @@ Form.prototype.handleCancel = function() {
 		silent: true,
 		text: 'cancel'
 	});
+	publish('enable-input');
 };
 
 Form.prototype.addListeners = function() {

@@ -76,7 +76,7 @@ function publish(event, data, cb) {
 	var current = state.getState();
 	var wasSubscription = false;
 	for (var i = 0; i < events.length; i++) {
-		if (events[i] && events[i].event === event) {
+		if (events[i] && events[i].event && events[i].event === event) {
 			if (current.DEBUG) {
 				wasSubscription = true;
 				console.log('Subscription to ' + event + ' was called: ', data);
