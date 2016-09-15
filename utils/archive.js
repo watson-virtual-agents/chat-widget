@@ -40,13 +40,13 @@ fs.copy(chatsrc, chatdest, function(err) {
 	fs.copy(quickstartsrc, quickstartdest, function(err) {
 		if (err) return console.error(`Failed copying ${quickstartdest}`, err);
 		console.log(`Copied ${quickstartdest}`);
-		glob(`${dest}/*-jsdocs.md`, function(er, files) {
+		glob(`${dest}/*-quickstart.md`, function(er, files) {
 			var json = {
 				versions: []
 			};
 			for (var i = 0; i < files.length; i++) {
 				if (files[i].indexOf('versions') === -1) {
-					var version = files[i].split('IBMChatClient-v')[1].split('-jsdocs.md')[0];
+					var version = files[i].split('IBMChatClient-v')[1].split('-quickstart.md')[0];
 					json.versions.push({
 						version: version,
 						widget: 'IBMChatClient-v' + version + '.js',
