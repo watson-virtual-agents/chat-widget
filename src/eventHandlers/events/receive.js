@@ -16,7 +16,7 @@ var state = require('../../state');
 var events = require('../../events');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
-var text = require('../templates/receive.html');
+var receiveTmpl = require('../templates/receive.html');
 
 function writeMessage(element, text) {
 	var exp = /(((https?:\/\/)|(www\.))[^\s]+)/gi;
@@ -56,21 +56,29 @@ function _layoutAndActions(debug, data) {
 	data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
 	data.msgElement = data.element.querySelector('.IBMChat-watson-message');
 
-	if (data.message && data.message.layout && data.message.layout.name) {
-		var layout = 'layout:' + data.message.layout.name;
-		if (events.hasSubscription(layout))
-			events.publish(layout, data);
-		else if (debug)
-			console.warn('Nothing is subscribed to ' + layout);
-	}
-
 	if (data.message && data.message.action && data.message.action.name) {
 		var action = 'action:' + data.message.action.name;
-		if (events.hasSubscription(action))
+		if (events.hasSubscription(action)) {
 			events.publish(action, data, events.completeEvent);
-		else if (debug)
+			if (debug)
+				console.log('Call to ' + action);
+		} else if (debug) {
 			console.warn('Nothing is subscribed to ' + action);
+		}
 	}
+
+	if (data.message && data.message.layout && data.message.layout.name) {
+		var layout = 'layout:' + data.message.layout.name;
+		if (events.hasSubscription(layout)) {
+			events.publish(layout, data);
+			if (debug)
+				console.log('Call to ' + layout);
+		} else if (debug) {
+			console.warn('Nothing is subscribed to ' + layout);
+		}
+	}
+
+
 
 	events.publish('disable-loading');
 	events.publish('scroll-to-bottom');
@@ -85,13 +93,15 @@ function receive(data) {
 		messages: [].concat(current.messages || [], data)
 	});
 	var msg = (data.message && data.message.text) ? ((Array.isArray(data.message.text)) ? data.message.text : [data.message.text]) : [''];
+	if (msg.length === 0)
+		msg = [''];
 	for (var i = 0; i < msg.length; i++) {
-		var parsed = utils.replaceAll(text, '${data.uuid}', data.uuid);
+		var parsed = utils.replaceAll(receiveTmpl, '${data.uuid}', data.uuid);
 		var item;
 		current.chatHolder.innerHTML += parsed;
 		item = current.chatHolder.querySelector('.' + data.uuid + ':last-child .IBMChat-watson-message');
 		writeMessage(item, msg[i]);
-		if (i === msg.length - 1)
+		if (i === (msg.length - 1))
 			_layoutAndActions(current.DEBUG, data);
 	}
 

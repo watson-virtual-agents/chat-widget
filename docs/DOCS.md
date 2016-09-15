@@ -1,4 +1,4 @@
-## Sample
+## Quick Sample
 
 You can copy this HTML code block into a file, give it an .html extension, and view it in a browser to see a quick and basic example. Replace the values of the botID, IBMClientID, and IBMClientSecretToken parameters.
 
@@ -20,7 +20,7 @@ You can copy this HTML code block into a file, give it an .html extension, and v
 <script>
   IBMChat.init({
     el: 'ibm_chat_root',
-    baseURL: 'https://dev.api.ibm.com/virtualagent/development/api/v1/',
+    baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
     botID: 'YOUR_BOT_ID',
     IBMClientID: 'YOUR_IBM_CLIENT_ID',
     IBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
@@ -56,7 +56,7 @@ IBMChat.init({
 
 ## Moving to production
 
-In your production environment, you should replace the baseURL with a server of your own. This server should add the `X-IBM-Client-Id` and `X-IBM-Client-Secret` headers to the request and forward them on to https://dev.api.ibm.com/virtualagent/development/api/v1/. `X-IBM-Client-Id` and `X-IBM-Client-Secret` are used for billing, so it is of utmost importance you keep them secret.
+In your production environment, you should replace the baseURL with a server of your own. This server should add the `X-IBM-Client-Id` and `X-IBM-Client-Secret` headers to the request and forward them on to https://api.ibm.com/virtualagent/run/api/v1. `X-IBM-Client-Id` and `X-IBM-Client-Secret` are used for billing, so it is of utmost importance you keep them secret.
 
 ## Actions
 
