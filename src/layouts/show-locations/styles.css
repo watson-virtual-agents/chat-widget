@@ -27,6 +27,17 @@
 .IBMChat-map-multiple-locations {
 	cursor: default;
 	opacity:0.3;
+	display: table;
+	width: 100%;
+}
+
+.IBMChat-map-multiple-locations .IBMChat-map-locations-row {
+	display:table-row;
+	width: 100%;
+}
+
+.IBMChat-map-multiple-locations .IBMChat-map-locations-cell {
+	display: table-cell;
 }
 
 .IBMChat-map-location-active .IBMChat-map-multiple-locations {
@@ -48,23 +59,13 @@
 	border-bottom:1px solid #505050;
 }
 
-.IBMChat-map-locations-item:after {
-	visibility: hidden;
-	display: block;
-	font-size: 0;
-	content: " ";
-	clear: both;
-	height: 0;
- }
 
 .IBMChat-map-locations-item-icon {
 	text-align:center;
 	width: 40px;
-	float:left;
 }
 
 .IBMChat-map-locations-item-data {
-	float:left;
 	padding:0 4px 0 4px;
 	font-size:0.9em;
 }
