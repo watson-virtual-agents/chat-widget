@@ -16,7 +16,7 @@ You can copy this HTML code block into a file, give it an .html extension, and v
 <body>
 <div id="ibm_chat_root"></div>
 <iframe style="width:100%; height:100%" src="http://www.ibm.com/en-us"></iframe>
-<script src='https://dp1-bot-chat.mybluemix.net/IBMChat-v1.0.9.js'></script>
+<script src='https://dp1-bot-chat.mybluemix.net/IBMChat-v1.0.10.js'></script>
 <script>
   IBMChat.init({
     el: 'ibm_chat_root',

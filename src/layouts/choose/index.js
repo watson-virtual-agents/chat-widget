@@ -64,7 +64,7 @@ Choose.prototype.drawButtons = function() {
 
 	for (var i = 0; i < this.data.length; i++) {
 		var val = this.data[i];
-		var buttonHolder = document.createElement((this.data.length === 2) ? 'span' : 'div');
+		var buttonHolder = document.createElement('div');
 		buttonHolder.classList.add(ns + '-option');
 		var parsed = utils.replaceAll(tmpl, '${text}', val);
 		var button;
@@ -73,8 +73,8 @@ Choose.prototype.drawButtons = function() {
 		button = buttonHolder.querySelector('button');
 		button.setAttribute('data-uuid', this.uuid);
 		button.setAttribute('tabindex', i);
-		if (i === 0)
-			button.setAttribute('autofocus', true);
+		/*if (i === 0)
+			button.setAttribute('autofocus', true);*/
 		button.classList.add(inactiveClassName);
 		this.addListener(button);
 	}

@@ -41,10 +41,6 @@ div[data-validation-for] {
 	display:inline-block;
 }
 
-.IBMChat-creditcard-col:last-child {
-	padding-left:1em;
-}
-
 .IBMChat-creditcard-col input{
 	text-align:center;
 	width:40px;

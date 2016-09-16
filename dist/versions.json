@@ -8,6 +8,10 @@
     "widget": "IBMChatClient-v1.0.1.js",
     "quickstart": "IBMChatClient-v1.0.1-quickstart.md"
   }, {
+    "version": "1.0.10",
+    "widget": "IBMChatClient-v1.0.10.js",
+    "quickstart": "IBMChatClient-v1.0.10-quickstart.md"
+  }, {
     "version": "1.0.2",
     "widget": "IBMChatClient-v1.0.2.js",
     "quickstart": "IBMChatClient-v1.0.2-quickstart.md"
