@@ -78,8 +78,6 @@ function _layoutAndActions(debug, data) {
 		}
 	}
 
-
-
 	events.publish('disable-loading');
 	events.publish('scroll-to-bottom');
 	events.publish('focus-input');
