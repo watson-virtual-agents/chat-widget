@@ -16,7 +16,8 @@ You can copy this HTML code block into a file, give it an .html extension, and v
 <body>
 <div id="ibm_chat_root"></div>
 <iframe style="width:100%; height:100%" src="http://www.ibm.com/en-us"></iframe>
-<script src='https://dp1-bot-chat.mybluemix.net/IBMChat-v1.0.10.js'></script>
+<!-- https://dp1-bot-chat.mybluemix.net/IBMChat-vX.X.X.js for a specific version --->
+<script src='https://dp1-bot-chat.mybluemix.net/IBMChat-latest.js'></script>
 <script>
   IBMChat.init({
     el: 'ibm_chat_root',
@@ -70,7 +71,7 @@ IBMChat.subscribe('action:update_address', function(data){
 });
 ```
 
-*If an action is thrown and there is nothing subscribed to it, the user will be escalated to a human agent.*
+The one exception is `action:agent`, which does not expect a response.
 
 ## Layouts
 
@@ -121,16 +122,16 @@ If you add a custom layout with the same name as a current layout, the custom la
 
 ## Private Identifiable Information (PII)
 
-Do not send PII to the bot. Externally save PII by using functions subscribed to actions. To store PII for the chat widget to use, use the IBMChat.setProfile method.
+Do not send PII to the bot. Externally save PII by using functions subscribed to actions. To store PII for the chat widget to use, use the IBMChat.profile.set method.
 
 **Example**
 
 ```js
-IBMChat.setProfile({
+IBMChat.profile.set({
 	cc_number: '1234567812345678'
 })
 ```
 
 If the bot responds with `|&cc_number|` in its message response, the chat widget replaces that key with the stored PII to be rendered in the widget.
 
-Access the profile information in your layouts and action handlers with the IBMChat.getProfile function.
+Access the profile information in your layouts and action handlers with the IBMChat.profile.get function.
