@@ -135,10 +135,8 @@ Form.prototype.handleCancel = function() {
 Form.prototype.addListeners = function() {
 	this.cancelButton.addEventListener('click', this.handleCancel.bind(this));
 	this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
-	for (var i = 0; i < this.fields.length; i++) {
-		this.fields[i].setAttribute('tabindex', i);
+	for (var i = 0; i < this.fields.length; i++)
 		this.fields[i].addEventListener('keypress', this.handleEnter.bind(this));
-	}
 };
 
 Form.prototype.removeAllEventListeners = function() {

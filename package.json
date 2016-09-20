@@ -1,10 +1,10 @@
 {
   "name": "@watson-virtual-agent/chat-widget",
-  "version": "1.0.10",
+  "version": "1.0.11-alpha.5",
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/IBMChatClient-latest.js",
-	"scripts": {
+  "scripts": {
     "archive": "jsdoc2md \"src/index.js\" > docs/JSDOCS.md && node ./utils/archive",
     "build": "webpack",
     "watch": "node ./utils/dev-server.js"
@@ -46,6 +46,7 @@
     "jsdoc-to-markdown": "1.3.7",
     "node-glob": "1.2.0",
     "raw-loader": "0.5.1",
+    "semver": "^5.3.0",
     "source-map-loader": "0.1.5",
     "style-loader": "0.13.1",
     "svg-inline-loader": "0.4.1",

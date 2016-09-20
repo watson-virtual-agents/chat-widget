@@ -37,10 +37,12 @@ RequestGeolocationLatlong.prototype = {
 		this.uuid = data.uuid;
 		this.parentElement = data.element;
 		this.layoutElement = data.layoutElement;
+		publish('enable-loading');
 		publish('disable-input');
 		navigator.geolocation.getCurrentPosition(
 				function(position) {
 					publish('enable-input');
+					publish('disable-loading');
 					publish('send', {
 						text: position.coords.latitude + ',' + position.coords.longitude,
 						silent: true
@@ -48,6 +50,7 @@ RequestGeolocationLatlong.prototype = {
 				},
 				function() {
 					publish('enable-input');
+					publish('disable-loading');
 					publish('send', {
 						text: '0,0',
 						silent: true

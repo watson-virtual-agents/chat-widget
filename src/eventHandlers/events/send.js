@@ -58,12 +58,13 @@ function agentSend() {
 			if (current.sendQueue.length > 0)
 				agentSend();
 		})
-		.catch( function(err) {
+		.catch( function(e) {
 			state.setState({
 				inProgress: false
 			});
 			events.publish('disable-loading');
-			events.publish('error', err);
+			events.publish('error', arguments);
+			console.error(e.stack);
 		});
 	current.root.querySelector('.IBMChat-chat-textbox').value = '';
 

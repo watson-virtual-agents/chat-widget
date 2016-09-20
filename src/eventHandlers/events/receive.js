@@ -90,7 +90,8 @@ function receive(data) {
 	var current = state.getState();
 	data = assign({}, checkData, { uuid: utils.getUUID() });
 	state.setState({
-		messages: [].concat(current.messages || [], data)
+		messages: [].concat(current.messages || [], data),
+		hasError: false
 	});
 	var msg = (data.message && data.message.text) ? ((Array.isArray(data.message.text)) ? data.message.text : [data.message.text]) : [''];
 	if (msg.length === 0)

@@ -15,6 +15,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var pkg = require('../package.json');
 var glob = require('glob');
+var semver = require('semver');
 var beautify = require('js-beautify').js_beautify;
 
 var dest = path.resolve(__dirname, '../dist');
@@ -26,10 +27,10 @@ var versionssrc = path.resolve(__dirname, '../dist', `versions.json`);
 
 function sort(versions) {
 	return versions.concat().sort(function(a, b) {
-		if (a.version < b.version)
-			return -1;
-		if (a.version > b.version)
+		if (semver.gt(a.version, b.version))
 			return 1;
+		else if (semver.lt(a.version, b.version))
+			return -1;
 		return 0;
 	});
 }
