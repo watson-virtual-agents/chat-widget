@@ -121,16 +121,16 @@ If you add a custom layout with the same name as a current layout, the custom la
 
 ## Private Identifiable Information (PII)
 
-Do not send PII to the bot. Externally save PII by using functions subscribed to actions. To store PII for the chat widget to use, use the IBMChat.setProfile method.
+Do not send PII to the bot. Externally save PII by using functions subscribed to actions. To store PII for the chat widget to use, use the IBMChat.profile.set method.
 
 **Example**
 
 ```js
-IBMChat.setProfile({
+IBMChat.profile.set({
 	cc_number: '1234567812345678'
 })
 ```
 
 If the bot responds with `|&cc_number|` in its message response, the chat widget replaces that key with the stored PII to be rendered in the widget.
 
-Access the profile information in your layouts and action handlers with the IBMChat.getProfile function.
+Access the profile information in your layouts and action handlers with the IBMChat.profile.set function.
