@@ -7,7 +7,7 @@
 - To prove that you have permission to use the Watson Virtual Agent API services, the following keys must be associated with any API calls that are made to the service from the virtual agent user interface:
 Client ID
 Client secret token
-a. Go to the IBM developerWorks API Explorer site (https://apiexplorer.rtp.raleigh.ibm.com/test/explorer/), and sign in with the same IBM ID that was used to sign up for the service subscription. Create a user name, and then click Next.
+a. Go to the IBM developerWorks API Explorer site (https://developer.ibm.com/api/)[https://developer.ibm.com/api/], and sign in with the same IBM ID that was used to sign up for the service subscription. Create a user name, and then click Next.
 b. Click the My APIs link, and look for the IBM Watson Virtual Agent tile. Click the key icon, and select the default key.
 c. Two keys are automatically generated. Hover over the key fields, and then click SHOW.
 d. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.
