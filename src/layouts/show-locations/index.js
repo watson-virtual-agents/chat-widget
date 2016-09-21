@@ -36,7 +36,19 @@ var ns = 'IBMChat-map';
 var templates = {
 	base: require('./templates/base.html'),
 	addLocationsItem: require('./templates/add-locations-item.html'),
-	addLocationItem: require('./templates/add-location-item.html')
+	addLocationItem: require('./templates/add-location-item.html'),
+	hoursClosed: require('./templates/hours-closed.html'),
+	hoursOpen: require('./templates/hours-open.html'),
+	hoursTodayOpen: require('./templates/hours-today-open.html'),
+	hoursTodayClosed: require('./templates/hours-today-closed.html')
+};
+
+var strings = {
+	locations: {
+		none: 'We could not find any locations close to you.',
+		single: 'Here are the details for the ${location} location...',
+		list: 'Here are the locations I found close to you:'
+	}
 };
 
 var showLocationsLayout = {
@@ -49,8 +61,8 @@ var showLocationsLayout = {
 		window.addEventListener('resize', utils.debounce(function() {
 			setTimeout(function() {
 				sizeMap();
-			}, 1000);
-		}, 1000));
+			}, 500);
+		}, 500));
 	}
 };
 
@@ -141,34 +153,28 @@ function createHours(hoursEl, moreHoursEl, hours) {
 		var todaysHours = hours[today];
 		var el = document.createElement('div');
 		if (todaysHours && todaysHours.isOpen) {
-			el.innerHTML = '' +
-				'<div class="' + ns + '-hours-open">Open today:</div>' +
-				'<div class="' + ns + '-hours-today">' +
-					formatAMPM(todaysHours.open) + ' &ndash; ' + formatAMPM(todaysHours.close) +
-				'</div>';
+			var text = utils.replaceAll(templates.hoursTodayOpen, '${ns}', ns);
+			text = utils.replaceAll(text, '${open}', formatAMPM(todaysHours.open));
+			text = utils.replaceAll(text, '${close}', formatAMPM(todaysHours.close));
+			el.innerHTML = text;
 		} else {
-			el.innerHTML = '<div class="' + ns + '-hours-open">Closed today.</div>';
+			el.innerHTML = utils.replaceAll(templates.hoursTodayClosed, '${ns}', ns);
 		}
 		hoursEl.appendChild(el);
 		for (var i = 0; i < hours.length; i++) {
 			var childEl = document.createElement('div');
+			var txt;
 			childEl.setAttribute('class', ns + '-days-hours');
 			if (hours[i] && hours[i].isOpen) {
-				childEl.innerHTML = '' +
-					'<div class="' + ns + '-days-hours-day">' +
-						days[i] +
-					'</div>' +
-					'<div class="' + ns + '-days-hours-hours">' +
-						formatAMPM(hours[i].open) + ' &ndash; ' + formatAMPM(hours[i].close) +
-					'</div>';
+				txt = utils.replaceAll(templates.hoursOpen, '${ns}', ns);
+				txt = utils.replaceAll(txt, '${day}', days[i]);
+				txt = utils.replaceAll(txt, '${open}', formatAMPM(todaysHours.open));
+				txt = utils.replaceAll(txt, '${close}', formatAMPM(todaysHours.close));
+				childEl.innerHTML = txt;
 			} else {
-				childEl.innerHTML = '' +
-				'<div class="' + ns + '-days-hours-day">' +
-					days[i] +
-				'</div>' +
-				'<div class="' + ns + '-days-hours-closed">' +
-					'Closed' +
-				'</div>';
+				txt = utils.replaceAll(templates.hoursClosed, '${ns}', ns);
+				txt = utils.replaceAll(txt, '${day}', days[i]);
+				childEl.innerHTML = txt;
 			}
 			moreHoursEl.appendChild(childEl);
 		}
@@ -201,13 +207,13 @@ ShowLocations.prototype = {
 		this.msgElement = data.msgElement;
 		switch (this.data.length) {
 		case 0:
-			this.msgElement.textContent = 'We could not find any locations close to you.';
+			this.msgElement.textContent = strings.locations.none;
 			break;
 		case 1:
-			this.msgElement.textContent = 'Here are the details for the ' + this.data[0].address.address + ' location...';
+			this.msgElement.textContent = utils.replaceAll(strings.locations.single, '${location}', this.data[0].address.address);
 			break;
 		default:
-			this.msgElement.textContent = 'Here are the locations I found close to you:';
+			this.msgElement.textContent = strings.locations.list;
 		}
 
 		if (this.data.length > 0) {
@@ -263,18 +269,11 @@ ShowLocations.prototype = {
 		return img;
 	},
 	handleClick: function() {
-		/*
-		for September version
-		const data = {
-			text: this.dataset.id,
-			silent: true
-		};*/
 		this.className = ns + '-location-active';
 		showLocations[this.dataset.uuid].removeAllEventListeners();
-		//actions.publish('send', data); for September version
 		publish('receive', {
 			message: {
-				text: ['Here are the details for this location.'],
+				text: [utils.replaceAll(strings.locations.single, '${location}', showLocations[this.dataset.uuid].data[this.dataset.id - 1].address.address)],
 				layout: {
 					name: 'show-locations'
 				},
@@ -369,7 +368,7 @@ ShowLocations.prototype = {
 				e.preventDefault();
 				publish('receive', {
 					message: {
-						text: ['Here are the locations I found close to you:'],
+						text: [strings.locations.list],
 						layout: {
 							name: 'show-locations'
 						},
