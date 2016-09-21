@@ -1,6 +1,6 @@
 ## Quick Sample
 
-You can copy this HTML code block into a file, give it an .html extension, and view it in a browser to see a quick and basic example. Replace the values of the botID, IBMClientID, and IBMClientSecretToken parameters.
+You can copy this HTML code block into a file, give it an .html extension, and view it in a browser to see a quick and basic example. Replace the values of the botID, XIBMClientID, and XIBMClientSecret parameters.
 
 ```html
 <html>
@@ -23,8 +23,8 @@ You can copy this HTML code block into a file, give it an .html extension, and v
     el: 'ibm_chat_root',
     baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
     botID: 'YOUR_BOT_ID',
-    IBMClientID: 'YOUR_IBM_CLIENT_ID',
-    IBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+    XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+    XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
   });
 </script>
 </body>
