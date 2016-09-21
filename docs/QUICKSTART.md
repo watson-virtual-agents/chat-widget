@@ -27,8 +27,8 @@ d. Copy the 32-digit alphanumeric code that is returned in the response. Save it
     el: 'ibm_chat_root',
     baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
     botID: 'YOUR_BOT_ID',
-    IBMClientID: 'YOUR_IBM_CLIENT_ID',
-    IBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+    XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+    XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
   });
 </script>
 
@@ -38,8 +38,8 @@ Replace all of the parameter values except the baseURL; use that value as-is.
 
 - el: Specify the ID of the element that you chose to use in Step 1.
 - botID: Add the bot ID you generated earlier.
-- IBMClientID: Add the client ID key value that you copied earlier.
-- IBMClientSecret: Add the Client secret token value that you copied earlier.
+- XIBMClientID: Add the client ID key value that you copied earlier.
+- XIBMClientSecret: Add the Client secret token value that you copied earlier.
 
 **Important: Keep the values of the IBMClientID and IBMClientSecret as private as possible.**
 
