@@ -44,12 +44,8 @@
     "widget": "IBMChatClient-v1.0.10.js",
     "quickstart": "IBMChatClient-v1.0.10-quickstart.md"
   }, {
-    "version": "1.0.11-alpha.7",
-    "widget": "IBMChatClient-v1.0.11-alpha.7.js",
-    "quickstart": "IBMChatClient-v1.0.11-alpha.7-quickstart.md"
-  }, {
-    "version": "1.0.11-alpha.8",
-    "widget": "IBMChatClient-v1.0.11-alpha.8.js",
-    "quickstart": "IBMChatClient-v1.0.11-alpha.8-quickstart.md"
+    "version": "1.0.11-alpha.9",
+    "widget": "IBMChatClient-v1.0.11-alpha.9.js",
+    "quickstart": "IBMChatClient-v1.0.11-alpha.9-quickstart.md"
   }]
 }
