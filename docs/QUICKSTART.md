@@ -41,7 +41,7 @@ Replace all of the parameter values except the baseURL; use that value as-is.
 - XIBMClientID: Add the client ID key value that you copied earlier.
 - XIBMClientSecret: Add the Client secret token value that you copied earlier.
 
-**Important: Keep the values of the IBMClientID and IBMClientSecret as private as possible.**
+**Important: Keep the values of the XIBMClientID and XIBMClientSecret as private as possible.**
 
 4. Embed and initialize the Watson Virtual Agent chat widget by pasting the revised scripts into your web page. Add them as close to the closing `</body>` tag as possible to prevent the script from blocking the rest of the page from rendering, and to ensure that whichever element you associated with the script will be fully rendered by the time the script is executed.
 
