@@ -1,11 +1,7 @@
-// var webpack = require("webpack");
 var webpackConfig = require('./webpack.config.js');
 
 module.exports = function(config) {
 	config.set({
-		// web server port
-		port: 9876,
-
 		// enable / disable colors in the output (reporters and logs)
 		colors: true,
 
@@ -65,11 +61,6 @@ module.exports = function(config) {
 			}
 		},
 		*/
-		
-		// webpack-dev-middleware configuration
-		webpackMiddleware: {
-			noInfo: true
-		},
 
 		plugins: [
 			require("karma-webpack"),
@@ -81,7 +72,6 @@ module.exports = function(config) {
 			require("karma-spec-reporter")
 		],
 
-		// browsers: ['Chrome']
 		browsers: ['PhantomJS']
 	});
 };
