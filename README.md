@@ -24,7 +24,7 @@ The widget is related to the [Client Bot SDK](https://github.com/watson-virtual-
 
 **Important**: Keep the values of the IBMClientID and IBMClientSecret as private as possible.
 
-6. Run the following commands:
+6. Run the following commands using Node 6.x or higher:
 
 ```console
 npm install
