@@ -23,8 +23,8 @@ const devServerConfig = {
 	publicPath: '/',
 	historyApiFallback: true,
 	noInfo: true,
-	hot: true,
-	https: true
+	hot: true/*,
+	https: true*/
 };
 const devServer = new WebpackDevServer( compiler, devServerConfig);
 
