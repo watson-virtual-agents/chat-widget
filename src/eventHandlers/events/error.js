@@ -13,40 +13,21 @@
 */
 
 var events = require('../../events');
-
-var statusMap = {
-	400: 'A bad request was made, somewhere. (400)',
-	401: 'This request is unauthorized. (401)',
-	403: 'This request is forbidden. (403)',
-	404: 'The server is missing. (404)',
-	405: 'Method not allowed. (405)',
-	408: 'We took too long to respond, something must be wrong. (408)',
-	412: 'The was an error on the server. (412)',
-	500: 'The was an error on the server. (500)',
-	501: 'The was an error on the server. (501)',
-	502: 'The was an error on the server. (502)',
-	503: 'The was an error on the server. (503)',
-	504: 'The was an error on the server. (504)'
-};
-
-function generateErrorMessage(error) {
-	if (typeof error === 'string')
-		return error;
-	else if (error.status && statusMap[error.status] !== undefined)
-		return statusMap[error.status];
-	else if (error.timeout)
-		return 'The request took too long.';
-	else
-		return JSON.stringify(error);
-}
+var state = require('../../state');
 
 function error(err) {
-	console.error(arguments);
-	console.error(generateErrorMessage(err));
-	events.publish('send', {
-		text: 'agent',
-		silent: true
+	var current = state.getState();
+	var text = 'I am sorry, I am having difficulties.';
+	if (current.hadError)
+		text += ' Please try again later.';
+	else
+		text += ' To speak with a human agent, type "agent".';
+	if (err.status)
+		text += ' (error: ' + err.status + ')';
+	state.setState({
+		hadError: true
 	});
+	events.publish('receive', text);
 }
 
 module.exports = error;

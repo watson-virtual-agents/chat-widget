@@ -150,6 +150,8 @@ Generate the chat widget into an element.
 | config.baseURL | <code>string</code> | <code>&quot;&#x27;https://dev.api.ibm.com/virtualagent/development/api/v1/&#x27;&quot;</code> | optional: specifies a different bot hosting server. The most common usecase for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request. |
 | config.XIBMClientID | <code>string</code> |  | optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request. |
 | config.XIBMClientSecret | <code>string</code> |  | optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request. |
+| config.errorHandler | <code>function</code> |  | optional: A function that takes an error object as a param if there is a problem with communicating with your Virtual Agent. By default, if an error is received, the user is escalated to a live agent. You may, however, want to handle some errors differently (401 for instance) |
+| config.errorHandlerContext | <code>Object</code> |  | optional: A "this" value for the errorHanlder. |
 | config.styles | <code>Object</code> |  | optional: Override default styling. |
 | config.styles.background | <code>string</code> | <code>&quot;&#x27;#3d3d3d&#x27;&quot;</code> | optional: hex code for background color |
 | config.styles.text | <code>string</code> | <code>&quot;&#x27;#ffffff&#x27;&quot;</code> | optional: hex code for main text color |
@@ -352,7 +354,7 @@ Subscribe to an IBMChat event.
 **Example**  
 ```js
 IBMChat.subscribe('the-end-of-the-world', function(message) {
-  console.log(messsage);
+  console.log(message);
 });
 ```
 <a name="IBMChat.publish"></a>

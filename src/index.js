@@ -32,6 +32,8 @@ module.exports = {
 	 * @param {string} config.baseURL='https://dev.api.ibm.com/virtualagent/development/api/v1/' - optional: specifies a different bot hosting server. The most common usecase for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request.
 	 * @param {string} config.XIBMClientID - optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request.
 	 * @param {string} config.XIBMClientSecret - optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request.
+	 * @param {Function} config.errorHandler - optional: A function that takes an error object as a param if there is a problem with communicating with your Virtual Agent. By default, if an error is received, the user is escalated to a live agent. You may, however, want to handle some errors differently (401 for instance)
+	 * @param {Object} config.errorHandlerContext - optional: A "this" value for the errorHanlder.
 	 * @param {Object} config.styles - optional: Override default styling.
 	 * @param {string} config.styles.background='#3d3d3d' - optional: hex code for background color
 	 * @param {string} config.styles.text='#ffffff' - optional: hex code for main text color
@@ -196,7 +198,7 @@ module.exports = {
 	 * @param context - optional: value of "this" in the function
 	 * @example
 	 * IBMChat.subscribe('the-end-of-the-world', function(message) {
-	 *   console.log(messsage);
+	 *   console.log(message);
 	 * });
 	 */
 	subscribe: bootstrap.subscribe,

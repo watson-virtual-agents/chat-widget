@@ -17,11 +17,10 @@
   min-width: 288px;
   margin: 0 auto 0 auto;
   border: none;
-	min-height:230px;
+	min-height:100px;
   height: 100%;
   box-sizing: border-box;
-	padding:0.5em;
-	position:relative;
+	padding:0;
 	display:table;
 	width:100%;
 	text-align: left;
@@ -33,6 +32,8 @@
 .IBMChat-inner-container {
 	display:table-cell;
 	height:100%;
+	margin: 0;
+	padding: 0 8px 0 8px;
 	vertical-align: bottom;
 }
 
@@ -40,7 +41,8 @@
 
 .IBMChat-chat-container {
 	display:table-row;
-	height:100%;
+	margin: 0;
+	padding:
 }
 
 /* Messages Component */
@@ -140,12 +142,15 @@
 
 .IBMChat-input-container {
 	display:table-row;
-	height:75px;
+	height:72px;
+	margin: 0;
+	padding: 0;
 }
 
 .IBMChat-input-form {
 	display:table-cell;
 	position:relative;
+	height: 24px;
 	padding:24px 24px 0 24px;
 }
 
@@ -155,7 +160,7 @@
   color: inherit;
   background: transparent;
   font-size:1em;
-  margin:0 0 1.625em 0;
+  margin:0;
   padding:0 0 3px 0;
   width:100%;
 }

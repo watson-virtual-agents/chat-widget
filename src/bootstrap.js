@@ -28,7 +28,6 @@ var registeredLayouts = [];
 function registerEvents(playback) {
 	events.subscribe('start', eventHandlers.start);
 	events.subscribe('resize', eventHandlers.resize);
-	events.subscribe('error', eventHandlers.error);
 	events.subscribe('disable-input', eventHandlers.input.disableInput);
 	events.subscribe('enable-loading', eventHandlers.input.enableLoadingInput);
 	events.subscribe('disable-loading', eventHandlers.input.disableLoadingInput);
@@ -82,13 +81,18 @@ function init(config) {
 			return;
 		}
 		if (root) {
+			if (config.errorHandler)
+				events.subscribe('error', config.errorHandler, config.errorHandlerContext);
+			else
+				events.subscribe('error', eventHandlers.error);
+
 			if (config.playback === true) {
 				registerEvents(true);
 				registerLayouts();
 				events.publish('start', {
 					active: true,
 					root: root,
-					mapsServer: process.env.MAPS_SERVER || 'https://dd1-i-serve-maps.mybluemix.net/',
+					mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
 					styles: assign({}, defaultStyles, config.styles),
 					originalContent: root.innerHTML,
 					chatId: '42',
@@ -107,7 +111,7 @@ function init(config) {
 						events.publish('start', {
 							active: true,
 							root: root,
-							mapsServer: process.env.MAPS_SERVER || 'https://dd1-i-serve-maps.mybluemix.net/',
+							mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
 							botID: config.botID,
 							chatID: chatID,
 							styles: assign({}, defaultStyles, config.styles),
@@ -117,7 +121,6 @@ function init(config) {
 						events.publish('receive', res);
 						resolve();
 					})['catch']( function(err) {
-						console.error('IBMChat:', err );
 						reject(err);
 					});
 			} else {
@@ -193,11 +196,9 @@ function enableInput() {
 }
 
 function debug() {
-	if (process.env.DEBUG) {
-		state.setState({
-			DEBUG: true
-		});
-	}
+	state.setState({
+		DEBUG: true
+	});
 }
 
 function destroy() {
