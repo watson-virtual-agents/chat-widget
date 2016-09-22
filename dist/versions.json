@@ -1,67 +1,39 @@
 {
   "versions": [{
     "version": "1.0.0",
-    "widget": "IBMChatClient-v1.0.0.js",
-    "quickstart": "IBMChatClient-v1.0.0-quickstart.md"
+    "widget": "IBMChatClient-v1.0.0.js"
   }, {
     "version": "1.0.1",
-    "widget": "IBMChatClient-v1.0.1.js",
-    "quickstart": "IBMChatClient-v1.0.1-quickstart.md"
+    "widget": "IBMChatClient-v1.0.1.js"
   }, {
     "version": "1.0.2",
-    "widget": "IBMChatClient-v1.0.2.js",
-    "quickstart": "IBMChatClient-v1.0.2-quickstart.md"
+    "widget": "IBMChatClient-v1.0.2.js"
   }, {
     "version": "1.0.3",
-    "widget": "IBMChatClient-v1.0.3.js",
-    "quickstart": "IBMChatClient-v1.0.3-quickstart.md"
+    "widget": "IBMChatClient-v1.0.3.js"
   }, {
     "version": "1.0.4",
-    "widget": "IBMChatClient-v1.0.4.js",
-    "quickstart": "IBMChatClient-v1.0.4-quickstart.md"
+    "widget": "IBMChatClient-v1.0.4.js"
   }, {
     "version": "1.0.5",
-    "widget": "IBMChatClient-v1.0.5.js",
-    "quickstart": "IBMChatClient-v1.0.5-quickstart.md"
+    "widget": "IBMChatClient-v1.0.5.js"
   }, {
     "version": "1.0.6",
-    "widget": "IBMChatClient-v1.0.6.js",
-    "quickstart": "IBMChatClient-v1.0.6-quickstart.md"
+    "widget": "IBMChatClient-v1.0.6.js"
   }, {
     "version": "1.0.7",
-    "widget": "IBMChatClient-v1.0.7.js",
-    "quickstart": "IBMChatClient-v1.0.7-quickstart.md"
+    "widget": "IBMChatClient-v1.0.7.js"
   }, {
     "version": "1.0.8",
-    "widget": "IBMChatClient-v1.0.8.js",
-    "quickstart": "IBMChatClient-v1.0.8-quickstart.md"
+    "widget": "IBMChatClient-v1.0.8.js"
   }, {
     "version": "1.0.9",
-    "widget": "IBMChatClient-v1.0.9.js",
-    "quickstart": "IBMChatClient-v1.0.9-quickstart.md"
+    "widget": "IBMChatClient-v1.0.9.js"
   }, {
     "version": "1.0.10",
-    "widget": "IBMChatClient-v1.0.10.js",
-    "quickstart": "IBMChatClient-v1.0.10-quickstart.md"
+    "widget": "IBMChatClient-v1.0.10.js"
   }, {
-    "version": "1.0.11-alpha.9",
-    "widget": "IBMChatClient-v1.0.11-alpha.9.js",
-    "quickstart": "IBMChatClient-v1.0.11-alpha.9-quickstart.md"
-  }, {
-    "version": "1.0.11-alpha.10",
-    "widget": "IBMChatClient-v1.0.11-alpha.10.js",
-    "quickstart": "IBMChatClient-v1.0.11-alpha.10-quickstart.md"
-  }, {
-    "version": "1.0.11-alpha.11",
-    "widget": "IBMChatClient-v1.0.11-alpha.11.js",
-    "quickstart": "IBMChatClient-v1.0.11-alpha.11-quickstart.md"
-  }, {
-    "version": "1.0.11-alpha.12",
-    "widget": "IBMChatClient-v1.0.11-alpha.12.js",
-    "quickstart": "IBMChatClient-v1.0.11-alpha.12-quickstart.md"
-  }, {
-    "version": "1.0.11-alpha.13",
-    "widget": "IBMChatClient-v1.0.11-alpha.13.js",
-    "quickstart": "IBMChatClient-v1.0.11-alpha.13-quickstart.md"
+    "version": "1.1.0",
+    "widget": "IBMChatClient-v1.1.0.js"
   }]
 }
