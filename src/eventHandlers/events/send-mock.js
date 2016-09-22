@@ -16,15 +16,16 @@ var state = require('../../state');
 var events = require('../../events');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
+var templates = {
+	send: require('../templates/send.html')
+};
 
 function sendMock(data) {
 	if (data.text && data.text.length > 0) {
 		var current = state.getState();
 		var newData = assign({}, data, { uuid: utils.getUUID() });
-		var text = require('../templates/send.html');
-		var parsed = utils.compile(text, { 'data.uuid': newData.uuid });
-		current.chatHolder.innerHTML += parsed;
-		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
+		current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
+		current.chatHolder.querySelector('.' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
 		events.publish('scroll-to-bottom');
 	}
 }
