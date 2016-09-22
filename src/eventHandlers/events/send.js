@@ -17,6 +17,9 @@ var events = require('../../events');
 var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
+var templates = {
+	send: require('../templates/send.html')
+};
 
 function send(data) {
 	if (data.text && data.text.length > 0) {
@@ -71,10 +74,8 @@ function agentSend() {
 	current = state.getState();
 	var msg = newData.text || '';
 	if (!newData.silent) {
-		var text = require('../templates/send.html');
-		var parsed = utils.compile(text, { 'data:uuid': newData.uuid });
-		current.chatHolder.innerHTML += parsed;
-		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = msg;
+		current.chatHolder.innerHTML += utils.compile(templates.send, { 'data:uuid': newData.uuid });
+		current.chatHolder.querySelector('.' + newData.uuid + ' .IBMChat-user-message').textContent = msg;
 		events.publish('scroll-to-bottom');
 	}
 }
