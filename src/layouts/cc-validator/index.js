@@ -52,7 +52,9 @@ CreditCard.prototype.init = function(data) {
 CreditCard.prototype.drawForm = function() {
 	var text = templates.base;
 	this.el = document.createElement('div');
-	text = utils.replaceAll(text, '${ns}', ns);
+	text = utils.compile(templates.field, {
+		ns: ns
+	});
 	this.el.innerHTML = text;
 	this.layoutElement.appendChild(this.el);
 	this.cancelButton = this.el.querySelector('.' + ns + '-cancel');

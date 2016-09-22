@@ -22,7 +22,7 @@ function sendMock(data) {
 		var current = state.getState();
 		var newData = assign({}, data, { uuid: utils.getUUID() });
 		var text = require('../templates/send.html');
-		var parsed = utils.replaceAll(text, '${data.uuid}', newData.uuid);
+		var parsed = utils.compile(text, { 'data.uuid': newData.uuid });
 		current.chatHolder.innerHTML += parsed;
 		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
 		events.publish('scroll-to-bottom');
