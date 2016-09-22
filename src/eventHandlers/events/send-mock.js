@@ -25,7 +25,7 @@ function sendMock(data) {
 		var current = state.getState();
 		var newData = assign({}, data, { uuid: utils.getUUID() });
 		current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
-		current.chatHolder.querySelector('.' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
+		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
 		events.publish('scroll-to-bottom');
 	}
 }

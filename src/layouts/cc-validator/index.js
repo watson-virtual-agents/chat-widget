@@ -52,7 +52,7 @@ CreditCard.prototype.init = function(data) {
 CreditCard.prototype.drawForm = function() {
 	var text = templates.base;
 	this.el = document.createElement('div');
-	text = utils.compile(templates.field, {
+	text = utils.compile(templates.base, {
 		ns: ns
 	});
 	this.el.innerHTML = text;
