@@ -60,11 +60,11 @@ Form.prototype.drawForm = function() {
 	formFields = base.querySelector('.IBMChat-form-fields');
 	for (var i = 0; i < this.data.length; i++) {
 		var field = document.createElement('div');
-		var fieldTxt = templates.field;
-		fieldTxt = utils.replaceAll(fieldTxt, '${label}', this.data[i].label || '');
-		fieldTxt = utils.replaceAll(fieldTxt, '${name}', this.data[i].name);
-		fieldTxt = utils.replaceAll(fieldTxt, '${value}', ''); //for future use
-		field.innerHTML = fieldTxt;
+		field.innerHTML = utils.compile(templates.field, {
+			label: this.data[i].label || '',
+			name: this.data[i].name,
+			value: ''
+		});
 		field.className = ns + '-fields-row';
 		formFields.appendChild(field);
 	}

@@ -107,7 +107,9 @@ function createPhoneArray(el, items) {
 			var itemChild = document.createElement('div');
 			var text = require('./templates/create-dom-array.html');
 			itemChild.className = ns + '-contact-row';
-			itemChild.innerHTML = utils.replaceAll(text, '${ns}', ns);
+			itemChild.innerHTML = utils.compile(text, {
+				ns: ns
+			});
 			var typeEl = itemChild.querySelector('.' + ns + '-contact-type');
 			var dataEl = itemChild.querySelector('.' + ns + '-contact-data');
 			typeEl.textContent = items[i].type;
@@ -153,28 +155,32 @@ function createHours(hoursEl, moreHoursEl, hours) {
 		var todaysHours = hours[today];
 		var el = document.createElement('div');
 		if (todaysHours && todaysHours.isOpen) {
-			var text = utils.replaceAll(templates.hoursTodayOpen, '${ns}', ns);
-			text = utils.replaceAll(text, '${open}', formatAMPM(todaysHours.open));
-			text = utils.replaceAll(text, '${close}', formatAMPM(todaysHours.close));
-			el.innerHTML = text;
+			el.innerHTML = utils.compile(templates.hoursTodayOpen, {
+				ns: ns,
+				open: formatAMPM(todaysHours.open),
+				close: formatAMPM(todaysHours.close)
+			});
 		} else {
-			el.innerHTML = utils.replaceAll(templates.hoursTodayClosed, '${ns}', ns);
+			el.innerHTML = utils.compile(templates.hoursTodayClosed, {
+				ns: ns
+			});
 		}
 		hoursEl.appendChild(el);
 		for (var i = 0; i < hours.length; i++) {
 			var childEl = document.createElement('div');
-			var txt;
 			childEl.setAttribute('class', ns + '-days-hours');
 			if (hours[i] && hours[i].isOpen) {
-				txt = utils.replaceAll(templates.hoursOpen, '${ns}', ns);
-				txt = utils.replaceAll(txt, '${day}', days[i]);
-				txt = utils.replaceAll(txt, '${open}', formatAMPM(todaysHours.open));
-				txt = utils.replaceAll(txt, '${close}', formatAMPM(todaysHours.close));
-				childEl.innerHTML = txt;
+				childEl.innerHTML = utils.compile(templates.hoursOpen, {
+					ns: ns,
+					day: days[i],
+					open: formatAMPM(hours[i].open),
+					close: formatAMPM(hours[i].close)
+				});
 			} else {
-				txt = utils.replaceAll(templates.hoursClosed, '${ns}', ns);
-				txt = utils.replaceAll(txt, '${day}', days[i]);
-				childEl.innerHTML = txt;
+				childEl.innerHTML = utils.compile(templates.hoursClosed, {
+					ns: ns,
+					day: days[i]
+				});
 			}
 			moreHoursEl.appendChild(childEl);
 		}
@@ -210,7 +216,7 @@ ShowLocations.prototype = {
 			this.msgElement.textContent = strings.locations.none;
 			break;
 		case 1:
-			this.msgElement.textContent = utils.replaceAll(strings.locations.single, '${location}', this.data[0].address.address);
+			this.msgElement.textContent = utils.compile(strings.locations.single, { location: this.data[0].address.address });
 			break;
 		default:
 			this.msgElement.textContent = strings.locations.list;
@@ -224,7 +230,7 @@ ShowLocations.prototype = {
 				first = false;
 			}
 			this.map = document.createElement('div');
-			this.map.innerHTML = utils.replaceAll(text, '${ns}', ns);
+			this.map.innerHTML = utils.compile(text, { ns: ns });
 			this.mapElement = this.map.querySelector('.' + ns + '-img');
 			this.dataElement = this.map.querySelector('.' + ns + '-data');
 			this.mapElement.appendChild(this.drawLocations());
@@ -273,7 +279,7 @@ ShowLocations.prototype = {
 		showLocations[this.dataset.uuid].removeAllEventListeners();
 		publish('receive', {
 			message: {
-				text: [utils.replaceAll(strings.locations.single, '${location}', showLocations[this.dataset.uuid].data[this.dataset.id - 1].address.address)],
+				text: [utils.compile(strings.locations.single, { location: showLocations[this.dataset.uuid].data[this.dataset.id - 1].address.address })],
 				layout: {
 					name: 'show-locations'
 				},
@@ -300,7 +306,7 @@ ShowLocations.prototype = {
 		var item = this.data[0];
 		var createDom = function(el) {
 			var text = templates.addLocationItem;
-			el.innerHTML = utils.replaceAll(text, '${ns}', ns);
+			el.innerHTML = utils.compile(text, { ns: ns });
 			return {
 				link: el.querySelector('.' + ns + '-locations-item-data-address-link'),
 				label: el.querySelector('.' + ns + '-locations-item-data-title'),
@@ -393,7 +399,7 @@ ShowLocations.prototype = {
 			el.dataset.uuid = uuid;
 			el.dataset.id = i + 1;
 			var text = templates.addLocationsItem;
-			el.innerHTML = utils.replaceAll(text, '${ns}', ns);
+			el.innerHTML = utils.compile(text, { ns: ns });
 			this.eventListeners.push(el);
 			return {
 				icon: el.querySelector('.' + ns + '-locations-item-icon'),

@@ -70,8 +70,13 @@ function serialize(obj) {
 	return str.join('&');
 }
 
-function replaceAll(str, find, replace) {
-	return str.split(find).join(replace);
+function compile(str, options) {
+	if (options && Object.keys(options).length > 0) {
+		Object.keys(options).forEach(function(key) {
+			str = str.split('${' + key + '}').join(options[key]);
+		});
+	}
+	return str;
 }
 
 function getUUID() {
@@ -104,9 +109,9 @@ function hasClass(element, className) {
 module.exports = {
 	debounce: debounce,
 	serialize: serialize,
-	replaceAll: replaceAll,
 	hasClass: hasClass,
 	getUUID: getUUID,
 	attachStyles: attachStyles,
-	spinner: spinner
+	spinner: spinner,
+	compile: compile
 };
