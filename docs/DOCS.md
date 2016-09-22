@@ -16,7 +16,10 @@ You can copy this HTML code block into a file, give it an .html extension, and v
 <body>
 <div id="ibm_chat_root"></div>
 <iframe style="width:100%; height:100%" src="http://www.ibm.com/en-us"></iframe>
-<!-- https://dp1-bot-chat.mybluemix.net/IBMChatClient-vX.X.X.js for a specific version -->
+<!--
+https://dp1-bot-chat.mybluemix.net/IBMChatClient-vX.X.X.js for a specific version
+In your production environment, we recommend locking down your widget version. See https://www.npmjs.com/package/@watson-virtual-agent/chat-widget for the list of versions.
+-->
 <script src='https://dp1-bot-chat.mybluemix.net/IBMChatClient-latest.js'></script>
 <script>
   IBMChat.init({
