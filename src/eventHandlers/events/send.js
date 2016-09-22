@@ -74,8 +74,8 @@ function agentSend() {
 	current = state.getState();
 	var msg = newData.text || '';
 	if (!newData.silent) {
-		current.chatHolder.innerHTML += utils.compile(templates.send, { 'data:uuid': newData.uuid });
-		current.chatHolder.querySelector('.' + newData.uuid + ' .IBMChat-user-message').textContent = msg;
+		current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
+		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = msg;
 		events.publish('scroll-to-bottom');
 	}
 }
