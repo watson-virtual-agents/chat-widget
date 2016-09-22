@@ -63,25 +63,26 @@ Choose.prototype.drawButtons = function() {
 	this.el.classList.add(ns + '-container');
 
 	for (var i = 0; i < this.data.length; i++) {
-		var val = this.data[i];
+		var text = this.data[i];
 		var buttonHolder = document.createElement('div');
 		buttonHolder.classList.add(ns + '-option');
-		var parsed = utils.replaceAll(tmpl, '${text}', val);
+		var parsed = utils.compile(tmpl, {
+			text: text
+		});
 		var button;
 		buttonHolder.innerHTML = parsed;
 		this.el.appendChild(buttonHolder);
 		button = buttonHolder.querySelector('button');
 		button.setAttribute('data-uuid', this.uuid);
-		button.setAttribute('tabindex', i);
-		/*if (i === 0)
-			button.setAttribute('autofocus', true);*/
 		button.classList.add(inactiveClassName);
 		this.addListener(button);
 	}
 
 	if (this.allowMultiple) {
 		var submit = document.createElement('div');
-		var submitBtn = utils.replaceAll(tmpl, '${text}', 'Submit');
+		var submitBtn = utils.compile(templates.field, {
+			text: 'Submit'
+		});
 		submit.className = ns + '-submit';
 		submit.innerHTML = submitBtn;
 		this.submitButton = submit.querySelector('button');

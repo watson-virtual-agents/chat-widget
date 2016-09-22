@@ -72,7 +72,7 @@ function agentSend() {
 	var msg = newData.text || '';
 	if (!newData.silent) {
 		var text = require('../templates/send.html');
-		var parsed = utils.replaceAll(text, '${data.uuid}', newData.uuid);
+		var parsed = utils.compile(text, { 'data:uuid': newData.uuid });
 		current.chatHolder.innerHTML += parsed;
 		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = msg;
 		events.publish('scroll-to-bottom');
