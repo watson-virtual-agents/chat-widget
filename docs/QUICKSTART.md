@@ -21,7 +21,7 @@ d. Copy the 32-digit alphanumeric code that is returned in the response. Save it
 3. Return to this Configure page, and revise the second script:
 
 ```html
-<script src='https://dp1-bot-chat.mybluemix.net/IBMChat-v1.0.10.js'></script>
+<script src='https://dp1-bot-chat.mybluemix.net/IBMChatClient-v1.0.10.js'></script>
 <script>
   IBMChat.init({
     el: 'ibm_chat_root',
