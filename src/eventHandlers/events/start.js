@@ -39,24 +39,31 @@ function start(data) {
 		elements.inputHolder.parentNode.removeChild(elements.inputHolder);
 
 	state.setState(elements);
-	elements.form.addEventListener(
-		"submit",
-		function(e) {
-			e.preventDefault();
-		},
-		false
-	);
-	elements.input.addEventListener(
-		'keypress',
-		function(e) {
-			if (e.keyCode === 13)
-				events.publish('send-input-message');
-		},
-		false
-	);
+	elements.form.addEventListener('submit', function(e) {
+		e.preventDefault();
+	});
+
+	elements.input.addEventListener('keypress', function(e) {
+		if (e.keyCode === 13)
+			events.publish('send-input-message');
+	});
+
+	elements.input.addEventListener('focus', function() {
+		events.publish('resize');
+	});
+
+	elements.input.addEventListener('blur', function() {
+		events.publish('resize');
+	});
+
 	window.addEventListener('resize', utils.debounce(function() {
 		events.publish('resize');
 	}, 1000));
+
+	window.addEventListener('orientationchange', function() {
+		events.publish('resize');
+	});
+
 	events.publish('resize');
 }
 

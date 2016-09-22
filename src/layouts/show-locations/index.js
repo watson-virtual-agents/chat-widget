@@ -36,7 +36,19 @@ var ns = 'IBMChat-map';
 var templates = {
 	base: require('./templates/base.html'),
 	addLocationsItem: require('./templates/add-locations-item.html'),
-	addLocationItem: require('./templates/add-location-item.html')
+	addLocationItem: require('./templates/add-location-item.html'),
+	hoursClosed: require('./templates/hours-closed.html'),
+	hoursOpen: require('./templates/hours-open.html'),
+	hoursTodayOpen: require('./templates/hours-today-open.html'),
+	hoursTodayClosed: require('./templates/hours-today-closed.html')
+};
+
+var strings = {
+	locations: {
+		none: 'We could not find any locations close to you.',
+		single: 'Here are the details for the ${location} location...',
+		list: 'Here are the locations I found close to you:'
+	}
 };
 
 var showLocationsLayout = {
@@ -49,8 +61,8 @@ var showLocationsLayout = {
 		window.addEventListener('resize', utils.debounce(function() {
 			setTimeout(function() {
 				sizeMap();
-			}, 1000);
-		}, 1000));
+			}, 500);
+		}, 500));
 	}
 };
 
@@ -95,7 +107,9 @@ function createPhoneArray(el, items) {
 			var itemChild = document.createElement('div');
 			var text = require('./templates/create-dom-array.html');
 			itemChild.className = ns + '-contact-row';
-			itemChild.innerHTML = utils.replaceAll(text, '${ns}', ns);
+			itemChild.innerHTML = utils.compile(text, {
+				ns: ns
+			});
 			var typeEl = itemChild.querySelector('.' + ns + '-contact-type');
 			var dataEl = itemChild.querySelector('.' + ns + '-contact-data');
 			typeEl.textContent = items[i].type;
@@ -141,34 +155,32 @@ function createHours(hoursEl, moreHoursEl, hours) {
 		var todaysHours = hours[today];
 		var el = document.createElement('div');
 		if (todaysHours && todaysHours.isOpen) {
-			el.innerHTML = '' +
-				'<div class="' + ns + '-hours-open">Open today:</div>' +
-				'<div class="' + ns + '-hours-today">' +
-					formatAMPM(todaysHours.open) + ' &ndash; ' + formatAMPM(todaysHours.close) +
-				'</div>';
+			el.innerHTML = utils.compile(templates.hoursTodayOpen, {
+				ns: ns,
+				open: formatAMPM(todaysHours.open),
+				close: formatAMPM(todaysHours.close)
+			});
 		} else {
-			el.innerHTML = '<div class="' + ns + '-hours-open">Closed today.</div>';
+			el.innerHTML = utils.compile(templates.hoursTodayClosed, {
+				ns: ns
+			});
 		}
 		hoursEl.appendChild(el);
 		for (var i = 0; i < hours.length; i++) {
 			var childEl = document.createElement('div');
 			childEl.setAttribute('class', ns + '-days-hours');
 			if (hours[i] && hours[i].isOpen) {
-				childEl.innerHTML = '' +
-					'<div class="' + ns + '-days-hours-day">' +
-						days[i] +
-					'</div>' +
-					'<div class="' + ns + '-days-hours-hours">' +
-						formatAMPM(hours[i].open) + ' &ndash; ' + formatAMPM(hours[i].close) +
-					'</div>';
+				childEl.innerHTML = utils.compile(templates.hoursOpen, {
+					ns: ns,
+					day: days[i],
+					open: formatAMPM(hours[i].open),
+					close: formatAMPM(hours[i].close)
+				});
 			} else {
-				childEl.innerHTML = '' +
-				'<div class="' + ns + '-days-hours-day">' +
-					days[i] +
-				'</div>' +
-				'<div class="' + ns + '-days-hours-closed">' +
-					'Closed' +
-				'</div>';
+				childEl.innerHTML = utils.compile(templates.hoursClosed, {
+					ns: ns,
+					day: days[i]
+				});
 			}
 			moreHoursEl.appendChild(childEl);
 		}
@@ -201,13 +213,13 @@ ShowLocations.prototype = {
 		this.msgElement = data.msgElement;
 		switch (this.data.length) {
 		case 0:
-			this.msgElement.textContent = 'We could not find any locations close to you.';
+			this.msgElement.textContent = strings.locations.none;
 			break;
 		case 1:
-			this.msgElement.textContent = 'Here are the details for the ' + this.data[0].address.address + ' location...';
+			this.msgElement.textContent = utils.compile(strings.locations.single, { location: this.data[0].address.address });
 			break;
 		default:
-			this.msgElement.textContent = 'Here are the locations I found close to you:';
+			this.msgElement.textContent = strings.locations.list;
 		}
 
 		if (this.data.length > 0) {
@@ -218,7 +230,7 @@ ShowLocations.prototype = {
 				first = false;
 			}
 			this.map = document.createElement('div');
-			this.map.innerHTML = utils.replaceAll(text, '${ns}', ns);
+			this.map.innerHTML = utils.compile(text, { ns: ns });
 			this.mapElement = this.map.querySelector('.' + ns + '-img');
 			this.dataElement = this.map.querySelector('.' + ns + '-data');
 			this.mapElement.appendChild(this.drawLocations());
@@ -263,18 +275,11 @@ ShowLocations.prototype = {
 		return img;
 	},
 	handleClick: function() {
-		/*
-		for September version
-		const data = {
-			text: this.dataset.id,
-			silent: true
-		};*/
 		this.className = ns + '-location-active';
 		showLocations[this.dataset.uuid].removeAllEventListeners();
-		//actions.publish('send', data); for September version
 		publish('receive', {
 			message: {
-				text: ['Here are the details for this location.'],
+				text: [utils.compile(strings.locations.single, { location: showLocations[this.dataset.uuid].data[this.dataset.id - 1].address.address })],
 				layout: {
 					name: 'show-locations'
 				},
@@ -301,7 +306,7 @@ ShowLocations.prototype = {
 		var item = this.data[0];
 		var createDom = function(el) {
 			var text = templates.addLocationItem;
-			el.innerHTML = utils.replaceAll(text, '${ns}', ns);
+			el.innerHTML = utils.compile(text, { ns: ns });
 			return {
 				link: el.querySelector('.' + ns + '-locations-item-data-address-link'),
 				label: el.querySelector('.' + ns + '-locations-item-data-title'),
@@ -369,7 +374,7 @@ ShowLocations.prototype = {
 				e.preventDefault();
 				publish('receive', {
 					message: {
-						text: ['Here are the locations I found close to you:'],
+						text: [strings.locations.list],
 						layout: {
 							name: 'show-locations'
 						},
@@ -394,7 +399,7 @@ ShowLocations.prototype = {
 			el.dataset.uuid = uuid;
 			el.dataset.id = i + 1;
 			var text = templates.addLocationsItem;
-			el.innerHTML = utils.replaceAll(text, '${ns}', ns);
+			el.innerHTML = utils.compile(text, { ns: ns });
 			this.eventListeners.push(el);
 			return {
 				icon: el.querySelector('.' + ns + '-locations-item-icon'),

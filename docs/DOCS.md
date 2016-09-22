@@ -1,6 +1,6 @@
 ## Quick Sample
 
-You can copy this HTML code block into a file, give it an .html extension, and view it in a browser to see a quick and basic example. Replace the values of the botID, IBMClientID, and IBMClientSecretToken parameters.
+You can copy this HTML code block into a file, give it an .html extension, and view it in a browser to see a quick and basic example. Replace the values of the botID, XIBMClientID, and XIBMClientSecret parameters.
 
 ```html
 <html>
@@ -16,7 +16,10 @@ You can copy this HTML code block into a file, give it an .html extension, and v
 <body>
 <div id="ibm_chat_root"></div>
 <iframe style="width:100%; height:100%" src="http://www.ibm.com/en-us"></iframe>
-<!-- https://dp1-bot-chat.mybluemix.net/IBMChatClient-vX.X.X.js for a specific version -->
+<!--
+https://dp1-bot-chat.mybluemix.net/IBMChatClient-vX.X.X.js for a specific version
+In your production environment, we recommend locking down your widget version. See https://www.npmjs.com/package/@watson-virtual-agent/chat-widget for the list of versions.
+-->
 <script src='https://dp1-bot-chat.mybluemix.net/IBMChatClient-latest.js'></script>
 <script>
   IBMChat.init({
@@ -71,7 +74,7 @@ IBMChat.subscribe('action:update_address', function(data){
 });
 ```
 
-*If an action is thrown and there is nothing subscribed to it, the user will be escalated to a human agent.*
+The one exception is `action:agent`, which does not expect a response.
 
 ## Layouts
 
@@ -134,4 +137,4 @@ IBMChat.profile.set({
 
 If the bot responds with `|&cc_number|` in its message response, the chat widget replaces that key with the stored PII to be rendered in the widget.
 
-Access the profile information in your layouts and action handlers with the IBMChat.profile.set function.
+Access the profile information in your layouts and action handlers with the IBMChat.profile.get function.

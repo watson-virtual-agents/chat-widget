@@ -16,7 +16,9 @@ var state = require('../../state');
 var events = require('../../events');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
-var receiveTmpl = require('../templates/receive.html');
+var templates = {
+	receive: require('../templates/receive.html')
+};
 
 function writeMessage(element, text) {
 	var exp = /(((https?:\/\/)|(www\.))[^\s]+)/gi;
@@ -78,8 +80,6 @@ function _layoutAndActions(debug, data) {
 		}
 	}
 
-
-
 	events.publish('disable-loading');
 	events.publish('scroll-to-bottom');
 	events.publish('focus-input');
@@ -90,15 +90,15 @@ function receive(data) {
 	var current = state.getState();
 	data = assign({}, checkData, { uuid: utils.getUUID() });
 	state.setState({
-		messages: [].concat(current.messages || [], data)
+		messages: [].concat(current.messages || [], data),
+		hasError: false
 	});
 	var msg = (data.message && data.message.text) ? ((Array.isArray(data.message.text)) ? data.message.text : [data.message.text]) : [''];
 	if (msg.length === 0)
 		msg = [''];
 	for (var i = 0; i < msg.length; i++) {
-		var parsed = utils.replaceAll(receiveTmpl, '${data.uuid}', data.uuid);
 		var item;
-		current.chatHolder.innerHTML += parsed;
+		current.chatHolder.innerHTML += utils.compile(templates.receive, { 'data.uuid': data.uuid });
 		item = current.chatHolder.querySelector('.' + data.uuid + ':last-child .IBMChat-watson-message');
 		writeMessage(item, msg[i]);
 		if (i === (msg.length - 1))

@@ -48,7 +48,6 @@ function ChooseLocationType(data) {
 
 ChooseLocationType.prototype = {
 	init: function(data) {
-		var text = templates.base;
 		this.data = data.data;
 		this.uuid = data.uuid;
 		if ('navigator' in window && 'geolocation' in navigator) {
@@ -56,10 +55,11 @@ ChooseLocationType.prototype = {
 			this.parentElement = data.element;
 			this.layoutElement = data.layoutElement;
 			this.el = document.createElement('div');
-			text = utils.replaceAll(text, '${ns}', ns);
-			text = utils.replaceAll(text, '${values.geolocation}', values.geolocation);
-			text = utils.replaceAll(text, '${values.postalcode}', values.postalcode);
-			this.el.innerHTML = text;
+			this.el.innerHTML = utils.compile(templates.base, {
+				ns: ns,
+				'values.geolocation': values.geolocation,
+				'values.postalcode': values.postalcode
+			});
 			this.layoutElement.appendChild(this.el);
 			this.buttons = this.layoutElement.querySelectorAll('button');
 			for (var i = 0; i < this.buttons.length; i++) {
