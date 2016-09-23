@@ -58,8 +58,7 @@ function registerLayouts() {
 function init(config) {
 	var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
 	var SDKconfig = {};
-	if (config.baseURL)
-		SDKconfig.baseURL = config.baseURL;
+	SDKconfig.baseURL = config.baseURL || 'https://api.ibm.com/virtualagent/run/api/v1/';
 	if (config.withCredentials)
 		SDKconfig.withCredentials = config.withCredentials;
 	if (config.XIBMClientID)
