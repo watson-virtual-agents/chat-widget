@@ -67,7 +67,7 @@ In your production environment, you should replace the baseURL with a server of 
 Actions are included in the bot response when the UI is expected to take an action. Examples of actions include processing a credit card or updating an address. An action is thrown as an event and expects *success*, *failure* or *cancel* as a response.
 
 ```js
-IBMChat.subscribe('action:update_address', function(data){
+IBMChat.subscribe('action:updateAddress', function(data){
 	//make an ajax call to update a user address using "data"
 	IBMChat.sendSilently('success');
 	// or IBMChat.sendSilently('failure'); or IBMChat.sendSilently('cancel');
