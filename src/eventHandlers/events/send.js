@@ -49,26 +49,35 @@ function agentSend() {
 		sendQueue: current.sendQueue.slice(0, -1),
 		messages: [].concat(current.messages || [], newData)
 	});
-	BotSDK
-		.send( current.botID, current.chatID, newData.text )
-		.then( function(res) {
-			current = state.getState();
-			state.setState({
-				inProgress: false
+	if (!current.silenceUser) {
+		BotSDK
+			.send( current.botID, current.chatID, newData.text )
+			.then( function(res) {
+				current = state.getState();
+				state.setState({
+					inProgress: false
+				});
+				events.publish('disable-loading');
+				events.publish('receive', res);
+				if (current.sendQueue.length > 0)
+					agentSend();
+			})
+			.catch( function(e) {
+				state.setState({
+					inProgress: false
+				});
+				events.publish('disable-loading');
+				events.publish('error', arguments);
+				console.error(e.stack);
 			});
-			events.publish('disable-loading');
-			events.publish('receive', res);
-			if (current.sendQueue.length > 0)
-				agentSend();
-		})
-		.catch( function(e) {
-			state.setState({
-				inProgress: false
-			});
-			events.publish('disable-loading');
-			events.publish('error', arguments);
-			console.error(e.stack);
+	} else {
+		current = state.getState();
+		state.setState({
+			inProgress: false
 		});
+		events.publish('disable-loading');
+	}
+
 	current.root.querySelector('.IBMChat-chat-textbox').value = '';
 
 	current = state.getState();

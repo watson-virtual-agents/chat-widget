@@ -31,6 +31,8 @@ function registerEvents(playback) {
 	events.subscribe('disable-input', eventHandlers.input.disableInput);
 	events.subscribe('enable-loading', eventHandlers.input.enableLoadingInput);
 	events.subscribe('disable-loading', eventHandlers.input.disableLoadingInput);
+	events.subscribe('silence-user', eventHandlers.input.silenceUser);
+	events.subscribe('unsilence-user', eventHandlers.input.unsilenceUser);
 	events.subscribe('scroll-to-bottom', eventHandlers.scrollToBottom);
 	events.subscribe('receive', eventHandlers.receive);
 	if (playback === true) {
@@ -195,6 +197,18 @@ function enableInput() {
 		events.publish('enable-input');
 }
 
+function silenceUser() {
+	var current = state.getState();
+	if (current.active)
+		events.publish('silence-user');
+}
+
+function unsilenceUser() {
+	var current = state.getState();
+	if (current.active)
+		events.publish('unsilence-user');
+}
+
 function debug() {
 	state.setState({
 		DEBUG: true
@@ -242,6 +256,8 @@ module.exports = {
 	focusInput: focusInput,
 	disableInput: disableInput,
 	enableInput: enableInput,
+	silenceUser: silenceUser,
+	unsilenceUser: unsilenceUser,
 	subscribe: events.subscribe,
 	publish: events.publish,
 	debug: debug,
