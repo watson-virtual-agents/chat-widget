@@ -40,7 +40,7 @@ function registerEvents(playback) {
 		events.subscribe('send-input-message', eventHandlers.sendInputMessage);
 		events.subscribe('enable-input', eventHandlers.input.enableInput);
 		events.subscribe('focus-input', eventHandlers.input.focusInput);
-		events.subscribe('sendMock', eventHandlers.sendMock);
+		events.subscribe('send-mock', eventHandlers.sendMock);
 	}
 }
 
