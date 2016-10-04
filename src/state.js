@@ -28,8 +28,6 @@ function setState(updated) {
 	state = assign({}, state, updated);
 	if (state.DEBUG) {
 		states.push(state);
-		console.log('STATE HISTORY: ', states);
-		console.log('NEW STATE: ', state);
 	}
 }
 

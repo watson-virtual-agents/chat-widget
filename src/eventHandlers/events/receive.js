@@ -65,7 +65,7 @@ function _layoutAndActions(debug, data) {
 			if (debug)
 				console.log('Call to ' + action);
 		} else if (debug) {
-			console.warn('Nothing is subscribed to ' + action);
+			// console.warn('Nothing is subscribed to ' + action);
 		}
 	}
 
@@ -76,7 +76,7 @@ function _layoutAndActions(debug, data) {
 			if (debug)
 				console.log('Call to ' + layout);
 		} else if (debug) {
-			console.warn('Nothing is subscribed to ' + layout);
+			// console.warn('Nothing is subscribed to ' + layout);
 		}
 	}
 

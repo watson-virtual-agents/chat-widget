@@ -85,7 +85,7 @@ function publish(event, data, cb) {
 		}
 	}
 	if (current.DEBUG && event.indexOf('layout') == -1 && !wasSubscription)
-		console.warn('Nothing is subscribed to ' + event);
+		// console.warn('Nothing is subscribed to ' + event);
 }
 
 module.exports = {

@@ -190,6 +190,25 @@ module.exports = {
 	enableInput: bootstrap.enableInput,
 
 	/**
+	 * Enable users to submit messages in the chat text box without sending the message to the server.
+	 * Useful when handing off the conversation to a live agent
+	 * @function silenceUser
+	 * @memberof IBMChat
+	 * @example
+	 * IBMChat.silenceUser();
+	 */
+	silenceUser: bootstrap.silenceUser,
+
+	/**
+	 * Undo the effects of silenceUser()
+	 * @function unsilenceUser
+	 * @memberof IBMChat
+	 * @example
+	 * IBMChat.unsilenceUser();
+	 */
+	unsilenceUser: bootstrap.unsilenceUser,
+
+	/**
 	 * Subscribe to an IBMChat event.
 	 * @function subscribe
 	 * @memberof IBMChat
