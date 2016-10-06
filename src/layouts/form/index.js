@@ -71,7 +71,7 @@ Form.prototype.drawForm = function() {
 	this.fields = formFields.querySelectorAll('input');
 	this.submitButton = base.querySelector('.' + ns + '-submit');
 	this.cancelButton = base.querySelector('.' + ns + '-cancel');
-	this.submitButton.classList.add(activeClassName);
+	this.submitButton.classList.add(inactiveClassName);
 	this.cancelButton.classList.add(inactiveClassName);
 	this.layoutElement.appendChild(base);
 	this.fields[0].focus();
@@ -84,6 +84,7 @@ Form.prototype.handleSubmit = function() {
 			var field = this.fields[i];
 			profile.set(field.getAttribute('name'), field.value);
 		}
+		this.submitButton.classList.add(activeClassName);
 		publish('send', {
 			silent: true,
 			text: 'success'
@@ -125,6 +126,7 @@ Form.prototype.handleEnter = function(e) {
 };
 
 Form.prototype.handleCancel = function() {
+	this.cancelButton.classList.add(activeClassName);
 	publish('send', {
 		silent: true,
 		text: 'cancel'
