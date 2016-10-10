@@ -54,10 +54,27 @@ function focusInput() {
 	current.input.focus();
 }
 
+function silenceUser() {
+	var current = state.getState();
+	var silenceUser = (current.silenceUser) ? (current.silenceUser + 1) :1;
+	state.setState({ silenceUser: silenceUser });
+	current.input.setAttribute('silenceUser', 'enabled');
+}
+
+function unsilenceUser() {
+	var current = state.getState();
+	var silenceUser = (current.silenceUser) ? (current.silenceUser - 1) :0;
+	state.setState({ silenceUser: silenceUser });
+	if (!silenceUser)
+		current.input.removeAttribute('silenceUser');
+}
+
 module.exports = {
 	enableInput: enableInput,
 	disableInput: disableInput,
 	enableLoadingInput: enableLoadingInput,
 	disableLoadingInput: disableLoadingInput,
-	focusInput: focusInput
+	focusInput: focusInput,
+	silenceUser: silenceUser,
+	unsilenceUser: unsilenceUser
 };
