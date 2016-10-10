@@ -19,6 +19,7 @@
     * [.sendMock(message)](#IBMChat.sendMock)
     * [.sendSilently(message)](#IBMChat.sendSilently)
     * [.registerLayout(layout, init)](#IBMChat.registerLayout)
+    * [.handleInput()](#IBMChat.handleInput)
     * [.focusInput()](#IBMChat.focusInput)
     * [.disableInput()](#IBMChat.disableInput)
     * [.enableInput()](#IBMChat.enableInput)
@@ -307,6 +308,25 @@ function initGame() {
 
 IBMChat.registerLayout('plumber-brothers-game', initGame);
 IBMChat.init(config);
+```
+<a name="IBMChat.handleInput"></a>
+
+### IBMChat.handleInput()
+Override how inputs into the chat text box are handled. e.g. you may wish to send messages to your live agent instead of to your virtual agent.
+
+**Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Example**  
+```js
+IBMChat.handleInput({
+  default: false,
+  callback: function(message, resolve, reject) {
+    //do something like send the message to your live customer service rep
+    IBMChat.receive('A message from your live customer service rep');
+    resolve(); // gets rid of loading spinner and allows the chat text box to accept another message
+    // reject(error);
+ }
+});
+IBMChat.handleInput( { default: true } ); //return control to virtual agent
 ```
 <a name="IBMChat.focusInput"></a>
 

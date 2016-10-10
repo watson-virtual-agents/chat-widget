@@ -67,14 +67,23 @@ function init(config) {
 		SDKconfig.XIBMClientSecret = config.XIBMClientSecret;
 	if (config.userID)
 		SDKconfig.userID = config.userID;
-		/*
-	// TODO: , allow entering in old chatID
-	const sessionChatID = window.sessionStorage.getItem('IBMChatChatID') || null;
-	if (chatID || sessionChatID)
-		config.chatID = (chatID) ? chatID : sessionChatID;
-	*/
+
 	return new Promise(function(resolve, reject) {
 		var current = state.getState();
+		var defaultState = {
+			active: true,
+			root: root,
+			mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
+			botID: config.botID,
+			styles: assign({}, defaultStyles, config.styles),
+			baseURL: config.baseURL,
+			originalContent: root.innerHTML,
+			handleInput: {
+				default: true
+			},
+			playback: config.playback || false,
+			chatID: 42
+		};
 		if (current.active === true) {
 			resolve();
 			return;
@@ -88,35 +97,18 @@ function init(config) {
 			if (config.playback === true) {
 				registerEvents(true);
 				registerLayouts();
-				events.publish('start', {
-					active: true,
-					root: root,
-					mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
-					styles: assign({}, defaultStyles, config.styles),
-					originalContent: root.innerHTML,
-					chatId: '42',
-					playback: true
-				});
+				events.publish('start', defaultState);
 				resolve();
 			} else if (config.botID) {
 				BotSDK
 					.configure( SDKconfig )
 					.start( config.botID )
 					.then( function(res) {
-						var chatID = res.chatID;
-						window.sessionStorage.setItem('IBMChatChatID', chatID);
+						defaultState.chatID = res.chatID;
+						window.sessionStorage.setItem('IBMChatChatID', res.chatID);
 						registerLayouts();
 						registerEvents();
-						events.publish('start', {
-							active: true,
-							root: root,
-							mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
-							botID: config.botID,
-							chatID: chatID,
-							styles: assign({}, defaultStyles, config.styles),
-							baseURL: config.baseURL,
-							originalContent: root.innerHTML
-						});
+						events.publish('start', defaultState);
 						events.publish('receive', res);
 						resolve();
 					})['catch']( function(err) {
@@ -172,6 +164,24 @@ function sendSilently(message) {
 		events.publish('send', {
 			text: message,
 			silent: true
+		});
+	}
+}
+
+function handleInput(config) {
+	if (config && !config.default && config.callback && typeof config.callback === 'function') {
+		state.setState({
+			handleInput: {
+				default: false,
+				callback: config.callback,
+				context: config.context
+			}
+		});
+	} else {
+		state.setState({
+			handleInput: {
+				default: true
+			}
 		});
 	}
 }
@@ -238,6 +248,7 @@ module.exports = {
 	receive: receive,
 	sendMock: sendMock,
 	sendSilently: sendSilently,
+	handleInput: handleInput,
 	focusInput: focusInput,
 	disableInput: disableInput,
 	enableInput: enableInput,
