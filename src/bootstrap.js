@@ -81,8 +81,7 @@ function init(config) {
 			handleInput: {
 				default: true
 			},
-			playback: config.playback || false,
-			chatID: 42
+			playback: config.playback || false
 		};
 		if (current.active === true) {
 			resolve();
@@ -95,6 +94,7 @@ function init(config) {
 				events.subscribe('error', eventHandlers.error);
 
 			if (config.playback === true) {
+				defaultState.chatID = 'playback';
 				registerEvents(true);
 				registerLayouts();
 				events.publish('start', defaultState);
