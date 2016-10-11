@@ -19,12 +19,14 @@
     * [.sendMock(message)](#IBMChat.sendMock)
     * [.sendSilently(message)](#IBMChat.sendSilently)
     * [.registerLayout(layout, init)](#IBMChat.registerLayout)
-    * [.handleInput()](#IBMChat.handleInput)
+    * [.enableCustomInputHandler(config)](#IBMChat.enableCustomInputHandler)
+    * [.disableCustomInputHandler()](#IBMChat.disableCustomInputHandler)
     * [.focusInput()](#IBMChat.focusInput)
     * [.disableInput()](#IBMChat.disableInput)
     * [.enableInput()](#IBMChat.enableInput)
     * [.subscribe(eventName, callback, context)](#IBMChat.subscribe)
     * [.publish(eventName, data)](#IBMChat.publish)
+    * [.debug()](#IBMChat.debug)
 
 <a name="IBMChat.profile"></a>
 
@@ -309,16 +311,22 @@ function initGame() {
 IBMChat.registerLayout('plumber-brothers-game', initGame);
 IBMChat.init(config);
 ```
-<a name="IBMChat.handleInput"></a>
+<a name="IBMChat.enableCustomInputHandler"></a>
 
-### IBMChat.handleInput()
+### IBMChat.enableCustomInputHandler(config)
 Override how inputs into the chat text box are handled. e.g. you may wish to send messages to your live agent instead of to your virtual agent.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| config | <code>Object</code> |  |
+| config.callback | <code>function</code> | A function that receives a message and resolve and reject functions as params |
+| config.context | <code>boolean</code> | (optional) A value for "this" in your callback function |
+
 **Example**  
 ```js
-IBMChat.handleInput({
-  default: false,
+IBMChat.enableCustomInputHandler({
   callback: function(message, resolve, reject) {
     //do something like send the message to your live customer service rep
     IBMChat.receive('A message from your live customer service rep');
@@ -326,7 +334,16 @@ IBMChat.handleInput({
     // reject(error);
  }
 });
-IBMChat.handleInput( { default: true } ); //return control to virtual agent
+```
+<a name="IBMChat.disableCustomInputHandler"></a>
+
+### IBMChat.disableCustomInputHandler()
+Returns inputs into chat text box to default handling.
+
+**Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Example**  
+```js
+IBMChat.disableCustomInputHandler();
 ```
 <a name="IBMChat.focusInput"></a>
 
@@ -392,4 +409,14 @@ Publish an IBMChat event.
 **Example**  
 ```js
 IBMChat.publish('the-end-of-the-world', 'panic!');
+```
+<a name="IBMChat.debug"></a>
+
+### IBMChat.debug()
+Turns on a whole bunch of verbose console.log statements!
+
+**Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Example**  
+```js
+IBMChat.debug()
 ```

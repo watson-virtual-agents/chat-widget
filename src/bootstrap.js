@@ -128,48 +128,68 @@ function init(config) {
 }
 
 function registerLayout(layout, init, defaultSetup) {
-	if (registeredLayouts.indexOf(layout) === -1 || !defaultSetup) {
-		registeredLayouts.push(layout);
-		layoutInit[layout] = init;
+	if (layout && init && typeof init === 'function') {
+		if (registeredLayouts.indexOf(layout) === -1 || !defaultSetup) {
+			registeredLayouts.push(layout);
+			layoutInit[layout] = init;
+		}
+	} else {
+		console.error('registerLayout was configured incorrectly.');
 	}
 }
 
 function send(message) {
-	var current = state.getState();
-	if (current.active) {
-		events.publish('send', {
-			text: message
-		});
+	if (message) {
+		var current = state.getState();
+		if (current.active) {
+			events.publish('send', {
+				text: message
+			});
+		}
+	} else {
+		console.error('The message was empty.');
 	}
 }
 
 function receive(message) {
-	var current = state.getState();
-	if (current.active)
-		events.publish('receive', message);
+	if (message) {
+		var current = state.getState();
+		if (current.active)
+			events.publish('receive', message);
+	} else {
+		console.error('The message was empty.');
+	}
 }
 
 function sendMock(message) {
-	var current = state.getState();
-	if (current.active) {
-		events.publish('send-mock', {
-			text: message
-		});
+	if (message) {
+		var current = state.getState();
+		if (current.active) {
+			events.publish('send-mock', {
+				text: message
+			});
+		}
+	} else {
+		console.error('The message was empty.');
 	}
 }
 
 function sendSilently(message) {
-	var current = state.getState();
-	if (current.active) {
-		events.publish('send', {
-			text: message,
-			silent: true
-		});
+	if (message) {
+		var current = state.getState();
+		if (current.active) {
+			events.publish('send', {
+				text: message,
+				silent: true
+			});
+		}
+	} else {
+		console.error('The message was empty.');
 	}
 }
 
-function handleInput(config) {
-	if (config && !config.default && config.callback && typeof config.callback === 'function') {
+function enableCustomInputHandler(config) {
+	if (config && config.callback && typeof config.callback === 'function') {
 		state.setState({
 			handleInput: {
 				default: false,
@@ -178,12 +198,16 @@ function handleInput(config) {
 			}
 		});
 	} else {
-		state.setState({
-			handleInput: {
-				default: true
-			}
-		});
+		console.error('Invalid configuration of enableCustomInputHandler');
 	}
+}
+
+function disableCustomInputHandler() {
+	state.setState({
+		handleInput: {
+			default: true
+		}
+	});
 }
 
 function focusInput() {
@@ -248,7 +272,8 @@ module.exports = {
 	receive: receive,
 	sendMock: sendMock,
 	sendSilently: sendSilently,
-	handleInput: handleInput,
+	enableCustomInputHandler: enableCustomInputHandler,
+	disableCustomInputHandler: disableCustomInputHandler,
 	focusInput: focusInput,
 	disableInput: disableInput,
 	enableInput: enableInput,

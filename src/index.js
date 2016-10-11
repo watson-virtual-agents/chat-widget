@@ -164,11 +164,13 @@ module.exports = {
 
 	/**
 	 * Override how inputs into the chat text box are handled. e.g. you may wish to send messages to your live agent instead of to your virtual agent.
-	 * @function handleInput
+	 * @function enableCustomInputHandler
 	 * @memberof IBMChat
+	 * @param {Object} config
+	 * @param {function} config.callback - A function that receives a message and resolve and reject functions as params
+	 * @param {boolean} config.context - (optional) A value for "this" in your callback function
 	 * @example
-	 * IBMChat.handleInput({
-	 *   default: false,
+	 * IBMChat.enableCustomInputHandler({
 	 *   callback: function(message, resolve, reject) {
 	 *     //do something like send the message to your live customer service rep
 	 *     IBMChat.receive('A message from your live customer service rep');
@@ -176,10 +178,19 @@ module.exports = {
 	 *     // reject(error);
 	 *  }
 	 * });
-	 * IBMChat.handleInput( { default: true } ); //return control to virtual agent
 	 */
 
-	handleInput: bootstrap.handleInput,
+	enableCustomInputHandler: bootstrap.enableCustomInputHandler,
+
+	/**
+	 * Returns inputs into chat text box to default handling.
+	 * @function disableCustomInputHandler
+	 * @memberof IBMChat
+	 * @example
+	 * IBMChat.disableCustomInputHandler();
+	 */
+
+	disableCustomInputHandler: bootstrap.disableCustomInputHandler,
 
 	/**
 	 * Set focus to the chat text box. Useful if you want users to be able to just start typing into the text box without having to click in the text box first to set focus.
@@ -307,7 +318,11 @@ module.exports = {
 	 */
 	currentSubscriptions: bootstrap.currentSubscriptions,
 	/**
-	 * @ignore
+	 * Turns on a whole bunch of verbose console.log statements!
+	 * @function debug
+	 * @memberof IBMChat
+	 * @example
+	 * IBMChat.debug()
 	 */
 	debug: bootstrap.debug
 };
