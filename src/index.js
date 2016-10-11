@@ -183,7 +183,7 @@ module.exports = {
 	enableCustomInputHandler: bootstrap.enableCustomInputHandler,
 
 	/**
-	 * Returns inputs into chat text box to default handling.
+	 * Return chat input boxes handling to the default provided handler.
 	 * @function disableCustomInputHandler
 	 * @memberof IBMChat
 	 * @example

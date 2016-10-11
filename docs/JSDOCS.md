@@ -338,7 +338,7 @@ IBMChat.enableCustomInputHandler({
 <a name="IBMChat.disableCustomInputHandler"></a>
 
 ### IBMChat.disableCustomInputHandler()
-Returns inputs into chat text box to default handling.
+Return chat input boxes handling to the default provided handler.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
 **Example**  
