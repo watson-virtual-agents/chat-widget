@@ -47,7 +47,9 @@
 
 .IBMChat-form-cancel {
 	float:left;
+	max-width: 50%;
 }
 .IBMChat-form-submit {
 	float:right;
+	max-width: 50%;
 }

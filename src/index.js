@@ -29,21 +29,21 @@ module.exports = {
 	 * @param {string} config.el - Takes a string representing the ID of an html element to be rendered to OR a selected element
 	 * @param {string} config.botID - The unique identifier of your Virtual Agent.
 	 * @param {string} config.userID - A hashed non-identifiable (i.e. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard.
-	 * @param {string} config.baseURL='https://dev.api.ibm.com/virtualagent/development/api/v1/' - optional: specifies a different bot hosting server. The most common usecase for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request.
+	 * @param {string} config.baseURL=https://api.ibm.com/virtualagent/run/api/v1/ - optional: specifies a different bot hosting server. The most common usecase for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request.
 	 * @param {string} config.XIBMClientID - optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request.
 	 * @param {string} config.XIBMClientSecret - optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request.
 	 * @param {Function} config.errorHandler - optional: A function that takes an error object as a param if there is a problem with communicating with your Virtual Agent. By default, if an error is received, the user is escalated to a live agent. You may, however, want to handle some errors differently (401 for instance)
 	 * @param {Object} config.errorHandlerContext - optional: A "this" value for the errorHanlder.
 	 * @param {Object} config.styles - optional: Override default styling.
-	 * @param {string} config.styles.background='#3d3d3d' - optional: hex code for background color
-	 * @param {string} config.styles.text='#ffffff' - optional: hex code for main text color
-	 * @param {string} config.styles.link='#ffffff' - optional: hex code for color of links in text
-	 * @param {string} config.styles.secondaryBackground='#464646' - optional: hex code for background color of chat bubbles and other secondary info
-	 * @param {string} config.styles.secondaryText='#f7f7f7' - optional: hex code for color of chat bubble text and other secondary info
-	 * @param {string} config.styles.inputBackground='#464646' - optional: hex code for background color of input elements
-	 * @param {string} config.styles.inputText='#f7f7f7' - optional: hex code for color of input text
-	 * @param {string} config.styles.accentText='#ffffff' - optional: hex code for text colors to be used in conjunction with accentBackground i.e. button text
-	 * @param {string} config.styles.accentBackground='#AF6EE8' - optional: hex code for accent colors used by the chat application i.e. buttons
+	 * @param {string} config.styles.background=rgba(61, 61, 61, 1) - optional: rgba(X, X, X, X) or hex code for background color
+	 * @param {string} config.styles.text=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for main text color
+	 * @param {string} config.styles.link=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for color of links in text
+	 * @param {string} config.styles.secondaryBackground=rgba(70, 70, 70, 1) - optional: rgba(X, X, X, X) or hex code for background color of chat bubbles and other secondary info
+	 * @param {string} config.styles.secondaryText=rgba(247, 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of chat bubble text and other secondary info
+	 * @param {string} config.styles.inputBackground=rgba(70, 70, 70, 1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms
+	 * @param {string} config.styles.inputText=rgba(247, 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms
+	 * @param {string} config.styles.accentText=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground i.e. button text
+	 * @param {string} config.styles.accentBackground=rgba(175, 110, 232, 1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application i.e. buttons
 	 * @example
 	 * IBMChat.init({
 	 *  el: 'my_div',
@@ -161,6 +161,36 @@ module.exports = {
 	 * IBMChat.init(config);
 	 */
 	registerLayout: bootstrap.registerLayout,
+
+	/**
+	 * Override how inputs into the chat text box are handled. e.g. you may wish to send messages to your live agent instead of to your virtual agent.
+	 * @function enableCustomInputHandler
+	 * @memberof IBMChat
+	 * @param {Object} config
+	 * @param {function} config.callback - A function that receives a message and resolve and reject functions as params
+	 * @param {boolean} config.context - (optional) A value for "this" in your callback function
+	 * @example
+	 * IBMChat.enableCustomInputHandler({
+	 *   callback: function(message, resolve, reject) {
+	 *     //do something like send the message to your live customer service rep
+	 *     IBMChat.receive('A message from your live customer service rep');
+	 *     resolve(); // gets rid of loading spinner and allows the chat text box to accept another message
+	 *     // reject(error);
+	 *  }
+	 * });
+	 */
+
+	enableCustomInputHandler: bootstrap.enableCustomInputHandler,
+
+	/**
+	 * Return chat input boxes handling to the default provided handler.
+	 * @function disableCustomInputHandler
+	 * @memberof IBMChat
+	 * @example
+	 * IBMChat.disableCustomInputHandler();
+	 */
+
+	disableCustomInputHandler: bootstrap.disableCustomInputHandler,
 
 	/**
 	 * Set focus to the chat text box. Useful if you want users to be able to just start typing into the text box without having to click in the text box first to set focus.
@@ -288,7 +318,11 @@ module.exports = {
 	 */
 	currentSubscriptions: bootstrap.currentSubscriptions,
 	/**
-	 * @ignore
+	 * Turns on a whole bunch of verbose console.log statements!
+	 * @function debug
+	 * @memberof IBMChat
+	 * @example
+	 * IBMChat.debug()
 	 */
 	debug: bootstrap.debug
 };
