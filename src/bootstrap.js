@@ -67,14 +67,22 @@ function init(config) {
 		SDKconfig.XIBMClientSecret = config.XIBMClientSecret;
 	if (config.userID)
 		SDKconfig.userID = config.userID;
-		/*
-	// TODO: , allow entering in old chatID
-	const sessionChatID = window.sessionStorage.getItem('IBMChatChatID') || null;
-	if (chatID || sessionChatID)
-		config.chatID = (chatID) ? chatID : sessionChatID;
-	*/
+
 	return new Promise(function(resolve, reject) {
 		var current = state.getState();
+		var defaultState = {
+			active: true,
+			root: root,
+			mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
+			botID: config.botID,
+			styles: assign({}, defaultStyles, config.styles),
+			baseURL: config.baseURL,
+			originalContent: root.innerHTML,
+			handleInput: {
+				default: true
+			},
+			playback: config.playback || false
+		};
 		if (current.active === true) {
 			resolve();
 			return;
@@ -86,37 +94,21 @@ function init(config) {
 				events.subscribe('error', eventHandlers.error);
 
 			if (config.playback === true) {
+				defaultState.chatID = 'playback';
 				registerEvents(true);
 				registerLayouts();
-				events.publish('start', {
-					active: true,
-					root: root,
-					mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
-					styles: assign({}, defaultStyles, config.styles),
-					originalContent: root.innerHTML,
-					chatId: '42',
-					playback: true
-				});
+				events.publish('start', defaultState);
 				resolve();
 			} else if (config.botID) {
 				BotSDK
 					.configure( SDKconfig )
 					.start( config.botID )
 					.then( function(res) {
-						var chatID = res.chatID;
-						window.sessionStorage.setItem('IBMChatChatID', chatID);
+						defaultState.chatID = res.chatID;
+						window.sessionStorage.setItem('IBMChatChatID', res.chatID);
 						registerLayouts();
 						registerEvents();
-						events.publish('start', {
-							active: true,
-							root: root,
-							mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
-							botID: config.botID,
-							chatID: chatID,
-							styles: assign({}, defaultStyles, config.styles),
-							baseURL: config.baseURL,
-							originalContent: root.innerHTML
-						});
+						events.publish('start', defaultState);
 						events.publish('receive', res);
 						resolve();
 					})['catch']( function(err) {
@@ -136,44 +128,86 @@ function init(config) {
 }
 
 function registerLayout(layout, init, defaultSetup) {
-	if (registeredLayouts.indexOf(layout) === -1 || !defaultSetup) {
-		registeredLayouts.push(layout);
-		layoutInit[layout] = init;
+	if (layout && init && typeof init === 'function') {
+		if (registeredLayouts.indexOf(layout) === -1 || !defaultSetup) {
+			registeredLayouts.push(layout);
+			layoutInit[layout] = init;
+		}
+	} else {
+		console.error('registerLayout was configured incorrectly.');
 	}
 }
 
 function send(message) {
-	var current = state.getState();
-	if (current.active) {
-		events.publish('send', {
-			text: message
-		});
+	if (message) {
+		var current = state.getState();
+		if (current.active) {
+			events.publish('send', {
+				text: message
+			});
+		}
+	} else {
+		console.error('The message was empty.');
 	}
 }
 
 function receive(message) {
-	var current = state.getState();
-	if (current.active)
-		events.publish('receive', message);
+	if (message) {
+		var current = state.getState();
+		if (current.active)
+			events.publish('receive', message);
+	} else {
+		console.error('The message was empty.');
+	}
 }
 
 function sendMock(message) {
-	var current = state.getState();
-	if (current.active) {
-		events.publish('send-mock', {
-			text: message
-		});
+	if (message) {
+		var current = state.getState();
+		if (current.active) {
+			events.publish('send-mock', {
+				text: message
+			});
+		}
+	} else {
+		console.error('The message was empty.');
 	}
 }
 
 function sendSilently(message) {
-	var current = state.getState();
-	if (current.active) {
-		events.publish('send', {
-			text: message,
-			silent: true
-		});
+	if (message) {
+		var current = state.getState();
+		if (current.active) {
+			events.publish('send', {
+				text: message,
+				silent: true
+			});
+		}
+	} else {
+		console.error('The message was empty.');
 	}
+}
+
+function enableCustomInputHandler(config) {
+	if (config && config.callback && typeof config.callback === 'function') {
+		state.setState({
+			handleInput: {
+				default: false,
+				callback: config.callback,
+				context: config.context
+			}
+		});
+	} else {
+		console.error('Invalid configuration of enableCustomInputHandler');
+	}
+}
+
+function disableCustomInputHandler() {
+	state.setState({
+		handleInput: {
+			default: true
+		}
+	});
 }
 
 function focusInput() {
@@ -238,6 +272,8 @@ module.exports = {
 	receive: receive,
 	sendMock: sendMock,
 	sendSilently: sendSilently,
+	enableCustomInputHandler: enableCustomInputHandler,
+	disableCustomInputHandler: disableCustomInputHandler,
 	focusInput: focusInput,
 	disableInput: disableInput,
 	enableInput: enableInput,
