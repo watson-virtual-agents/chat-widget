@@ -87,10 +87,6 @@
 	padding-bottom:1em;
 }
 
-.IBMChat-map-locations-item-data-timezone {
-	padding-bottom:0.5em;
-}
-
 .IBMChat-map-locations-item-data-phone {
 	display: table;
 	max-width:400px;
@@ -161,6 +157,12 @@ button.IBMChat-map-locations-all {
 	padding:0.75em 1em 0 0;
 	overflow: hidden;
 	word-wrap: break-word;
+}
+
+.IBMChat-map-hours-timezone {
+	font-style: italic;
+	font-size: 0.8em;
+	padding-top: 0.5em;
 }
 
 .IBMChat-map-days-hours > div:last-child {

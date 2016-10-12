@@ -14,8 +14,6 @@
 
 require('./styles.css');
 
-var moment = require('moment-timezone');
-
 var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
@@ -40,7 +38,6 @@ var templates = {
 	createDomArray: require('./templates/create-dom-array.html'),
 	addLocationsItem: require('./templates/add-locations-item.html'),
 	addLocationItem: require('./templates/add-location-item.html'),
-	timezone: require('./templates/timezone.html'),
 	hoursClosed: require('./templates/hours-closed.html'),
 	hoursOpen: require('./templates/hours-open.html'),
 	hoursTodayOpen: require('./templates/hours-today-open.html'),
@@ -153,7 +150,7 @@ function parseAddress(address) {
 	};
 }
 
-function createHours(hoursEl, moreHoursEl, hours) {
+function createHours(hoursEl, moreHoursEl, hours, timezone) {
 	if (hours) {
 		var today = new Date().getDay();
 		var todaysHours = hours[today];
@@ -162,11 +159,13 @@ function createHours(hoursEl, moreHoursEl, hours) {
 			el.innerHTML = utils.compile(templates.hoursTodayOpen, {
 				ns: ns,
 				open: formatAMPM(todaysHours.open),
-				close: formatAMPM(todaysHours.close)
+				close: formatAMPM(todaysHours.close),
+				timezone: timezone
 			});
 		} else {
 			el.innerHTML = utils.compile(templates.hoursTodayClosed, {
-				ns: ns
+				ns: ns,
+				timezone: timezone
 			});
 		}
 		hoursEl.appendChild(el);
@@ -319,7 +318,6 @@ ShowLocations.prototype = {
 				address2: document.createElement('span'),
 				phone: el.querySelector('.' + ns + '-locations-item-data-phone'),
 				email: el.querySelector('.' + ns + '-locations-item-data-email'),
-				timezone: el.querySelector('.' + ns + '-locations-item-data-timezone'),
 				hours: el.querySelector('.' + ns + '-locations-item-data-hours'),
 				parentEl: el.querySelector('.' + ns + '-locations-item-data'),
 				hoursButton: el.querySelector('.' + ns + '-locations-item-data-hours-button'),
@@ -365,19 +363,9 @@ ShowLocations.prototype = {
 		else
 			dom.phone.parentNode.removeChild(dom.phone);
 		
-		// timezone
-		if (item.address.timezone) {
-			dom.timezone.innerHTML = utils.compile(templates.timezone, {
-				ns: ns,
-				timezone: moment().tz(item.address.timezone).format('z')
-			});
-		} else {
-			dom.timezone.parentNode.removeChild(dom.timezone);
-		}
-		
 		// hours
 		if (item.days && item.days.length > 0) {
-			createHours(dom.hours, dom.moreHours, item.days);
+			createHours(dom.hours, dom.moreHours, item.days, item.address.timezone);
 			dom.hoursButton.addEventListener('click', function(e) {
 				e.preventDefault();
 				dom.parentEl.removeChild(dom.hoursButton);
