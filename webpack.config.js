@@ -90,16 +90,21 @@ module.exports = {
 			test: /\.json$/
 		}]
 	},
-	plugins: [ new NoErrorsPlugin(), new DedupePlugin(), new DefinePlugin({
-		'process.env.DEBUG': JSON.stringify(debug),
-		'process.env.MAPS_SERVER': JSON.stringify(mapsServer)
-	})].concat(_toConsumableArray(!debug ? [new OccurenceOrderPlugin(), new UglifyJsPlugin({
-		output: { comments: false }
+	plugins: [new NoErrorsPlugin(), new DedupePlugin(),
+		// Moment.js locales, add locales as needed in the future
+	    new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/),
+	    new DefinePlugin({
+	        'process.env.DEBUG': JSON.stringify(debug),
+	        'process.env.MAPS_SERVER': JSON.stringify(mapsServer)
+	    })
+	].concat(_toConsumableArray(!debug ? [new OccurenceOrderPlugin(), new UglifyJsPlugin({
+	    output: { comments: false }
 	}), new webpack.BannerPlugin(copyright)] : [new HtmlWebpackPlugin({
-		template: paths.template,
-		inject: 'head',
-		hash: true
+	    template: paths.template,
+	    inject: 'head',
+	    hash: true
 	})])),
+
 	devServer: {
 		port: process.env.PORT || 3100,
 		historyApiFallback: true
