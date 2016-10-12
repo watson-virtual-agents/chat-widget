@@ -159,6 +159,12 @@ button.IBMChat-map-locations-all {
 	word-wrap: break-word;
 }
 
+.IBMChat-map-hours-timezone {
+	font-style: italic;
+	font-size: 0.8em;
+	padding-top: 0.5em;
+}
+
 .IBMChat-map-days-hours > div:last-child {
 	padding: 0.75em 0 0 0 !important;
 }

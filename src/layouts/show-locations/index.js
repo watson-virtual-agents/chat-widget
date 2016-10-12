@@ -35,6 +35,7 @@ var ns = 'IBMChat-map';
 
 var templates = {
 	base: require('./templates/base.html'),
+	createDomArray: require('./templates/create-dom-array.html'),
 	addLocationsItem: require('./templates/add-locations-item.html'),
 	addLocationItem: require('./templates/add-location-item.html'),
 	hoursClosed: require('./templates/hours-closed.html'),
@@ -105,7 +106,7 @@ function createPhoneArray(el, items) {
 	if (items) {
 		for (var i = 0; i < items.length; i++) {
 			var itemChild = document.createElement('div');
-			var text = require('./templates/create-dom-array.html');
+			var text = templates.createDomArray;
 			itemChild.className = ns + '-contact-row';
 			itemChild.innerHTML = utils.compile(text, {
 				ns: ns
@@ -149,7 +150,7 @@ function parseAddress(address) {
 	};
 }
 
-function createHours(hoursEl, moreHoursEl, hours) {
+function createHours(hoursEl, moreHoursEl, hours, timezone) {
 	if (hours) {
 		var today = new Date().getDay();
 		var todaysHours = hours[today];
@@ -158,11 +159,13 @@ function createHours(hoursEl, moreHoursEl, hours) {
 			el.innerHTML = utils.compile(templates.hoursTodayOpen, {
 				ns: ns,
 				open: formatAMPM(todaysHours.open),
-				close: formatAMPM(todaysHours.close)
+				close: formatAMPM(todaysHours.close),
+				timezone: timezone
 			});
 		} else {
 			el.innerHTML = utils.compile(templates.hoursTodayClosed, {
-				ns: ns
+				ns: ns,
+				timezone: timezone
 			});
 		}
 		hoursEl.appendChild(el);
@@ -325,11 +328,14 @@ ShowLocations.prototype = {
 			};
 		};
 		var dom = createDom(el);
+
+		// name
 		if (item.label)
 			dom.label.textContent = item.label;
 		else
 			dom.parentEl.removeChild(dom.label);
-
+		
+		// addresses
 		var addresses = parseAddress(item.address.address);
 		dom.address1.textContent = addresses.address1;
 		dom.address2.textContent = addresses.address2;
@@ -339,7 +345,8 @@ ShowLocations.prototype = {
 		dom.link.setAttribute('href', 'https://maps.google.com/?q=' + encodeURIComponent(item.address.address));
 		dom.link.setAttribute('target', '_blank');
 		dom.distance.textContent = distance(item) || '';
-
+		
+		// email
 		if (item.email) {
 			const linkEl = document.createElement('a');
 			linkEl.setAttribute('href', 'mailto:' + item.email);
@@ -349,14 +356,16 @@ ShowLocations.prototype = {
 		} else {
 			dom.email.parentNode.removeChild(dom.email);
 		}
-
+		
+		// phones
 		if (item.phones && item.phones.length > 0)
 			createPhoneArray(dom.phone, item.phones);
 		else
 			dom.phone.parentNode.removeChild(dom.phone);
-
+		
+		// hours
 		if (item.days && item.days.length > 0) {
-			createHours(dom.hours, dom.moreHours, item.days);
+			createHours(dom.hours, dom.moreHours, item.days, item.address.timezone);
 			dom.hoursButton.addEventListener('click', function(e) {
 				e.preventDefault();
 				dom.parentEl.removeChild(dom.hoursButton);
