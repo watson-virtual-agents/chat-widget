@@ -1,6 +1,6 @@
 {
   "name": "@watson-virtual-agent/chat-widget",
-  "version": "1.2.0",
+  "version": "1.2.1-alpha.1",
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/IBMChatClient-latest.js",
@@ -37,7 +37,8 @@
   "dependencies": {
     "@watson-virtual-agent/client-sdk": "1.0.3",
     "es6-promise": "3.2.1",
-    "lodash": "4.15.0"
+    "lodash": "4.15.0",
+    "moment-timezone": "0.5.6"
   },
   "devDependencies": {
     "chai": "3.5.0",
@@ -49,6 +50,7 @@
     "istanbul-instrumenter-loader": "1.0.0",
     "js-beautify": "1.6.4",
     "jsdoc-to-markdown": "1.3.7",
+    "json-loader": "0.5.4",
     "karma": "1.3.0",
     "karma-chrome-launcher": "2.0.0",
     "karma-coverage": "1.1.1",

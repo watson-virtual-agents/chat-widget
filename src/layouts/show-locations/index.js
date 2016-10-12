@@ -14,6 +14,8 @@
 
 require('./styles.css');
 
+var moment = require('moment-timezone');
+
 var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
@@ -35,8 +37,10 @@ var ns = 'IBMChat-map';
 
 var templates = {
 	base: require('./templates/base.html'),
+	createDomArray: require('./templates/create-dom-array.html');
 	addLocationsItem: require('./templates/add-locations-item.html'),
 	addLocationItem: require('./templates/add-location-item.html'),
+	timezone: require('./templates/timezone.html'),
 	hoursClosed: require('./templates/hours-closed.html'),
 	hoursOpen: require('./templates/hours-open.html'),
 	hoursTodayOpen: require('./templates/hours-today-open.html'),
@@ -105,7 +109,7 @@ function createPhoneArray(el, items) {
 	if (items) {
 		for (var i = 0; i < items.length; i++) {
 			var itemChild = document.createElement('div');
-			var text = require('./templates/create-dom-array.html');
+			var text = templates.createDomArray;
 			itemChild.className = ns + '-contact-row';
 			itemChild.innerHTML = utils.compile(text, {
 				ns: ns
@@ -315,6 +319,7 @@ ShowLocations.prototype = {
 				address2: document.createElement('span'),
 				phone: el.querySelector('.' + ns + '-locations-item-data-phone'),
 				email: el.querySelector('.' + ns + '-locations-item-data-email'),
+				timezone: el.querySelector('.' + ns + '-locations-item-data-timezone'),
 				hours: el.querySelector('.' + ns + '-locations-item-data-hours'),
 				parentEl: el.querySelector('.' + ns + '-locations-item-data'),
 				hoursButton: el.querySelector('.' + ns + '-locations-item-data-hours-button'),
@@ -325,11 +330,14 @@ ShowLocations.prototype = {
 			};
 		};
 		var dom = createDom(el);
+
+		// name
 		if (item.label)
 			dom.label.textContent = item.label;
 		else
 			dom.parentEl.removeChild(dom.label);
-
+		
+		// addresses
 		var addresses = parseAddress(item.address.address);
 		dom.address1.textContent = addresses.address1;
 		dom.address2.textContent = addresses.address2;
@@ -339,7 +347,8 @@ ShowLocations.prototype = {
 		dom.link.setAttribute('href', 'https://maps.google.com/?q=' + encodeURIComponent(item.address.address));
 		dom.link.setAttribute('target', '_blank');
 		dom.distance.textContent = distance(item) || '';
-
+		
+		// email
 		if (item.email) {
 			const linkEl = document.createElement('a');
 			linkEl.setAttribute('href', 'mailto:' + item.email);
@@ -349,12 +358,24 @@ ShowLocations.prototype = {
 		} else {
 			dom.email.parentNode.removeChild(dom.email);
 		}
-
+		
+		// phones
 		if (item.phones && item.phones.length > 0)
 			createPhoneArray(dom.phone, item.phones);
 		else
 			dom.phone.parentNode.removeChild(dom.phone);
-
+		
+		// timezone
+		if (item.address.timezone) {
+			dom.timezone.innerHTML = utils.compile(templates.timezone, {
+				ns: ns,
+				timezone: moment().tz(item.address.timezone).format('z')
+			});
+		} else {
+			dom.timezone.parentNode.removeChild(dom.timezone);
+		}
+		
+		// hours
 		if (item.days && item.days.length > 0) {
 			createHours(dom.hours, dom.moreHours, item.days);
 			dom.hoursButton.addEventListener('click', function(e) {

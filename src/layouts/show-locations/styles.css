@@ -87,6 +87,10 @@
 	padding-bottom:1em;
 }
 
+.IBMChat-map-locations-item-data-timezone {
+	padding-bottom:0.5em;
+}
+
 .IBMChat-map-locations-item-data-phone {
 	display: table;
 	max-width:400px;
