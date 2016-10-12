@@ -37,7 +37,7 @@ var ns = 'IBMChat-map';
 
 var templates = {
 	base: require('./templates/base.html'),
-	createDomArray: require('./templates/create-dom-array.html');
+	createDomArray: require('./templates/create-dom-array.html'),
 	addLocationsItem: require('./templates/add-locations-item.html'),
 	addLocationItem: require('./templates/add-location-item.html'),
 	timezone: require('./templates/timezone.html'),
