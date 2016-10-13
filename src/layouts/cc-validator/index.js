@@ -20,6 +20,7 @@ var subscribe = events.subscribe;
 var publish = events.publish;
 var utils = require('../../utils');
 var validation = require('./validation');
+var activeClassName = 'IBMChat-accent-colors';
 var ns = 'IBMChat-creditcard';
 var widgets = [];
 var templates = {
@@ -47,6 +48,8 @@ CreditCard.prototype.init = function(data) {
 	this.layoutElement = data.layoutElement;
 	this.msgElement = data.msgElement;
 	this.drawForm();
+	this.subscribeSend = subscribe('send', this.removeAllEventListeners.bind(this));
+	publish('disable-input');
 };
 
 CreditCard.prototype.drawForm = function() {
@@ -142,17 +145,19 @@ CreditCard.prototype.handleContinue = function() {
 };
 
 CreditCard.prototype.handleCancel = function() {
+	this.cancelButton.classList.add(activeClassName);
 	publish('send', {
 		silent: true,
 		text: 'cancel'
 	});
+	publish('enable-input');
 };
 
 CreditCard.prototype.removeAllEventListeners = function() {
 	this.cancelButton.removeEventListener('click', this.handleCancel.bind(this));
 	this.cancelButton.setAttribute('disabled', true);
-	this.submitButton.removeEventListener('click', this.handleSubmit.bind(this));
-	this.submitButton.setAttribute('disabled', true);
+	this.continueButton.removeEventListener('click', this.handleContinue.bind(this));
+	this.continueButton.setAttribute('disabled', true);
 	for (var j = 0; j < this.fields.length; j++)
 		this.fields[j].setAttribute('disabled', true);
 
