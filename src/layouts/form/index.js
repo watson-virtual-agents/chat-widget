@@ -107,14 +107,16 @@ Form.prototype.validateField = function(field, datum) {
 		this.addError(field.getAttribute('name'), 'This field is required.');
 		valid = false;
 	} else if (datum.validations && datum.validations.length !== 0) {
-		datum.validations.forEach(function(validation) {
+		for (var i = 0; i < datum.validations.length; i++) {
+			var validation = datum.validations[i];
 			var regex = new RegExp('/'+ validation.regex +'/');
 			var matches = regex.test(field.value);
 			if (!matches) {
 				this.addError(field.getAttribute('name'), validation.message);
 				valid = false;
+				break;
 			}
-		}, this);
+		}
 	}
 	return valid;
 };
