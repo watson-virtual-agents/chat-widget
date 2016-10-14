@@ -205,8 +205,15 @@
 	display:none;
 }
 
-/* initial rotation */
+/* validation error message */
+.IBMChat-validation-error {
+	color: #CB3333;
+	padding-top: 0.25em;
+	font-size: 0.9em;
+	height: 1em;
+}
 
+/* initial rotation */
 @keyframes init-rotate {
 	0% {
 		transform: rotate(0deg);
@@ -227,7 +234,6 @@
 }
 
 /* initial stroke animation */
-
 @keyframes init-stroke {
 	0% {
 		opacity: 0;
