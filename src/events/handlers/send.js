@@ -57,11 +57,11 @@ function reject(e) {
 	always();
 }
 
-function sendToBot(text) {
+function sendToBot(data) {
 	var current = state.getState();
 	events.publish('enable-loading');
 	BotSDK
-		.send( current.botID, current.chatID, text )
+		.send( current.botID, current.chatID, data.text )
 		.then( function(res) {
 			events.publish('receive', res);
 			resolve();
@@ -75,20 +75,20 @@ function agentSend() {
 	var current = state.getState();
 	var newData = assign({}, current.sendQueue[0], { uuid: utils.getUUID() });
 	var msg = newData.text || '';
+	state.setState({
+		inProgress: true,
+		sendQueue: current.sendQueue.slice(1, current.sendQueue.length),
+		messages: [].concat(current.messages || [], newData)
+	});
 	current.root.querySelector('.IBMChat-chat-textbox').value = '';
 	if (!newData.silent) {
 		current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
 		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = msg;
 		events.publish('scroll-to-bottom');
 	}
-	state.setState({
-		inProgress: true,
-		sendQueue: current.sendQueue.slice(0, -1),
-		messages: [].concat(current.messages || [], newData)
-	});
 	events.publish('enable-loading');
 	if (current.handleInput.default)
-		sendToBot(newData.text);
+		sendToBot(newData);
 	else if (current.handleInput.context)
 		current.handleInput.callback.bind(current.handleInput.context, newData.text, resolve, reject);
 	else

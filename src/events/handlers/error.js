@@ -16,6 +16,7 @@ var events = require('../../events');
 var state = require('../../state');
 
 function error(err) {
+	console.error(err);
 	var current = state.getState();
 	var text = 'I am sorry, I am having difficulties.';
 	if (current.hadError)

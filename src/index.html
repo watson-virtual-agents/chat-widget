@@ -27,14 +27,16 @@
 	<body>
 		<div id="ibm_el"></div>
 		<script>
-			window.IBMChat.init({
+			window.pb = window.IBMChat.playback.init({
 				el: 'ibm_el',
-				baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
-				botID: '',
-				XIBMClientID: '',
-				XIBMClientSecret: ''
-			}).then(function(){
-				window.IBMChat.debug();
+				styles: {
+					background: '#ffffff',
+					text: '#000',
+					accentBackground: '#31eaf1',
+					accentText: '#ffffff',
+					secondaryBackground: '#f7f7f7',
+					secondaryText: '#464646'
+				}
 			});
 		</script>
 	</body>

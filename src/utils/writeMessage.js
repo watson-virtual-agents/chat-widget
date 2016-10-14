@@ -1,3 +1,5 @@
+//TODO: we also need to sniff for emails
+
 function writeMessage(element, text) {
 	var exp = /(((https?:\/\/)|(www\.))[^\s]+)/gi;
 	var linked = text.replace(exp,'|||$1|||');

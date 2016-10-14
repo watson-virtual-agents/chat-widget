@@ -1,3 +1,18 @@
+## Objects
+
+<dl>
+<dt><a href="#IBMChat">IBMChat</a> : <code>object</code></dt>
+<dd></dd>
+</dl>
+
+## Functions
+
+<dl>
+<dt><a href="#enableInput">enableInput()</a> ⇒ <code>object</code></dt>
+<dd><p>Enable users to submit messages in the chat text box. Useful when you want users to be able to return to adding messages to the chat text box after interacting with a layout.</p>
+</dd>
+</dl>
+
 <a name="IBMChat"></a>
 
 ## IBMChat : <code>object</code>
@@ -14,19 +29,18 @@
     * [.init(config)](#IBMChat.init) ⇒ <code>Promise</code>
     * [.restart()](#IBMChat.restart) ⇒ <code>Promise</code>
     * [.destroy()](#IBMChat.destroy) ⇒ <code>Promise</code>
-    * [.send(message)](#IBMChat.send)
-    * [.receive(message)](#IBMChat.receive)
-    * [.sendMock(message)](#IBMChat.sendMock)
-    * [.sendSilently(message)](#IBMChat.sendSilently)
-    * [.registerLayout(layout, init)](#IBMChat.registerLayout)
-    * [.enableCustomInputHandler(config)](#IBMChat.enableCustomInputHandler)
-    * [.disableCustomInputHandler()](#IBMChat.disableCustomInputHandler)
-    * [.focusInput()](#IBMChat.focusInput)
-    * [.disableInput()](#IBMChat.disableInput)
-    * [.enableInput()](#IBMChat.enableInput)
-    * [.subscribe(eventName, callback, context)](#IBMChat.subscribe)
-    * [.publish(eventName, data)](#IBMChat.publish)
-    * [.debug()](#IBMChat.debug)
+    * [.send(message)](#IBMChat.send) ⇒ <code>object</code>
+    * [.receive(message)](#IBMChat.receive) ⇒ <code>object</code>
+    * [.sendMock(message)](#IBMChat.sendMock) ⇒ <code>object</code>
+    * [.sendSilently(message)](#IBMChat.sendSilently) ⇒ <code>object</code>
+    * [.registerLayout(layout, init)](#IBMChat.registerLayout) ⇒ <code>object</code>
+    * [.enableCustomInputHandler(config)](#IBMChat.enableCustomInputHandler) ⇒ <code>object</code>
+    * [.disableCustomInputHandler()](#IBMChat.disableCustomInputHandler) ⇒ <code>object</code>
+    * [.focusInput()](#IBMChat.focusInput) ⇒ <code>object</code>
+    * [.disableInput()](#IBMChat.disableInput) ⇒ <code>object</code>
+    * [.subscribe(eventName, callback, context)](#IBMChat.subscribe) ⇒ <code>object</code>
+    * [.publish(eventName, data)](#IBMChat.publish) ⇒ <code>object</code>
+    * [.debug()](#IBMChat.debug) ⇒ <code>object</code>
 
 <a name="IBMChat.profile"></a>
 
@@ -217,10 +231,11 @@ IBMChat.destroy().then(function(){
 ```
 <a name="IBMChat.send"></a>
 
-### IBMChat.send(message)
+### IBMChat.send(message) ⇒ <code>object</code>
 Send a message to the chat widget from outside the chat widget. This message will be displayed in the interface.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -232,10 +247,11 @@ IBMChat.send('Hello world.');
 ```
 <a name="IBMChat.receive"></a>
 
-### IBMChat.receive(message)
+### IBMChat.receive(message) ⇒ <code>object</code>
 Mock receiving a message to the chat widget from outside the chat widget.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -247,10 +263,11 @@ IBMChat.receive('Hello world.');
 ```
 <a name="IBMChat.sendMock"></a>
 
-### IBMChat.sendMock(message)
+### IBMChat.sendMock(message) ⇒ <code>object</code>
 Send a message to the chat widget from outside the chat widget. This message will be displayed in the interface, but will not actually get sent to the server.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -262,10 +279,11 @@ IBMChat.sendMock('Hello world.');
 ```
 <a name="IBMChat.sendSilently"></a>
 
-### IBMChat.sendSilently(message)
+### IBMChat.sendSilently(message) ⇒ <code>object</code>
 Send a message to the chat widget from outside the chat widget. This message will NOT be displayed in the interface.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -277,10 +295,11 @@ IBMChat.sendSilently('Hello world.');
 ```
 <a name="IBMChat.registerLayout"></a>
 
-### IBMChat.registerLayout(layout, init)
+### IBMChat.registerLayout(layout, init) ⇒ <code>object</code>
 Register a custom layout with the chat widget. Call registerLayout() before you call init().
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -313,10 +332,11 @@ IBMChat.init(config);
 ```
 <a name="IBMChat.enableCustomInputHandler"></a>
 
-### IBMChat.enableCustomInputHandler(config)
+### IBMChat.enableCustomInputHandler(config) ⇒ <code>object</code>
 Override how inputs into the chat text box are handled. e.g. you may wish to send messages to your live agent instead of to your virtual agent.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -337,50 +357,44 @@ IBMChat.enableCustomInputHandler({
 ```
 <a name="IBMChat.disableCustomInputHandler"></a>
 
-### IBMChat.disableCustomInputHandler()
+### IBMChat.disableCustomInputHandler() ⇒ <code>object</code>
 Return chat input boxes handling to the default provided handler.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 **Example**  
 ```js
 IBMChat.disableCustomInputHandler();
 ```
 <a name="IBMChat.focusInput"></a>
 
-### IBMChat.focusInput()
+### IBMChat.focusInput() ⇒ <code>object</code>
 Set focus to the chat text box. Useful if you want users to be able to just start typing into the text box without having to click in the text box first to set focus.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 **Example**  
 ```js
 IBMChat.focusInput();
 ```
 <a name="IBMChat.disableInput"></a>
 
-### IBMChat.disableInput()
+### IBMChat.disableInput() ⇒ <code>object</code>
 Prevent users from submitting messages in the chat text box. Useful when you want the user to interact with a layout instead.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 **Example**  
 ```js
 IBMChat.disableInput();
 ```
-<a name="IBMChat.enableInput"></a>
-
-### IBMChat.enableInput()
-Enable users to submit messages in the chat text box. Useful when you want users to be able to return to adding messages to the chat text box after interacting with a layout.
-
-**Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
-**Example**  
-```js
-IBMChat.enableInput();
-```
 <a name="IBMChat.subscribe"></a>
 
-### IBMChat.subscribe(eventName, callback, context)
+### IBMChat.subscribe(eventName, callback, context) ⇒ <code>object</code>
 Subscribe to an IBMChat event.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -396,10 +410,11 @@ IBMChat.subscribe('the-end-of-the-world', function(message) {
 ```
 <a name="IBMChat.publish"></a>
 
-### IBMChat.publish(eventName, data)
+### IBMChat.publish(eventName, data) ⇒ <code>object</code>
 Publish an IBMChat event.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -412,11 +427,23 @@ IBMChat.publish('the-end-of-the-world', 'panic!');
 ```
 <a name="IBMChat.debug"></a>
 
-### IBMChat.debug()
+### IBMChat.debug() ⇒ <code>object</code>
 Turns on a whole bunch of verbose console.log statements!
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
 **Example**  
 ```js
 IBMChat.debug()
+```
+<a name="enableInput"></a>
+
+## enableInput() ⇒ <code>object</code>
+Enable users to submit messages in the chat text box. Useful when you want users to be able to return to adding messages to the chat text box after interacting with a layout.
+
+**Kind**: global function  
+**Returns**: <code>object</code> - IBMChat - returns IBMChat for chaining.  
+**Example**  
+```js
+IBMChat.enableInput();
 ```

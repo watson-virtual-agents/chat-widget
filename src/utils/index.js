@@ -28,8 +28,7 @@ var spinner = {
 	}
 };
 
-function _getStyles() {
-	var current = state.getState();
+function _getStyles(current) {
 	var containerClass = ".chatID-" + current.chatID;
 	var styles = containerClass + " .IBMChat-default-colors {\n  background-color: " + current.styles.background + ";\n  color: " + current.styles.text + ";\n}\n" +
 							containerClass + " .IBMChat-secondary-colors {\n  background-color: " + current.styles.secondaryBackground + ";\n  color: " + current.styles.secondaryText + ";\n}\n" +
@@ -91,8 +90,7 @@ function getUUID() {
 	}));
 }
 
-function attachStyles() {
-	var styles = _getStyles();
+function _attachStylesToDOM(styles) {
 	var css = document.createElement('style');
 	css.type = "text/css";
 	if (css.styleSheet)
@@ -100,6 +98,18 @@ function attachStyles() {
 	else
 		css.appendChild(document.createTextNode(styles));
 	document.getElementsByTagName("head")[0].appendChild(css);
+}
+
+function attachPlaybackStyles(chatID) {
+	var current = state.getState()[chatID];
+	var styles = _getStyles(current);
+	_attachStylesToDOM(styles);
+}
+
+function attachStyles() {
+	var current = state.getState();
+	var styles = _getStyles(current);
+	_attachStylesToDOM(styles);
 }
 
 function hasClass(element, className) {
@@ -113,6 +123,7 @@ module.exports = {
 	hasClass: hasClass,
 	getUUID: getUUID,
 	attachStyles: attachStyles,
+	attachPlaybackStyles: attachPlaybackStyles,
 	spinner: spinner,
 	compile: compile,
 	writeMessage: writeMessage

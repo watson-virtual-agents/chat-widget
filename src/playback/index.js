@@ -13,69 +13,65 @@
 */
 
 var events = require('../events');
+var eventHandlers = require('../events/handlers');
 var utils = require('../utils');
 var assign = require('lodash/assign');
 var defaultStyles = require('../styles');
+
+var eventsArray = {};
 
 function init(config) {
 	return new PlayBack(config);
 }
 
+function registerEvents(chatID) {
+	eventsArray[chatID] = [];
+	eventsArray[chatID].push(events.subscribe('playback-start-' + chatID, eventHandlers.playback.start));
+	eventsArray[chatID].push(events.subscribe('playback-resize-' + chatID, eventHandlers.playback.resize));
+	eventsArray[chatID].push(events.subscribe('playback-scroll-to-bottom-' + chatID, eventHandlers.playback.scrollToBottom));
+	eventsArray[chatID].push(events.subscribe('playback-receive-' + chatID, eventHandlers.playback.receive));
+	eventsArray[chatID].push(events.subscribe('playback-send-' + chatID, eventHandlers.playback.send));
+	eventsArray[chatID].push(events.subscribe('playback-destroy-' + chatID, eventHandlers.playback.destroy));
+	eventsArray[chatID].push(events.subscribe('playback-clear-' + chatID, eventHandlers.playback.clear));
+}
+
 function PlayBack(config) {
 	var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
-	this.registerEvents();
 	this.chatID = utils.getUUID();
+	registerEvents(this.chatID);
 	events.publish('playback-start-' + this.chatID, {
-		active: true,
 		chatID: this.chatID,
 		root: (typeof config.el === 'string') ? document.getElementById(config.el) : config.el,
 		mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
 		styles: assign({}, defaultStyles, config.styles),
 		originalContent: root.innerHTML
 	});
-	return this.return;
+	return this;
 }
-
-PlayBack.prototype.events = [];
-
-PlayBack.prototype.return = {
-	clear: this.clear,
-	remove: this.remove,
-	send: this.send,
-	receive: this.receive
-};
-
-PlayBack.prototype.registerEvents = function() {
-	this.events.push(events.subscribe('playback-start-' + this.chatID, events.handlers.playback.start));
-	this.events.push(events.subscribe('playback-resize-' + this.chatID, events.handlers.playback.eventHandlers.resize));
-	this.events.push(events.subscribe('playback-scroll-to-bottom-' + this.chatID, events.handlers.playback.eventHandlers.scrollToBottom));
-	this.events.push(events.subscribe('playback-receive-' + this.chatID, events.handlers.playback.receive));
-	this.events.push(events.subscribe('playback-send-' + this.chatID, events.handlers.playback.send));
-	this.events.push(events.subscribe('playback-remove-' + this.chatID, events.handlers.playback.remove));
-	this.events.push(events.subscribe('playback-clear-' + this.chatID, events.handlers.playback.clear));
-};
 
 PlayBack.prototype.clear = function() {
 	events.publish('playback-clear-' + this.chatID);
-	return this.return;
+	return this;
 };
 
 PlayBack.prototype.remove = function() {
 	events.publish('playback-clear-' + this.chatID);
-	events.publish('playback-remove-' + this.chatID);
-	for (var i = 0; i < this.events.length; i++)
-		this.events[i].remove();
-	this.events = [];
+	events.publish('playback-destroy-' + this.chatID);
+	for (var i = 0; i < eventsArray[this.chatID].length; i++)
+		eventsArray[this.chatID][i].remove();
+	delete eventsArray[this.chatID];
 };
 
-PlayBack.prototype.send = function(message) {
-	events.publish('playback-send-' + this.chatID, message);
-	return this.return;
+PlayBack.prototype.send = function(data) {
+	var chatID = this.chatID;
+	events.publish('playback-send-' + chatID, { chatID: chatID, data: data });
+	return this;
 };
 
-PlayBack.prototype.receive = function(message) {
-	events.publish('playback-receive-' + this.chatID, message);
-	return this.return;
+PlayBack.prototype.receive = function(data) {
+	var chatID = this.chatID;
+	events.publish('playback-receive-' + chatID, { chatID: chatID, data: data });
+	return this;
 };
 
 

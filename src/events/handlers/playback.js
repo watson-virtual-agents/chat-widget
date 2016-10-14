@@ -24,14 +24,15 @@ function start(config) {
 	data[config.chatID] = config;
 	state.setState(data);
 	current = state.getState()[config.chatID];
-	utils.attachStyles();
+	utils.attachPlaybackStyles(config.chatID);
 	current.root.className += " chatID-" + current.chatID;
 	current.root.innerHTML = templates.start;
-	var elements = {
-		container: current.root.querySelector('.IBMChat-chat-container'),
-		chatHolder: current.root.querySelector('.IBMChat-messages'),
-		innerContainer: current.root.querySelector('.IBMChat-inner-container')
-	};
+	current.container = current.root.querySelector('.IBMChat-chat-container');
+	current.chatHolder = current.root.querySelector('.IBMChat-messages');
+	current.innerContainer = current.root.querySelector('.IBMChat-inner-container');
+	data[config.chatID] = current;
+	state.setState(data);
+	current.chatHolder.style.paddingBottom = '1em';
 
 	window.addEventListener('resize', utils.debounce(function() {
 		events.publish('playback-resize-' + config.chatID, config.chatID);
@@ -41,15 +42,17 @@ function start(config) {
 		events.publish('playback-resize-' + config.chatID, config.chatID);
 	});
 
-	state.setState(elements);
+
 	events.publish('playback-resize-' + config.chatID, config.chatID);
 }
 
 function send(obj) {
 	var chatID = obj.chatID;
 	var data = obj.data;
+	console.log('obj', obj);
 	if (data.text && data.text.length > 0) {
 		var current = state.getState()[chatID];
+		console.log('current', current);
 		var newData = assign({}, data, { uuid: utils.getUUID() });
 		current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
 		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
@@ -82,9 +85,9 @@ function clear(chatID) {
 
 function destroy(chatID) {
 	var current = state.getState()[chatID];
-	state.setState({
-		[chatID]: undefined
-	});
+	var obj = {};
+	obj[chatID] = undefined;
+	state.setState(obj);
 	current.root.innerHTML = current.originalContent;
 }
 

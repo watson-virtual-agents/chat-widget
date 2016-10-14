@@ -368,6 +368,11 @@ var IBMChat = {
 		return IBMChat;
 	},
 	/**
+	* @ignore
+	*/
+	playback: bootstrap.playback,
+	
+	/**
 	 * Turns on a whole bunch of verbose console.log statements!
 	 * @function debug
 	 * @memberof IBMChat
