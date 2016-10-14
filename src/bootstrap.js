@@ -12,12 +12,12 @@
 * the License.
 */
 
-var eventHandlers = require('./eventHandlers/index.js');
 var layouts = require('./layouts');
 var events = require('./events');
 var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var state = require('./state');
 var profile = require('./profile');
+var playback = require('./playback');
 var Promise = require('es6-promise').Promise;
 var assign = require('lodash/assign');
 var defaultStyles = require('./styles');
@@ -26,21 +26,21 @@ var layoutInit = {};
 var registeredLayouts = [];
 
 function registerEvents(playback) {
-	events.subscribe('start', eventHandlers.start);
-	events.subscribe('resize', eventHandlers.resize);
-	events.subscribe('disable-input', eventHandlers.input.disableInput);
-	events.subscribe('enable-loading', eventHandlers.input.enableLoadingInput);
-	events.subscribe('disable-loading', eventHandlers.input.disableLoadingInput);
-	events.subscribe('scroll-to-bottom', eventHandlers.scrollToBottom);
-	events.subscribe('receive', eventHandlers.receive);
-	if (playback === true) {
-		events.subscribe('send', eventHandlers.sendMock);
+	events.subscribe('start', events.handlers.start);
+	events.subscribe('resize', events.handlers.resize);
+	events.subscribe('disable-input', events.handlers.input.disableInput);
+	events.subscribe('enable-loading', events.handlers.input.enableLoadingInput);
+	events.subscribe('disable-loading', events.handlers.input.disableLoadingInput);
+	events.subscribe('scroll-to-bottom', events.handlers.scrollToBottom);
+	events.subscribe('receive', events.handlers.receive);
+	if (playback === true) { //TODO: remove if playback when Dashboard code is updated
+		events.subscribe('send', events.handlers.sendMock);
 	} else {
-		events.subscribe('send', eventHandlers.send);
-		events.subscribe('send-input-message', eventHandlers.sendInputMessage);
-		events.subscribe('enable-input', eventHandlers.input.enableInput);
-		events.subscribe('focus-input', eventHandlers.input.focusInput);
-		events.subscribe('send-mock', eventHandlers.sendMock);
+		events.subscribe('send', events.handlers.send);
+		events.subscribe('send-input-message', events.handlers.sendInputMessage);
+		events.subscribe('enable-input', events.handlers.input.enableInput);
+		events.subscribe('focus-input', events.handlers.input.focusInput);
+		events.subscribe('send-mock', events.handlers.sendMock);
 	}
 }
 
@@ -81,7 +81,7 @@ function init(config) {
 			handleInput: {
 				default: true
 			},
-			playback: config.playback || false
+			playback: config.playback || false //TODO: remove playback when Dashboard code is updated
 		};
 		if (current.active === true) {
 			resolve();
@@ -91,8 +91,9 @@ function init(config) {
 			if (config.errorHandler)
 				events.subscribe('error', config.errorHandler, config.errorHandlerContext);
 			else
-				events.subscribe('error', eventHandlers.error);
+				events.subscribe('error', events.handlers.error);
 
+			//TODO: remove if playback when Dashboard code is updated
 			if (config.playback === true) {
 				defaultState.chatID = 'playback';
 				registerEvents(true);
@@ -284,5 +285,6 @@ module.exports = {
 	restart: restart,
 	currentSubscriptions: events.currentSubscriptions,
 	hasSubscription: events.hasSubscription,
-	completeEvent: events.completeEvent
+	completeEvent: events.completeEvent,
+	playback: playback
 };

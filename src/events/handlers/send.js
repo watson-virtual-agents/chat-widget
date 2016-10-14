@@ -17,9 +17,7 @@ var events = require('../../events');
 var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
-var templates = {
-	send: require('../templates/send.html')
-};
+var templates = require('../../templates');
 
 function send(data) {
 	if (data.text && data.text.length > 0) {

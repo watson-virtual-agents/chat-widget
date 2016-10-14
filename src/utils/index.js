@@ -12,7 +12,8 @@
 * the License.
 */
 
-var state = require('./state');
+var state = require('../state');
+var writeMessage = require('./writeMessage');
 
 function _render(el, state) {
 	el.setAttribute('class', 'IBMChat-ibm-spinner IBMChat-input-loading IBMChat-' + state + '-spin');
@@ -113,5 +114,6 @@ module.exports = {
 	getUUID: getUUID,
 	attachStyles: attachStyles,
 	spinner: spinner,
-	compile: compile
+	compile: compile,
+	writeMessage: writeMessage
 };

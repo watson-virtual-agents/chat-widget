@@ -12,7 +12,8 @@
 * the License.
 */
 
-var state = require('./state');
+var state = require('../state');
+var handlers = require('./handlers');
 
 var events = [];
 
@@ -95,5 +96,6 @@ module.exports = {
 	hasSubscription: hasSubscription,
 	subscribe: subscribe,
 	publish: publish,
-	completeEvent: completeEvent
+	completeEvent: completeEvent,
+	handlers: handlers
 };
