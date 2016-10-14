@@ -46,33 +46,35 @@ function PlayBack(config) {
 		styles: assign({}, defaultStyles, config.styles),
 		originalContent: root.innerHTML
 	});
+	this.clear = function() {
+		events.publish('playback-clear-' + this.chatID, this.chatID);
+		return this;
+	};
+	this.destroy = function() {
+		events.publish('playback-clear-' + this.chatID, this.chatID);
+		events.publish('playback-destroy-' + this.chatID, this.chatID);
+		for (var i = 0; i < eventsArray[this.chatID].length; i++)
+			eventsArray[this.chatID][i].remove();
+		delete eventsArray[this.chatID];
+		delete this.clear;
+		delete this.send;
+		delete this.receive;
+		delete this.destroy;
+		delete this.chatID;
+		return this;
+	};
+	this.send = function(data) {
+		var chatID = this.chatID;
+		events.publish('playback-send-' + chatID, { chatID: chatID, data: data });
+		return this;
+	};
+	this.receive = function(data) {
+		var chatID = this.chatID;
+		events.publish('playback-receive-' + chatID, { chatID: chatID, data: data });
+		return this;
+	};
 	return this;
 }
-
-PlayBack.prototype.clear = function() {
-	events.publish('playback-clear-' + this.chatID);
-	return this;
-};
-
-PlayBack.prototype.remove = function() {
-	events.publish('playback-clear-' + this.chatID);
-	events.publish('playback-destroy-' + this.chatID);
-	for (var i = 0; i < eventsArray[this.chatID].length; i++)
-		eventsArray[this.chatID][i].remove();
-	delete eventsArray[this.chatID];
-};
-
-PlayBack.prototype.send = function(data) {
-	var chatID = this.chatID;
-	events.publish('playback-send-' + chatID, { chatID: chatID, data: data });
-	return this;
-};
-
-PlayBack.prototype.receive = function(data) {
-	var chatID = this.chatID;
-	events.publish('playback-receive-' + chatID, { chatID: chatID, data: data });
-	return this;
-};
 
 
 module.exports = {
