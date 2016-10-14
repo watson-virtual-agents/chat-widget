@@ -16,42 +16,7 @@ var state = require('../../state');
 var events = require('../../events');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
-var templates = {
-	receive: require('../templates/receive.html')
-};
-
-function writeMessage(element, text) {
-	var exp = /(((https?:\/\/)|(www\.))[^\s]+)/gi;
-	var linked = text.replace(exp,'|||$1|||');
-	var arr = linked.split('|||');
-	for (var i = 0; i < arr.length; i++) {
-		var child = document.createElement('span');
-		var newtext = arr[i].replace(exp, '<a href="$1" target="_blank">$1</a>');
-		if (newtext === arr[i])
-			child = _addLineEndings(child, newtext);
-		else
-			child.innerHTML = newtext;
-		element.appendChild(child);
-	}
-}
-
-function _addLineEndings(el, newtext) {
-	var arr = newtext.split('\n');
-	if (arr.length === 1) {
-		el.textContent = arr[0];
-	} else {
-		for (var i = 0; i < arr.length; i++) {
-			if (arr[i].length > 0) {
-				var child = document.createElement('span');
-				child.textContent = arr[i];
-				el.appendChild(child);
-			}
-			if (i < arr.length - 1)
-				el.appendChild(document.createElement('br'));
-		}
-	}
-	return el;
-}
+var templates = require('../../templates');
 
 function _layoutAndActions(debug, data) {
 	data.element = document.querySelector('.' + data.uuid + ':last-child');
@@ -100,14 +65,10 @@ function receive(data) {
 		var item;
 		current.chatHolder.innerHTML += utils.compile(templates.receive, { 'data.uuid': data.uuid });
 		item = current.chatHolder.querySelector('.' + data.uuid + ':last-child .IBMChat-watson-message');
-		writeMessage(item, msg[i]);
+		utils.writeMessage(item, msg[i]);
 		if (i === (msg.length - 1))
 			_layoutAndActions(current.DEBUG, data);
 	}
-
-	/*
-	make an option for auto adding aria stuff
-	*/
 }
 
 module.exports = receive;

@@ -16,9 +16,7 @@ var state = require('../../state');
 var events = require('../../events');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
-var templates = {
-	send: require('../templates/send.html')
-};
+var templates = require('../../templates');
 
 function sendMock(data) {
 	if (data.text && data.text.length > 0) {

@@ -12,7 +12,7 @@
 * the License.
 */
 
-var state = require('./state');
+var state = require('../state');
 
 var events = [];
 
