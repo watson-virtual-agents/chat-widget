@@ -156,6 +156,14 @@
   padding:0 0 2px 0;
 }
 
+/* validation error message */
+.IBMChat-validation-error {
+	color: #CB3333;
+	padding-top: 0.25em;
+	font-size: 0.9em;
+	height: 1em;
+}
+
 /* Spinner */
 .IBMChat-input-loading {
 	z-index: 2;
@@ -189,14 +197,6 @@
 
 .IBMChat-end-spin svg circle {
 	display:none;
-}
-
-/* validation error message */
-.IBMChat-validation-error {
-	color: #CB3333;
-	padding-top: 0.25em;
-	font-size: 0.9em;
-	height: 1em;
 }
 
 /* initial rotation */

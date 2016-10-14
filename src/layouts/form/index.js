@@ -58,7 +58,7 @@ Form.prototype.drawForm = function() {
 	var formFields;
 	base.innerHTML = templates.base;
 	formFields = base.querySelector('.IBMChat-form-fields');
-	this.data.forEach(function(datum){
+	this.data.forEach(function(datum) {
 		var field = document.createElement('div');
 		field.innerHTML = utils.compile(templates.field, {
 			label: datum.label || '',
@@ -66,7 +66,7 @@ Form.prototype.drawForm = function() {
 			value: ''
 		});
 		field.className = ns + '-fields-row';
-		formFields.appendChild(field);		
+		formFields.appendChild(field);
 	});
 	this.fields = formFields.querySelectorAll('input');
 	this.submitButton = base.querySelector('.' + ns + '-submit');
@@ -161,7 +161,7 @@ Form.prototype.handleCancel = function() {
 Form.prototype.addEventListeners = function() {
 	this.cancelButton.addEventListener('click', this.handleCancel.bind(this));
 	this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
-	this.fields.forEach(function(field){
+	this.fields.forEach(function(field) {
 		field.addEventListener('keypress', this.handleEnter.bind(this));
 		field.addEventListener('input', this.handleInput.bind(this));
 	}, this);
@@ -172,7 +172,7 @@ Form.prototype.removeEventListeners = function() {
 	this.cancelButton.setAttribute('disabled', true);
 	this.submitButton.removeEventListener('click', this.handleSubmit.bind(this));
 	this.submitButton.setAttribute('disabled', true);
-	this.fields.forEach(function(field){
+	this.fields.forEach(function(field) {
 		field.removeEventListener('keypress', this.handleEnter.bind(this));
 		field.removeEventListener('input', this.handleInput.bind(this));
 		field.setAttribute('disabled', true);
