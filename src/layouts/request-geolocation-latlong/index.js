@@ -51,8 +51,9 @@ RequestGeolocationLatlong.prototype = {
 				function() {
 					publish('enable-input');
 					publish('disable-loading');
+					publish('receive', 'You have blocked sharing your location on this website.');
 					publish('send', {
-						text: '0,0',
+						text: 'find nearest locations',
 						silent: true
 					});
 				}
