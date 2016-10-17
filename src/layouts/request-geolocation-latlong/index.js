@@ -35,13 +35,16 @@ function RequestGeolocationLatlong(data) {
 
 RequestGeolocationLatlong.prototype = {
 	init: function(data) {
+		var locationShared = false;
 		this.data = data.data;
 		this.uuid = data.uuid;
 		this.parentElement = data.element;
 		this.layoutElement = data.layoutElement;
+		this.timeoutCheck = setTimeout(function() {
+			if (!locationShared) this.handleLocationNotShared();
+		}.bind(this), LOCATION_TIMEOUT);
 		publish('enable-loading');
 		publish('disable-input');
-		var locationShared = false;
 		navigator.geolocation.getCurrentPosition(
 				function(position) {
 					locationShared = true;
@@ -54,12 +57,10 @@ RequestGeolocationLatlong.prototype = {
 				},
 				this.handleLocationNotShared
 			);
-		setTimeout(function() {
-			if (!locationShared) this.handleLocationNotShared();
-		}.bind(this), LOCATION_TIMEOUT);
 	},
 
 	handleLocationNotShared: function() {
+		this.timeoutCheck = null;
 		publish('enable-input');
 		publish('disable-loading');
 		publish('receive', "You haven't shared your location on this website.");
