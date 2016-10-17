@@ -18,6 +18,8 @@ var publish = events.publish;
 
 var requestGeolocationLatlongs = [];
 
+var LOCATION_TIMEOUT = 10 * 1000;
+
 var requestGeolocationLatlongLayout = {
 	init: function() {
 		subscribe('layout:request-geolocation-latlong', function(data) {
@@ -39,8 +41,10 @@ RequestGeolocationLatlong.prototype = {
 		this.layoutElement = data.layoutElement;
 		publish('enable-loading');
 		publish('disable-input');
+		var locationShared = false;
 		navigator.geolocation.getCurrentPosition(
 				function(position) {
+					locationShared = true;
 					publish('enable-input');
 					publish('disable-loading');
 					publish('send', {
@@ -48,16 +52,21 @@ RequestGeolocationLatlong.prototype = {
 						silent: true
 					});
 				},
-				function() {
-					publish('enable-input');
-					publish('disable-loading');
-					publish('receive', 'You have blocked sharing your location on this website.');
-					publish('send', {
-						text: 'find nearest locations',
-						silent: true
-					});
-				}
+				this.handleLocationNotShared
 			);
+		setTimeout(function() {
+			if (!locationShared) this.handleLocationNotShared();
+		}.bind(this), LOCATION_TIMEOUT);
+	},
+
+	handleLocationNotShared: function() {
+		publish('enable-input');
+		publish('disable-loading');
+		publish('receive', "You haven't shared your location on this website.");
+		publish('send', {
+			text: 'find nearest locations',
+			silent: true
+		});
 	}
 };
 
