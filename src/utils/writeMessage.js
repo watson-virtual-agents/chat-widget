@@ -16,19 +16,21 @@ function validLink(link) {
 }
 
 ParseContent.prototype.init = function(el, text) {
-	var cls = this;
-	var content = [
-		{
-			type: 'span',
-			content: text
-		}
-	];
-	this.addLineEndings(content)
-		.then(cls.addUrls)
-		.then(cls.addEmails)
-		.then(function(content) {
-			cls.writeMessage(el, content);
-		});
+	if (text) {
+		var cls = this;
+		var content = [
+			{
+				type: 'span',
+				content: text
+			}
+		];
+		this.addLineEndings(content)
+			.then(cls.addUrls)
+			.then(cls.addEmails)
+			.then(function(content) {
+				cls.writeMessage(el, content);
+			});
+	}
 };
 
 ParseContent.prototype.writeMessage = function(el, content) {
