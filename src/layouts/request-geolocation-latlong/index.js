@@ -35,32 +35,40 @@ function RequestGeolocationLatlong(data) {
 
 RequestGeolocationLatlong.prototype = {
 	init: function(data) {
-		var locationShared = false;
 		this.data = data.data;
 		this.uuid = data.uuid;
 		this.parentElement = data.element;
 		this.layoutElement = data.layoutElement;
+		this.timedOut = false;
 		this.timeoutCheck = setTimeout(function() {
-			if (!locationShared) this.handleLocationNotShared();
+			this.timedOut = true;
+			this.handleLocationNotShared();
 		}.bind(this), LOCATION_TIMEOUT);
 		publish('enable-loading');
 		publish('disable-input');
 		navigator.geolocation.getCurrentPosition(
-				function(position) {
-					locationShared = true;
-					publish('enable-input');
-					publish('disable-loading');
-					publish('send', {
-						text: position.coords.latitude + ',' + position.coords.longitude,
-						silent: true
-					});
-				},
-				this.handleLocationNotShared
-			);
+			function(position) {
+				if (this.timedOut) return false;
+				clearTimeout(this.timeoutCheck);
+				this.handleLocationShared(position);
+			}.bind(this),
+			function() {
+				if (this.timedOut) return false;
+				clearTimeout(this.timeoutCheck);
+				this.handleLocationNotShared();
+			}.bind(this),
+			{ timeout: LOCATION_TIMEOUT }
+		);
 	},
-
+	handleLocationShared: function(position) {
+		publish('enable-input');
+		publish('disable-loading');
+		publish('send', {
+			text: position.coords.latitude + ',' + position.coords.longitude,
+			silent: true
+		});
+	},
 	handleLocationNotShared: function() {
-		this.timeoutCheck = null;
 		publish('enable-input');
 		publish('disable-loading');
 		publish('receive', "You haven't shared your location on this website.");
