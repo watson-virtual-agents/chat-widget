@@ -18,7 +18,7 @@ var publish = events.publish;
 
 var requestGeolocationLatlongs = [];
 
-var LOCATION_TIMEOUT = 10 * 1000;
+var LOCATION_TIMEOUT = 20 * 1000;
 
 var requestGeolocationLatlongLayout = {
 	init: function() {
