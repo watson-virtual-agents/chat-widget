@@ -12,7 +12,7 @@ function validLink(link) {
 	if (link.startsWith('http://') || link.startsWith('https://'))
 		return link;
 	else
-		return '//' + link;
+		return 'http://' + link;
 }
 
 ParseContent.prototype.init = function(el, text) {
