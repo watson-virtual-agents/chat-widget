@@ -49,11 +49,13 @@ IBMChat.init({
  botID: 'YOUR_BOT_ID',
  baseURL: 'https://example.com/botProxy',
  styles: {
-	 background: '#ffffff',
-	 accentBackground: '#31eaf1',
+	 background: 'rgba(255, 255, 255, 1)', //use rgba
+	 text: 'rgba(0, 0, 0, 1)',
+	 accentBackground: '#31eaf1', //or a hex code
 	 accentText: '#ffffff',
 	 secondaryBackground: '#f7f7f7',
-	 secondaryText: '#464646'
+	 secondaryText: '#464646',
+	 link: '#ffffff'
  }
 });
 ```

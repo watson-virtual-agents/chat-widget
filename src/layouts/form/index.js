@@ -16,17 +16,17 @@ require('./styles.css');
 
 var events = require('../../events');
 var profile = require('../../profile');
+var utils = require('../../utils');
 var subscribe = events.subscribe;
 var publish = events.publish;
+var ns = 'IBMChat-form';
 var activeClassName = 'IBMChat-accent-colors';
 var inactiveClassName = 'IBMChat-secondary-colors';
-var utils = require('../../utils');
-var ns = 'IBMChat-form';
-var widgets = [];
 var templates = {
 	base: require('./templates/base.html'),
 	field: require('./templates/field.html')
 };
+var widgets = [];
 
 var formLayout = {
 	init: function() {
@@ -49,7 +49,7 @@ Form.prototype.init = function(data) {
 	this.layoutElement = data.layoutElement;
 	this.msgElement = data.msgElement;
 	this.drawForm();
-	this.subscribeSend = subscribe('send', this.removeAllEventListeners.bind(this));
+	this.subscribeSend = subscribe('send', this.removeEventListeners.bind(this));
 	publish('disable-input');
 };
 
@@ -58,32 +58,31 @@ Form.prototype.drawForm = function() {
 	var formFields;
 	base.innerHTML = templates.base;
 	formFields = base.querySelector('.IBMChat-form-fields');
-	for (var i = 0; i < this.data.length; i++) {
+	this.data.forEach(function(datum) {
 		var field = document.createElement('div');
 		field.innerHTML = utils.compile(templates.field, {
-			label: this.data[i].label || '',
-			name: this.data[i].name,
+			label: datum.label || '',
+			name: datum.name,
 			value: ''
 		});
 		field.className = ns + '-fields-row';
 		formFields.appendChild(field);
-	}
+	});
 	this.fields = formFields.querySelectorAll('input');
 	this.submitButton = base.querySelector('.' + ns + '-submit');
 	this.cancelButton = base.querySelector('.' + ns + '-cancel');
-	this.submitButton.classList.add(activeClassName);
+	this.submitButton.classList.add(inactiveClassName);
 	this.cancelButton.classList.add(inactiveClassName);
 	this.layoutElement.appendChild(base);
 	this.fields[0].focus();
-	this.addListeners();
+	this.addEventListeners();
 };
 
 Form.prototype.handleSubmit = function() {
 	if (this.validateFields() === true) {
-		for (var i = 0; i < this.fields.length; i++) {
-			var field = this.fields[i];
-			profile.set(field.getAttribute('name'), field.value);
-		}
+		for (var i = 0; i < this.fields.length; i++)
+			profile.set(this.fields[i].getAttribute('name'), this.fields[i].value);
+		this.submitButton.classList.add(activeClassName);
 		publish('send', {
 			silent: true,
 			text: 'success'
@@ -95,28 +94,50 @@ Form.prototype.handleSubmit = function() {
 Form.prototype.validateFields = function() {
 	var valid = true;
 	for (var i = 0; i < this.data.length; i++) {
-		if (this.data[i].required && this.data[i].required != 'false') {
-			if (!this.fields[i].value || this.fields[i].value.length === 0) {
-				this.showError(this.fields[i].getAttribute('name'), 'This field is required.');
+		if (this.data[i].required === 'true')
+			valid = this.validateField(this.fields[i], this.data[i]);
+	}
+	return valid;
+};
+
+Form.prototype.validateField = function(field, datum) {
+	var valid = true;
+	if (!field.value || field.value.trim().length === 0) {
+		this.addError(field.getAttribute('name'), 'This field is required.');
+		if (valid) field.focus();
+		valid = false;
+	} else if (datum.validations && datum.validations.length !== 0) {
+		for (var i = 0; i < datum.validations.length; i++) {
+			var validation = datum.validations[i];
+			var regex = new RegExp('/'+ validation.regex +'/');
+			var matches = regex.test(field.value);
+			if (!matches) {
+				this.addError(field.getAttribute('name'), validation.message);
+				if (valid) field.focus();
 				valid = false;
+				break;
 			}
 		}
 	}
 	return valid;
 };
 
-Form.prototype.showError = function(name, error) {
-	var el = this.layoutElement.querySelector('[data-name="' + name + '"]');
-	el.textContent = error;
+Form.prototype.addError = function(name, msg) {
+	var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
+	el.textContent = msg;
 	el.style.display = 'block';
 };
 
-Form.prototype.hideErrors = function() {
-	var els = this.layoutElement.querySelectorAll('[data-name]');
-	for (var i = 0; i < els.length; i++) {
-		els[i].textContent = '';
-		els[i].style.display = 'none';
-	}
+Form.prototype.removeError = function(name) {
+	var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
+	el.textContent = '';
+};
+
+Form.prototype.removeAllErrors = function() {
+	var els = this.layoutElement.querySelectorAll('[data-validation-for]');
+	els.forEach(function(el) {
+		this.removeError(el);
+	}, this);
 };
 
 Form.prototype.handleEnter = function(e) {
@@ -124,29 +145,40 @@ Form.prototype.handleEnter = function(e) {
 		this.handleSubmit();
 };
 
+Form.prototype.handleInput = function(e) {
+	var name = e.target.name;
+	this.removeError(name);
+};
+
 Form.prototype.handleCancel = function() {
+	this.cancelButton.classList.add(activeClassName);
+	publish('enable-input');
 	publish('send', {
 		silent: true,
 		text: 'cancel'
 	});
-	publish('enable-input');
 };
 
-Form.prototype.addListeners = function() {
+Form.prototype.addEventListeners = function() {
 	this.cancelButton.addEventListener('click', this.handleCancel.bind(this));
 	this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
-	for (var i = 0; i < this.fields.length; i++)
-		this.fields[i].addEventListener('keypress', this.handleEnter.bind(this));
+	for (var i = 0; i < this.fields.length; i++) {
+		var field = this.fields[i];
+		field.addEventListener('keypress', this.handleEnter.bind(this));
+		field.addEventListener('input', this.handleInput.bind(this));
+	}
 };
 
-Form.prototype.removeAllEventListeners = function() {
+Form.prototype.removeEventListeners = function() {
 	this.cancelButton.removeEventListener('click', this.handleCancel.bind(this));
 	this.cancelButton.setAttribute('disabled', true);
 	this.submitButton.removeEventListener('click', this.handleSubmit.bind(this));
 	this.submitButton.setAttribute('disabled', true);
 	for (var i = 0; i < this.fields.length; i++) {
-		this.fields[i].removeEventListener('keypress', this.handleEnter.bind(this));
-		this.fields[i].setAttribute('disabled', true);
+		var field = this.fields[i];
+		field.removeEventListener('keypress', this.handleEnter.bind(this));
+		field.removeEventListener('input', this.handleInput.bind(this));
+		field.setAttribute('disabled', true);
 	}
 
 	this.subscribeSend.remove();

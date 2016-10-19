@@ -12,15 +12,16 @@
 * the License.
 */
 
-var start = require('./events/start');
-var resize = require('./events/resize');
-var receive = require('./events/receive');
-var send = require('./events/send');
-var sendMock = require('./events/send-mock');
-var sendInputMessage = require('./events/send-input-message');
-var input = require('./events/input');
-var error = require('./events/error');
-var scrollToBottom = require('./events/scroll-to-bottom');
+var start = require('./start');
+var resize = require('./resize');
+var receive = require('./receive');
+var send = require('./send');
+var sendMock = require('./send-mock');
+var sendInputMessage = require('./send-input-message');
+var input = require('./input');
+var error = require('./error');
+var playback = require('./playback');
+var scrollToBottom = require('./scroll-to-bottom');
 
 module.exports = {
 	resize: resize,
@@ -31,5 +32,6 @@ module.exports = {
 	input: input,
 	error: error,
 	scrollToBottom: scrollToBottom,
-	sendInputMessage: sendInputMessage
+	sendInputMessage: sendInputMessage,
+	playback: playback
 };

@@ -17,9 +17,7 @@ var events = require('../../events');
 var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
-var templates = {
-	send: require('../templates/send.html')
-};
+var templates = require('../../templates');
 
 function send(data) {
 	if (data.text && data.text.length > 0) {
@@ -40,44 +38,63 @@ function addToSendQueue(data) {
 	});
 }
 
-function agentSend() {
+function always() {
+	events.publish('disable-loading');
+	state.setState({
+		inProgress: false
+	});
+	if (state.getState().sendQueue.length > 0)
+		agentSend();
+}
+
+function resolve() {
+	always();
+}
+
+function reject(e) {
+	events.publish('error', arguments);
+	console.error(e.stack);
+	always();
+}
+
+function sendToBot(data) {
 	var current = state.getState();
 	events.publish('enable-loading');
-	var newData = assign({}, current.sendQueue[0], { uuid: utils.getUUID() });
-	state.setState({
-		inProgress: true,
-		sendQueue: current.sendQueue.slice(0, -1),
-		messages: [].concat(current.messages || [], newData)
-	});
+	events.publish('scroll-to-bottom');
+	events.publish('focus-input');
 	BotSDK
-		.send( current.botID, current.chatID, newData.text )
+		.send( current.botID, current.chatID, data.text )
 		.then( function(res) {
-			current = state.getState();
-			state.setState({
-				inProgress: false
-			});
-			events.publish('disable-loading');
 			events.publish('receive', res);
-			if (current.sendQueue.length > 0)
-				agentSend();
+			resolve();
 		})
 		.catch( function(e) {
-			state.setState({
-				inProgress: false
-			});
-			events.publish('disable-loading');
-			events.publish('error', arguments);
-			console.error(e.stack);
+			reject(e);
 		});
-	current.root.querySelector('.IBMChat-chat-textbox').value = '';
+}
 
-	current = state.getState();
+function agentSend() {
+	var current = state.getState();
+	var newData = assign({}, current.sendQueue[0], { uuid: utils.getUUID() });
 	var msg = newData.text || '';
+	state.setState({
+		inProgress: true,
+		sendQueue: current.sendQueue.slice(1, current.sendQueue.length),
+		messages: [].concat(current.messages || [], newData)
+	});
+	current.root.querySelector('.IBMChat-chat-textbox').value = '';
 	if (!newData.silent) {
 		current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
 		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = msg;
 		events.publish('scroll-to-bottom');
 	}
+	events.publish('enable-loading');
+	if (current.handleInput.default)
+		sendToBot(newData);
+	else if (current.handleInput.context)
+		current.handleInput.callback.bind(current.handleInput.context, newData.text, resolve, reject);
+	else
+		current.handleInput.callback(newData.text, resolve, reject);
 }
 
 module.exports = send;

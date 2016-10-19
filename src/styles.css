@@ -1,17 +1,3 @@
-/**
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
-*
-* Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
-* in compliance with the License. You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software distributed under the License
-* is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
-* or implied. See the License for the specific language governing permissions and limitations under
-* the License.
-*/
-
 .IBMChat-outer-container {
 	max-width: 768px;
   min-width: 288px;
@@ -53,16 +39,8 @@
 	height:auto;
 }
 
-.IBMChat-messages > div {
-	opacity:0.8;
-}
-
 .IBMChat-messages > div .IBMChat-watson-layout {
 	opacity:0.8;
-}
-
-.IBMChat-messages > div:last-child {
-	opacity:1;
 }
 
 .IBMChat-messages > div:last-child .IBMChat-watson-layout {
@@ -117,7 +95,7 @@
 }
 
 .IBMChat-watson-message {
-	margin-right:2em;
+	margin:1em 2em 1em 0;
 	padding: 0.1em;
 	padding-left: 1em;
 }
@@ -178,6 +156,14 @@
   padding:0 0 2px 0;
 }
 
+/* validation error message */
+.IBMChat-validation-error {
+	color: #CB3333;
+	padding-top: 0.25em;
+	font-size: 0.9em;
+	height: 1em;
+}
+
 /* Spinner */
 .IBMChat-input-loading {
 	z-index: 2;
@@ -214,7 +200,6 @@
 }
 
 /* initial rotation */
-
 @keyframes init-rotate {
 	0% {
 		transform: rotate(0deg);
@@ -235,7 +220,6 @@
 }
 
 /* initial stroke animation */
-
 @keyframes init-stroke {
 	0% {
 		opacity: 0;
