@@ -20,6 +20,7 @@ var subscribe = events.subscribe;
 var publish = events.publish;
 var utils = require('../../utils');
 var validation = require('./validation');
+var activeClassName = 'IBMChat-accent-colors';
 var ns = 'IBMChat-creditcard';
 var widgets = [];
 var templates = {
@@ -47,6 +48,8 @@ CreditCard.prototype.init = function(data) {
 	this.layoutElement = data.layoutElement;
 	this.msgElement = data.msgElement;
 	this.drawForm();
+	this.subscribeSend = subscribe('send', this.removeAllEventListeners.bind(this));
+	publish('disable-input');
 };
 
 CreditCard.prototype.drawForm = function() {
@@ -66,6 +69,7 @@ CreditCard.prototype.drawForm = function() {
 		var name = field.getAttribute('name');
 		this.formElements[name] = field;
 	}
+	this.formElements['cc_full_name'].focus();
 	this.addListeners();
 };
 
@@ -97,6 +101,7 @@ CreditCard.prototype.validate = function() {
 
 	if (this.formData.cc_full_name.length === 0) {
 		this.addError('cc_full_name', 'This field is required.');
+		if (valid) this.formElements['cc_full_name'].focus();
 		valid = false;
 	} else {
 		this.removeError('cc_full_name');
@@ -105,14 +110,16 @@ CreditCard.prototype.validate = function() {
 	var cc = validation.validateCard(this.data.acceptedCards, this.formData.cc_number);
 	if (!cc.valid) {
 		this.addError('cc_number', cc.message);
+		if (valid) this.formElements['cc_number'].focus();
 		valid = false;
 	} else {
-		this.removeError('cc_full_name');
+		this.removeError('cc_number');
 	}
 
 	var exp = validation.validateExp(this.formData.cc_exp_date_month, this.formData.cc_exp_date_year);
 	if (!exp.valid) {
 		this.addError('cc_exp_date', exp.message);
+		if (valid) this.formElements['cc_exp_date_month'].focus();
 		valid = false;
 	} else {
 		this.removeError('cc_exp_date');
@@ -121,6 +128,7 @@ CreditCard.prototype.validate = function() {
 	var cvv = validation.validateCVV(this.formData.cc_code);
 	if (!cvv.valid) {
 		this.addError('cc_code', cvv.message);
+		if (valid) this.formElements['cc_code'].focus();
 		valid = false;
 	} else {
 		this.removeError('cc_code');
@@ -142,17 +150,19 @@ CreditCard.prototype.handleContinue = function() {
 };
 
 CreditCard.prototype.handleCancel = function() {
+	this.cancelButton.classList.add(activeClassName);
 	publish('send', {
 		silent: true,
 		text: 'cancel'
 	});
+	publish('enable-input');
 };
 
 CreditCard.prototype.removeAllEventListeners = function() {
 	this.cancelButton.removeEventListener('click', this.handleCancel.bind(this));
 	this.cancelButton.setAttribute('disabled', true);
-	this.submitButton.removeEventListener('click', this.handleSubmit.bind(this));
-	this.submitButton.setAttribute('disabled', true);
+	this.continueButton.removeEventListener('click', this.handleContinue.bind(this));
+	this.continueButton.setAttribute('disabled', true);
 	for (var j = 0; j < this.fields.length; j++)
 		this.fields[j].setAttribute('disabled', true);
 

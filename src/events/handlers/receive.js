@@ -16,48 +16,9 @@ var state = require('../../state');
 var events = require('../../events');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
-var templates = {
-	receive: require('../templates/receive.html')
-};
+var templates = require('../../templates');
 
-function writeMessage(element, text) {
-	var exp = /(((https?:\/\/)|(www\.))[^\s]+)/gi;
-	var linked = text.replace(exp,'|||$1|||');
-	var arr = linked.split('|||');
-	for (var i = 0; i < arr.length; i++) {
-		var child = document.createElement('span');
-		var newtext = arr[i].replace(exp, '<a href="$1" target="_blank">$1</a>');
-		if (newtext === arr[i])
-			child = _addLineEndings(child, newtext);
-		else
-			child.innerHTML = newtext;
-		element.appendChild(child);
-	}
-}
-
-function _addLineEndings(el, newtext) {
-	var arr = newtext.split('\n');
-	if (arr.length === 1) {
-		el.textContent = arr[0];
-	} else {
-		for (var i = 0; i < arr.length; i++) {
-			if (arr[i].length > 0) {
-				var child = document.createElement('span');
-				child.textContent = arr[i];
-				el.appendChild(child);
-			}
-			if (i < arr.length - 1)
-				el.appendChild(document.createElement('br'));
-		}
-	}
-	return el;
-}
-
-function _layoutAndActions(debug, data) {
-	data.element = document.querySelector('.' + data.uuid + ':last-child');
-	data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
-	data.msgElement = data.element.querySelector('.IBMChat-watson-message');
-
+function _layoutAndActions(debug, data, holder) {
 	if (data.message && data.message.action && data.message.action.name) {
 		var action = 'action:' + data.message.action.name;
 		if (events.hasSubscription(action)) {
@@ -68,9 +29,14 @@ function _layoutAndActions(debug, data) {
 			console.warn('Nothing is subscribed to ' + action);
 		}
 	}
-
 	if (data.message && data.message.layout && data.message.layout.name) {
 		var layout = 'layout:' + data.message.layout.name;
+		var el = document.createElement('div');
+		el.classList = 'IBMChat-watson-layout';
+		holder.appendChild(el);
+		data.element = document.querySelector('.' + data.uuid + ':last-child');
+		data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
+		data.msgElement = data.element.querySelector('.IBMChat-watson-message');
 		if (events.hasSubscription(layout)) {
 			events.publish(layout, data);
 			if (debug)
@@ -79,10 +45,11 @@ function _layoutAndActions(debug, data) {
 			console.warn('Nothing is subscribed to ' + layout);
 		}
 	}
-
-	events.publish('disable-loading');
-	events.publish('scroll-to-bottom');
-	events.publish('focus-input');
+	setTimeout(function() {
+		events.publish('disable-loading');
+		events.publish('scroll-to-bottom');
+		events.publish('focus-input');
+	}, 0);
 }
 
 function receive(data) {
@@ -97,17 +64,20 @@ function receive(data) {
 	if (msg.length === 0)
 		msg = [''];
 	for (var i = 0; i < msg.length; i++) {
-		var item;
-		current.chatHolder.innerHTML += utils.compile(templates.receive, { 'data.uuid': data.uuid });
-		item = current.chatHolder.querySelector('.' + data.uuid + ':last-child .IBMChat-watson-message');
-		writeMessage(item, msg[i]);
+		var holder = document.createElement('div');
+		holder.classList = data.uuid;
+		holder.innerHTML = templates.receive;
+		if (msg[i] || (data.message && data.message.layout && data.message.layout.name && i === (msg.length - 1))) {
+			var item = document.createElement('div');
+			item.classList = 'IBMChat-watson-message IBMChat-watson-message-theme';
+			holder.appendChild(item);
+			utils.writeMessage(item, msg[i]);
+			current.chatHolder.appendChild(holder);
+		}
 		if (i === (msg.length - 1))
-			_layoutAndActions(current.DEBUG, data);
-	}
+			_layoutAndActions(current.DEBUG, data, holder);
 
-	/*
-	make an option for auto adding aria stuff
-	*/
+	}
 }
 
 module.exports = receive;

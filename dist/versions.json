@@ -36,19 +36,25 @@
     "version": "1.1.0",
     "widget": "IBMChatClient-v1.1.0.js"
   }, {
-    "version": "1.1.1-alpha.1",
-    "widget": "IBMChatClient-v1.1.1-alpha.1.js"
-  }, {
-    "version": "1.1.1-alpha.2",
-    "widget": "IBMChatClient-v1.1.1-alpha.2.js"
-  }, {
-    "version": "1.1.1-alpha.3",
-    "widget": "IBMChatClient-v1.1.1-alpha.3.js"
-  }, {
-    "version": "1.1.1-alpha.4",
-    "widget": "IBMChatClient-v1.1.1-alpha.4.js"
-  }, {
     "version": "1.2.0",
     "widget": "IBMChatClient-v1.2.0.js"
+  }, {
+    "version": "1.2.1-alpha.5",
+    "widget": "IBMChatClient-v1.2.1-alpha.5.js"
+  }, {
+    "version": "1.2.1-alpha.6",
+    "widget": "IBMChatClient-v1.2.1-alpha.6.js"
+  }, {
+    "version": "1.2.1-alpha.7",
+    "widget": "IBMChatClient-v1.2.1-alpha.7.js"
+  }, {
+    "version": "1.2.1-alpha.8",
+    "widget": "IBMChatClient-v1.2.1-alpha.8.js"
+  }, {
+    "version": "1.2.1-alpha.9",
+    "widget": "IBMChatClient-v1.2.1-alpha.9.js"
+  }, {
+    "version": "1.2.1-alpha.10",
+    "widget": "IBMChatClient-v1.2.1-alpha.10.js"
   }]
 }
