@@ -86,7 +86,7 @@ Choose.prototype.drawButtons = function() {
 		submit.className = ns + '-submit';
 		submit.innerHTML = submitBtn;
 		this.submitButton = submit.querySelector('button');
-		this.submitButton.classList = activeClassName;
+		this.submitButton.classList.add(activeClassName);
 		this.submitButton.setAttribute('disabled', true);
 		this.el.appendChild(submit);
 		this.addSubmitListener(this.submitButton);

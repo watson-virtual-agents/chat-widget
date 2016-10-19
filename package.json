@@ -1,6 +1,6 @@
 {
   "name": "@watson-virtual-agent/chat-widget",
-  "version": "1.2.1-alpha.10",
+  "version": "1.2.1-alpha.11",
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/IBMChatClient-latest.js",

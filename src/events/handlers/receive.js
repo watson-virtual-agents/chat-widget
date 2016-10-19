@@ -32,7 +32,7 @@ function _layoutAndActions(debug, data, holder) {
 	if (data.message && data.message.layout && data.message.layout.name) {
 		var layout = 'layout:' + data.message.layout.name;
 		var el = document.createElement('div');
-		el.classList = 'IBMChat-watson-layout';
+		el.classList.add('IBMChat-watson-layout');
 		holder.appendChild(el);
 		data.element = document.querySelector('.' + data.uuid + ':last-child');
 		data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
@@ -49,7 +49,7 @@ function _layoutAndActions(debug, data, holder) {
 		events.publish('disable-loading');
 		events.publish('scroll-to-bottom');
 		events.publish('focus-input');
-	}, 0);
+	}, 10);
 }
 
 function receive(data) {
@@ -65,11 +65,12 @@ function receive(data) {
 		msg = [''];
 	for (var i = 0; i < msg.length; i++) {
 		var holder = document.createElement('div');
-		holder.classList = data.uuid;
+		holder.classList.add(data.uuid);
 		holder.innerHTML = templates.receive;
 		if (msg[i] || (data.message && data.message.layout && data.message.layout.name && i === (msg.length - 1))) {
 			var item = document.createElement('div');
-			item.classList = 'IBMChat-watson-message IBMChat-watson-message-theme';
+			item.classList.add('IBMChat-watson-message');
+			item.classList.add('IBMChat-watson-message-theme');
 			holder.appendChild(item);
 			utils.writeMessage(item, msg[i]);
 			current.chatHolder.appendChild(holder);
