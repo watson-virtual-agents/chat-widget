@@ -18,11 +18,7 @@ var utils = require('../../utils');
 var assign = require('lodash/assign');
 var templates = require('../../templates');
 
-function _layoutAndActions(debug, data) {
-	data.element = document.querySelector('.' + data.uuid + ':last-child');
-	data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
-	data.msgElement = data.element.querySelector('.IBMChat-watson-message');
-
+function _layoutAndActions(debug, data, holder) {
 	if (data.message && data.message.action && data.message.action.name) {
 		var action = 'action:' + data.message.action.name;
 		if (events.hasSubscription(action)) {
@@ -33,9 +29,14 @@ function _layoutAndActions(debug, data) {
 			console.warn('Nothing is subscribed to ' + action);
 		}
 	}
-
 	if (data.message && data.message.layout && data.message.layout.name) {
 		var layout = 'layout:' + data.message.layout.name;
+		var el = document.createElement('div');
+		el.classList = 'IBMChat-watson-layout';
+		holder.appendChild(el);
+		data.element = document.querySelector('.' + data.uuid + ':last-child');
+		data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
+		data.msgElement = data.element.querySelector('.IBMChat-watson-message');
 		if (events.hasSubscription(layout)) {
 			events.publish(layout, data);
 			if (debug)
@@ -44,10 +45,11 @@ function _layoutAndActions(debug, data) {
 			console.warn('Nothing is subscribed to ' + layout);
 		}
 	}
-
-	events.publish('disable-loading');
-	events.publish('scroll-to-bottom');
-	events.publish('focus-input');
+	setTimeout(function() {
+		events.publish('disable-loading');
+		events.publish('scroll-to-bottom');
+		events.publish('focus-input');
+	}, 0);
 }
 
 function receive(data) {
@@ -62,12 +64,19 @@ function receive(data) {
 	if (msg.length === 0)
 		msg = [''];
 	for (var i = 0; i < msg.length; i++) {
-		var item;
-		current.chatHolder.innerHTML += utils.compile(templates.receive, { 'data.uuid': data.uuid });
-		item = current.chatHolder.querySelector('.' + data.uuid + ':last-child .IBMChat-watson-message');
-		utils.writeMessage(item, msg[i]);
+		var holder = document.createElement('div');
+		holder.classList = data.uuid;
+		holder.innerHTML = templates.receive;
+		if (msg[i] || (data.message && data.message.layout && data.message.layout.name && i === (msg.length - 1))) {
+			var item = document.createElement('div');
+			item.classList = 'IBMChat-watson-message IBMChat-watson-message-theme';
+			holder.appendChild(item);
+			utils.writeMessage(item, msg[i]);
+			current.chatHolder.appendChild(holder);
+		}
 		if (i === (msg.length - 1))
-			_layoutAndActions(current.DEBUG, data);
+			_layoutAndActions(current.DEBUG, data, holder);
+
 	}
 }
 
