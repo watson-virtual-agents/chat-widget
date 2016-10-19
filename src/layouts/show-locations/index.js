@@ -41,7 +41,8 @@ var templates = {
 	hoursClosed: require('./templates/hours-closed.html'),
 	hoursOpen: require('./templates/hours-open.html'),
 	hoursTodayOpen: require('./templates/hours-today-open.html'),
-	hoursTodayClosed: require('./templates/hours-today-closed.html')
+	hoursTodayClosed: require('./templates/hours-today-closed.html'),
+	hoursTimezone: require('./templates/hours-timezone.html')
 };
 
 var strings = {
@@ -150,8 +151,9 @@ function parseAddress(address) {
 	};
 }
 
-function createHours(hoursEl, moreHoursEl, hours, timezone) {
+function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
 	if (hours) {
+		// hours
 		var today = new Date().getDay();
 		var todaysHours = hours[today];
 		var el = document.createElement('div');
@@ -159,16 +161,26 @@ function createHours(hoursEl, moreHoursEl, hours, timezone) {
 			el.innerHTML = utils.compile(templates.hoursTodayOpen, {
 				ns: ns,
 				open: formatAMPM(todaysHours.open),
-				close: formatAMPM(todaysHours.close),
-				timezone: timezone
+				close: formatAMPM(todaysHours.close)
 			});
 		} else {
 			el.innerHTML = utils.compile(templates.hoursTodayClosed, {
-				ns: ns,
-				timezone: timezone
+				ns: ns
 			});
 		}
 		hoursEl.appendChild(el);
+		// timezone
+		if (timezone) {
+			var tzChildEl = document.createElement('div');
+			tzChildEl.innerHTML = utils.compile(templates.hoursTimezone, {
+				ns: ns,
+				timezone: timezone
+			});
+			timezoneEl.appendChild(tzChildEl);
+		} else {
+			timezoneEl.parentNode.removeChild(timezoneEl);
+		}
+		// more hours
 		for (var i = 0; i < hours.length; i++) {
 			var childEl = document.createElement('div');
 			childEl.setAttribute('class', ns + '-days-hours');
@@ -319,6 +331,7 @@ ShowLocations.prototype = {
 				phone: el.querySelector('.' + ns + '-locations-item-data-phone'),
 				email: el.querySelector('.' + ns + '-locations-item-data-email'),
 				hours: el.querySelector('.' + ns + '-locations-item-data-hours'),
+				timezone: el.querySelector('.' + ns + '-locations-item-data-timezone'),
 				parentEl: el.querySelector('.' + ns + '-locations-item-data'),
 				hoursButton: el.querySelector('.' + ns + '-locations-item-data-hours-button'),
 				moreHours: el.querySelector('.' + ns + '-locations-item-data-more-hours'),
@@ -363,9 +376,9 @@ ShowLocations.prototype = {
 		else
 			dom.phone.parentNode.removeChild(dom.phone);
 		
-		// hours
+		// hours/timezone
 		if (item.days && item.days.length > 0) {
-			createHours(dom.hours, dom.moreHours, item.days, item.address.timezone);
+			createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
 			dom.hoursButton.addEventListener('click', function(e) {
 				e.preventDefault();
 				dom.parentEl.removeChild(dom.hoursButton);
