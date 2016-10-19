@@ -60,6 +60,8 @@ function reject(e) {
 function sendToBot(data) {
 	var current = state.getState();
 	events.publish('enable-loading');
+	events.publish('scroll-to-bottom');
+	events.publish('focus-input');
 	BotSDK
 		.send( current.botID, current.chatID, data.text )
 		.then( function(res) {
