@@ -80,9 +80,8 @@ Form.prototype.drawForm = function() {
 
 Form.prototype.handleSubmit = function() {
 	if (this.validateFields() === true) {
-		this.fields.forEach(function(field) {
-			profile.set(field.getAttribute('name'), field.value);
-		});
+		for (var i = 0; i < this.fields.length; i++)
+			profile.set(this.fields[i].getAttribute('name'), this.fields[i].value);
 		this.submitButton.classList.add(activeClassName);
 		publish('send', {
 			silent: true,
@@ -153,20 +152,21 @@ Form.prototype.handleInput = function(e) {
 
 Form.prototype.handleCancel = function() {
 	this.cancelButton.classList.add(activeClassName);
+	publish('enable-input');
 	publish('send', {
 		silent: true,
 		text: 'cancel'
 	});
-	publish('enable-input');
 };
 
 Form.prototype.addEventListeners = function() {
 	this.cancelButton.addEventListener('click', this.handleCancel.bind(this));
 	this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
-	this.fields.forEach(function(field) {
+	for (var i = 0; i < this.fields.length; i++) {
+		var field = this.fields[i];
 		field.addEventListener('keypress', this.handleEnter.bind(this));
 		field.addEventListener('input', this.handleInput.bind(this));
-	}, this);
+	}
 };
 
 Form.prototype.removeEventListeners = function() {
@@ -174,11 +174,12 @@ Form.prototype.removeEventListeners = function() {
 	this.cancelButton.setAttribute('disabled', true);
 	this.submitButton.removeEventListener('click', this.handleSubmit.bind(this));
 	this.submitButton.setAttribute('disabled', true);
-	this.fields.forEach(function(field) {
+	for (var i = 0; i < this.fields.length; i++) {
+		var field = this.fields[i];
 		field.removeEventListener('keypress', this.handleEnter.bind(this));
 		field.removeEventListener('input', this.handleInput.bind(this));
 		field.setAttribute('disabled', true);
-	}, this);
+	}
 
 	this.subscribeSend.remove();
 };
