@@ -174,8 +174,9 @@ function validateExp(userM, userY) {
 	}
 
 	userM = parseInt(userM, 10);
-	userY = parseInt('20' + '' + userY, 10);
-	if (userM > 12 || userM < 1 || (userY < year || (userY === year && userM < month))) {
+	userY = parseInt(userY, 10);
+
+	if (userM > 12 || userM < 1 || (userY > year + 20) || (userY < year || (userY === year && userM < month))) {
 		return {
 			"message": messages.invalidExpiration,
 			"valid": false
