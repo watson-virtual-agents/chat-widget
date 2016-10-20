@@ -265,16 +265,14 @@ var IBMChat = {
 	 * @param {string} eventName - Takes a string representing the name of the event
 	 * @param {function} callback - function to run when event is called
 	 * @param context - optional: value of "this" in the function
-	 * @returns {IBMChat} - Returns IBMChat for chaining.
+	 * @returns {Object} - Returns object with a .remove function to destroy the subscription
 	 * @example
-	 * IBMChat.subscribe('the-end-of-the-world', function(message) {
+	 * var mySubscription = IBMChat.subscribe('the-end-of-the-world', function(message) {
 	 *   console.log(message);
+	 *   mySubscription.remove(); // remove subscription
 	 * });
 	 */
-	subscribe: function(eventName, callback) {
-		bootstrap.subscribe(eventName, callback);
-		return IBMChat;
-	},
+	subscribe: bootstrap.subscribe,
 	/**
 	 * Publish an IBMChat event.
 	 * @function publish
@@ -285,8 +283,8 @@ var IBMChat = {
 	 * @example
 	 * IBMChat.publish('the-end-of-the-world', 'panic!');
 	 */
-	publish: function(eventName) {
-		bootstrap.publish(eventName);
+	publish: function(eventName, data) {
+		bootstrap.publish(eventName, data);
 		return IBMChat;
 	},
 
