@@ -84,7 +84,7 @@ function receive(data) {
 		}
 		if (i === (msg.length - 1))
 			_actions(current.DEBUG, data);
-		if (data.message.layout && (data.message.layout.index !== undefined && data.message.layout.index == i) || (data.message.layout.index === undefined && i == (msg.length - 1)))
+		if (data.message.layout && ((data.message.layout.index !== undefined && data.message.layout.index == i) ||(data.message.layout.index === undefined && i == (msg.length - 1))))
 			_layouts(current.DEBUG, data, container);
 	}
 }
