@@ -56,8 +56,7 @@ RequestGeolocationLatlong.prototype = {
 				if (this.timedOut) return false;
 				clearTimeout(this.timeoutCheck);
 				this.handleLocationNotShared();
-			}.bind(this),
-			{ timeout: LOCATION_TIMEOUT }
+			}.bind(this)
 		);
 	},
 	handleLocationShared: function(position) {
