@@ -47,5 +47,8 @@
   }, {
     "version": "1.2.3",
     "widget": "IBMChatClient-v1.2.3.js"
+  }, {
+    "version": "1.2.4",
+    "widget": "IBMChatClient-v1.2.4.js"
   }]
 }
