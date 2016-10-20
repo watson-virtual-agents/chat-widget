@@ -18,7 +18,7 @@ var utils = require('../../utils');
 var assign = require('lodash/assign');
 var templates = require('../../templates');
 
-function _layoutAndActions(debug, data, holder) {
+function _actions(debug, data) {
 	if (data.message && data.message.action && data.message.action.name) {
 		var action = 'action:' + data.message.action.name;
 		if (events.hasSubscription(action)) {
@@ -29,27 +29,32 @@ function _layoutAndActions(debug, data, holder) {
 			console.warn('Nothing is subscribed to ' + action);
 		}
 	}
-	if (data.message && data.message.layout && data.message.layout.name) {
-		var layout = 'layout:' + data.message.layout.name;
-		var el = document.createElement('div');
-		el.classList.add('IBMChat-watson-layout');
-		holder.appendChild(el);
-		data.element = document.querySelector('.' + data.uuid + ':last-child');
-		data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
-		data.msgElement = data.element.querySelector('.IBMChat-watson-message');
-		if (events.hasSubscription(layout)) {
-			events.publish(layout, data);
-			if (debug)
-				console.log('Call to ' + layout);
-		} else if (debug) {
-			console.warn('Nothing is subscribed to ' + layout);
-		}
-	}
 	setTimeout(function() {
 		events.publish('disable-loading');
 		events.publish('scroll-to-bottom');
 		events.publish('focus-input');
-	}, 10);
+	}, 20);
+}
+
+function _layouts(debug, data, container) {
+	if (data.message && data.message.layout && data.message.layout.name) {
+		var layout = 'layout:' + data.message.layout.name;
+		var el = document.createElement('div');
+		el.classList.add('IBMChat-watson-layout');
+		container.appendChild(el);
+		data.element = container;
+		data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
+		data.msgElement = data.element.querySelector('.IBMChat-watson-message');
+		if (events.hasSubscription(layout)) {
+			setTimeout(function() {
+				events.publish(layout, data);
+				if (debug)
+					console.log('Call to ' + layout);
+			}, 10);
+		} else if (debug) {
+			console.warn('Nothing is subscribed to ' + layout);
+		}
+	}
 }
 
 function receive(data) {
@@ -65,19 +70,22 @@ function receive(data) {
 		msg = [''];
 	for (var i = 0; i < msg.length; i++) {
 		var holder = document.createElement('div');
+		var container;
 		holder.classList.add(data.uuid);
 		holder.innerHTML = templates.receive;
+		container = holder.querySelector('.IBMChat-watson-message-container');
 		if (msg[i] || (data.message && data.message.layout && data.message.layout.name && i === (msg.length - 1))) {
 			var item = document.createElement('div');
 			item.classList.add('IBMChat-watson-message');
 			item.classList.add('IBMChat-watson-message-theme');
-			holder.appendChild(item);
+			container.appendChild(item);
 			utils.writeMessage(item, msg[i]);
 			current.chatHolder.appendChild(holder);
 		}
 		if (i === (msg.length - 1))
-			_layoutAndActions(current.DEBUG, data, holder);
-
+			_actions(current.DEBUG, data);
+		if (data.message.layout && (data.message.layout.index !== undefined && data.message.layout.index == i) || (data.message.layout.index === undefined && i == (msg.length - 1)))
+			_layouts(current.DEBUG, data, container);
 	}
 }
 
