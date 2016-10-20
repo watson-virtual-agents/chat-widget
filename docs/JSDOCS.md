@@ -38,7 +38,7 @@
     * [.disableCustomInputHandler()](#IBMChat.disableCustomInputHandler) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.focusInput()](#IBMChat.focusInput) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.disableInput()](#IBMChat.disableInput) ⇒ <code>[IBMChat](#IBMChat)</code>
-    * [.subscribe(eventName, callback, context)](#IBMChat.subscribe) ⇒ <code>[IBMChat](#IBMChat)</code>
+    * [.subscribe(eventName, callback, context)](#IBMChat.subscribe) ⇒ <code>Object</code>
     * [.publish(eventName, data)](#IBMChat.publish) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.debug()](#IBMChat.debug) ⇒ <code>[IBMChat](#IBMChat)</code>
 
@@ -390,11 +390,11 @@ IBMChat.disableInput();
 ```
 <a name="IBMChat.subscribe"></a>
 
-### IBMChat.subscribe(eventName, callback, context) ⇒ <code>[IBMChat](#IBMChat)</code>
+### IBMChat.subscribe(eventName, callback, context) ⇒ <code>Object</code>
 Subscribe to an IBMChat event.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
-**Returns**: <code>[IBMChat](#IBMChat)</code> - - Returns IBMChat for chaining.  
+**Returns**: <code>Object</code> - - Returns object with a .remove function to destroy the subscription  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -404,8 +404,9 @@ Subscribe to an IBMChat event.
 
 **Example**  
 ```js
-IBMChat.subscribe('the-end-of-the-world', function(message) {
+var mySubscription = IBMChat.subscribe('the-end-of-the-world', function(message) {
   console.log(message);
+  mySubscription.remove(); // remove subscription
 });
 ```
 <a name="IBMChat.publish"></a>
