@@ -88,6 +88,19 @@ Form.prototype.handleSubmit = function() {
 			text: 'success'
 		});
 		publish('enable-input');
+	} else {
+		this.setFocusOnError();
+	}
+};
+
+Form.prototype.setFocusOnError = function() {
+	for (var j = 0; j < this.fields.length; j++) {
+		var name = this.fields[j].getAttribute('name');
+		var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
+		if (el.dataset.valid === "false") {
+			this.fields[j].focus();
+			break;
+		}
 	}
 };
 
@@ -104,7 +117,7 @@ Form.prototype.validateField = function(field, datum) {
 	var valid = true;
 	if (!field.value || field.value.trim().length === 0) {
 		this.addError(field.getAttribute('name'), 'This field is required.');
-		if (valid) field.focus();
+		// if (valid) field.focus();
 		valid = false;
 	} else if (datum.validations && datum.validations.length !== 0) {
 		for (var i = 0; i < datum.validations.length; i++) {
@@ -113,7 +126,7 @@ Form.prototype.validateField = function(field, datum) {
 			var matches = regex.test(field.value);
 			if (!matches) {
 				this.addError(field.getAttribute('name'), validation.message);
-				if (valid) field.focus();
+				// if (valid) field.focus();
 				valid = false;
 				break;
 			}
@@ -124,12 +137,14 @@ Form.prototype.validateField = function(field, datum) {
 
 Form.prototype.addError = function(name, msg) {
 	var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
+	el.dataset.valid = false;
 	el.textContent = msg;
 	el.style.display = 'block';
 };
 
 Form.prototype.removeError = function(name) {
 	var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
+	el.dataset.valid = true;
 	el.textContent = '';
 };
 
