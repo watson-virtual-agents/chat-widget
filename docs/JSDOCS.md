@@ -163,7 +163,7 @@ Generate the chat widget into an element.
 | config | <code>Object</code> |  |  |
 | config.el | <code>string</code> |  | Takes a string representing the ID of an html element to be rendered to OR a selected element |
 | config.botID | <code>string</code> |  | The unique identifier of your Virtual Agent. |
-| config.userID | <code>string</code> |  | A hashed non-identifiable (i.e. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard. |
+| config.userID | <code>string</code> |  | A hashed non-identifiable (e.g. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard. |
 | config.baseURL | <code>string</code> | <code>&quot;https://api.ibm.com/virtualagent/run/api/v1/&quot;</code> | optional: specifies a different bot hosting server. The most common usecase for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request. |
 | config.XIBMClientID | <code>string</code> |  | optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request. |
 | config.XIBMClientSecret | <code>string</code> |  | optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request. |
@@ -177,8 +177,10 @@ Generate the chat widget into an element.
 | config.styles.secondaryText | <code>string</code> | <code>&quot;rgba(247,&quot;</code> | 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of chat bubble text and other secondary info |
 | config.styles.inputBackground | <code>string</code> | <code>&quot;rgba(70,&quot;</code> | 70, 70, 1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms |
 | config.styles.inputText | <code>string</code> | <code>&quot;rgba(247,&quot;</code> | 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms |
-| config.styles.accentText | <code>string</code> | <code>&quot;rgba(255,&quot;</code> | 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground i.e. button text |
-| config.styles.accentBackground | <code>string</code> | <code>&quot;rgba(175,&quot;</code> | 110, 232, 1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application i.e. buttons |
+| config.styles.accentText | <code>string</code> | <code>&quot;rgba(255,&quot;</code> | 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text |
+| config.styles.accentBackground | <code>string</code> | <code>&quot;rgba(175,&quot;</code> | 110, 232, 1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons |
+| config.styles.errorText | <code>string</code> | <code>&quot;rgba(255,&quot;</code> | 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text |
+| config.styles.errorBackground | <code>string</code> | <code>&quot;rgba(239,&quot;</code> | 62, 58, 1) - optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons |
 
 **Example**  
 ```js

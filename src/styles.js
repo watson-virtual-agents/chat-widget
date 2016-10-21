@@ -21,7 +21,9 @@ var defaultStyles = {
 	secondaryBackground: 'rgba(70, 70, 70, 1)',
 	secondaryText: 'rgba(247, 247, 247, 1)',
 	inputBackground: 'rgba(70, 70, 70, 1)',
-	inputText: 'rgba(247, 247, 247, 1)'
+	inputText: 'rgba(247, 247, 247, 1)',
+	errorBackground: 'rgba(239, 62, 58, 1)',
+	errorText: 'rgba(255, 255, 255, 1)'
 };
 
 module.exports = defaultStyles;

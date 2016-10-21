@@ -18,15 +18,18 @@ var utils = require('../../utils');
 var assign = require('lodash/assign');
 var templates = require('../../templates');
 
-function _actions(debug, data) {
+function _actions(tryit, debug, data) {
 	if (data.message && data.message.action && data.message.action.name) {
 		var action = 'action:' + data.message.action.name;
 		if (events.hasSubscription(action)) {
 			events.publish(action, data, events.completeEvent);
 			if (debug)
 				console.log('Call to ' + action);
-		} else if (debug) {
-			console.warn('Nothing is subscribed to ' + action);
+		} else {
+			if (debug)
+				console.warn('Nothing is subscribed to ' + action);
+			if (tryit)
+				events.publish('tryit-action-subscription', action);
 		}
 	}
 	setTimeout(function() {
@@ -36,23 +39,20 @@ function _actions(debug, data) {
 	}, 20);
 }
 
-function _layouts(debug, data, container) {
+function _layouts(tryit, debug, data, container) {
 	if (data.message && data.message.layout && data.message.layout.name) {
 		var layout = 'layout:' + data.message.layout.name;
-		var el = document.createElement('div');
-		el.classList.add('IBMChat-watson-layout');
-		container.appendChild(el);
-		data.element = container;
-		data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
-		data.msgElement = data.element.querySelector('.IBMChat-watson-message');
 		if (events.hasSubscription(layout)) {
 			setTimeout(function() {
 				events.publish(layout, data);
 				if (debug)
 					console.log('Call to ' + layout);
 			}, 10);
-		} else if (debug) {
-			console.warn('Nothing is subscribed to ' + layout);
+		} else {
+			if (debug)
+				console.warn('Nothing is subscribed to ' + layout);
+			if (tryit)
+				events.publish('tryit-layout-subscription', layout);
 		}
 	}
 }
@@ -66,26 +66,33 @@ function receive(data) {
 		hasError: false
 	});
 	var msg = (data.message && data.message.text) ? ((Array.isArray(data.message.text)) ? data.message.text : [data.message.text]) : [''];
-	if (msg.length === 0)
-		msg = [''];
 	for (var i = 0; i < msg.length; i++) {
 		var holder = document.createElement('div');
-		var container;
+		var container, message, layout;
 		holder.classList.add(data.uuid);
 		holder.innerHTML = templates.receive;
 		container = holder.querySelector('.IBMChat-watson-message-container');
+		message = container;
+		layout = container.querySelector('.IBMChat-watson-layout');
 		if (msg[i] || (data.message && data.message.layout && data.message.layout.name && i === (msg.length - 1))) {
 			var item = document.createElement('div');
 			item.classList.add('IBMChat-watson-message');
 			item.classList.add('IBMChat-watson-message-theme');
 			container.appendChild(item);
+			message = item;
 			utils.writeMessage(item, msg[i]);
 			current.chatHolder.appendChild(holder);
 		}
+		layout = document.createElement('div');
+		layout.classList.add('IBMChat-watson-layout');
+		container.appendChild(layout);
+		data.element = container;
+		data.layoutElement = layout;
+		data.msgElement = message;
 		if (i === (msg.length - 1))
-			_actions(current.DEBUG, data);
+			_actions(current.tryit, current.DEBUG, data);
 		if (data.message.layout && ((data.message.layout.index !== undefined && data.message.layout.index == i) ||(data.message.layout.index === undefined && i == (msg.length - 1))))
-			_layouts(current.DEBUG, data, container);
+			_layouts(current.tryit, current.DEBUG, data, container);
 	}
 }
 

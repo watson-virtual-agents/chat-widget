@@ -28,7 +28,7 @@ var IBMChat = {
 	 * @param {Object} config
 	 * @param {string} config.el - Takes a string representing the ID of an html element to be rendered to OR a selected element
 	 * @param {string} config.botID - The unique identifier of your Virtual Agent.
-	 * @param {string} config.userID - A hashed non-identifiable (i.e. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard.
+	 * @param {string} config.userID - A hashed non-identifiable (e.g. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard.
 	 * @param {string} config.baseURL=https://api.ibm.com/virtualagent/run/api/v1/ - optional: specifies a different bot hosting server. The most common usecase for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request.
 	 * @param {string} config.XIBMClientID - optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request.
 	 * @param {string} config.XIBMClientSecret - optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request.
@@ -42,8 +42,10 @@ var IBMChat = {
 	 * @param {string} config.styles.secondaryText=rgba(247, 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of chat bubble text and other secondary info
 	 * @param {string} config.styles.inputBackground=rgba(70, 70, 70, 1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms
 	 * @param {string} config.styles.inputText=rgba(247, 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms
-	 * @param {string} config.styles.accentText=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground i.e. button text
-	 * @param {string} config.styles.accentBackground=rgba(175, 110, 232, 1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application i.e. buttons
+	 * @param {string} config.styles.accentText=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text
+	 * @param {string} config.styles.accentBackground=rgba(175, 110, 232, 1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
+	 * @param {string} config.styles.errorText=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text
+	 * @param {string} config.styles.errorBackground=rgba(239, 62, 58, 1) - optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons
 	 * @example
 	 * IBMChat.init({
 	 *  el: 'my_div',
@@ -369,6 +371,11 @@ var IBMChat = {
 	* @ignore
 	*/
 	playback: bootstrap.playback,
+
+	/**
+	* @ignore
+	*/
+	state: bootstrap.state,
 
 	/**
 	 * Turns on a whole bunch of verbose console.log statements!
