@@ -32,4 +32,8 @@ npm run watch
 ```
 7. Navigate to http://localhost:3100.
 
-For more details about getting started, see [./docs/DOCS.md](./docs/DOCS.md), and for advanced documentation about using our JavaScript, see [./docs/JSDOCS.md](./docs/JSDOCS.md).
+## Customizing the Chat Widget
+
+For more details about what you can do once the widget is up and running, see [./docs/DOCS.md](./docs/DOCS.md).
+
+For API documentation of the widget, see [./docs/JSDOCS.md](./docs/JSDOCS.md).
