@@ -32,14 +32,14 @@ function _actions(tryit, debug, data) {
 				events.publish('tryit-action-subscription', action);
 		}
 	}
+	events.publish('disable-loading');
+	events.publish('focus-input');
 	setTimeout(function() {
-		events.publish('disable-loading');
 		events.publish('scroll-to-bottom');
-		events.publish('focus-input');
 	}, 20);
 }
 
-function _layouts(tryit, debug, data, container) {
+function _layouts(tryit, debug, data) {
 	if (data.message && data.message.layout && data.message.layout.name) {
 		var layout = 'layout:' + data.message.layout.name;
 		if (events.hasSubscription(layout)) {
@@ -72,28 +72,24 @@ function receive(data) {
 		holder.classList.add(data.uuid);
 		holder.innerHTML = templates.receive;
 		container = holder.querySelector('.IBMChat-watson-message-container');
-		message = container;
-		layout = container.querySelector('.IBMChat-watson-layout');
-		if (msg[i] || (data.message && data.message.layout && data.message.layout.name && i === (msg.length - 1))) {
-			var item = document.createElement('div');
-			item.classList.add('IBMChat-watson-message');
-			item.classList.add('IBMChat-watson-message-theme');
-			container.appendChild(item);
-			message = item;
-			utils.writeMessage(item, msg[i]);
-			current.chatHolder.appendChild(holder);
-		}
+		message = document.createElement('div');
 		layout = document.createElement('div');
 		layout.classList.add('IBMChat-watson-layout');
+		if (msg[i] || (data.message && data.message.layout && data.message.layout.name && i === (msg.length - 1))) {
+			message.classList.add('IBMChat-watson-message');
+			message.classList.add('IBMChat-watson-message-theme');
+			utils.writeMessage(message, msg[i]);
+			current.chatHolder.appendChild(holder);
+		}
+		container.appendChild(message);
 		container.appendChild(layout);
 		data.element = container;
 		data.layoutElement = layout;
 		data.msgElement = message;
-		if (i === (msg.length - 1))
-			_actions(current.tryit, current.DEBUG, data);
 		if (data.message.layout && ((data.message.layout.index !== undefined && data.message.layout.index == i) ||(data.message.layout.index === undefined && i == (msg.length - 1))))
-			_layouts(current.tryit, current.DEBUG, data, container);
+			_layouts(current.tryit, current.DEBUG, data);
 	}
+	_actions(current.tryit, current.DEBUG, data);
 }
 
 module.exports = receive;

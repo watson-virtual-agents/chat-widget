@@ -363,10 +363,7 @@ var IBMChat = {
 	/**
 	 * @ignore
 	 */
-	currentSubscriptions: function() {
-		bootstrap.currentSubscriptions();
-		return IBMChat;
-	},
+	currentSubscriptions: bootstrap.currentSubscriptions,
 	/**
 	* @ignore
 	*/
