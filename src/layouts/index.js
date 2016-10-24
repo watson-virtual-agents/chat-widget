@@ -18,6 +18,7 @@ var chooseLocationTypeLayout = require('./choose-location-type');
 var chooseLayout = require('./choose');
 var formLayout = require('./form');
 var creditCardLayout = require('./cc-validator');
+var errorLayout = require('./error');
 
 module.exports = {
 	showLocations: showLocationsLayout,
@@ -25,5 +26,6 @@ module.exports = {
 	chooseLocationType: chooseLocationTypeLayout,
 	choose: chooseLayout,
 	creditCard: creditCardLayout,
-	form: formLayout
+	form: formLayout,
+	error: errorLayout
 };

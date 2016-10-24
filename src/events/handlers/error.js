@@ -16,7 +16,8 @@ var events = require('../../events');
 var state = require('../../state');
 
 function error(err) {
-	console.error(err);
+	var display = (err && err.stack) ? err.stack : err;
+	console.error(display);
 	var current = state.getState();
 	var text = 'I am sorry, I am having difficulties.';
 	if (current.hadError)
@@ -31,4 +32,11 @@ function error(err) {
 	events.publish('receive', text);
 }
 
-module.exports = error;
+function tryIt(data) {
+	events.publish('layout:error', data);
+}
+
+module.exports = {
+	default: error,
+	tryIt: tryIt
+};

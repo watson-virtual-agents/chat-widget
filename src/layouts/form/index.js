@@ -117,7 +117,6 @@ Form.prototype.validateField = function(field, datum) {
 	var valid = true;
 	if (!field.value || field.value.trim().length === 0) {
 		this.addError(field.getAttribute('name'), 'This field is required.');
-		// if (valid) field.focus();
 		valid = false;
 	} else if (datum.validations && datum.validations.length !== 0) {
 		for (var i = 0; i < datum.validations.length; i++) {
@@ -126,7 +125,6 @@ Form.prototype.validateField = function(field, datum) {
 			var matches = regex.test(field.value);
 			if (!matches) {
 				this.addError(field.getAttribute('name'), validation.message);
-				// if (valid) field.focus();
 				valid = false;
 				break;
 			}
@@ -150,9 +148,8 @@ Form.prototype.removeError = function(name) {
 
 Form.prototype.removeAllErrors = function() {
 	var els = this.layoutElement.querySelectorAll('[data-validation-for]');
-	els.forEach(function(el) {
-		this.removeError(el);
-	}, this);
+	for (var i = 0; i < els.length; i++)
+		this.removeError(els[i].attr('data-validation-for'));
 };
 
 Form.prototype.handleEnter = function(e) {

@@ -95,9 +95,9 @@
 }
 
 .IBMChat-watson-message {
+	min-height: 1em;
 	margin:1em 2em 1em 0;
-	padding: 0.1em;
-	padding-left: 1em;
+	padding: 0.1em 0.1em 0.1em 1em;
 }
 
 .IBMChat-watson-layout {
@@ -158,10 +158,8 @@
 
 /* validation error message */
 .IBMChat-validation-error {
-	color: #CB3333;
-	padding-top: 0.25em;
+	padding: 0.25em;
 	font-size: 0.9em;
-	height: 1em;
 }
 
 /* Spinner */
