@@ -16,6 +16,7 @@ require('./styles.css');
 
 var events = require('../../events');
 var state = require('../../state');
+var profile = require('../../profile');
 var subscribe = events.subscribe;
 var publish = events.publish;
 var utils = require('../../utils');
@@ -80,12 +81,14 @@ CreditCard.prototype.addListeners = function() {
 
 CreditCard.prototype.addError = function(name, msg) {
 	var errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
+	errorElement.style.display = 'block';
 	errorElement.dataset.valid = false;
 	errorElement.textContent = msg;
 };
 
 CreditCard.prototype.removeError = function(name) {
 	var errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
+	errorElement.style.display = 'none';
 	errorElement.dataset.valid = true;
 	errorElement.textContent = '';
 };
@@ -138,10 +141,12 @@ CreditCard.prototype.validate = function() {
 
 CreditCard.prototype.handleContinue = function() {
 	if (this.validate()) {
-		this.formData.cc_exp_date = this.formData.cc_exp_date_month + '/' + this.formData.cc_exp_date_year;
-		state.setProfile({
-			selectedCard: this.formData
+		var fd = this.formData;
+		fd.cc_exp_date = fd.cc_exp_date_month + '/' + fd.cc_exp_date_year;
+		Object.keys(fd).map(function(key) {
+			profile.set(key, fd[key]);
 		});
+		publish('enable-input');
 		publish('send', {
 			silent: true,
 			text: 'success'
@@ -151,11 +156,11 @@ CreditCard.prototype.handleContinue = function() {
 
 CreditCard.prototype.handleCancel = function() {
 	this.cancelButton.classList.add(activeClassName);
+	publish('enable-input');
 	publish('send', {
 		silent: true,
 		text: 'cancel'
 	});
-	publish('enable-input');
 };
 
 CreditCard.prototype.removeAllEventListeners = function() {
