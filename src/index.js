@@ -35,17 +35,17 @@ var IBMChat = {
 	 * @param {Function} config.errorHandler - optional: A function that takes an error object as a param if there is a problem with communicating with your Virtual Agent. By default, if an error is received, the user is escalated to a live agent. You may, however, want to handle some errors differently (401 for instance)
 	 * @param {Object} config.errorHandlerContext - optional: A "this" value for the errorHanlder.
 	 * @param {Object} config.styles - optional: Override default styling.
-	 * @param {string} config.styles.background=rgba(61, 61, 61, 1) - optional: rgba(X, X, X, X) or hex code for background color
-	 * @param {string} config.styles.text=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for main text color
-	 * @param {string} config.styles.link=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for color of links in text
-	 * @param {string} config.styles.secondaryBackground=rgba(70, 70, 70, 1) - optional: rgba(X, X, X, X) or hex code for background color of chat bubbles and other secondary info
-	 * @param {string} config.styles.secondaryText=rgba(247, 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of chat bubble text and other secondary info
-	 * @param {string} config.styles.inputBackground=rgba(70, 70, 70, 1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms
-	 * @param {string} config.styles.inputText=rgba(247, 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms
-	 * @param {string} config.styles.accentText=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text
-	 * @param {string} config.styles.accentBackground=rgba(175, 110, 232, 1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
-	 * @param {string} config.styles.errorText=rgba(255, 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text
-	 * @param {string} config.styles.errorBackground=rgba(239, 62, 58, 1) - optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons
+	 * @param {string} config.styles.background=rgba(61,61,61,1) - optional: rgba(X, X, X, X) or hex code for background color
+	 * @param {string} config.styles.text=#ffffff - optional: rgba(X, X, X, X) or hex code for main text color
+	 * @param {string} config.styles.link=#ffffff - optional: rgba(X, X, X, X) or hex code for color of links in text
+	 * @param {string} config.styles.secondaryBackground=rgba(70,70,70,1) - optional: rgba(X, X, X, X) or hex code for background color of chat bubbles and other secondary info
+	 * @param {string} config.styles.secondaryText=rgba(247,247,247,1) - optional: rgba(X, X, X, X) or hex code for color of chat bubble text and other secondary info
+	 * @param {string} config.styles.inputBackground=rgba(70,70,70,1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms
+	 * @param {string} config.styles.inputText=rgba(247,247,247,1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms
+	 * @param {string} config.styles.accentText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text
+	 * @param {string} config.styles.accentBackground=rgba(175,110,232,1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
+	 * @param {string} config.styles.errorText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text
+	 * @param {string} config.styles.errorBackground=rgba(239,62,58,1) - optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons
 	 * @example
 	 * IBMChat.init({
 	 *  el: 'my_div',

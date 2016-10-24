@@ -83,12 +83,12 @@ function init(config) {
 			mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
 			botID: config.botID,
 			styles: assign({}, defaultStyles, config.styles),
-			baseURL: config.baseURL,
+			baseURL: SDKconfig.baseURL,
 			originalContent: root.innerHTML,
 			handleInput: {
 				default: true
 			},
-			tryit: config.tryit || false,
+			tryIt: config.tryIt || false,
 			playback: config.playback || false //TODO: remove playback when Dashboard code is updated
 		};
 		if (current.active === true) {
@@ -100,7 +100,7 @@ function init(config) {
 				events.subscribe('error', config.errorHandler, config.errorHandlerContext);
 			else
 				events.subscribe('error', eventHandlers.error.default);
-			registerEvents(config.tryit, config.playback);
+			registerEvents(config.tryIt, config.playback);
 			registerLayouts();
 			//TODO: remove if playback when Dashboard code is updated
 			if (config.playback === true) {

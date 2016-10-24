@@ -19,8 +19,9 @@ var assign = require('lodash/assign');
 var templates = require('../../templates');
 
 function _actions(tryit, debug, data) {
-	if (data.message && data.message.action && data.message.action.name) {
-		var action = 'action:' + data.message.action.name;
+	var msg = data.message;
+	if (msg && msg.action && msg.action.name) {
+		var action = 'action:' + msg.action.name;
 		if (events.hasSubscription(action)) {
 			events.publish(action, data, events.completeEvent);
 			if (debug)
@@ -40,8 +41,9 @@ function _actions(tryit, debug, data) {
 }
 
 function _layouts(tryit, debug, data) {
-	if (data.message && data.message.layout && data.message.layout.name) {
-		var layout = 'layout:' + data.message.layout.name;
+	var msg = data.message;
+	if (msg && msg.layout && msg.layout.name) {
+		var layout = 'layout:' + msg.layout.name;
 		if (events.hasSubscription(layout)) {
 			setTimeout(function() {
 				events.publish(layout, data);
@@ -65,8 +67,9 @@ function receive(data) {
 		messages: [].concat(current.messages || [], data),
 		hasError: false
 	});
-	var msg = (data.message && data.message.text) ? ((Array.isArray(data.message.text)) ? data.message.text : [data.message.text]) : [''];
-	for (var i = 0; i < msg.length; i++) {
+	var msg = data.message;
+	var msgText = (msg && msg.text) ? ((Array.isArray(msg.text)) ? msg.text : [msg.text]) : [''];
+	for (var i = 0; i < msgText.length; i++) {
 		var holder = document.createElement('div');
 		var container, message, layout;
 		holder.classList.add(data.uuid);
@@ -75,10 +78,10 @@ function receive(data) {
 		message = document.createElement('div');
 		layout = document.createElement('div');
 		layout.classList.add('IBMChat-watson-layout');
-		if (msg[i] || (data.message && data.message.layout && data.message.layout.name && i === (msg.length - 1))) {
+		if (msgText[i] || (msg && msg.layout && msg.layout.name && i === (msgText.length - 1))) {
 			message.classList.add('IBMChat-watson-message');
 			message.classList.add('IBMChat-watson-message-theme');
-			utils.writeMessage(message, msg[i]);
+			utils.writeMessage(message, msgText[i]);
 			current.chatHolder.appendChild(holder);
 		}
 		container.appendChild(message);
@@ -86,10 +89,10 @@ function receive(data) {
 		data.element = container;
 		data.layoutElement = layout;
 		data.msgElement = message;
-		if (data.message.layout && ((data.message.layout.index !== undefined && data.message.layout.index == i) ||(data.message.layout.index === undefined && i == (msg.length - 1))))
-			_layouts(current.tryit, current.DEBUG, data);
+		if (msg && msg.layout && ((msg.layout.index !== undefined && msg.layout.index == i) ||(msg.layout.index === undefined && i == (msgText.length - 1))))
+			_layouts(current.tryIt, current.DEBUG, data);
 	}
-	_actions(current.tryit, current.DEBUG, data);
+	_actions(current.tryIt, current.DEBUG, data);
 }
 
 module.exports = receive;

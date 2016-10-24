@@ -170,17 +170,17 @@ Generate the chat widget into an element.
 | config.errorHandler | <code>function</code> |  | optional: A function that takes an error object as a param if there is a problem with communicating with your Virtual Agent. By default, if an error is received, the user is escalated to a live agent. You may, however, want to handle some errors differently (401 for instance) |
 | config.errorHandlerContext | <code>Object</code> |  | optional: A "this" value for the errorHanlder. |
 | config.styles | <code>Object</code> |  | optional: Override default styling. |
-| config.styles.background | <code>string</code> | <code>&quot;rgba(61,&quot;</code> | 61, 61, 1) - optional: rgba(X, X, X, X) or hex code for background color |
-| config.styles.text | <code>string</code> | <code>&quot;rgba(255,&quot;</code> | 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for main text color |
-| config.styles.link | <code>string</code> | <code>&quot;rgba(255,&quot;</code> | 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for color of links in text |
-| config.styles.secondaryBackground | <code>string</code> | <code>&quot;rgba(70,&quot;</code> | 70, 70, 1) - optional: rgba(X, X, X, X) or hex code for background color of chat bubbles and other secondary info |
-| config.styles.secondaryText | <code>string</code> | <code>&quot;rgba(247,&quot;</code> | 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of chat bubble text and other secondary info |
-| config.styles.inputBackground | <code>string</code> | <code>&quot;rgba(70,&quot;</code> | 70, 70, 1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms |
-| config.styles.inputText | <code>string</code> | <code>&quot;rgba(247,&quot;</code> | 247, 247, 1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms |
-| config.styles.accentText | <code>string</code> | <code>&quot;rgba(255,&quot;</code> | 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text |
-| config.styles.accentBackground | <code>string</code> | <code>&quot;rgba(175,&quot;</code> | 110, 232, 1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons |
-| config.styles.errorText | <code>string</code> | <code>&quot;rgba(255,&quot;</code> | 255, 255, 1) - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text |
-| config.styles.errorBackground | <code>string</code> | <code>&quot;rgba(239,&quot;</code> | 62, 58, 1) - optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons |
+| config.styles.background | <code>string</code> | <code>&quot;rgba(61,61,61,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for background color |
+| config.styles.text | <code>string</code> | <code>&quot;#ffffff&quot;</code> | optional: rgba(X, X, X, X) or hex code for main text color |
+| config.styles.link | <code>string</code> | <code>&quot;#ffffff&quot;</code> | optional: rgba(X, X, X, X) or hex code for color of links in text |
+| config.styles.secondaryBackground | <code>string</code> | <code>&quot;rgba(70,70,70,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for background color of chat bubbles and other secondary info |
+| config.styles.secondaryText | <code>string</code> | <code>&quot;rgba(247,247,247,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for color of chat bubble text and other secondary info |
+| config.styles.inputBackground | <code>string</code> | <code>&quot;rgba(70,70,70,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for background color of input elements in forms |
+| config.styles.inputText | <code>string</code> | <code>&quot;rgba(247,247,247,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for color of input text in forms |
+| config.styles.accentText | <code>string</code> | <code>&quot;#ffffff&quot;</code> | optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text |
+| config.styles.accentBackground | <code>string</code> | <code>&quot;rgba(175,110,232,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons |
+| config.styles.errorText | <code>string</code> | <code>&quot;#ffffff&quot;</code> | optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text |
+| config.styles.errorBackground | <code>string</code> | <code>&quot;rgba(239,62,58,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons |
 
 **Example**  
 ```js
