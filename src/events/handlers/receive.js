@@ -18,7 +18,7 @@ var utils = require('../../utils');
 var assign = require('lodash/assign');
 var templates = require('../../templates');
 
-function _actions(tryit, debug, data) {
+function _actions(tryIt, debug, data) {
 	var msg = data.message;
 	if (msg && msg.action && msg.action.name) {
 		var action = 'action:' + msg.action.name;
@@ -29,8 +29,8 @@ function _actions(tryit, debug, data) {
 		} else {
 			if (debug)
 				console.warn('Nothing is subscribed to ' + action);
-			if (tryit)
-				events.publish('tryit-action-subscription', action);
+			if (tryIt)
+				events.publish('try-it-action-subscription', action);
 		}
 	}
 	events.publish('disable-loading');
@@ -40,7 +40,7 @@ function _actions(tryit, debug, data) {
 	}, 20);
 }
 
-function _layouts(tryit, debug, data) {
+function _layouts(tryIt, debug, data) {
 	var msg = data.message;
 	if (msg && msg.layout && msg.layout.name) {
 		var layout = 'layout:' + msg.layout.name;
@@ -53,8 +53,8 @@ function _layouts(tryit, debug, data) {
 		} else {
 			if (debug)
 				console.warn('Nothing is subscribed to ' + layout);
-			if (tryit)
-				events.publish('tryit-layout-subscription', layout);
+			if (tryIt)
+				events.publish('try-it-layout-subscription', layout);
 		}
 	}
 }

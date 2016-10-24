@@ -26,7 +26,7 @@ var defaultStyles = require('./styles');
 var layoutInit = {};
 var registeredLayouts = [];
 
-function registerEvents(tryit, playback) {
+function registerEvents(tryIt, playback) {
 	events.subscribe('start', eventHandlers.start);
 	events.subscribe('resize', eventHandlers.resize);
 	events.subscribe('disable-input', eventHandlers.input.disableInput);
@@ -34,10 +34,10 @@ function registerEvents(tryit, playback) {
 	events.subscribe('disable-loading', eventHandlers.input.disableLoadingInput);
 	events.subscribe('scroll-to-bottom', eventHandlers.scrollToBottom);
 	events.subscribe('receive', eventHandlers.receive);
-	if (tryit === true) {
-		events.subscribe('tryit-error', eventHandlers.error.tryit);
-		events.subscribe('tryit-layout-subscription', eventHandlers.tryit.layoutError);
-		events.subscribe('tryit-action-subscription', eventHandlers.tryit.actionError);
+	if (tryIt === true) {
+		events.subscribe('try-it-error', eventHandlers.error.tryIt);
+		events.subscribe('try-it-layout-subscription', eventHandlers.tryIt.layoutError);
+		events.subscribe('try-it-action-subscription', eventHandlers.tryIt.actionError);
 	}
 	if (playback === true) { //TODO: remove if playback when Dashboard code is updated
 		events.subscribe('send', eventHandlers.sendMock);

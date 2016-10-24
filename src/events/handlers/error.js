@@ -32,11 +32,11 @@ function error(err) {
 	events.publish('receive', text);
 }
 
-function tryit(data) {
+function tryIt(data) {
 	events.publish('layout:error', data);
 }
 
 module.exports = {
 	default: error,
-	tryit: tryit
+	tryIt: tryIt
 };
