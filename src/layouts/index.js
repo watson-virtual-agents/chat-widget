@@ -14,6 +14,7 @@
 
 var showLocationsLayout = require('./show-locations');
 var requestGeolocationLatlongLayout = require('./request-geolocation-latlong');
+var requestGeolocationZipcodeLayout = require('./request-geolocation-zipcode');
 var chooseLocationTypeLayout = require('./choose-location-type');
 var chooseLayout = require('./choose');
 var formLayout = require('./form');
@@ -23,6 +24,7 @@ var errorLayout = require('./error');
 module.exports = {
 	showLocations: showLocationsLayout,
 	requestGeolocationLatlong: requestGeolocationLatlongLayout,
+	requestGeolocationZipcode: requestGeolocationZipcodeLayout,
 	chooseLocationType: chooseLocationTypeLayout,
 	choose: chooseLayout,
 	creditCard: creditCardLayout,
