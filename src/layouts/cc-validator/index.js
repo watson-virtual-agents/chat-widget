@@ -143,6 +143,7 @@ CreditCard.prototype.handleContinue = function() {
 	if (this.validate()) {
 		var fd = this.formData;
 		fd.cc_exp_date = fd.cc_exp_date_month + '/' + fd.cc_exp_date_year;
+		fd.cc_last_four_digits = fd.cc_number.substr(fd.cc_number.length - 4);
 		Object.keys(fd).map(function(key) {
 			profile.set(key, fd[key]);
 		});
