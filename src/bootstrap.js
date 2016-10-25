@@ -26,7 +26,7 @@ var defaultStyles = require('./styles');
 var layoutInit = {};
 var registeredLayouts = [];
 
-function registerEvents(playback) {
+function registerEvents(tryIt, playback) {
 	events.subscribe('start', eventHandlers.start);
 	events.subscribe('resize', eventHandlers.resize);
 	events.subscribe('disable-input', eventHandlers.input.disableInput);
@@ -34,6 +34,11 @@ function registerEvents(playback) {
 	events.subscribe('disable-loading', eventHandlers.input.disableLoadingInput);
 	events.subscribe('scroll-to-bottom', eventHandlers.scrollToBottom);
 	events.subscribe('receive', eventHandlers.receive);
+	if (tryIt === true) {
+		events.subscribe('try-it-error', eventHandlers.error.tryIt);
+		events.subscribe('try-it-layout-subscription', eventHandlers.tryIt.layoutError);
+		events.subscribe('try-it-action-subscription', eventHandlers.tryIt.actionError);
+	}
 	if (playback === true) { //TODO: remove if playback when Dashboard code is updated
 		events.subscribe('send', eventHandlers.sendMock);
 	} else {
@@ -49,9 +54,11 @@ function registerLayouts() {
 	registerLayout('show-locations', layouts.showLocations.init, true);
 	registerLayout('choose-location-type', layouts.chooseLocationType.init, true);
 	registerLayout('request-geolocation-latlong', layouts.requestGeolocationLatlong.init, true);
+	registerLayout('request-geolocation-zipcode', layouts.requestGeolocationZipcode.init, true);
 	registerLayout('choose', layouts.choose.init, true);
 	registerLayout('form', layouts.form.init, true);
 	registerLayout('cc-validator', layouts.creditCard.init, true);
+	registerLayout('error', layouts.error.init, true);
 	for (var i = 0; i < registeredLayouts.length; i++)
 		layoutInit[registeredLayouts[i]]();
 }
@@ -77,11 +84,12 @@ function init(config) {
 			mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
 			botID: config.botID,
 			styles: assign({}, defaultStyles, config.styles),
-			baseURL: config.baseURL,
+			baseURL: SDKconfig.baseURL,
 			originalContent: root.innerHTML,
 			handleInput: {
 				default: true
 			},
+			tryIt: config.tryIt || false,
 			playback: config.playback || false //TODO: remove playback when Dashboard code is updated
 		};
 		if (current.active === true) {
@@ -92,13 +100,12 @@ function init(config) {
 			if (config.errorHandler)
 				events.subscribe('error', config.errorHandler, config.errorHandlerContext);
 			else
-				events.subscribe('error', eventHandlers.error);
-
+				events.subscribe('error', eventHandlers.error.default);
+			registerEvents(config.tryIt, config.playback);
+			registerLayouts();
 			//TODO: remove if playback when Dashboard code is updated
 			if (config.playback === true) {
 				defaultState.chatID = 'playback';
-				registerEvents(true);
-				registerLayouts();
 				events.publish('start', defaultState);
 				resolve();
 			} else if (config.botID) {
@@ -108,20 +115,21 @@ function init(config) {
 					.then( function(res) {
 						defaultState.chatID = res.chatID;
 						window.sessionStorage.setItem('IBMChatChatID', res.chatID);
-						registerLayouts();
-						registerEvents();
 						events.publish('start', defaultState);
 						events.publish('receive', res);
 						resolve();
 					})['catch']( function(err) {
+						console.error(err);
 						reject(err);
 					});
 			} else {
+				console.error('BotID is required!');
 				reject({
 					error: 'BotID is required!'
 				});
 			}
 		} else {
+			console.error('Element for chat does not exist!');
 			reject({
 				error: 'Element for chat does not exist!'
 			});
@@ -287,5 +295,6 @@ module.exports = {
 	currentSubscriptions: events.currentSubscriptions,
 	hasSubscription: events.hasSubscription,
 	completeEvent: events.completeEvent,
-	playback: playback
+	playback: playback,
+	state: state
 };

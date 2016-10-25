@@ -22,6 +22,7 @@ var input = require('./input');
 var error = require('./error');
 var playback = require('./playback');
 var scrollToBottom = require('./scroll-to-bottom');
+var tryIt = require('./try-it');
 
 module.exports = {
 	resize: resize,
@@ -33,5 +34,6 @@ module.exports = {
 	error: error,
 	scrollToBottom: scrollToBottom,
 	sendInputMessage: sendInputMessage,
-	playback: playback
+	playback: playback,
+	tryIt: tryIt
 };

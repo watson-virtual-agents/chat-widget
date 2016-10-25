@@ -45,7 +45,10 @@
     "version": "1.2.2",
     "widget": "IBMChatClient-v1.2.2.js"
   }, {
-    "version": "1.2.3",
-    "widget": "IBMChatClient-v1.2.3.js"
+    "version": "1.2.4",
+    "widget": "IBMChatClient-v1.2.4.js"
+  }, {
+    "version": "1.2.5",
+    "widget": "IBMChatClient-v1.2.5.js"
   }]
 }
