@@ -72,6 +72,6 @@ module.exports = function(config) {
 			require("karma-spec-reporter")
 		],
 
-		browsers: ['PhantomJS']
+		browsers: ['PhantomJS', 'Chrome']
 	});
 };
