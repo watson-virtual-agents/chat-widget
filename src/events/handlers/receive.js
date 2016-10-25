@@ -60,13 +60,13 @@ function _layouts(tryIt, debug, data) {
 }
 
 function receive(data) {
-	var checkData = (typeof data === 'string') ? { message: { text: data } } : data;
+	var parsed = (typeof data === 'string') ? { message: { text: data } } : data;
 	var current = state.getState();
 	state.setState({
-		messages: [].concat(current.messages || [], checkData),
+		messages: [].concat(current.messages || [], parsed),
 		hasError: false
 	});
-	var msg = checkData.message;
+	var msg = parsed.message;
 	var msgText = (msg && msg.text) ? ((Array.isArray(msg.text)) ? msg.text : [msg.text]) : [''];
 	var containers = [];
 	var messages = [];
@@ -74,7 +74,7 @@ function receive(data) {
 	var datas = [];
 	for (var i = 0; i < msgText.length; i++) {
 		var holder = document.createElement('div');
-		var msgData = assign({}, checkData, { uuid: utils.getUUID() });
+		var msgData = assign({}, parsed, { uuid: utils.getUUID() });
 		holder.classList.add(msgData.uuid);
 		holder.innerHTML = templates.receive;
 		containers.push(holder.querySelector('.IBMChat-watson-message-container'));
