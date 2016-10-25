@@ -48,7 +48,7 @@ var templates = {
 var strings = {
 	locations: {
 		none: 'We could not find any locations close to you.',
-		single: 'Here are the details for the ${location} location...',
+		single: 'Here are the details for the ${location} location:',
 		list: 'Here are the locations I found close to you:'
 	}
 };
@@ -347,7 +347,7 @@ ShowLocations.prototype = {
 			dom.label.textContent = item.label;
 		else
 			dom.parentEl.removeChild(dom.label);
-		
+
 		// addresses
 		var addresses = parseAddress(item.address.address);
 		dom.address1.textContent = addresses.address1;
@@ -358,7 +358,7 @@ ShowLocations.prototype = {
 		dom.link.setAttribute('href', 'https://maps.google.com/?q=' + encodeURIComponent(item.address.address));
 		dom.link.setAttribute('target', '_blank');
 		dom.distance.textContent = distance(item) || '';
-		
+
 		// email
 		if (item.email) {
 			const linkEl = document.createElement('a');
@@ -369,13 +369,13 @@ ShowLocations.prototype = {
 		} else {
 			dom.email.parentNode.removeChild(dom.email);
 		}
-		
+
 		// phones
 		if (item.phones && item.phones.length > 0)
 			createPhoneArray(dom.phone, item.phones);
 		else
 			dom.phone.parentNode.removeChild(dom.phone);
-		
+
 		// hours/timezone
 		if (item.days && item.days.length > 0) {
 			createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
