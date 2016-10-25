@@ -18,41 +18,43 @@ var utils = require('../../utils');
 var assign = require('lodash/assign');
 var templates = require('../../templates');
 
-function _actions(debug, data) {
-	if (data.message && data.message.action && data.message.action.name) {
-		var action = 'action:' + data.message.action.name;
+function _actions(tryIt, debug, data) {
+	var msg = data.message;
+	if (msg && msg.action && msg.action.name) {
+		var action = 'action:' + msg.action.name;
 		if (events.hasSubscription(action)) {
 			events.publish(action, data, events.completeEvent);
 			if (debug)
 				console.log('Call to ' + action);
-		} else if (debug) {
-			console.warn('Nothing is subscribed to ' + action);
+		} else {
+			if (debug)
+				console.warn('Nothing is subscribed to ' + action);
+			if (tryIt)
+				events.publish('try-it-action-subscription', action);
 		}
 	}
+	events.publish('disable-loading');
+	events.publish('focus-input');
 	setTimeout(function() {
-		events.publish('disable-loading');
 		events.publish('scroll-to-bottom');
-		events.publish('focus-input');
 	}, 20);
 }
 
-function _layouts(debug, data, container) {
-	if (data.message && data.message.layout && data.message.layout.name) {
-		var layout = 'layout:' + data.message.layout.name;
-		var el = document.createElement('div');
-		el.classList.add('IBMChat-watson-layout');
-		container.appendChild(el);
-		data.element = container;
-		data.layoutElement = data.element.querySelector('.IBMChat-watson-layout');
-		data.msgElement = data.element.querySelector('.IBMChat-watson-message');
+function _layouts(tryIt, debug, data) {
+	var msg = data.message;
+	if (msg && msg.layout && msg.layout.name) {
+		var layout = 'layout:' + msg.layout.name;
 		if (events.hasSubscription(layout)) {
 			setTimeout(function() {
 				events.publish(layout, data);
 				if (debug)
 					console.log('Call to ' + layout);
 			}, 10);
-		} else if (debug) {
-			console.warn('Nothing is subscribed to ' + layout);
+		} else {
+			if (debug)
+				console.warn('Nothing is subscribed to ' + layout);
+			if (tryIt)
+				events.publish('try-it-layout-subscription', layout);
 		}
 	}
 }
@@ -65,28 +67,32 @@ function receive(data) {
 		messages: [].concat(current.messages || [], data),
 		hasError: false
 	});
-	var msg = (data.message && data.message.text) ? ((Array.isArray(data.message.text)) ? data.message.text : [data.message.text]) : [''];
-	if (msg.length === 0)
-		msg = [''];
-	for (var i = 0; i < msg.length; i++) {
+	var msg = data.message;
+	var msgText = (msg && msg.text) ? ((Array.isArray(msg.text)) ? msg.text : [msg.text]) : [''];
+	for (var i = 0; i < msgText.length; i++) {
 		var holder = document.createElement('div');
-		var container;
+		var container, message, layout;
 		holder.classList.add(data.uuid);
 		holder.innerHTML = templates.receive;
 		container = holder.querySelector('.IBMChat-watson-message-container');
-		if (msg[i] || (data.message && data.message.layout && data.message.layout.name && i === (msg.length - 1))) {
-			var item = document.createElement('div');
-			item.classList.add('IBMChat-watson-message');
-			item.classList.add('IBMChat-watson-message-theme');
-			container.appendChild(item);
-			utils.writeMessage(item, msg[i]);
+		message = document.createElement('div');
+		layout = document.createElement('div');
+		layout.classList.add('IBMChat-watson-layout');
+		if (msgText[i] || (msg && msg.layout && msg.layout.name && i === (msgText.length - 1))) {
+			message.classList.add('IBMChat-watson-message');
+			message.classList.add('IBMChat-watson-message-theme');
+			utils.writeMessage(message, msgText[i]);
 			current.chatHolder.appendChild(holder);
 		}
-		if (i === (msg.length - 1))
-			_actions(current.DEBUG, data);
-		if (data.message.layout && ((data.message.layout.index !== undefined && data.message.layout.index == i) ||(data.message.layout.index === undefined && i == (msg.length - 1))))
-			_layouts(current.DEBUG, data, container);
+		container.appendChild(message);
+		container.appendChild(layout);
+		data.element = container;
+		data.layoutElement = layout;
+		data.msgElement = message;
+		if (msg && msg.layout && ((msg.layout.index !== undefined && msg.layout.index == i) ||(msg.layout.index === undefined && i == (msgText.length - 1))))
+			_layouts(current.tryIt, current.DEBUG, data);
 	}
+	_actions(current.tryIt, current.DEBUG, data);
 }
 
 module.exports = receive;

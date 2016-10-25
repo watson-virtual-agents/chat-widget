@@ -13,30 +13,11 @@
 */
 
 var events = require('../../events');
-var state = require('../../state');
-
-function error(err) {
-	var display = (err && err.stack) ? err.stack : err;
-	console.error(display);
-	var current = state.getState();
-	var text = 'I am sorry, I am having difficulties.';
-	if (current.hadError)
-		text += ' Please try again later.';
-	else
-		text += ' To speak with a human agent, type "agent".';
-	if (err.status)
-		text += ' (error: ' + err.status + ')';
-	state.setState({
-		hadError: true
-	});
-	events.publish('receive', text);
-}
-
-function tryIt(data) {
-	events.publish('layout:error', data);
-}
-
-module.exports = {
-	default: error,
-	tryIt: tryIt
+var subscribe = events.subscribe;
+var requestGeolocationZipcodeLayout = {
+	init: function() {
+		subscribe('layout:request-geolocation-zipcode', function() {});
+	}
 };
+
+module.exports = requestGeolocationZipcodeLayout;
