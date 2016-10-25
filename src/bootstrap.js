@@ -54,6 +54,7 @@ function registerLayouts() {
 	registerLayout('show-locations', layouts.showLocations.init, true);
 	registerLayout('choose-location-type', layouts.chooseLocationType.init, true);
 	registerLayout('request-geolocation-latlong', layouts.requestGeolocationLatlong.init, true);
+	registerLayout('request-geolocation-zipcode', layouts.requestGeolocationZipcode.init, true);
 	registerLayout('choose', layouts.choose.init, true);
 	registerLayout('form', layouts.form.init, true);
 	registerLayout('cc-validator', layouts.creditCard.init, true);
