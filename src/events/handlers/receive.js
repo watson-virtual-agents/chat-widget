@@ -60,39 +60,45 @@ function _layouts(tryIt, debug, data) {
 }
 
 function receive(data) {
-	var checkData = (typeof data === 'string') ? { message: { text: data } } : data;
+	var parsed = (typeof data === 'string') ? { message: { text: data } } : data;
 	var current = state.getState();
-	data = assign({}, checkData, { uuid: utils.getUUID() });
 	state.setState({
-		messages: [].concat(current.messages || [], data),
+		messages: [].concat(current.messages || [], parsed),
 		hasError: false
 	});
-	var msg = data.message;
+	var msg = parsed.message;
 	var msgText = (msg && msg.text) ? ((Array.isArray(msg.text)) ? msg.text : [msg.text]) : [''];
+	var containers = [];
+	var messages = [];
+	var layouts = [];
+	var datas = [];
 	for (var i = 0; i < msgText.length; i++) {
 		var holder = document.createElement('div');
-		var container, message, layout;
-		holder.classList.add(data.uuid);
+		var msgData = assign({}, parsed, { uuid: utils.getUUID() });
+		holder.classList.add(msgData.uuid);
 		holder.innerHTML = templates.receive;
-		container = holder.querySelector('.IBMChat-watson-message-container');
-		message = document.createElement('div');
-		layout = document.createElement('div');
-		layout.classList.add('IBMChat-watson-layout');
+		containers.push(holder.querySelector('.IBMChat-watson-message-container'));
+		messages.push(document.createElement('div'));
+		layouts.push(document.createElement('div'));
+		layouts[i].classList.add('IBMChat-watson-layout');
 		if (msgText[i] || (msg && msg.layout && msg.layout.name && i === (msgText.length - 1))) {
-			message.classList.add('IBMChat-watson-message');
-			message.classList.add('IBMChat-watson-message-theme');
-			utils.writeMessage(message, msgText[i]);
+			messages[i].classList.add('IBMChat-watson-message');
+			messages[i].classList.add('IBMChat-watson-message-theme');
+			utils.writeMessage(messages[i], msgText[i]);
 			current.chatHolder.appendChild(holder);
 		}
-		container.appendChild(message);
-		container.appendChild(layout);
-		data.element = container;
-		data.layoutElement = layout;
-		data.msgElement = message;
+		containers[i].appendChild(messages[i]);
+		containers[i].appendChild(layouts[i]);
+		msgData.element = containers[i];
+		msgData.layoutElement = layouts[i];
+		msgData.msgElement = messages[i];
+		datas.push(msgData);
 		if (msg && msg.layout && ((msg.layout.index !== undefined && msg.layout.index == i) ||(msg.layout.index === undefined && i == (msgText.length - 1))))
-			_layouts(current.tryIt, current.DEBUG, data);
+			_layouts(current.tryIt, current.DEBUG, datas[i]);
+		if (i === (msgText.length - 1))
+			_actions(current.tryIt, current.DEBUG, datas[i]);
 	}
-	_actions(current.tryIt, current.DEBUG, data);
+
 }
 
 module.exports = receive;
