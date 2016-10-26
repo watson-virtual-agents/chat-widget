@@ -137,19 +137,19 @@ Choose.prototype.addListener = function(el) {
 		el.addEventListener('click', this.handleMultiClick);
 	else
 		el.addEventListener('click', this.handleClick);
-	this.eventListeners.push(el);
+	this.eventListeners.push({ el: el, cb: (this.allowMultiple) ? this.handleMultiClick: this.handleClick });
 };
 
 Choose.prototype.addSubmitListener = function(el) {
 	el.addEventListener('click', this.handleSubmit.bind(this));
-	this.eventListeners.push(el);
+	this.eventListeners.push({ el: el, cb: this.handleSubmit.bind(this) });
 };
 
 Choose.prototype.removeAllEventListeners = function() {
 	if (this.eventListeners.length > 0) {
 		for (var i = 0; i < this.eventListeners.length; i++) {
-			this.eventListeners[i].removeEventListener('click', this.handleClick);
-			this.eventListeners[i].setAttribute('disabled', true);
+			this.eventListeners[i].el.removeEventListener('click', this.eventListeners[i].cb);
+			this.eventListeners[i].el.setAttribute('disabled', true);
 		}
 		this.eventListeners = [];
 		this.subscribeSend.remove();
