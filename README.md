@@ -63,11 +63,11 @@ For questions please refer to [StackOverflow](http://stackoverflow.com/questions
 
 ## API
 
-For detailed API Documentation please see [./docs/JSDOCS.md](./docs/JSDOCS.md)
+For detailed API Documentation please see [./docs/JSDOCS.md](./docs/JSDOCS.md).
 
 ## Watson Virtual Agent Documentation
 
-Additional documentation related to Watson Virtual Agent can be found in [www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml](https://www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml)
+Additional documentation related to Watson Virtual Agent can be found in [www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml](https://www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml).
 
 ## Customization
 
