@@ -15,18 +15,18 @@ It contains a configurable user interface and can be used as-is or customized. A
     ```
   
 2. (if you don't already have one) Get a set of Watson Virtual Agent API keys:
-    a. Sign in for a Free Trial in https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/
-    b. Log in to [/api explorer](https://developer.ibm.com/api/) with the same IBM ID that you used to sign up for the trial subscription
-    c. Click the My APIs link, and look for the IBM Watson Virtual Agent tile. Click the key icon, and select the default key.
-    d. Hover over the key fields, and then click SHOW to view the values. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.
+    1. Sign in for a Free Trial in https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/
+    2. Log in to [/api explorer](https://developer.ibm.com/api/) with the same IBM ID that you used to sign up for the trial subscription
+    3. Click the My APIs link, and look for the IBM Watson Virtual Agent tile. Click the key icon, and select the default key.
+    4. Hover over the key fields, and then click SHOW to view the values. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.
 
 3. Get your bot ID.
 
-    a. Click the IBM Watson Virtual Agent tile.
-    b. Click **Keys**, and select the default key.
-    c. Scroll down to the **Retrieve bot** call.
-    d. Add '2016-09-16' as the version parameter value, and click **Test**.
-    e. Copy the 32-digit alphanumeric code that is returned in the response and paste it in a text file because you will need it later.
+    1. Click the IBM Watson Virtual Agent tile.
+    2. Click **Keys**, and select the default key.
+    3. Scroll down to the **Retrieve bot** call.
+    4. Add '2016-09-16' as the version parameter value, and click **Test**.
+    5. Copy the 32-digit alphanumeric code that is returned in the response and paste it in a text file because you will need it later.
 
 4. Open `src/index.html` in your favorite text editor and set the values for the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters:
     ```html
