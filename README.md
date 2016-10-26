@@ -11,7 +11,7 @@ It contains a configurable user interface and can be used as-is or customized. A
 1. Clone this repository
 
     ```bash
-        git clone https://github.com/watson-virtual-agents/chat-widget.git
+        git clone https://github.com/watson-virtual-agents/chat-widget
     ```
   
 2. (if you don't already have one) Get a set of Watson Virtual Agent API keys:
@@ -75,4 +75,4 @@ For more details about what you can do once the widget is up and running, see [.
 
 ## License
 
-This code is licensed under Apache 2.0. Full license text is available in [LICENSE](https://github.com/watson-virtual-agents/chat-widget/blob/master/LICENSE)
+This code is licensed under Apache 2.0. Full license text is available in [LICENSE](https://github.com/watson-virtual-agents/chat-widget/blob/master/LICENSE).
