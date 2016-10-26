@@ -1,6 +1,6 @@
 # IBM Watson Virtual Agent Chat Widget
 
-![Chat Widget example screencap](https://github.com/watson-virtual-agents/chat-widget/blob/dev/images/screencap-compressed.gif)
+![Chat Widget example screencap](https://github.com/watson-virtual-agents/chat-widget/blob/dev/images/screencap.gif)
 
 Lightweight chat widget for [Watson Virtual Agent](https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/). The widget is built on top of the [Client Bot SDK](https://github.com/watson-virtual-agents/client-sdk), which manages communications with a Watson Virtual Agent bot. 
 
