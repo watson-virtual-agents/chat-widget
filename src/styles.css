@@ -39,14 +39,6 @@
 	height:auto;
 }
 
-.IBMChat-messages > div .IBMChat-watson-layout {
-	opacity:0.8;
-}
-
-.IBMChat-messages > div:last-child .IBMChat-watson-layout {
-	opacity:1;
-}
-
 .IBMChat-messages label {
 	display:block;
 	font-weight:bold;
