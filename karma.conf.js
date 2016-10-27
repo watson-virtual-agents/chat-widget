@@ -40,32 +40,6 @@ module.exports = function(config) {
 		},
 
 		webpack: webpackConfig,
-		/*
-		webpack: {
-			// webpack configuration
-			module: {
-				loaders: [{
-					test: /\.css$/,
-					loader: "style!css"
-				}, {
-					test: /\.less$/,
-					loader: "style!css!less"
-				}],
-				postLoaders: [{
-					test: /\.js/,
-					exclude: /(test|node_modules)/,
-					loader: 'istanbul-instrumenter'
-				}]
-			},
-			resolve: {
-				modulesDirectories: [
-					"",
-					"src",
-					"node_modules"
-				]
-			}
-		},
-		*/
 
 		plugins: [
 			require("karma-webpack"),
@@ -77,7 +51,6 @@ module.exports = function(config) {
 			require("karma-spec-reporter")
 		],
 
-		// browsers: ['PhantomJS', 'Chrome']
-		browsers: ['PhantomJS']
+		browsers: ['PhantomJS', 'Chrome']
 	});
 };

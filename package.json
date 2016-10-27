@@ -8,9 +8,8 @@
     "archive": "jsdoc2md \"src/index.js\" > docs/JSDOCS.md && node ./utils/archive",
     "build": "webpack",
     "watch": "node ./utils/dev-server.js",
-    "test": "node ./node_modules/karma/bin/karma start ./karma.conf.js",
-    "test:debug": "node ./node_modules/karma/bin/karma start --browsers Chrome",
-    "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS"
+    "test": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
+    "test:chrome": "node ./node_modules/karma/bin/karma start --browsers Chrome"
   },
   "engines": {
     "node": ">=4.0.0"
