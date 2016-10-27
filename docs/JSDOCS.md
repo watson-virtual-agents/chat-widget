@@ -98,7 +98,7 @@ See if an item from the user profile exists based on key.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| key | <code>string</code> | The named key of the value you are checking the existance of. |
+| key | <code>string</code> | The named key of the value you are checking the existence of. |
 
 **Example**  
 ```js
@@ -164,11 +164,11 @@ Generate the chat widget into an element.
 | config.el | <code>string</code> |  | Takes a string representing the ID of an html element to be rendered to OR a selected element |
 | config.botID | <code>string</code> |  | The unique identifier of your Virtual Agent. |
 | config.userID | <code>string</code> |  | A hashed non-identifiable (e.g. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard. |
-| config.baseURL | <code>string</code> | <code>&quot;https://api.ibm.com/virtualagent/run/api/v1/&quot;</code> | optional: specifies a different bot hosting server. The most common usecase for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request. |
+| config.baseURL | <code>string</code> | <code>&quot;https://api.ibm.com/virtualagent/run/api/v1/&quot;</code> | optional: specifies a different bot hosting server. The most common use-case for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request. |
 | config.XIBMClientID | <code>string</code> |  | optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request. |
 | config.XIBMClientSecret | <code>string</code> |  | optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request. |
 | config.errorHandler | <code>function</code> |  | optional: A function that takes an error object as a param if there is a problem with communicating with your Virtual Agent. By default, if an error is received, the user is escalated to a live agent. You may, however, want to handle some errors differently (401 for instance) |
-| config.errorHandlerContext | <code>Object</code> |  | optional: A "this" value for the errorHanlder. |
+| config.errorHandlerContext | <code>Object</code> |  | optional: A "this" value for the errorHandler. |
 | config.styles | <code>Object</code> |  | optional: Override default styling. |
 | config.styles.background | <code>string</code> | <code>&quot;rgba(61,61,61,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for background color |
 | config.styles.text | <code>string</code> | <code>&quot;#ffffff&quot;</code> | optional: rgba(X, X, X, X) or hex code for main text color |
