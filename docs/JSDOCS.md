@@ -40,6 +40,7 @@
     * [.disableInput()](#IBMChat.disableInput) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.subscribe(eventName, callback, context)](#IBMChat.subscribe) ⇒ <code>Object</code>
     * [.publish(eventName, data)](#IBMChat.publish) ⇒ <code>[IBMChat](#IBMChat)</code>
+    * [.currentSubscriptions()](#IBMChat.currentSubscriptions) ⇒ <code>Array</code>
     * [.debug()](#IBMChat.debug) ⇒ <code>[IBMChat](#IBMChat)</code>
 
 <a name="IBMChat.profile"></a>
@@ -393,7 +394,7 @@ IBMChat.disableInput();
 <a name="IBMChat.subscribe"></a>
 
 ### IBMChat.subscribe(eventName, callback, context) ⇒ <code>Object</code>
-Subscribe to an IBMChat event.
+Subscribe to an IBMChat event. See [./EVENTS.md](./EVENTS.md) for more details.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
 **Returns**: <code>Object</code> - - Returns object with a .remove function to destroy the subscription  
@@ -414,7 +415,7 @@ var mySubscription = IBMChat.subscribe('the-end-of-the-world', function(message)
 <a name="IBMChat.publish"></a>
 
 ### IBMChat.publish(eventName, data) ⇒ <code>[IBMChat](#IBMChat)</code>
-Publish an IBMChat event.
+Publish an IBMChat event. See [./EVENTS.md](./EVENTS.md) for more details.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
 **Returns**: <code>[IBMChat](#IBMChat)</code> - - Returns IBMChat for chaining.  
@@ -427,6 +428,17 @@ Publish an IBMChat event.
 **Example**  
 ```js
 IBMChat.publish('the-end-of-the-world', 'panic!');
+```
+<a name="IBMChat.currentSubscriptions"></a>
+
+### IBMChat.currentSubscriptions() ⇒ <code>Array</code>
+See a list of current event subscriptions. See [./EVENTS.md](./EVENTS.md) for more details.
+
+**Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>Array</code> - - Array of events and callbacks.  
+**Example**  
+```js
+IBMChat.currentSubscriptions();
 ```
 <a name="IBMChat.debug"></a>
 
