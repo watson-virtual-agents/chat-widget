@@ -76,10 +76,6 @@ var insertUserProfileData = function(msg) {
 	return msg;
 };
 
-/**
- * @namespace SDK
- */
-
 var SDK = module.exports = {
 	configure: function( config ) {
 		assign( options, config );
@@ -137,7 +133,7 @@ var SDK = module.exports = {
 		forEach: storage.forEach
 	},
 	mock: {
-		init: function(botID, message) {
+		start: function(botID, message) {
 			var chatID = uuid();
 			var response = {
 				dialog_id: chatID,
@@ -145,7 +141,7 @@ var SDK = module.exports = {
 			};
 			SDK.profile.set('chatID', chatID);
 			SDK.profile.set('botID', botID);
-			axios.onPost('/bots/'+ botID +'/dialogs').replyOnce(200, response);
+			mock.onPost('/bots/'+ botID +'/dialogs').replyOnce(200, response);
 		},
 		message: function(input, output) {
 			var chatID = SDK.profile.get('chatID');
@@ -155,7 +151,7 @@ var SDK = module.exports = {
 			var endpoint = '/bots/'+ botID +'/dialogs/'+ chatID +'/messages';
 			var query = 'message='+ encodeURIComponent( input );
 			var config = { 'headers': { 'X-Request-ID': requestID } };
-			axios.onPost(endpoint +'?'+ query, data, config).replyOnce(200, output);
+			mock.onPost(endpoint +'?'+ query, data, config).replyOnce(200, output);
 		}
 	}
 };
