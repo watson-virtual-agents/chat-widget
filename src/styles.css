@@ -39,14 +39,6 @@
 	height:auto;
 }
 
-.IBMChat-messages > div .IBMChat-watson-layout {
-	opacity:0.8;
-}
-
-.IBMChat-messages > div:last-child .IBMChat-watson-layout {
-	opacity:1;
-}
-
 .IBMChat-messages label {
 	display:block;
 	font-weight:bold;
@@ -80,7 +72,7 @@
 
 .IBMChat-messages button[disabled="true"] {
 	cursor: default;
-  opacity:.8;
+  opacity:.7;
 }
 
 .IBMChat-messages button::-moz-focus-inner {
@@ -102,6 +94,10 @@
 
 .IBMChat-watson-layout {
 	margin: 0 1em 0 1em;
+}
+
+.IBMChat-disabled-layout {
+	opacity: 0.7;
 }
 
 /* UserMessage Component */
