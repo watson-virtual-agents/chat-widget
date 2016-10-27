@@ -12,10 +12,9 @@ module.exports = function(config) {
 		// enable / disable watching file and executing tests whenever any file changes
 		autoWatch: true,
 
-		// all files ending in "-test"
-		// (recommended loading approach per https://github.com/webpack/karma-webpack)
+		// all files ending in '.spec.js'
 		files: [
-			'test/index.js'
+			'test/*.spec.js'
 		],
 
 		// frameworks to use
@@ -24,9 +23,15 @@ module.exports = function(config) {
 		preprocessors: {
 			// only specify one entry point
 			// and require all tests in there
-			'test/index.js': ['webpack']
+			'test/*.spec.js': ['webpack']
 		},
-
+	   
+	   	// add preprocessor to the files that should be
+	    // processed via browserify
+	    // preprocessors: {
+	    //   'test/*.spec.js': [ 'browserify' ]
+	    // },
+		
 		reporters: ['spec', 'coverage'],
 
 		coverageReporter: {

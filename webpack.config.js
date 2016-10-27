@@ -25,12 +25,14 @@ function _toConsumableArray(arr) {
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var RewirePlugin = require("rewire-webpack");
 
 var DefinePlugin = webpack.DefinePlugin;
 var NoErrorsPlugin = webpack.NoErrorsPlugin;
 var DedupePlugin = webpack.optimize.DedupePlugin;
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin;
+
 
 var MAPS_SERVER = {
 	'development': 'https://dd1-i-serve-maps.mybluemix.net',
@@ -90,7 +92,7 @@ module.exports = {
 			test: /\.json$/
 		}]
 	},
-	plugins: [ new NoErrorsPlugin(), new DedupePlugin(), new DefinePlugin({
+	plugins: [ new NoErrorsPlugin(), new DedupePlugin(), new RewirePlugin(), new DefinePlugin({
 		'process.env.DEBUG': JSON.stringify(debug),
 		'process.env.MAPS_SERVER': JSON.stringify(mapsServer)
 	})].concat(_toConsumableArray(!debug ? [new OccurenceOrderPlugin(), new UglifyJsPlugin({
