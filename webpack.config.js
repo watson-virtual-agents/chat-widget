@@ -60,9 +60,11 @@ module.exports = {
 	devtool: debug ? 'inline-sourcemap' : null,
 	stats: { colors: true },
 	resolve: {
-		extensions: ['', '.js', '.json']
+		extensions: ['', '.js', '.json'],
+		alias: {
+			'sinon': 'sinon/pkg/sinon'
+		}
 	},
-
 	env: env,
 	context: paths.context,
 	entry: paths.entry,
@@ -90,7 +92,10 @@ module.exports = {
 		}, {
 			loader: 'json',
 			test: /\.json$/
-		}]
+		}],
+		noParse: [
+	        /node_modules\/sinon\//,
+	    ]
 	},
 	plugins: [ new NoErrorsPlugin(), new DedupePlugin(), new RewirePlugin(), new DefinePlugin({
 		'process.env.DEBUG': JSON.stringify(debug),
