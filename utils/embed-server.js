@@ -14,5 +14,6 @@
 
 const server = require('./server');
 server.run({
-	index: 'dev'
+	https: true,
+	index: 'embed'
 });

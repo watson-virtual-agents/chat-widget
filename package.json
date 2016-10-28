@@ -7,9 +7,13 @@
   "scripts": {
     "archive": "jsdoc2md \"src/index.js\" > docs/JSDOCS.md && node ./utils/archive",
     "build": "webpack",
-    "watch": "node ./utils/dev-server.js",
+    "server:embed": "node ./utils/embed-server.js",
+    "server:selenium": "node ./utils/selenium-server.js",
+    "server:watch": "node ./utils/dev-server.js",
     "test": "node ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
-    "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS"
+    "test:selenium": "selenium-standalone install --silent && concurrently -k -s first \"selenium-standalone start\" \"npm run server:selenium\" \"wdio wdio.conf.js\"",
+    "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
+    "watch": "npm run server:watch"
   },
   "engines": {
     "node": ">=4.0.0"
@@ -40,7 +44,10 @@
     "lodash": "4.15.0"
   },
   "devDependencies": {
+    "axios": "0.12.0",
+    "axios-mock-adapter": "1.7.1",
     "chai": "3.5.0",
+    "concurrently": "^3.1.0",
     "eslint": "3.0.0",
     "eslint-loader": "1.4.0",
     "eslint-plugin-mocha": "4.5.1",
@@ -60,10 +67,16 @@
     "node-glob": "1.2.0",
     "phantomjs-prebuilt": "2.1.12",
     "raw-loader": "0.5.1",
+    "selenium-standalone": "5.8.0",
     "semver": "5.3.0",
     "source-map-loader": "0.1.5",
     "style-loader": "0.13.1",
     "svg-inline-loader": "0.4.1",
+    "wdio-dot-reporter": "0.0.6",
+    "wdio-json-reporter": "0.1.0",
+    "wdio-junit-reporter": "0.1.0",
+    "wdio-mocha-framework": "0.4.6",
+    "webdriverio": "4.2.16",
     "webpack": "1.13.1",
     "webpack-dev-server": "1.14.1"
   },

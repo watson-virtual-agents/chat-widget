@@ -12,7 +12,17 @@
 * the License.
 */
 
-const server = require('./server');
-server.run({
-	index: 'dev'
-});
+var SDK = require('@watson-virtual-agent/client-sdk/lib/web');
+
+function set(sdk) {
+	SDK = sdk;
+}
+
+function get() {
+	return SDK;
+}
+
+module.exports = {
+	get: get,
+	set: set
+};
