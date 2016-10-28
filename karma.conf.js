@@ -14,7 +14,7 @@ module.exports = function(config) {
 
 		// all files ending in '.spec.js'
 		files: [
-			'test/*.spec.js'
+			'test/**/*.spec.js'
 		],
 
 		// frameworks to use
@@ -23,14 +23,14 @@ module.exports = function(config) {
 		preprocessors: {
 			// only specify one entry point
 			// and require all tests in there
-			'test/*.spec.js': ['webpack']
+			'test/**/*.spec.js': ['webpack']
 		},
-	   
-	   	// add preprocessor to the files that should be
-	    // processed via browserify
-	    // preprocessors: {
-	    //   'test/*.spec.js': [ 'browserify' ]
-	    // },
+		
+		// add preprocessor to the files that should be
+		// processed via browserify
+		// preprocessors: {
+		//   'test/*.spec.js': [ 'browserify' ]
+		// },
 		
 		reporters: ['spec', 'coverage'],
 

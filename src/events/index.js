@@ -42,20 +42,33 @@ function destroy() {
 	events = [];
 }
 
-function unsubscribe(event, handler, context) {
-	if (typeof context === undefined)
-		context = handler;
+function unsubscribe(event, handler) {
+	var isDebug = state.getState().DEBUG;
+	if (!event || !handler) {
+		if (isDebug) {
+			console.error('Must pass a valid event and handler to unsubscribe.');
+		}
+		return;
+	}
+	if(!hasSubscription(event)) {
+		if (isDebug) {
+			debugger;
+			console.error('Must pass a valid event and handler to unsubscribe.');
+		}
+		return;
+	}
+
 }
 
 function currentSubscriptions() {
 	return events.slice(0);
 }
 
-function hasSubscription(action) {
+function hasSubscription(event) {
 	var subscriptions = currentSubscriptions();
 	for (var i = 0; i < subscriptions.length; i++) {
 		var subscription = subscriptions[i];
-		if (subscription && subscription.event === action)
+		if (subscription && subscription.event === event)
 			return true;
 	}
 	return false;
@@ -67,7 +80,7 @@ function subscribe(event, handler, context) {
 	var index = events.push({ event: event, handler: handler.bind(context) }) - 1;
 	return {
 		remove: function() {
-			delete events[index];
+			events.splice(index, 1);
 		}
 	};
 }
