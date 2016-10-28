@@ -15,7 +15,7 @@
 var layouts = require('./layouts');
 var events = require('./events');
 var eventHandlers = require('./events/handlers');
-var SDK = require('./sdk');
+var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var state = require('./state');
 var profile = require('./profile');
 var playback = require('./playback');
@@ -65,9 +65,6 @@ function registerLayouts() {
 
 function init(config) {
 	var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
-	if (config.mockSDK)
-		SDK.set(config.mockSDK);
-	var BotSDK = SDK.get();
 	var SDKconfig = {};
 	SDKconfig.baseURL = config.baseURL || 'https://api.ibm.com/virtualagent/run/api/v1/';
 	if (config.withCredentials)

@@ -14,7 +14,7 @@
 
 var state = require('../../state');
 var events = require('../../events');
-var BotSDK = require('../../sdk').get();
+var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
 var templates = require('../../templates');

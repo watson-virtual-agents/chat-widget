@@ -11,7 +11,7 @@
     "server:selenium": "node ./utils/selenium-server.js",
     "server:watch": "node ./utils/dev-server.js",
     "test": "node ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
-    "test:selenium": "selenium-standalone install --silent && concurrently -k -s first \"selenium-standalone start\" \"npm run server:selenium\" \"wdio wdio.conf.js\"",
+    "test:selenium": "selenium-standalone install --silent && concurrently -k -s first \"selenium-standalone start\" \"npm run server:selenium\" \"wdio wdio.conf.js\" \"node ./selenium/mocks/server.js\"",
     "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
     "watch": "npm run server:watch"
   },
@@ -45,9 +45,8 @@
   },
   "devDependencies": {
     "axios": "0.12.0",
-    "axios-mock-adapter": "1.7.1",
     "chai": "3.5.0",
-    "concurrently": "^3.1.0",
+    "concurrently": "3.1.0",
     "eslint": "3.0.0",
     "eslint-loader": "1.4.0",
     "eslint-plugin-mocha": "4.5.1",
