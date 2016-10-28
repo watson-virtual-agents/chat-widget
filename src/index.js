@@ -261,7 +261,7 @@ var IBMChat = {
 	},
 
 	/**
-	 * Subscribe to an IBMChat event.
+	 * Subscribe to an IBMChat event. See [./EVENTS.md](./EVENTS.md) for more details.
 	 * @function subscribe
 	 * @memberof IBMChat
 	 * @param {string} eventName - Takes a string representing the name of the event
@@ -276,7 +276,7 @@ var IBMChat = {
 	 */
 	subscribe: bootstrap.subscribe,
 	/**
-	 * Publish an IBMChat event.
+	 * Publish an IBMChat event. See [./EVENTS.md](./EVENTS.md) for more details.
 	 * @function publish
 	 * @memberof IBMChat
 	 * @param {string} eventName - A string that represents the name of the event data
@@ -361,7 +361,12 @@ var IBMChat = {
 	},
 
 	/**
-	 * @ignore
+	 * See a list of current event subscriptions. See [./EVENTS.md](./EVENTS.md) for more details.
+ 	 * @function currentSubscriptions
+	 * @memberof IBMChat
+	 * @returns {Array} - Array of events and callbacks.
+	 * @example
+	 * IBMChat.currentSubscriptions();
 	 */
 	currentSubscriptions: bootstrap.currentSubscriptions,
 	/**
