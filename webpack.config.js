@@ -94,8 +94,8 @@ module.exports = {
 			test: /\.json$/
 		}],
 		noParse: [
-	        /node_modules\/sinon\//,
-	    ]
+			/node_modules\/sinon\//,
+		]
 	},
 	plugins: [ new NoErrorsPlugin(), new DedupePlugin(), new RewirePlugin(), new DefinePlugin({
 		'process.env.DEBUG': JSON.stringify(debug),
