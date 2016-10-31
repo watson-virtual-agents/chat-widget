@@ -251,6 +251,7 @@ var IBMChat = {
 	/**
 	 * Enable users to submit messages in the chat text box. Useful when you want users to be able to return to adding messages to the chat text box after interacting with a layout.
 	 * @function enableInput
+	 * @memberof IBMChat
 	 * @returns {IBMChat} - Returns IBMChat for chaining.
 	 * @example
 	 * IBMChat.enableInput();

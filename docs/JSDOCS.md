@@ -1,18 +1,3 @@
-## Objects
-
-<dl>
-<dt><a href="#IBMChat">IBMChat</a> : <code>object</code></dt>
-<dd></dd>
-</dl>
-
-## Functions
-
-<dl>
-<dt><a href="#enableInput">enableInput()</a> ⇒ <code><a href="#IBMChat">IBMChat</a></code></dt>
-<dd><p>Enable users to submit messages in the chat text box. Useful when you want users to be able to return to adding messages to the chat text box after interacting with a layout.</p>
-</dd>
-</dl>
-
 <a name="IBMChat"></a>
 
 ## IBMChat : <code>object</code>
@@ -38,6 +23,7 @@
     * [.disableCustomInputHandler()](#IBMChat.disableCustomInputHandler) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.focusInput()](#IBMChat.focusInput) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.disableInput()](#IBMChat.disableInput) ⇒ <code>[IBMChat](#IBMChat)</code>
+    * [.enableInput()](#IBMChat.enableInput) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.subscribe(eventName, callback, context)](#IBMChat.subscribe) ⇒ <code>Object</code>
     * [.publish(eventName, data)](#IBMChat.publish) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.currentSubscriptions()](#IBMChat.currentSubscriptions) ⇒ <code>Array</code>
@@ -391,6 +377,17 @@ Prevent users from submitting messages in the chat text box. Useful when you wan
 ```js
 IBMChat.disableInput();
 ```
+<a name="IBMChat.enableInput"></a>
+
+### IBMChat.enableInput() ⇒ <code>[IBMChat](#IBMChat)</code>
+Enable users to submit messages in the chat text box. Useful when you want users to be able to return to adding messages to the chat text box after interacting with a layout.
+
+**Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>[IBMChat](#IBMChat)</code> - - Returns IBMChat for chaining.  
+**Example**  
+```js
+IBMChat.enableInput();
+```
 <a name="IBMChat.subscribe"></a>
 
 ### IBMChat.subscribe(eventName, callback, context) ⇒ <code>Object</code>
@@ -450,15 +447,4 @@ Turns on a whole bunch of verbose console.log statements!
 **Example**  
 ```js
 IBMChat.debug()
-```
-<a name="enableInput"></a>
-
-## enableInput() ⇒ <code>[IBMChat](#IBMChat)</code>
-Enable users to submit messages in the chat text box. Useful when you want users to be able to return to adding messages to the chat text box after interacting with a layout.
-
-**Kind**: global function  
-**Returns**: <code>[IBMChat](#IBMChat)</code> - - Returns IBMChat for chaining.  
-**Example**  
-```js
-IBMChat.enableInput();
 ```
