@@ -21,12 +21,13 @@ It contains a configurable user interface and can be used as-is or customized. A
     4. Hover over the key fields, and then click SHOW to view the values. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.
 
 3. Get your bot ID.
-
-    1. Click the IBM Watson Virtual Agent tile.
-    2. Click **Keys**, and select the default key.
-    3. Scroll down to the **Retrieve bot** call.
-    4. Add '2016-09-16' as the version parameter value, and click **Test**.
-    5. Copy the 32-digit alphanumeric code that is returned in the response and paste it in a text file because you will need it later.
+    
+    Your bot ID is assigned when you create the Watson Virtual Agent instance, and is provided in the bot ID parameter of the code snippet that is displayed in the Publish page. You can use the value that is provided there as-is. 
+    If, for some reason, you want to retrieve the bot ID yourself, follow these steps. The order is important.
+    1. When you get to the Watson Virtual Agent API details page, click KEYS`.
+    2. Click **#1 - Key1**.
+    The key you selected is now displayed.
+    3. Now you should see a `TEST` button when you scroll down to the Retrieve Bot call.
 
 4. Open `src/index.html` in your favorite text editor and set the values for the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters:
     ```html
@@ -37,8 +38,6 @@ It contains a configurable user interface and can be used as-is or customized. A
                 botID: '',              // replace with Bot ID
                 XIBMClientID: '',       // replace with Client ID
                 XIBMClientSecret: ''    // replace with Client Secret
-            }).then(function(){
-                window.IBMChat.debug();
             });
         </script>
     ```
@@ -47,7 +46,7 @@ It contains a configurable user interface and can be used as-is or customized. A
 
     **Important**: Keep the values of the IBMClientID and IBMClientSecret as private as possible.
 
-6. Run the following commands using [Node](https://nodejs.org/) 4.x or higher:
+6. Run the following commands using [Node 4.x](https://nodejs.org/) or higher:
 
     ```bash
     npm install
@@ -63,7 +62,7 @@ For questions please refer to [StackOverflow](http://stackoverflow.com/questions
 
 ## API
 
-For detailed API Documentation please see [./docs/JSDOCS.md](./docs/JSDOCS.md).
+For detailed documentation on the Watson Virtual Agent Chat Widget API please see [JSDOCS.md](./docs/JSDOCS.md).
 
 ## Watson Virtual Agent Documentation
 
@@ -71,7 +70,10 @@ Additional documentation related to Watson Virtual Agent can be found in [www.ib
 
 ## Customization
 
-For more details about what you can do once the widget is up and running, see [./docs/DOCS.md](./docs/DOCS.md) and [./docs/JSDOCS.md](./docs/JSDOCS.md).
+For more details about what you can do once the widget is up and running, see:
+- [DOCS.md](./docs/DOCS.md)
+- [JSDOCS.md](./docs/JSDOCS.md)
+- [EVENTS.md](./docs/EVENTS.md)
 
 ## License
 
