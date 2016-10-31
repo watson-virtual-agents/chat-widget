@@ -18,7 +18,6 @@ describe('bootstrap', function() {
 		};
 		bootstrap.__set__('events', eventsMock);
 	});
-		
 
 	it('should send error for invalid messages', function() {
 		stateMock = {
@@ -63,6 +62,30 @@ describe('bootstrap', function() {
 		expect(eventsMock.publish.notCalled);
 	});
 
+	it('should have the expected API', function() {
+		expect(bootstrap).to.have.property('profile');
+		expect(bootstrap).itself.to.respondTo('init');
+		expect(bootstrap).itself.to.respondTo('registerLayout');
+		expect(bootstrap).itself.to.respondTo('send');
+		expect(bootstrap).itself.to.respondTo('receive');
+		expect(bootstrap).itself.to.respondTo('sendMock');
+		expect(bootstrap).itself.to.respondTo('sendSilently');
+		expect(bootstrap).itself.to.respondTo('enableCustomInputHandler');
+		expect(bootstrap).itself.to.respondTo('disableCustomInputHandler');
+		expect(bootstrap).itself.to.respondTo('focusInput');
+		expect(bootstrap).itself.to.respondTo('disableInput');
+		expect(bootstrap).itself.to.respondTo('enableInput');
+		expect(bootstrap).itself.to.respondTo('subscribe');
+		expect(bootstrap).itself.to.respondTo('publish');
+		expect(bootstrap).itself.to.respondTo('debug');
+		expect(bootstrap).itself.to.respondTo('restart');
+		expect(bootstrap).itself.to.respondTo('currentSubscriptions');
+		expect(bootstrap).itself.to.respondTo('hasSubscription');
+		expect(bootstrap).itself.to.respondTo('completeEvent');
+		expect(bootstrap).to.have.property('playback');
+		expect(bootstrap).to.have.property('state');
+	});
+	
 	afterEach(function() {
 		// reset spy state
 		publishSpy.reset();

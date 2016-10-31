@@ -80,6 +80,16 @@ describe('events', function() {
 		expect(events.currentSubscriptions()).to.be.empty;
 	});
 
+	it('should have the expected API', function() {
+		expect(events).itself.to.respondTo('destroy');
+		expect(events).itself.to.respondTo('unsubscribe');
+		expect(events).itself.to.respondTo('currentSubscriptions');
+		expect(events).itself.to.respondTo('hasSubscription');
+		expect(events).itself.to.respondTo('subscribe');
+		expect(events).itself.to.respondTo('publish');
+		expect(events).itself.to.respondTo('completeEvent');
+	});
+
 	afterEach(function() {
 		// remove stub and restore console.error's behavior
 		consoleErrStub.restore();

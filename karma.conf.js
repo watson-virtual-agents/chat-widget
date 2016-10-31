@@ -26,12 +26,6 @@ module.exports = function(config) {
 			'test/**/*.spec.js': ['webpack']
 		},
 		
-		// add preprocessor to the files that should be
-		// processed via browserify
-		// preprocessors: {
-		//   'test/*.spec.js': [ 'browserify' ]
-		// },
-		
 		reporters: ['spec', 'coverage'],
 
 		coverageReporter: {
