@@ -64,12 +64,17 @@ IBMChat.init({
 
 In your production environment, you should replace the baseURL with a server of your own. This server should add the `X-IBM-Client-Id` and `X-IBM-Client-Secret` headers to the request and forward them on to https://api.ibm.com/virtualagent/run/api/v1. `X-IBM-Client-Id` and `X-IBM-Client-Secret` are used for billing, so it is of utmost importance you keep them secret.
 
+## Events
+
+The Chat UI is written in a PubSub architecture and exposes many events that you may wish to subscribe to when creating your own custom layouts. For a list of events provided by default, see [./EVENTS.md](./EVENTS.md). You can subscribe to events using `IBMChat.subscribe(event, cb)` and publish an event using `IBMChat.publish(event, data)`. `Action` and `Layout` events are published with the `action:ACTION_NAME` and `layout:LAYOUT_NAME` format.
+
+
 ## Actions
 
 Actions are included in the bot response when the UI is expected to take an action. Examples of actions include processing a credit card or updating an address. An action is thrown as an event and expects *success*, *failure* or *cancel* as a response.
 
 ```js
-IBMChat.subscribe('action:update_address', function(data){
+IBMChat.subscribe('action:updateAddress', function(data){
 	//make an ajax call to update a user address using "data"
 	IBMChat.sendSilently('success');
 	// or IBMChat.sendSilently('failure'); or IBMChat.sendSilently('cancel');
