@@ -18,7 +18,7 @@ var utils = require('../../utils');
 var assign = require('lodash/assign');
 var templates = require('../../templates');
 
-function _actions(tryIt, debug, data) {
+function _actions(data, tryIt, debug) {
 	var msg = data.message;
 	if (msg && msg.action && msg.action.name) {
 		var action = 'action:' + msg.action.name;
@@ -40,7 +40,7 @@ function _actions(tryIt, debug, data) {
 	}, 20);
 }
 
-function _layouts(tryIt, debug, data) {
+function _layouts(data, tryIt, debug) {
 	var msg = data.message;
 	if (msg && msg.layout && msg.layout.name) {
 		var layout = 'layout:' + msg.layout.name;
@@ -67,7 +67,7 @@ function receive(data) {
 		hasError: false
 	});
 	var msg = parsed.message;
-	var msgText = (msg && msg.text) ? ((Array.isArray(msg.text)) ? msg.text : [msg.text]) : [''];
+	var msgText = (msg && msg.text) ? ((Array.isArray(msg.text) && msg.text.length > 0) ? msg.text : [msg.text]) : [''];
 	var containers = [];
 	var messages = [];
 	var layouts = [];
@@ -81,7 +81,7 @@ function receive(data) {
 		messages.push(document.createElement('div'));
 		layouts.push(document.createElement('div'));
 		layouts[i].classList.add('IBMChat-watson-layout');
-		if (msgText[i] || (msg && msg.layout && msg.layout.name && i === (msgText.length - 1))) {
+		if ((msgText[i] && msgText[i].length > 0) || (msg && msg.layout && msg.layout.name && i === (msgText.length - 1))) {
 			messages[i].classList.add('IBMChat-watson-message');
 			messages[i].classList.add('IBMChat-watson-message-theme');
 			utils.writeMessage(messages[i], msgText[i]);
@@ -94,9 +94,9 @@ function receive(data) {
 		msgData.msgElement = messages[i];
 		datas.push(msgData);
 		if (msg && msg.layout && ((msg.layout.index !== undefined && msg.layout.index == i) ||(msg.layout.index === undefined && i == (msgText.length - 1))))
-			_layouts(current.tryIt, current.DEBUG, datas[i]);
+			_layouts(datas[i], current.tryIt, current.DEBUG);
 		if (i === (msgText.length - 1))
-			_actions(current.tryIt, current.DEBUG, datas[i]);
+			_actions(datas[i], current.tryIt, current.DEBUG);
 	}
 
 }
