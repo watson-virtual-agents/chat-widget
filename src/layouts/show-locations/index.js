@@ -271,6 +271,20 @@ ShowLocations.prototype.addDetails = function() {
 		return this.addLocation();
 };
 
+ShowLocations.prototype.convertColor = function(color) {
+	function rgb2hex(rgb) {
+		rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+		return (rgb && rgb.length === 4) ?
+		("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+		("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+		("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+	}
+	if (color.indexOf('#') > -1)
+		return color.replace('#', '');
+	else
+		return rgb2hex(color);
+};
+
 ShowLocations.prototype.drawLocations = function() {
 	var current = getState();
 	var img = document.createElement('img');
@@ -279,6 +293,8 @@ ShowLocations.prototype.drawLocations = function() {
 		size: width + 'x180',
 		scale: pixelRatio
 	};
+	if (this.data.length === 1)
+		config.zoom = 12;
 	this.uri = current.mapsServer + '?';
 	this.uri += utils.serialize(config);
 	this.uri += '&locations=';
@@ -288,7 +304,7 @@ ShowLocations.prototype.drawLocations = function() {
 		locations += (i === 0 ) ? item.address.lat + ',' + item.address.lng : '+' + item.address.lat + ',' + item.address.lng;
 	}
 	this.uri += encodeURIComponent(locations);
-	this.uri += '&color=' + encodeURIComponent(current.styles.accentBackground.replace('#', ''));
+	this.uri += '&color=' + encodeURIComponent(this.convertColor(current.styles.accentBackground));
 	img.setAttribute('width', '100%');
 	img.setAttribute('src', this.uri);
 	return img;
