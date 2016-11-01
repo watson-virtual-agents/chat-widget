@@ -121,7 +121,7 @@ Form.prototype.validateField = function(field, datum) {
 	} else if (datum.validations && datum.validations.length !== 0) {
 		for (var i = 0; i < datum.validations.length; i++) {
 			var validation = datum.validations[i];
-			var regex = new RegExp('/'+ validation.regex +'/');
+			var regex = new RegExp(validation.regex);
 			var matches = regex.test(field.value);
 			if (!matches) {
 				this.addError(field.getAttribute('name'), validation.message);
@@ -144,6 +144,7 @@ Form.prototype.removeError = function(name) {
 	var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
 	el.dataset.valid = true;
 	el.textContent = '';
+	el.style.display = 'none';
 };
 
 Form.prototype.removeAllErrors = function() {
