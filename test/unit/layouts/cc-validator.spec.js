@@ -23,7 +23,7 @@ describe('cc-validator layout', function() {
 		};
 	});
 	
-	describe('#validateCVV', function(){
+	describe('#validateCVV()', function() {
 		var validateCVV = validation.validateCVV;
 
 		it('should validate empty values', function() {
@@ -60,7 +60,7 @@ describe('cc-validator layout', function() {
 
 	});
 	
-	describe('#validateExp', function() {
+	describe('#validateExp()', function() {
 		var validateExp = validation.validateExp;
 		var validYear = String(new Date().getFullYear() + 10);
 		
@@ -111,7 +111,7 @@ describe('cc-validator layout', function() {
 		
 	});
 
-	describe('#validateCard', function() {
+	describe('#validateCard()', function() {
 		var validateCard = validation.validateCard;
 		var allCards = ['visa','mastercard','discover','amex'];
 		
@@ -192,7 +192,11 @@ describe('cc-validator layout', function() {
 			expect(validateCard(allCards, '6490000000000000007')).to.eql(validOutput);
 			expect(validateCard(allCards, '6221260000000000001')).to.eql(validOutput);
 			expect(validateCard(allCards, '6229250000000000006')).to.eql(validOutput);
-		});	
+			// With dashes/spaces
+			expect(validateCard(allCards, '4222222222222')).to.eql(validOutput);
+			expect(validateCard(allCards, '4111-1111-1111-1111')).to.eql(validOutput);
+			expect(validateCard(allCards, '4111 1111 1111 1111')).to.eql(validOutput);
+		});
 	});
 
 
