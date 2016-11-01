@@ -23,13 +23,14 @@ var state = {
 var messages = {
 	required: 'This field is required.',
 	acceptedCard: function() {
+		var cards = state.acceptedCards;
+		var length = cards.length;
 		var text = 'We accept ';
-		for (i = 0; i < state.acceptedCards.length; i++) {
-			if (i > 0)
-				text += ', ';
-			if (i === (state.acceptedCards.length - 1))
-				text += ' and ';
-			text += cardData[state.acceptedCards[i]].human;
+		if (length === 1) {
+			text += cardData[cards[0]].human;
+		} else {
+			var middle = cards.slice(1, length-1).map(function(c) { return ', ' + cardData[c].human; });
+			text += cardData[cards[0]].human + middle +' and '+cardData[cards[length-1]].human;
 		}
 		text += '. Please use a valid card.';
 		return text;
@@ -87,7 +88,7 @@ function _detectCard() {
 	return false;
 }
 
-function _checkKuhn() {
+function _checkLuhn() {
 	var checksum = 0; // running checksum total
 	var j = 1; // takes value of 1 or 2
 
@@ -117,39 +118,42 @@ function _checkKuhn() {
 
 function validateCard(acceptedCards, cardNumber) {
 	state.acceptedCards = acceptedCards;
-	state.cardNumber = cardNumber.replace(/\D/g,''); //strip extra characters
-	if (cardNumber.length === 0) {
-		return {
-			"message": messages.required,
-			"valid": false
-		};
-	}
+	state.cardNumber = cardNumber.trim(); //strip extra characters
+
 	if (state.cardNumber.length === 0) {
 		return {
 			"message": messages.required,
 			"valid": false
 		};
 	}
+	
+	if (state.cardNumber.length && isNaN(state.cardNumber)) {
+		return {
+			"message": messages.invalid,
+			"valid": false
+		};
+	}
+
 	if (_detectCard()) {
-		if (state.acceptedCards.indexOf(state.cardType) === -1) {
-			return {
-				"message": messages.acceptedCard(),
-				"valid": false
-			};
-		}
 		if (cardData[state.cardType].lengths.indexOf(state.cardNumber.length) === -1) {
 			return {
 				"message": messages.invalid,
 				"valid": false
 			};
 		}
-		if (_checkKuhn() === false) {
+		if (_checkLuhn() === false) {
 			return {
 				"message": messages.invalid,
 				"valid": false
 			};
 		}
 	} else {
+		if (state.acceptedCards.indexOf(state.cardType) === -1) {
+			return {
+				"message": messages.acceptedCard(),
+				"valid": false
+			};
+		}
 		return {
 			"message": messages.invalid,
 			"valid": false
@@ -162,39 +166,47 @@ function validateCard(acceptedCards, cardNumber) {
 }
 
 function validateExp(userM, userY) {
+	var monthRegexp = /^(0[1-9]|1[012])$/;
+	var yearRegexp = /^(20)[0-9][0-9]$/;
 	var d = new Date();
 	var month = d.getMonth();
 	var year = d.getFullYear();
 
-	if (userM.length === 0 || userY.length === 0 || userM.replace(/\D/g,'').length === 0 || userY.replace(/\D/g,'').length === 0) {
+	if (userM.trim().length === 0 || userY.trim().length === 0) {
 		return {
 			"message": messages.required,
 			"valid": false
 		};
 	}
 
+	var invalidDigits = !userM.match(monthRegexp) || !userY.match(yearRegexp);
 	userM = parseInt(userM, 10);
 	userY = parseInt(userY, 10);
-
-	if (userM > 12 || userM < 1 || (userY > year + 20) || (userY < year || (userY === year && userM < month))) {
+	var yearNotInRange = (userY > year + 20) || (userY < year);
+	var beforeCurrentMonth = (userY === year && userM < month);
+	
+	if (invalidDigits || yearNotInRange || beforeCurrentMonth) {
 		return {
 			"message": messages.invalidExpiration,
 			"valid": false
 		};
 	}
+	
 	return {
 		"valid": true
 	};
 }
 
 function validateCVV(CVV) {
-	if (CVV.length === 0) {
+	// 3 or 4 digits
+	var CVVRegex = /^[0-9]{3,4}$/;
+	if (CVV.trim().length === 0) {
 		return {
 			"message": messages.required,
 			"valid": false
 		};
 	}
-	if (!isNaN(CVV) && (CVV > 9999 || CVV < 100)) {
+	if (!CVV.match(CVVRegex)) {
 		return {
 			"message": messages.invalidCvv,
 			"valid": false
