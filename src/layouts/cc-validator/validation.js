@@ -29,8 +29,10 @@ var messages = {
 		if (length === 1) {
 			text += cardData[cards[0]].human;
 		} else {
-			var middle = cards.slice(1, length-1).map(function(c) { return ', ' + cardData[c].human; });
-			text += cardData[cards[0]].human + middle +' and '+cardData[cards[length-1]].human;
+			var middle = cards.slice(1, length - 1).map(function(c) {
+				return ', ' + cardData[c].human;
+			});
+			text += cardData[cards[0]].human + middle + ' and ' + cardData[cards[length - 1]].human;
 		}
 		text += '. Please use a valid card.';
 		return text;
@@ -116,53 +118,41 @@ function _checkLuhn() {
 	return (checksum % 10 != 0) ? false : true;
 }
 
+function _invalid(message) {
+	return {
+		'message': message,
+		'valid': false
+	};
+}
+
+function _valid() {
+	return {
+		'valid': true
+	};
+}
+
 function validateCard(acceptedCards, cardNumber) {
 	state.acceptedCards = acceptedCards;
-	state.cardNumber = cardNumber.trim(); //strip extra characters
+	state.cardNumber = cardNumber.replace(/\D/g,''); //strip extra characters
 
-	if (state.cardNumber.length === 0) {
-		return {
-			"message": messages.required,
-			"valid": false
-		};
+	if (cardNumber.trim().length === 0)
+		return _invalid(messages.required);
+
+	if (state.cardNumber.length === 0)
+		return _invalid(messages.invalid);
+	
+	if (_detectCard()) {
+		if (cardData[state.cardType].lengths.indexOf(state.cardNumber.length) === -1)
+			return _invalid(messages.invalid);
+		if (_checkLuhn() === false)
+			return _invalid(messages.invalid);
+	} else {
+		if (state.acceptedCards.indexOf(state.cardType) === -1)
+			return _invalid(messages.acceptedCard());
+		return _invalid(messages.invalid);
 	}
 	
-	if (state.cardNumber.length && isNaN(state.cardNumber)) {
-		return {
-			"message": messages.invalid,
-			"valid": false
-		};
-	}
-
-	if (_detectCard()) {
-		if (cardData[state.cardType].lengths.indexOf(state.cardNumber.length) === -1) {
-			return {
-				"message": messages.invalid,
-				"valid": false
-			};
-		}
-		if (_checkLuhn() === false) {
-			return {
-				"message": messages.invalid,
-				"valid": false
-			};
-		}
-	} else {
-		if (state.acceptedCards.indexOf(state.cardType) === -1) {
-			return {
-				"message": messages.acceptedCard(),
-				"valid": false
-			};
-		}
-		return {
-			"message": messages.invalid,
-			"valid": false
-		};
-	}
-
-	return {
-		"valid": true
-	};
+	return _valid();
 }
 
 function validateExp(userM, userY) {
@@ -172,49 +162,30 @@ function validateExp(userM, userY) {
 	var month = d.getMonth();
 	var year = d.getFullYear();
 
-	if (userM.trim().length === 0 || userY.trim().length === 0) {
-		return {
-			"message": messages.required,
-			"valid": false
-		};
-	}
+	if (userM.trim().length === 0 || userY.trim().length === 0)
+		return _invalid(messages.required);
 
 	var invalidDigits = !userM.match(monthRegexp) || !userY.match(yearRegexp);
 	userM = parseInt(userM, 10);
 	userY = parseInt(userY, 10);
 	var yearNotInRange = (userY > year + 20) || (userY < year);
 	var beforeCurrentMonth = (userY === year && userM < month);
+	if (invalidDigits || yearNotInRange || beforeCurrentMonth)
+		return _invalid(messages.invalidExpiration);
 	
-	if (invalidDigits || yearNotInRange || beforeCurrentMonth) {
-		return {
-			"message": messages.invalidExpiration,
-			"valid": false
-		};
-	}
-	
-	return {
-		"valid": true
-	};
+	return _valid();
 }
 
 function validateCVV(CVV) {
 	// 3 or 4 digits
 	var CVVRegex = /^[0-9]{3,4}$/;
-	if (CVV.trim().length === 0) {
-		return {
-			"message": messages.required,
-			"valid": false
-		};
-	}
-	if (!CVV.match(CVVRegex)) {
-		return {
-			"message": messages.invalidCvv,
-			"valid": false
-		};
-	}
-	return {
-		"valid": true
-	};
+	if (CVV.trim().length === 0)
+		return _invalid(messages.required);
+
+	if (!CVV.match(CVVRegex))
+		return _invalid(messages.invalidCvv);
+
+	return _valid();
 }
 
 module.exports = {
