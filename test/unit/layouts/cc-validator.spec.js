@@ -25,14 +25,12 @@ describe('cc-validator layout', function() {
 		var validateCVV = validation.validateCVV;
 
 		it('should validate empty values', function() {
-			// empty value
 			var fieldRequiredOutput = { message: messages.required, valid: false };
 			expect(validateCVV('')).to.eql(fieldRequiredOutput);
 			expect(validateCVV('   ')).to.eql(fieldRequiredOutput);
 		});
 
 		it('should validate invalid values', function() {
-			// invalid values
 			var invalidCvvOutput = { message: messages.invalidCvv, valid: false };
 			expect(validateCVV('1')).to.eql(invalidCvvOutput);
 			expect(validateCVV('12')).to.eql(invalidCvvOutput);
@@ -46,7 +44,6 @@ describe('cc-validator layout', function() {
 		});
 
 		it('should validate valid values', function() {
-			// valid values
 			var validOutput = { valid: true };
 			expect(validateCVV('000')).to.eql(validOutput);
 			expect(validateCVV('123')).to.eql(validOutput);
@@ -63,7 +60,6 @@ describe('cc-validator layout', function() {
 		var validYear = String(new Date().getFullYear() + 10);
 		
 		it('should validate empty expiration dates', function() {
-			// empty values
 			var fieldRequiredOutput = { message: messages.required, valid: false };
 			expect(validateExp('', validYear)).to.eql(fieldRequiredOutput);
 			expect(validateExp('  ', validYear)).to.eql(fieldRequiredOutput);
@@ -72,7 +68,6 @@ describe('cc-validator layout', function() {
 		});
 
 		it('should validate invalid expiration dates', function() {
-			// invalid values
 			var invalidOutput = {
 				message: messages.invalidExpiration,
 				valid: false
@@ -99,12 +94,10 @@ describe('cc-validator layout', function() {
 		});
 
 		it('should validate valid expiration dates', function() {
-			// valid values
 			var validOutput = { valid: true };
 			expect(validateExp('01', validYear)).to.eql(validOutput);
 			expect(validateExp('12', String(new Date().getFullYear() + 15))).to.eql(validOutput);
 			expect(validateExp('06', String(new Date().getFullYear() + 19))).to.eql(validOutput);
-
 		});
 		
 	});
