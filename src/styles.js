@@ -23,7 +23,9 @@ var defaultStyles = {
 	inputBackground: 'rgba(70, 70, 70, 1)',
 	inputText: 'rgba(247, 247, 247, 1)',
 	errorBackground: 'rgba(239, 62, 58, 1)',
-	errorText: '#ffffff'
+	errorText: '#ffffff',
+	fontSize: '15px',
+	fontFamily: '"Helvetica Neue",HelveticaNeue,Helvetica,sans-serif'
 };
 
 module.exports = defaultStyles;

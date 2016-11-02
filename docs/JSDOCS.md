@@ -168,6 +168,8 @@ Generate the chat widget into an element.
 | config.styles.accentBackground | <code>string</code> | <code>&quot;rgba(175,110,232,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons |
 | config.styles.errorText | <code>string</code> | <code>&quot;#ffffff&quot;</code> | optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text |
 | config.styles.errorBackground | <code>string</code> | <code>&quot;rgba(239,62,58,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons |
+| config.styles.fontFamily | <code>string</code> | <code>&quot;HelveticaNeue,Helvetica,sans-serif&quot;</code> | optional: comma seperated list of fonts to use |
+| config.styles.fontSize | <code>string</code> | <code>&quot;15px&quot;</code> | optional: base font size to use |
 
 **Example**  
 ```js

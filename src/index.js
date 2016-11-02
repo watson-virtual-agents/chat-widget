@@ -46,6 +46,8 @@ var IBMChat = {
 	 * @param {string} config.styles.accentBackground=rgba(175,110,232,1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
 	 * @param {string} config.styles.errorText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text
 	 * @param {string} config.styles.errorBackground=rgba(239,62,58,1) - optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons
+	 * @param {string} config.styles.fontFamily=HelveticaNeue,Helvetica,sans-serif - optional: comma seperated list of fonts to use
+	 * @param {string} config.styles.fontSize=15px - optional: base font size to use
 	 * @example
 	 * IBMChat.init({
 	 *  el: 'my_div',
