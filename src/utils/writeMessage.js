@@ -31,7 +31,7 @@ ParseContent.prototype.init = function(el, text) {
 				cls.writeMessage(el, content);
 			})
 			.catch(function(e) {
-				console.log('e', e);
+				console.error(e);
 			});
 	}
 };
