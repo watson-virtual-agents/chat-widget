@@ -42,6 +42,7 @@ function registerEvents(tryIt, playback) {
 	if (playback === true) { //TODO: remove if playback when Dashboard code is updated
 		events.subscribe('send', eventHandlers.sendMock);
 	} else {
+		events.subscribe('resize-input', eventHandlers.resizeInput);
 		events.subscribe('send', eventHandlers.send);
 		events.subscribe('send-input-message', eventHandlers.sendInputMessage);
 		events.subscribe('enable-input', eventHandlers.input.enableInput);

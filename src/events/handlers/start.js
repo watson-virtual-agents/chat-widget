@@ -19,8 +19,8 @@ var templates = require('../../templates');
 
 function start(data) {
 	var current;
-	state.setState(data);
-	current = state.getState();
+	state.set(data);
+	current = state.get();
 	utils.attachStyles();
 	current.root.className += " chatID-" + current.chatID;
 	current.root.innerHTML = templates.start;
@@ -33,22 +33,32 @@ function start(data) {
 	var elements = {
 		container: current.root.querySelector('.IBMChat-chat-container'),
 		chatHolder: current.root.querySelector('.IBMChat-messages'),
-		innerContainer: current.root.querySelector('.IBMChat-inner-container')
+		innerContainer: current.root.querySelector('.IBMChat-inner-container'),
 	};
 	//TODO: remove if conditional after Dashboard implements new playback
 	if (current.playback !== true) {
 		elements.inputHolder = current.root.querySelector('.IBMChat-input-container');
 		elements.input = current.root.querySelector('.IBMChat-chat-textbox');
+		elements.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
 		elements.form = current.root.querySelector('.IBMChat-input-form');
 		elements.loader = current.root.querySelector('.IBMChat-input-loading');
-
+		elements.originalInputHeight = window.getComputedStyle(elements.input).getPropertyValue('height').replace('px', '');
 		elements.form.addEventListener('submit', function(e) {
 			e.preventDefault();
 		});
 
-		elements.input.addEventListener('keypress', function(e) {
-			if (e.keyCode === 13)
+		elements.input.addEventListener('keyup', function(e) {
+			if (e.keyCode === 13) {
 				events.publish('send-input-message');
+				elements.inputClone.innerHTML = '';
+				elements.input.style.height = elements.originalInputHeight + "px";
+				state.set({
+					inputHeight: elements.originalInputHeight
+				});
+				events.publish('resize');
+			} else {
+				events.publish('resize-input');
+			}
 		});
 
 		elements.input.addEventListener('focus', function() {
@@ -62,7 +72,7 @@ function start(data) {
 
 	window.addEventListener('resize', utils.debounce(function() {
 		events.publish('resize');
-	}, 1000));
+	}, 300));
 
 	window.addEventListener('orientationchange', function() {
 		events.publish('resize');

@@ -28,7 +28,7 @@
 .IBMChat-chat-container {
 	display:table-row;
 	margin: 0;
-	padding:
+	padding: 0;
 }
 
 /* Messages Component */
@@ -116,7 +116,6 @@
 
 .IBMChat-input-container {
 	display:table-row;
-	height:72px;
 	margin: 0;
 	padding: 0;
 }
@@ -124,19 +123,37 @@
 .IBMChat-input-form {
 	display:table-cell;
 	position:relative;
-	height: 24px;
-	padding:24px 24px 0 24px;
+	padding:16px 24px 24px 24px;
+}
+
+.IBMChat-chat-textbox-clone-holder {
+	height: 0;
+	overflow: hidden;
+}
+
+.IBMChat-chat-textbox-clone {
+	font-size: 1em;
+	line-height: 1.5em;
+	margin:0;
+	padding:0 0 3px 0;
+	position: relative;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+	visibility: hidden;
 }
 
 .IBMChat-chat-textbox {
-  border: none;
+	background: transparent;
+	border: none;
 	border-radius: 0;
-  color: inherit;
-  background: transparent;
-  font-size:1em;
-  margin:0;
-  padding:0 0 3px 0;
-  width:100%;
+	color: inherit;
+	font-size:1em;
+	height:1.5em;
+	line-height: 1.5em;
+	margin:0;
+	padding:0 0 3px 0;
+	resize: none;
+	width:100%;
 }
 
 .IBMChat-chat-textbox[disabled='disabled'] {
