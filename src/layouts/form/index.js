@@ -105,12 +105,14 @@ Form.prototype.setFocusOnError = function() {
 };
 
 Form.prototype.validateFields = function() {
-	var valid = true;
+	var allFieldsAreValid = true;
 	for (var i = 0; i < this.data.length; i++) {
-		if (this.data[i].required === 'true')
-			valid = this.validateField(this.fields[i], this.data[i]);
+		if (this.data[i].required === 'true') {
+			var fieldIsValid = this.validateField(this.fields[i], this.data[i]);
+			allFieldsAreValid = allFieldsAreValid && fieldIsValid;
+		}
 	}
-	return valid;
+	return allFieldsAreValid;
 };
 
 Form.prototype.validateField = function(field, datum) {
