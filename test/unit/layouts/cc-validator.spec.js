@@ -9,8 +9,6 @@ chai.use(sinonChai);
 
 var validation = rewire('../../../src/layouts/cc-validator/validation.js');
 
-// Note: uncomment these tests once https://github.com/watson-virtual-agents/chat-widget/pull/69 is complete ");
-
 describe('cc-validator layout', function() {
 	var messages;
 	
