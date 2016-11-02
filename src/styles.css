@@ -195,15 +195,16 @@
 
 /* placeholder styling */
 ::-webkit-input-placeholder {
-   color: #A3A3A3;
+	color: #A3A3A3;
 }
 
 ::-moz-placeholder {
-   color: #A3A3A3;  
+	opacity: 1;
+	color: #A3A3A3;  
 }
 
 :-ms-input-placeholder {  
-   color: #A3A3A3;  
+	color: #A3A3A3;  
 }
 
 /* initial rotation */
