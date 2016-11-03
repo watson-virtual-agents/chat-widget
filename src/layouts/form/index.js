@@ -105,12 +105,14 @@ Form.prototype.setFocusOnError = function() {
 };
 
 Form.prototype.validateFields = function() {
-	var valid = true;
+	var allFieldsAreValid = true;
 	for (var i = 0; i < this.data.length; i++) {
-		if (this.data[i].required === 'true')
-			valid = this.validateField(this.fields[i], this.data[i]);
+		if (this.data[i].required === 'true') {
+			var fieldIsValid = this.validateField(this.fields[i], this.data[i]);
+			allFieldsAreValid = allFieldsAreValid && fieldIsValid;
+		}
 	}
-	return valid;
+	return allFieldsAreValid;
 };
 
 Form.prototype.validateField = function(field, datum) {
@@ -121,7 +123,11 @@ Form.prototype.validateField = function(field, datum) {
 	} else if (datum.validations && datum.validations.length !== 0) {
 		for (var i = 0; i < datum.validations.length; i++) {
 			var validation = datum.validations[i];
-			var regex = new RegExp('/'+ validation.regex +'/');
+			var validationRegex = validation.regex;
+			//TODO: handle this better
+			if (validation.regex.indexOf('^(') !== 0)
+				validationRegex = '^(' + validation.regex + ')$';
+			var regex = new RegExp(validationRegex);
 			var matches = regex.test(field.value);
 			if (!matches) {
 				this.addError(field.getAttribute('name'), validation.message);
@@ -144,6 +150,7 @@ Form.prototype.removeError = function(name) {
 	var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
 	el.dataset.valid = true;
 	el.textContent = '';
+	el.style.display = 'none';
 };
 
 Form.prototype.removeAllErrors = function() {
