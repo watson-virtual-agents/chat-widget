@@ -19,10 +19,6 @@
 	width:100%;
 }
 
-div[data-validation-for] {
-	padding-top:0.5em;
-}
-
 .IBMChat-creditcard-col {
 	display:inline-block;
 }

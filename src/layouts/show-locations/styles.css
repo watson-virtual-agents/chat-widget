@@ -12,7 +12,6 @@
 
 .IBMChat-map-multiple-locations {
 	cursor: default;
-	opacity:0.3;
 	display: table;
 	width: 100%;
 }
@@ -32,10 +31,13 @@
 	opacity: 1;
 }
 
-.IBMChat-map-clickable .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
+.IBMChat-map-locations-item.IBMChat-map-multiple-locations {
 	padding: 1em 0 1em 0;
 	cursor: pointer;
-	opacity: 1;
+}
+
+.IBMChat-disabled-layout .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
+	cursor: default;
 }
 
 .IBMChat-map-data-section {
