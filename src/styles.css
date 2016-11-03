@@ -214,6 +214,20 @@
 	display:none;
 }
 
+/* placeholder styling */
+::-webkit-input-placeholder {
+	color: #A3A3A3;
+}
+
+::-moz-placeholder {
+	opacity: 1;
+	color: #A3A3A3;  
+}
+
+:-ms-input-placeholder {  
+	color: #A3A3A3;  
+}
+
 /* initial rotation */
 @keyframes init-rotate {
 	0% {
