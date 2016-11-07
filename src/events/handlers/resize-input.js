@@ -16,25 +16,25 @@ var state = require('../../state');
 var events = require('../../events');
 
 function resizeInput() {
-	var current = state.get();
-	var maxInputPercentage = 35;
-	var maxInputHeight = (window.getComputedStyle(current.root).getPropertyValue('height').replace('px', '')) * (maxInputPercentage / 100);
-	maxInputHeight = (maxInputHeight > 96) ? maxInputHeight : 96;
-	if (maxInputHeight !== current.inputHeight) {
-		var cloneHeight;
-		current.inputClone.innerHTML = current.input.value.replace(/\n/g, '<br />');
-		cloneHeight = window.getComputedStyle(current.inputClone).getPropertyValue('height').replace('px', '');
-		if (cloneHeight !== current.inputHeight) {
-			setTimeout(function() {
-				var inputHeight = (maxInputHeight > cloneHeight) ? cloneHeight : maxInputHeight;
-				state.set({
-					inputHeight: inputHeight
-				});
-				current.input.style.height = inputHeight + "px";
-				events.publish('resize');
-			}, 0);
-		}
-	}
+  var current = state.get();
+  var maxInputPercentage = 35;
+  var maxInputHeight = (window.getComputedStyle(current.root).getPropertyValue('height').replace('px', '')) * (maxInputPercentage / 100);
+  maxInputHeight = (maxInputHeight > 96) ? maxInputHeight : 96;
+  if (maxInputHeight !== current.inputHeight) {
+    var cloneHeight;
+    current.inputClone.innerHTML = current.input.value.replace(/\n/g, '<br />');
+    cloneHeight = window.getComputedStyle(current.inputClone).getPropertyValue('height').replace('px', '');
+    if (cloneHeight !== current.inputHeight) {
+      setTimeout(function() {
+        var inputHeight = (maxInputHeight > cloneHeight) ? cloneHeight : maxInputHeight;
+        state.set({
+          inputHeight: inputHeight
+        });
+        current.input.style.height = inputHeight + "px";
+        events.publish('resize');
+      }, 0);
+    }
+  }
 }
 
 module.exports = resizeInput;

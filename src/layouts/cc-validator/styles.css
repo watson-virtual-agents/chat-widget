@@ -1,46 +1,46 @@
 .IBMChat-creditcard-container {
-	text-align:center;
-	padding:0 0 1em 0;
+  padding:0 0 1em 0;
+  text-align:center;
 }
 
 .IBMChat-creditcard-rows {
-	margin:auto;
-	text-align:left;
-	max-width:360px;
-	width:100%;
+  margin:auto;
+  max-width:360px;
+  text-align:left;
+  width:100%;
 }
 
 .IBMChat-creditcard-row {
-	text-align:left;
-	padding-bottom:1em;
+  padding-bottom:1em;
+  text-align:left;
 }
 
 .IBMChat-creditcard-row input {
-	width:100%;
+  width:100%;
 }
 
 .IBMChat-creditcard-col {
-	display:inline-block;
+  display:inline-block;
 }
 
 .IBMChat-creditcard-col input{
-	text-align:center;
-	width:40px;
+  text-align:center;
+  width:40px;
 }
 
 .IBMChat-creditcard-col:last-child input {
-	width:60px;
+  width:60px;
 }
 
 .IBMChat-creditcard-buttons {
-	height:2.5em;
+  height:2.5em;
 }
 
 .IBMChat-creditcard-buttons button {
-	width:90px;
-	float:left;
+  float:left;
+  width:90px;
 }
 
 .IBMChat-creditcard-buttons button:last-child {
-	float:right;
+  float:right;
 }
