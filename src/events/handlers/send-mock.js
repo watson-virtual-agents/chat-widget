@@ -19,13 +19,13 @@ var assign = require('lodash/assign');
 var templates = require('../../templates');
 
 function sendMock(data) {
-	if (data.text && data.text.length > 0) {
-		var current = state.getState();
-		var newData = assign({}, data, { uuid: utils.getUUID() });
-		current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
-		current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
-		events.publish('scroll-to-bottom');
-	}
+  if (data.text && data.text.length > 0) {
+    var current = state.getState();
+    var newData = assign({}, data, { uuid: utils.getUUID() });
+    current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
+    current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
+    events.publish('scroll-to-bottom');
+  }
 }
 
 module.exports = sendMock;

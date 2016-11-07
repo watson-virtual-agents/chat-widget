@@ -13,19 +13,19 @@
 */
 
 var defaultStyles = {
-	background: 'rgba(61, 61, 61, 1)',
-	accentBackground: 'rgba(175, 110, 232, 1)',
-	accentText: '#ffffff',
-	text: '#ffffff',
-	link: '#ffffff',
-	secondaryBackground: 'rgba(70, 70, 70, 1)',
-	secondaryText: 'rgba(247, 247, 247, 1)',
-	inputBackground: 'rgba(70, 70, 70, 1)',
-	inputText: 'rgba(247, 247, 247, 1)',
-	errorBackground: 'rgba(239, 62, 58, 1)',
-	errorText: '#ffffff',
-	fontSize: '15px',
-	fontFamily: '"Helvetica Neue",HelveticaNeue,Helvetica,sans-serif'
+  background: 'rgba(61, 61, 61, 1)',
+  accentBackground: 'rgba(175, 110, 232, 1)',
+  accentText: '#ffffff',
+  text: '#ffffff',
+  link: '#ffffff',
+  secondaryBackground: 'rgba(70, 70, 70, 1)',
+  secondaryText: 'rgba(247, 247, 247, 1)',
+  inputBackground: 'rgba(70, 70, 70, 1)',
+  inputText: 'rgba(247, 247, 247, 1)',
+  errorBackground: 'rgba(239, 62, 58, 1)',
+  errorText: '#ffffff',
+  fontSize: '15px',
+  fontFamily: '"Helvetica Neue",HelveticaNeue,Helvetica,sans-serif'
 };
 
 module.exports = defaultStyles;

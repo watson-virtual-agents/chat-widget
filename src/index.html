@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>IBM Watson Virtual Agent Chat Widget Demo</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-		<style>
-			html {
-				height:100%;
-				margin: 0;
-				padding: 0;
-			}
-			body {
-				height:100%;
-				margin: 0;
-				padding: 0;
-				background:#000;
-				text-align:center;
-			}
-			#ibm_el {
-				margin: auto;
-				margin-top:5%;
-				display:block;
-				height:80%;
-				width:100%;
-				max-width:768px;
-				min-width:288px;
-			}
-		</style>
-	</head>
-	<body>
-		<div id="ibm_el"></div>
-		<script>
-			window.IBMChat.init({
-				el: 'ibm_el',
-				baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
-				botID: '',
-				XIBMClientID: '',
-				XIBMClientSecret: ''
-			});
-		</script>
-	</body>
+  <head>
+    <title>IBM Watson Virtual Agent Chat Widget Demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <style>
+      html {
+        height:100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        height:100%;
+        margin: 0;
+        padding: 0;
+        background:#000;
+        text-align:center;
+      }
+      #ibm_el {
+        margin: auto;
+        margin-top:5%;
+        display:block;
+        height:80%;
+        width:100%;
+        max-width:768px;
+        min-width:288px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="ibm_el"></div>
+    <script>
+      window.IBMChat.init({
+        el: 'ibm_el',
+        baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
+        botID: '20b35cea-062e-45ef-92be-4fe351d64834',
+        XIBMClientID: '986ffea7-6d60-480d-9ea7-f281ef9d92ca',
+        XIBMClientSecret: 'C4hD7oT5iJ5iY2iC4vD3vX4dH6gN0gK4gS2xT2gO5xG8hK3fL2'
+      });
+    </script>
+  </body>
 </html>

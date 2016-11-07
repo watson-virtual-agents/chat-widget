@@ -20,11 +20,11 @@ const config = require('../webpack.config.js');
 const compiler = webpack( config );
 
 const devServerConfig = {
-	publicPath: '/',
-	historyApiFallback: true,
-	noInfo: true,
-	hot: true/*,
-	https: true*/
+  publicPath: '/',
+  historyApiFallback: true,
+  noInfo: true,
+  hot: true/*,
+  https: true*/
 };
 const devServer = new WebpackDevServer( compiler, devServerConfig);
 
@@ -32,6 +32,6 @@ const host = '127.0.0.1';
 const port = process.env.PORT || 3100;
 
 devServer.listen( port, host, err => {
-	if ( err ) console.log( err );
-	console.log(`Listening at ${host}:${port}`);
+  if ( err ) console.log( err );
+  console.log(`Listening at ${host}:${port}`);
 });
