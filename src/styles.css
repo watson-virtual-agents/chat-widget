@@ -1,11 +1,11 @@
 .IBMChat-outer-container {
 	max-width: 768px;
-  min-width: 288px;
-  margin: 0 auto 0 auto;
-  border: none;
+	min-width: 288px;
+	margin: 0 auto 0 auto;
+	border: none;
 	min-height:100px;
-  height: 100%;
-  box-sizing: border-box;
+	height: 100%;
+	box-sizing: border-box;
 	padding:0;
 	display:table;
 	width:100%;
@@ -28,7 +28,7 @@
 .IBMChat-chat-container {
 	display:table-row;
 	margin: 0;
-	padding:
+	padding: 0;
 }
 
 /* Messages Component */
@@ -72,7 +72,7 @@
 
 .IBMChat-messages button[disabled="true"] {
 	cursor: default;
-  opacity:.7;
+	opacity:.7;
 }
 
 .IBMChat-messages button::-moz-focus-inner {
@@ -87,8 +87,9 @@
 }
 
 .IBMChat-watson-message {
-	min-height: 1em;
+	line-height: 1.5em;
 	margin:1em 2em 1em 0;
+	min-height: 1em;
 	padding: 0.1em 0.1em 0.1em 1em;
 }
 
@@ -103,20 +104,20 @@
 /* UserMessage Component */
 
 .IBMChat-user-message-container {
-  margin: 1em 0 1em 2em;
+	margin: 1em 0 1em 2em;
 }
 
 .IBMChat-user-message {
-  padding:1em;
-	margin:0 1em 0 0;
 	border-radius: 0.5em;
+	line-height: 1.5em;
+	margin:0 1em 0 0;
+	padding:1em;
 }
 
 /* Input Component */
 
 .IBMChat-input-container {
 	display:table-row;
-	height:72px;
 	margin: 0;
 	padding: 0;
 }
@@ -124,19 +125,40 @@
 .IBMChat-input-form {
 	display:table-cell;
 	position:relative;
-	height: 24px;
-	padding:24px 24px 0 24px;
+	padding:16px 24px 24px 24px;
+}
+
+.IBMChat-chat-textbox-clone-holder {
+	height: 0;
+	overflow: hidden;
+}
+
+.IBMChat-chat-textbox-clone {
+	font-size: 1em;
+	line-height: 1.5em;
+	min-height:1.5em;
+	margin:0;
+	padding:0 0 3px 0;
+	position: relative;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	visibility: hidden;
 }
 
 .IBMChat-chat-textbox {
-  border: none;
+	background: transparent;
+	border: none;
 	border-radius: 0;
-  color: inherit;
-  background: transparent;
-  font-size:1em;
-  margin:0;
-  padding:0 0 3px 0;
-  width:100%;
+	border-image-width: 0;
+	color: inherit;
+	font-size:1em;
+	font-weight:normal;
+	height:1.5em;
+	line-height: 1.5em;
+	margin:0;
+	padding:0 0 3px 0;
+	resize: none;
+	width:100%;
 }
 
 .IBMChat-chat-textbox[disabled='disabled'] {
@@ -148,8 +170,8 @@
 }
 
 .IBMChat-chat-textbox:focus {
-  outline: none;
-  padding:0 0 2px 0;
+	outline: none;
+	padding:0 0 2px 0;
 }
 
 /* validation error message */
@@ -200,11 +222,11 @@
 
 ::-moz-placeholder {
 	opacity: 1;
-	color: #A3A3A3;  
+	color: #A3A3A3;
 }
 
-:-ms-input-placeholder {  
-	color: #A3A3A3;  
+:-ms-input-placeholder {
+	color: #A3A3A3;
 }
 
 /* initial rotation */

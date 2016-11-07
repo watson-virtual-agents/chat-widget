@@ -14,6 +14,7 @@
 
 var start = require('./start');
 var resize = require('./resize');
+var resizeInput = require('./resize-input');
 var receive = require('./receive');
 var send = require('./send');
 var sendMock = require('./send-mock');
@@ -36,6 +37,10 @@ module.exports = {
 	* });
 	*/
 	resize: resize,
+	/**
+	* @ignore
+	*/
+	resizeInput: resizeInput,
 	/**
 	* @ignore
 	*/
