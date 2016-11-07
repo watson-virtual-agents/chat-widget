@@ -21,62 +21,62 @@ var defaultStyles = require('../styles');
 var eventsArray = {};
 
 function init(config) {
-	return new PlayBack(config);
+  return new PlayBack(config);
 }
 
 function registerEvents(chatID) {
-	eventsArray[chatID] = [];
-	eventsArray[chatID].push(events.subscribe('playback-start-' + chatID, eventHandlers.playback.start));
-	eventsArray[chatID].push(events.subscribe('playback-resize-' + chatID, eventHandlers.playback.resize));
-	eventsArray[chatID].push(events.subscribe('playback-scroll-to-bottom-' + chatID, eventHandlers.playback.scrollToBottom));
-	eventsArray[chatID].push(events.subscribe('playback-receive-' + chatID, eventHandlers.playback.receive));
-	eventsArray[chatID].push(events.subscribe('playback-send-' + chatID, eventHandlers.playback.send));
-	eventsArray[chatID].push(events.subscribe('playback-destroy-' + chatID, eventHandlers.playback.destroy));
-	eventsArray[chatID].push(events.subscribe('playback-clear-' + chatID, eventHandlers.playback.clear));
+  eventsArray[chatID] = [];
+  eventsArray[chatID].push(events.subscribe('playback-start-' + chatID, eventHandlers.playback.start));
+  eventsArray[chatID].push(events.subscribe('playback-resize-' + chatID, eventHandlers.playback.resize));
+  eventsArray[chatID].push(events.subscribe('playback-scroll-to-bottom-' + chatID, eventHandlers.playback.scrollToBottom));
+  eventsArray[chatID].push(events.subscribe('playback-receive-' + chatID, eventHandlers.playback.receive));
+  eventsArray[chatID].push(events.subscribe('playback-send-' + chatID, eventHandlers.playback.send));
+  eventsArray[chatID].push(events.subscribe('playback-destroy-' + chatID, eventHandlers.playback.destroy));
+  eventsArray[chatID].push(events.subscribe('playback-clear-' + chatID, eventHandlers.playback.clear));
 }
 
 function PlayBack(config) {
-	var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
-	this.chatID = utils.getUUID();
-	registerEvents(this.chatID);
-	events.publish('playback-start-' + this.chatID, {
-		chatID: this.chatID,
-		root: (typeof config.el === 'string') ? document.getElementById(config.el) : config.el,
-		mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
-		styles: assign({}, defaultStyles, config.styles),
-		originalContent: root.innerHTML
-	});
-	this.clear = function() {
-		events.publish('playback-clear-' + this.chatID, this.chatID);
-		return this;
-	};
-	this.destroy = function() {
-		events.publish('playback-clear-' + this.chatID, this.chatID);
-		events.publish('playback-destroy-' + this.chatID, this.chatID);
-		for (var i = 0; i < eventsArray[this.chatID].length; i++)
-			eventsArray[this.chatID][i].remove();
-		delete eventsArray[this.chatID];
-		delete this.clear;
-		delete this.send;
-		delete this.receive;
-		delete this.destroy;
-		delete this.chatID;
-		return this;
-	};
-	this.send = function(data) {
-		var chatID = this.chatID;
-		events.publish('playback-send-' + chatID, { chatID: chatID, data: data });
-		return this;
-	};
-	this.receive = function(data) {
-		var chatID = this.chatID;
-		events.publish('playback-receive-' + chatID, { chatID: chatID, data: data });
-		return this;
-	};
-	return this;
+  var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
+  this.chatID = utils.getUUID();
+  registerEvents(this.chatID);
+  events.publish('playback-start-' + this.chatID, {
+    chatID: this.chatID,
+    root: (typeof config.el === 'string') ? document.getElementById(config.el) : config.el,
+    mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
+    styles: assign({}, defaultStyles, config.styles),
+    originalContent: root.innerHTML
+  });
+  this.clear = function() {
+    events.publish('playback-clear-' + this.chatID, this.chatID);
+    return this;
+  };
+  this.destroy = function() {
+    events.publish('playback-clear-' + this.chatID, this.chatID);
+    events.publish('playback-destroy-' + this.chatID, this.chatID);
+    for (var i = 0; i < eventsArray[this.chatID].length; i++)
+      eventsArray[this.chatID][i].remove();
+    delete eventsArray[this.chatID];
+    delete this.clear;
+    delete this.send;
+    delete this.receive;
+    delete this.destroy;
+    delete this.chatID;
+    return this;
+  };
+  this.send = function(data) {
+    var chatID = this.chatID;
+    events.publish('playback-send-' + chatID, { chatID: chatID, data: data });
+    return this;
+  };
+  this.receive = function(data) {
+    var chatID = this.chatID;
+    events.publish('playback-receive-' + chatID, { chatID: chatID, data: data });
+    return this;
+  };
+  return this;
 }
 
 
 module.exports = {
-	init: init
+  init: init
 };
