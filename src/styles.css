@@ -136,6 +136,7 @@
 .IBMChat-chat-textbox-clone {
 	font-size: 1em;
 	line-height: 1.5em;
+	min-height:1.5em;
 	margin:0;
 	padding:0 0 3px 0;
 	position: relative;
@@ -221,11 +222,11 @@
 
 ::-moz-placeholder {
 	opacity: 1;
-	color: #A3A3A3;  
+	color: #A3A3A3;
 }
 
-:-ms-input-placeholder {  
-	color: #A3A3A3;  
+:-ms-input-placeholder {
+	color: #A3A3A3;
 }
 
 /* initial rotation */
