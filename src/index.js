@@ -38,9 +38,9 @@ var IBMChat = {
 	 * @param {string} config.styles.background=rgba(61,61,61,1) - optional: rgba(X, X, X, X) or hex code for background color
 	 * @param {string} config.styles.text=#ffffff - optional: rgba(X, X, X, X) or hex code for main text color
 	 * @param {string} config.styles.link=#ffffff - optional: rgba(X, X, X, X) or hex code for color of links in text
-	 * @param {string} config.styles.secondaryBackground=rgba(70,70,70,1) - optional: rgba(X, X, X, X) or hex code for background color of chat bubbles and other secondary info
+	 * @param {string} config.styles.secondaryBackground=rgba(90,90,90,1) - optional: rgba(X, X, X, X) or hex code for background color of chat bubbles and other secondary info
 	 * @param {string} config.styles.secondaryText=rgba(247,247,247,1) - optional: rgba(X, X, X, X) or hex code for color of chat bubble text and other secondary info
-	 * @param {string} config.styles.inputBackground=rgba(70,70,70,1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms
+	 * @param {string} config.styles.inputBackground=rgba(90,90,90,1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms
 	 * @param {string} config.styles.inputText=rgba(247,247,247,1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms
 	 * @param {string} config.styles.accentText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text
 	 * @param {string} config.styles.accentBackground=rgba(175,110,232,1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
@@ -363,7 +363,7 @@ var IBMChat = {
 
 	/**
 	 * See a list of current event subscriptions. See [./EVENTS.md](./EVENTS.md) for more details.
- 	 * @function currentSubscriptions
+		* @function currentSubscriptions
 	 * @memberof IBMChat
 	 * @returns {Array} - Array of events and callbacks.
 	 * @example

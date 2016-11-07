@@ -18,9 +18,9 @@ var defaultStyles = {
 	accentText: '#ffffff',
 	text: '#ffffff',
 	link: '#ffffff',
-	secondaryBackground: 'rgba(70, 70, 70, 1)',
+	secondaryBackground: 'rgba(90, 90, 90, 1)',
 	secondaryText: 'rgba(247, 247, 247, 1)',
-	inputBackground: 'rgba(70, 70, 70, 1)',
+	inputBackground: 'rgba(90, 90, 90, 1)',
 	inputText: 'rgba(247, 247, 247, 1)',
 	errorBackground: 'rgba(239, 62, 58, 1)',
 	errorText: '#ffffff'
