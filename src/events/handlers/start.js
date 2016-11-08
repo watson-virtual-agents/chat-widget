@@ -51,6 +51,7 @@ function start(data) {
       if (e.keyCode === 13) {
         events.publish('send-input-message');
         elements.inputClone.innerHTML = '';
+        elements.input.style.overflow = 'hidden';
         elements.input.style.height = elements.originalInputHeight + "px";
         state.set({
           inputHeight: elements.originalInputHeight
@@ -79,6 +80,7 @@ function start(data) {
   });
 
   state.setState(elements);
+  events.publish('resize-input');
   events.publish('resize');
 }
 

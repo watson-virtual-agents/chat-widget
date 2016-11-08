@@ -30,7 +30,8 @@ var spinner = {
 
 function _getStyles(current) {
   var containerClass = ".chatID-" + current.chatID;
-  var styles = containerClass + " .IBMChat-outer-container, .IBMChat-outer-container textarea {\n  font-size: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
+  var styles = containerClass + " .IBMChat-outer-container {\n  font-size: " + current.styles.fontSize + ";\n line-height: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
+              containerClass + " .IBMChat-outer-container textarea {\n  font-size: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
               containerClass + " .IBMChat-default-colors {\n  background-color: " + current.styles.background + ";\n  color: " + current.styles.text + ";\n}\n" +
               containerClass + " .IBMChat-secondary-colors {\n  background-color: " + current.styles.secondaryBackground + ";\n  color: " + current.styles.secondaryText + ";\n}\n" +
               containerClass + " .IBMChat-accent-colors {\n  background-color: " + current.styles.accentBackground + ";\n  color: " + current.styles.accentText + ";\n}\n" +
