@@ -24,41 +24,41 @@ var chatdest = path.resolve(__dirname, '../dist', 'IBMChatClient-v' + pkg.versio
 var versionssrc = path.resolve(__dirname, '../dist', `versions.json`);
 
 function sort(versions) {
-	return versions.concat().sort(function(a, b) {
-		if (semver.gt(a.version, b.version))
-			return 1;
-		else if (semver.lt(a.version, b.version))
-			return -1;
-		return 0;
-	});
+  return versions.concat().sort(function(a, b) {
+    if (semver.gt(a.version, b.version))
+      return 1;
+    else if (semver.lt(a.version, b.version))
+      return -1;
+    return 0;
+  });
 }
 
 fs.copy(chatsrc, chatdest, function(err) {
-	if (err) return console.error(`Failed copying ${chatdest}`, err);
-	console.log(`Copied ${chatdest}`);
-	glob(`${dest}/IBMChatClient-v*.js`, function(er, files) {
-		var json = {
-			versions: []
-		};
-		for (var i = 0; i < files.length; i++) {
-			if (files[i].indexOf('versions') === -1) {
-				var version = files[i].split('IBMChatClient-v')[1].split('.js')[0];
-				json.versions.push({
-					version: version,
-					widget: 'IBMChatClient-v' + version + '.js'
-				});
-			}
-			if (i === (files.length - 1)) {
-				json.versions = sort(json.versions);
-				setTimeout(function() {
-					fs.writeFile(`${versionssrc}`, beautify(JSON.stringify(json), {
-						indent_size: 2
-					}), function(err) {
-						if (err) return console.log(err);
-						console.log(`Created ${versionssrc}`);
-					});
-				}, 0);
-			}
-		}
-	});
+  if (err) return console.error(`Failed copying ${chatdest}`, err);
+  console.log(`Copied ${chatdest}`);
+  glob(`${dest}/IBMChatClient-v*.js`, function(er, files) {
+    var json = {
+      versions: []
+    };
+    for (var i = 0; i < files.length; i++) {
+      if (files[i].indexOf('versions') === -1) {
+        var version = files[i].split('IBMChatClient-v')[1].split('.js')[0];
+        json.versions.push({
+          version: version,
+          widget: 'IBMChatClient-v' + version + '.js'
+        });
+      }
+      if (i === (files.length - 1)) {
+        json.versions = sort(json.versions);
+        setTimeout(function() {
+          fs.writeFile(`${versionssrc}`, beautify(JSON.stringify(json), {
+            indent_size: 2
+          }), function(err) {
+            if (err) return console.log(err);
+            console.log(`Created ${versionssrc}`);
+          });
+        }, 0);
+      }
+    }
+  });
 });

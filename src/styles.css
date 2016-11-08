@@ -1,102 +1,102 @@
 .IBMChat-outer-container {
-	max-width: 768px;
-	min-width: 288px;
-	margin: 0 auto 0 auto;
-	border: none;
-	min-height:100px;
-	height: 100%;
-	box-sizing: border-box;
-	padding:0;
-	display:table;
-	width:100%;
-	text-align: left;
+  border: none;
+  box-sizing: border-box;
+  display:table;
+  height: 100%;
+  margin: 0 auto 0 auto;
+  max-width: 768px;
+  min-height:100px;
+  min-width: 288px;
+  padding:0;
+  text-align: left;
+  width:100%;
 }
 
 
 /* Agent Component */
 
 .IBMChat-inner-container {
-	display:table-cell;
-	height:100%;
-	margin: 0;
-	padding: 0 2em 0 2em;
-	vertical-align: bottom;
+  display:table-cell;
+  height:100%;
+  margin: 0;
+  padding: 0 2em 0 2em;
+  vertical-align: bottom;
 }
 
 /* Chat Component */
 
 .IBMChat-chat-container {
-	display:table-row;
-	margin: 0;
-	padding:
+  display:table-row;
+  margin: 0;
+  padding: 0;
 }
 
 /* Messages Component */
 
 .IBMChat-messages {
-	overflow-y: auto;
-	overflow-x: hidden;
-	height:auto;
+  height:auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .IBMChat-messages label {
-	display:block;
-	font-weight:bold;
-	text-transform: capitalize;
-	padding-bottom:0.25em;
+  display:block;
+  font-weight:bold;
+  padding-bottom:0.25em;
+  text-transform: capitalize;
 }
 
 .IBMChat-messages input {
-	border-radius: 0;
-	border: 0;
-	padding:0.25em;
+  border: 0;
+  border-radius: 0;
+  padding:0.25em;
 }
 
 .IBMChat-messages button {
-	background: none;
-	border: 0;
-	color: inherit;
-	font: inherit;
-	line-height: normal;
-	overflow: visible;
-	padding: 0.25em 1em 0.25em 1em;
-	-webkit-appearance: button; /* for input */
-	-webkit-user-select: none; /* for button */
-	-moz-user-select: none;
-	-ms-user-select: none;
-	border-radius: 1em;
-	cursor: pointer;
-	line-height: 1.5em;
-	margin: 0;
+  background: none;
+  border: 0;
+  border-radius: 1em;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.5em;
+  margin: 0;
+  overflow: visible;
+  padding: 0.25em 1em 0.25em 1em;
+  -webkit-appearance: button; /* for input */
+  -webkit-user-select: none; /* for button */
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .IBMChat-messages button[disabled="true"] {
-	cursor: default;
-	opacity:.7;
+  cursor: default;
+  opacity:.7;
 }
 
 .IBMChat-messages button::-moz-focus-inner {
-	border: 0;
-	padding: 0;
+  border: 0;
+  padding: 0;
 }
 
 /* WatsonMessage Component */
 
 .IBMChat-watson-message-container {
-	margin: 1em 0 1em 0;
+  margin: 1em 0 1em 0;
 }
 
 .IBMChat-watson-message {
-	min-height: 1em;
-	padding: 0 0 0 1em;
+  line-height: 1.5em;
+  min-height: 1.5em;
+  padding: 0 0 0 1em;
 }
 
 .IBMChat-watson-layout {
-	margin: 0 1em 0 1em;
+  margin: 0 1em 0 1em;
 }
 
 .IBMChat-disabled-layout {
-	opacity: 0.7;
+  opacity: 0.7;
 }
 
 /* UserMessage Component */
@@ -107,45 +107,67 @@
 }
 
 .IBMChat-user-message {
-	border-radius: 0.5em;
-	display: inline-block;
-	padding:1em;
-	text-align:left;
+  border-radius: 0.5em;
+  display: inline-block;
+  line-height: 1.5em;
+  padding: 1em;
+  text-align:left;
 }
 
 /* Input Component */
 
 .IBMChat-input-container {
-	display:table-row;
-	height:72px;
-	margin: 0;
-	padding: 0;
+  display: table-row;
+  margin: 0;
+  padding: 0;
 }
 
 .IBMChat-input-form {
-	display:table-cell;
-	position:relative;
-	height: 24px;
-	padding: 24px 2em 0 2em;
+  display:table-cell;
+  position:relative;
+  height: 24px;
+  padding: 24px 2em 24px 2em;
+}
+
+.IBMChat-chat-textbox-clone-holder {
+  height: 0;
+  overflow: hidden;
+}
+
+.IBMChat-chat-textbox-clone {
+  font-size: 1em;
+  line-height: 1.5em;
+  min-height:1.5em;
+  margin:0;
+  padding:0 0 3px 0;
+  position: relative;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  visibility: hidden;
 }
 
 .IBMChat-chat-textbox {
-	border: none;
-	border-radius: 0;
-	color: inherit;
-	background: transparent;
-	font-size:1em;
-	margin:0;
-	padding:0 0 3px 0;
-	width:100%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-image-width: 0;
+  color: inherit;
+  font-size:1em;
+  font-weight: normal;
+  height:1.5em;
+  line-height: 1.5em;
+  margin:0;
+  padding:0 0 3px 0;
+  resize: none;
+  width:100%;
 }
 
 .IBMChat-chat-textbox[disabled='disabled'] {
-	opacity:0.5;
+  opacity:0.5;
 }
 
 .IBMChat-input-form ::-webkit-input-placeholder {
-	opacity:1;
+  opacity:1;
 }
 
 .IBMChat-chat-textbox:focus {
@@ -155,8 +177,8 @@
 
 /* validation error message */
 .IBMChat-validation-error {
-	padding: 0.25em;
-	font-size: 0.9em;
+  padding: 0.25em;
+  font-size: 0.9em;
 }
 
 /* class to hide an element from everyone but screen readers for visually impared */
@@ -171,79 +193,80 @@
 
 /* Spinner */
 .IBMChat-input-loading {
-	z-index: 2;
-	position:absolute;
-	right: 16px;
-	top: 15px;
-	height:32px;
-	width:32px;
+  z-index: 2;
+  position:absolute;
+  right: 16px;
+  top: 15px;
+  height:32px;
+  width:32px;
 }
 
 .IBMChat-ibm-spinner-start {
-	opacity:0;
+  opacity:0;
 }
 
 .IBMChat-ibm-spinner {
-	fill: transparent;
-	stroke-width: 3;
-	stroke-linecap: "butt";
-	stroke-dasharray: 1;
-	stroke-dashoffset: 1;
+  fill: transparent;
+  stroke-width: 3;
+  stroke-linecap: "butt";
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
 }
 
 /* initial rotation and stroke animation and infinite rotation*/
 .IBMChat-init-spin {
-	animation: init-rotate 150ms linear forwards, rotate-loop 2000ms linear infinite;
+  animation: init-rotate 150ms linear forwards, rotate-loop 2000ms linear infinite;
 }
 
 .IBMChat-init-spin svg circle {
-	animation: init-stroke 1000ms linear;
+  animation: init-stroke 1000ms linear;
 }
 
 .IBMChat-end-spin svg circle {
-	display:none;
+  display:none;
 }
 
 /* placeholder styling */
 ::-webkit-input-placeholder {
-	color: #A3A3A3;
+  color: #A3A3A3;
 }
 
 ::-moz-placeholder {
-	opacity: 1;
-	color: #A3A3A3;
+  color: #A3A3A3;
+  opacity: 1;
 }
 
 :-ms-input-placeholder {
-	color: #A3A3A3;
+  color: #A3A3A3;
+  opacity: 1;
 }
 
 /* initial rotation */
 @keyframes init-rotate {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(180deg);
-	}
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
 }
 
 /* looping rotation */
 @keyframes rotate-loop {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* initial stroke animation */
 @keyframes init-stroke {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

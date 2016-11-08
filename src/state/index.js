@@ -17,27 +17,27 @@ var state = {};
 var assign = require('lodash/assign');
 
 function get() {
-	return state;
+  return state;
 }
 function destroy() {
-	state = {};
-	set({});
+  state = {};
+  set({});
 }
 
 function set(updated) {
-	state = assign({}, state, updated);
-	if (state.DEBUG) {
-		states.push(state);
-		console.log('STATE HISTORY: ', states);
-		console.log('NEW STATE: ', state);
-	}
+  state = assign({}, state, updated);
+  if (state.DEBUG) {
+    states.push(state);
+    console.log('STATE HISTORY: ', states);
+    console.log('NEW STATE: ', state);
+  }
 }
 
 module.exports ={
-	get: get,
-	set: set,
-	destroy: destroy,
-	getState: get,
-	setState: set,
-	destroyState: destroy
+  get: get,
+  set: set,
+  destroy: destroy,
+  getState: get,
+  setState: set,
+  destroyState: destroy
 };

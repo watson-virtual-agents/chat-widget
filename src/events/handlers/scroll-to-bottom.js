@@ -15,8 +15,8 @@
 var state = require('../../state');
 
 function scrollToBottom() {
-	var current = state.getState();
-	current.chatHolder.scrollTop = current.chatHolder.scrollHeight;
+  var current = state.getState();
+  current.chatHolder.scrollTop = current.chatHolder.scrollHeight;
 }
 
 module.exports = scrollToBottom;
