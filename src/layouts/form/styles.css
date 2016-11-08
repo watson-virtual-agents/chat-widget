@@ -1,5 +1,5 @@
 .IBMChat-form-container {
-  padding:0 0 1em 0;
+  margin-top:1em;
   text-align:center;
 }
 
@@ -19,15 +19,22 @@
 }
 
 .IBMChat-form-buttons {
-  height: 2.5em;
   margin:auto;
   max-width: 360px;
   text-align:center;
   width: 100%;
 }
 
+.IBMChat-form-buttons:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
 .IBMChat-form-buttons button {
-  line-height: 2.5em;
   width: 100px;
 }
 

@@ -49,6 +49,7 @@
 .IBMChat-messages input {
   border: 0;
   border-radius: 0;
+  font-size:1em;
   padding:0.25em;
 }
 
@@ -83,12 +84,20 @@
 
 .IBMChat-watson-message-container {
   margin: 1em 0 1em 0;
+  position: relative;
 }
 
 .IBMChat-watson-message {
   line-height: 1.5em;
   min-height: 1.5em;
   padding: 0 0 0 1em;
+}
+
+.IBMChat-watson-message-line {
+  left: 0;
+  height: 1.5em;
+  position: absolute;
+  top: 0;
 }
 
 .IBMChat-watson-layout {
@@ -126,7 +135,7 @@
   display:table-cell;
   position:relative;
   height: 24px;
-  padding: 24px 2em 24px 2em;
+  padding: 1em 2em 2em 2em;
 }
 
 .IBMChat-chat-textbox-clone-holder {
@@ -195,8 +204,8 @@
 .IBMChat-input-loading {
   z-index: 2;
   position:absolute;
-  right: 16px;
-  top: 15px;
+  right: 2em;
+  top: 8px;
   height:32px;
   width:32px;
 }

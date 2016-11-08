@@ -36,7 +36,7 @@ function _getStyles(current) {
               containerClass + " .IBMChat-accent-colors {\n  background-color: " + current.styles.accentBackground + ";\n  color: " + current.styles.accentText + ";\n}\n" +
               containerClass + " .IBMChat-error-colors {\n  background-color: " + current.styles.errorBackground + ";\n  color: " + current.styles.errorText + ";\n}\n" +
               containerClass + " .IBMChat-input-colors {\n  background-color: " + current.styles.inputBackground + ";\n  color: " + current.styles.inputText + ";\n}\n" +
-              containerClass + " .IBMChat-watson-message-theme {\n\tborder-left: 3px solid " + current.styles.accentBackground + ";\n}\n" +
+              containerClass + " .IBMChat-watson-message-line {\n\tborder-left: 3px solid " + current.styles.accentBackground + ";\n}\n" +
               containerClass + " a,\n" +
               containerClass + " a:hover,\n" +
               containerClass + " a:visited,\n" +
