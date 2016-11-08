@@ -404,7 +404,15 @@ var IBMChat = {
   debug: function() {
     bootstrap.debug();
     return IBMChat;
-  }
+  },
+
+  /**
+   * String of current version of the chat widget.
+   * @memberof IBMChat
+   * @example
+   * IBMChat.version
+   */
+  version: process.env.CHAT_VERSION
 
 };
 

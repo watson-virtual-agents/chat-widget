@@ -4,6 +4,7 @@
 **Kind**: global namespace  
 
 * [IBMChat](#IBMChat) : <code>object</code>
+    * [.version](#IBMChat.version)
     * [.profile](#IBMChat.profile) : <code>object</code>
         * [.get(key)](#IBMChat.profile.get) ⇒ <code>Any</code>
         * [.set(key, value)](#IBMChat.profile.set) ⇒ <code>[profile](#IBMChat.profile)</code>
@@ -30,6 +31,16 @@
     * [.currentSubscriptions()](#IBMChat.currentSubscriptions) ⇒ <code>Array</code>
     * [.debug()](#IBMChat.debug) ⇒ <code>[IBMChat](#IBMChat)</code>
 
+<a name="IBMChat.version"></a>
+
+### IBMChat.version
+String of current version of the chat widget.
+
+**Kind**: static property of <code>[IBMChat](#IBMChat)</code>  
+**Example**  
+```js
+IBMChat.version
+```
 <a name="IBMChat.profile"></a>
 
 ### IBMChat.profile : <code>object</code>

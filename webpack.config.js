@@ -35,6 +35,7 @@ function checkEnvFlags() {
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var version = require('./package.json').version;
 
 var DefinePlugin = webpack.DefinePlugin;
 var NoErrorsPlugin = webpack.NoErrorsPlugin;
@@ -129,7 +130,8 @@ module.exports = {
   },
   plugins: [ new NoErrorsPlugin(), new DedupePlugin(), new DefinePlugin({
     'process.env.DEBUG': JSON.stringify(debug),
-    'process.env.MAPS_SERVER': JSON.stringify(mapsServer)
+    'process.env.MAPS_SERVER': JSON.stringify(mapsServer),
+    'process.env.CHAT_VERSION': JSON.stringify(version)
   })].concat(conditionalPlugins()),
   devServer: {
     port: process.env.PORT || 3100,
