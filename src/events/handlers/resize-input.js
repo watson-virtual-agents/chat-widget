@@ -32,7 +32,7 @@ function resizeInput() {
         });
         current.input.style.height = inputHeight + "px";
         events.publish('resize');
-      }, 0);
+      }, 20);
     }
   }
 }

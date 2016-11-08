@@ -18,7 +18,7 @@ var events = require('../../events');
 function sendInputMessage() {
   var current = state.getState();
   if (!current.inProgress && !current.disableInput) {
-    var text = current.root.querySelector('.IBMChat-chat-textbox').value;
+    var text = current.root.querySelector('.IBMChat-chat-textbox').value.replace(/\n/g, "");
     events.publish('send', {
       text: text
     });

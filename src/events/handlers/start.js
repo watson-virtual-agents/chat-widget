@@ -47,9 +47,8 @@ function start(data) {
       e.preventDefault();
     });
 
-    elements.input.addEventListener('keypress', function(e) {
+    elements.input.addEventListener('keyup', function(e) {
       if (e.keyCode === 13) {
-        e.preventDefault();
         events.publish('send-input-message');
         elements.inputClone.innerHTML = '';
         elements.input.style.height = elements.originalInputHeight + "px";

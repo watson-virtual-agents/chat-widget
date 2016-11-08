@@ -1,13 +1,14 @@
 .IBMChat-map {
-  padding: 0 0 1em 0;
+	margin-top: 1em;
 }
 
 .IBMChat-map-img {
-  height:180px;
+  height:160px;
 }
 
 .IBMChat-map-img img {
-  height:180px;
+  height:160px;
+  padding: 0 0 1em 0;
 }
 
 .IBMChat-map-multiple-locations {
@@ -92,9 +93,12 @@
 .IBMChat-map-contact-type {
   font-style:italic;
   font-size:0.9em;
+<<<<<<< HEAD
+=======
 }
 .IBMChat-map-contact-data {
 
+>>>>>>> dev
 }
 
 a.IBMChat-map-locations-item-data-address-link,

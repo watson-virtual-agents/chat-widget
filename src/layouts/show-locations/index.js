@@ -63,8 +63,8 @@ var showLocationsLayout = {
     window.addEventListener('resize', utils.debounce(function() {
       setTimeout(function() {
         sizeMap();
-      }, 500);
-    }, 500));
+      }, 200);
+    }, 200));
   }
 };
 
