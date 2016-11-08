@@ -18,36 +18,36 @@ const config = require('../webpack.config.js');
 const devServers = {};
 
 function run(conf) {
-	conf = conf || {};
-	if (!devServers[conf.index]) {
-		const compiler = webpack( config );
-		const devServerConfig = {
-			publicPath: '/',
-			historyApiFallback: true,
-			noInfo: true,
-			hot: conf.hot || true,
-			https: conf.https || false
-		};
-		devServers[conf.index] = (new WebpackDevServer( compiler, devServerConfig));
+  conf = conf || {};
+  if (!devServers[conf.index]) {
+    const compiler = webpack( config );
+    const devServerConfig = {
+      publicPath: '/',
+      historyApiFallback: true,
+      noInfo: true,
+      hot: conf.hot || true,
+      https: conf.https || false
+    };
+    devServers[conf.index] = (new WebpackDevServer( compiler, devServerConfig));
 
-		const host = '127.0.0.1';
-		const port = conf.port || process.env.PORT || 3100;
+    const host = '127.0.0.1';
+    const port = conf.port || process.env.PORT || 3100;
 
-		devServers[conf.index].listen( port, host, err => {
-			if ( err ) console.log( err );
-			console.log(`Listening at ${host}:${port}`);
-		});
-	} else {
-		console.log('You already have a webpack-dev-server for ' + conf.index + ' running.');
-	}
+    devServers[conf.index].listen( port, host, err => {
+      if ( err ) console.log( err );
+      console.log(`Listening at ${host}:${port}`);
+    });
+  } else {
+    console.log('You already have a webpack-dev-server for ' + conf.index + ' running.');
+  }
 }
 
 function stop(index) {
-	devServers[index].close();
+  devServers[index].close();
 }
 
 module.exports = {
-	run: run,
-	stop: stop,
-	devServers: devServers
+  run: run,
+  stop: stop,
+  devServers: devServers
 };

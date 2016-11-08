@@ -1,100 +1,104 @@
 .IBMChat-map {
-	padding: 0 0 1em 0;
+	margin-top: 1em;
 }
 
 .IBMChat-map-img {
-	height:180px;
+  height:160px;
 }
 
 .IBMChat-map-img img {
-	height:180px;
+  height:160px;
+  padding: 0 0 1em 0;
 }
 
 .IBMChat-map-multiple-locations {
-	cursor: default;
-	display: table;
-	width: 100%;
+  cursor: default;
+  display: table;
+  width: 100%;
 }
 
 .IBMChat-map-multiple-locations .IBMChat-map-locations-row {
-	display:table-row;
-	width: 100%;
+  display:table-row;
+  width: 100%;
 }
 
 .IBMChat-map-multiple-locations .IBMChat-map-locations-cell {
-	display: table-cell;
-	overflow: hidden;
-	word-wrap: break-word;
+  display: table-cell;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 .IBMChat-map-location-active .IBMChat-map-multiple-locations {
-	opacity: 1;
+  opacity: 1;
 }
 
 .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
-	padding: 1em 0 1em 0;
-	cursor: pointer;
+  cursor: pointer;
+  padding: 1em 0 1em 0;
 }
 
 .IBMChat-disabled-layout .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
-	cursor: default;
+  cursor: default;
 }
 
 .IBMChat-map-data-section {
-	margin-top:0.5em;
+  margin-top:0.5em;
 }
 
 .IBMChat-map-locations-item {
-	padding: 1em;
-	border-bottom:1px solid #505050;
+  border-bottom:1px solid #505050;
+  padding: 1em;
 }
 
 
 .IBMChat-map-locations-item-icon {
-	text-align:center;
-	width: 40px;
+  text-align:center;
+  width: 40px;
 }
 
 .IBMChat-map-locations-item-data {
-	padding:0 4px 0 4px;
-	font-size:0.9em;
+  font-size:0.9em;
+  padding:0 4px 0 4px;
 }
 .IBMChat-map-locations-item-data-title {
-	font-weight: bold;
-	padding-bottom:0.5em;
+  font-weight: bold;
+  padding-bottom:0.5em;
 }
 .IBMChat-map-locations-item-data-items {
-	font-size: 0.9em;
+  font-size: 0.9em;
 }
 
 .IBMChat-map-locations-item-data-section {
-	padding-bottom:1em;
+  padding-bottom:1em;
 }
 
 .IBMChat-map-locations-item-data-email {
-	padding-bottom:1em;
+  padding-bottom:1em;
 }
 
 .IBMChat-map-locations-item-data-phone {
-	display: table;
-	max-width:400px;
-	width: 100%;
-	padding-bottom:1em;
+  display: table;
+  max-width:400px;
+  padding-bottom:1em;
+  width: 100%;
 }
 .IBMChat-map-contact-row {
-	padding-bottom:1em;
+  padding-bottom:1em;
 }
 
 .IBMChat-map-hours-open {
-	padding-bottom:0.5em;
+  padding-bottom:0.5em;
 }
 
 .IBMChat-map-contact-type {
-	font-style:italic;
-	font-size:0.9em;
+  font-style:italic;
+  font-size:0.9em;
+<<<<<<< HEAD
+=======
 }
 .IBMChat-map-contact-data {
 
+>>>>>>> dev
 }
 
 a.IBMChat-map-locations-item-data-address-link,
@@ -105,54 +109,54 @@ a.IBMChat-map-locations-item-data-address-link:active,
 .IBMChat-map-contact-data a:hover,
 .IBMChat-map-contact-data a:active,
 .IBMChat-map-contact-data a:visited {
-	font-weight:normal;
-	font-size:0.9em;
+  font-size:0.9em;
+  font-weight:normal;
 }
 
 .IBMChat-map-locations-item-distance {
-	width:64px;
-	font-size:0.9em;
+  font-size:0.9em;
+  width:64px;
 }
 
 button.IBMChat-map-locations-item-data-hours-button {
-	font-size:0.9em;
-	padding: 0 1em 0 1em;
-	line-height:1.5em;
-	margin-top:1em;
+  font-size:0.9em;
+  line-height:1.5em;
+  margin-top:1em;
+  padding: 0 1em 0 1em;
 }
 
 button.IBMChat-map-locations-all {
-	font-size:0.9em;
-	padding: 0 1em 0 1em;
-	line-height:1.5em;
+  font-size:0.9em;
+  line-height:1.5em;
+  padding: 0 1em 0 1em;
 }
 
 .IBMChat-map-locations-item-data-more-hours {
-	display: table;
+  display: table;
 }
 
 .IBMChat-map-locations-item-data-more-hours.IBMChat-map-hidden {
-	display: none;
+  display: none;
 }
 
 .IBMChat-map-days-hours {
-	display: table-row;
+  display: table-row;
 }
 
 .IBMChat-map-days-hours-day, .IBMChat-map-days-hours-hours, .IBMChat-map-days-hours-closed {
-	display: table-cell;
-	margin: 0;
-	padding:0.75em 1em 0 0;
-	overflow: hidden;
-	word-wrap: break-word;
+  display: table-cell;
+  margin: 0;
+  overflow: hidden;
+  padding:0.75em 1em 0 0;
+  word-wrap: break-word;
 }
 
 .IBMChat-map-hours-timezone {
-	font-style: italic;
-	font-size: 0.8em;
-	padding-top: 0.5em;
+  font-size: 0.8em;
+  font-style: italic;
+  padding-top: 0.5em;
 }
 
 .IBMChat-map-days-hours > div:last-child {
-	padding: 0.75em 0 0 0 !important;
+  padding: 0.75em 0 0 0 !important;
 }

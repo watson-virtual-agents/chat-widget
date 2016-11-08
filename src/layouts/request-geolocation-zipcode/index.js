@@ -15,9 +15,9 @@
 var events = require('../../events');
 var subscribe = events.subscribe;
 var requestGeolocationZipcodeLayout = {
-	init: function() {
-		subscribe('layout:request-geolocation-zipcode', function() {});
-	}
+  init: function() {
+    subscribe('layout:request-geolocation-zipcode', function() {});
+  }
 };
 
 module.exports = requestGeolocationZipcodeLayout;

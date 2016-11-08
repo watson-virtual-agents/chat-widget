@@ -19,29 +19,29 @@ var errors = [];
 var ns = 'IBMChat-error';
 
 var errorLayout = {
-	init: function() {
-		events.subscribe('layout:error', function(data) {
-			var error = new Error(data);
-			errors[data.uuid] = error;
-		});
-	}
+  init: function() {
+    events.subscribe('layout:error', function(data) {
+      var error = new Error(data);
+      errors[data.uuid] = error;
+    });
+  }
 };
 
 var templates = {
-	base: require('./templates/base.html')
+  base: require('./templates/base.html')
 };
 
 function Error(data) {
-	this.init(data);
+  this.init(data);
 }
 
 Error.prototype.init = function(data) {
-	this.message = data.message.layout.message;
-	this.uuid = data.uuid;
-	this.parentElement = data.element;
-	this.layoutElement = data.layoutElement;
-	this.layoutElement.innerHTML = templates.base;
-	this.layoutElement.querySelector('.' + ns).textContent = this.message;
+  this.message = data.message.layout.message;
+  this.uuid = data.uuid;
+  this.parentElement = data.element;
+  this.layoutElement = data.layoutElement;
+  this.layoutElement.innerHTML = templates.base;
+  this.layoutElement.querySelector('.' + ns).textContent = this.message;
 };
 
 

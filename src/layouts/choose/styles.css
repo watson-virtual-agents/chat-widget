@@ -1,18 +1,3 @@
-.IBMChat-choose-container {
-	text-align:center;
-	padding:0 0 1em 0;
-}
-
-.IBMChat-choose-container span {
-	display:inline-block;
-	margin: 1em 1em 0 1em;
-}
-
-.IBMChat-choose-container div {
-	margin: 1em auto 0 auto;
-}
-
-.IBMChat-choose-container button {
-	min-width:230px;
-	max-width:270px;
+.IBMChat-choose-container > div {
+	margin-top: 1em;
 }

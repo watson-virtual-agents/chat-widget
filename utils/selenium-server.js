@@ -14,7 +14,7 @@
 
 const server = require('./server');
 server.run({
-	port: 3300,
-	hot: false,
-	index: 'selenium'
+  port: 3300,
+  hot: false,
+  index: 'selenium'
 });

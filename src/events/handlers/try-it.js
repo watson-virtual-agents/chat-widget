@@ -15,28 +15,28 @@
 var events = require('../../events');
 
 function actionError(action) {
-	events.publish('receive', {
-		message: {
-			layout: {
-				name: 'error',
-				message: 'A subscription was called to ' + action + '. Nothing is subscribed to this action in the Try-It interface. This is probably due to you using a custom workspace. On your own site, you should have code to handle this action.'
-			}
-		}
-	});
+  events.publish('receive', {
+    message: {
+      layout: {
+        name: 'error',
+        message: 'A subscription was called to ' + action + '. Nothing is subscribed to this action in the Try-It interface. This is probably due to you using a custom workspace. On your own site, you should have code to handle this action.'
+      }
+    }
+  });
 }
 
 function layoutError(layout) {
-	events.publish('receive', {
-		message: {
-			layout: {
-				name: 'error',
-				message: 'A subscription was called to ' + layout + '. Nothing is subscribed to this layout in the Try-It interface. This is probably due to you using a custom workspace. On your own site, you should have code to handle this layout.'
-			}
-		}
-	});
+  events.publish('receive', {
+    message: {
+      layout: {
+        name: 'error',
+        message: 'A subscription was called to ' + layout + '. Nothing is subscribed to this layout in the Try-It interface. This is probably due to you using a custom workspace. On your own site, you should have code to handle this layout.'
+      }
+    }
+  });
 }
 
 module.exports = {
-	actionError: actionError,
-	layoutError: layoutError
+  actionError: actionError,
+  layoutError: layoutError
 };
