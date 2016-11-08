@@ -119,10 +119,9 @@ var IBMChat = {
    */
   receive: function(message) {
     bootstrap.receive(message);
-    return IBMChat;
   },
 
-  /**
+  /*
    * Send a message to the chat widget from outside the chat widget. This message will be displayed in the interface, but will not actually get sent to the server.
    * @function sendMock
    * @memberof IBMChat
