@@ -152,6 +152,8 @@
   padding:0 0 3px 0;
   position: relative;
   white-space: pre-wrap;
+  white-space: pre-line;
+  word-break: break-all;
   word-wrap: break-word;
   visibility: hidden;
 }
@@ -169,7 +171,12 @@
   min-height:1.5em;
   padding:0 0 3px 0;
   resize: none;
+  text-wrap: unrestricted;
   width:100%;
+  white-space: pre-wrap;
+  white-space: pre-line;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
 .IBMChat-chat-textbox[disabled='disabled'] {
