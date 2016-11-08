@@ -24,12 +24,12 @@ It contains a configurable user interface and can be used as-is or customized. A
 
     Your bot ID is assigned when you create the Watson Virtual Agent instance, and is provided in the bot ID parameter of the code snippet that is displayed in the Publish page. You can use the value that is provided there as-is.
     If, for some reason, you want to retrieve the bot ID yourself, follow these steps. The order is important.
-    1. When you get to the Watson Virtual Agent API details page, click KEYS`.
+    1. When you get to the Watson Virtual Agent API details page, click `KEYS`.
     2. Click **#1 - Key1**.
     The key you selected is now displayed.
     3. Now you should see a `TEST` button when you scroll down to the Retrieve Bot call.
 
-4. Open `src/index.html` in your favorite text editor and set the values for the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters:
+4. Open `dev-tools/index.html` in your favorite text editor and set the values for the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters:
     ```html
         <script>
             window.IBMChat.init({

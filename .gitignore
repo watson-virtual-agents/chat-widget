@@ -38,6 +38,6 @@ node_modules
 public
 creds
 
-src/creds.html
+dev-tools/creds.html
 dist/index.html
 selenium/errorShots
