@@ -17,29 +17,29 @@ var state = require('../state');
 var events = [];
 
 function completeEvent(response) {
-	switch (response) {
-	case true:
-		publish('send', {
-			message: 'success',
-			silent: true
-		});
-		break;
-	case false:
-		publish('send', {
-			message: 'failure',
-			silent: true
-		});
-		break;
-	default:
-		publish('send', {
-			message: 'cancel',
-			silent: true
-		});
-	}
+  switch (response) {
+  case true:
+    publish('send', {
+      message: 'success',
+      silent: true
+    });
+    break;
+  case false:
+    publish('send', {
+      message: 'failure',
+      silent: true
+    });
+    break;
+  default:
+    publish('send', {
+      message: 'cancel',
+      silent: true
+    });
+  }
 }
 
 function destroy() {
-	events = [];
+  events = [];
 }
 
 function unsubscribe(event, handler) {
@@ -58,55 +58,53 @@ function unsubscribe(event, handler) {
 		return;
 	}
 
-}
-
 function currentSubscriptions() {
-	return events.slice(0);
+  return events.slice(0);
 }
 
-function hasSubscription(event) {
-	var subscriptions = currentSubscriptions();
-	for (var i = 0; i < subscriptions.length; i++) {
-		var subscription = subscriptions[i];
-		if (subscription && subscription.event === event)
-			return true;
-	}
-	return false;
+function hasSubscription(action) {
+  var subscriptions = currentSubscriptions();
+  for (var i = 0; i < subscriptions.length; i++) {
+    var subscription = subscriptions[i];
+    if (subscription && subscription.event === action)
+      return true;
+  }
+  return false;
 }
 
 function subscribe(event, handler, context) {
-	if (typeof context === undefined)
-		context = handler;
-	var index = events.push({ event: event, handler: handler.bind(context) }) - 1;
-	return {
-		remove: function() {
-			events.splice(index, 1);
-		}
-	};
+  if (typeof context === undefined)
+    context = handler;
+  var index = events.push({ event: event, handler: handler.bind(context) }) - 1;
+  return {
+    remove: function() {
+      delete events[index];
+    }
+  };
 }
 
 function publish(event, data, cb) {
-	var current = state.getState();
-	var wasSubscription = false;
-	for (var i = 0; i < events.length; i++) {
-		if (events[i] && events[i].event && events[i].event === event) {
-			if (current.DEBUG) {
-				wasSubscription = true;
-				console.log('Subscription to ' + event + ' was called: ', data);
-			}
-			events[i].handler.call(undefined, data, cb);
-		}
-	}
-	if (current.DEBUG && event.indexOf('layout') == -1 && !wasSubscription)
-		console.warn('Nothing is subscribed to ' + event);
+  var current = state.getState();
+  var wasSubscription = false;
+  for (var i = 0; i < events.length; i++) {
+    if (events[i] && events[i].event && events[i].event === event) {
+      if (current.DEBUG) {
+        wasSubscription = true;
+        console.log('Subscription to ' + event + ' was called: ', data);
+      }
+      events[i].handler.call(undefined, data, cb);
+    }
+  }
+  if (current.DEBUG && event.indexOf('layout') == -1 && !wasSubscription)
+    console.warn('Nothing is subscribed to ' + event);
 }
 
 module.exports = {
-	destroy: destroy,
-	unsubscribe: unsubscribe,
-	currentSubscriptions: currentSubscriptions,
-	hasSubscription: hasSubscription,
-	subscribe: subscribe,
-	publish: publish,
-	completeEvent: completeEvent
+  destroy: destroy,
+  unsubscribe: unsubscribe,
+  currentSubscriptions: currentSubscriptions,
+  hasSubscription: hasSubscription,
+  subscribe: subscribe,
+  publish: publish,
+  completeEvent: completeEvent
 };
