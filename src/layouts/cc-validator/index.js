@@ -132,7 +132,7 @@ CreditCard.prototype.validate = function() {
   return valid;
 };
 
-CreditCard.prototype.retrieveFormData = function() {
+CreditCard.prototype.preprocessFormData = function() {
   this.formData = {};
   for (var i = 0; i < this.fields.length; i++) {
     var field = this.fields[i];
@@ -145,7 +145,7 @@ CreditCard.prototype.retrieveFormData = function() {
 };
 
 CreditCard.prototype.handleContinue = function() {
-  this.retrieveFormData();
+  this.preprocessFormData();
   if (this.validate()) {
     var fd = this.formData;
     fd.cc_exp_date = fd.cc_exp_date_month + '/' + fd.cc_exp_date_year;
