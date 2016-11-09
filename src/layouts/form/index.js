@@ -107,10 +107,8 @@ Form.prototype.setFocusOnError = function() {
 Form.prototype.validateFields = function() {
   var allFieldsAreValid = true;
   for (var i = 0; i < this.data.length; i++) {
-    if (this.data[i].required === 'true') {
-      var fieldIsValid = this.validateField(this.fields[i], this.data[i]);
-      allFieldsAreValid = allFieldsAreValid && fieldIsValid;
-    }
+    var fieldIsValid = this.validateField(this.fields[i], this.data[i]);
+    allFieldsAreValid = allFieldsAreValid && fieldIsValid;
   }
   return allFieldsAreValid;
 };
@@ -122,11 +120,10 @@ Form.prototype.validateField = function(field, datum) {
     valid = false;
   } else if (datum.validations && datum.validations.length !== 0) {
     for (var i = 0; i < datum.validations.length; i++) {
+      // regexes received from backend should always include
+      // start/end of line anchors (^, $)
       var validation = datum.validations[i];
       var validationRegex = validation.regex;
-      //TODO: handle this better
-      if (validation.regex.indexOf('^(') !== 0)
-        validationRegex = '^(' + validation.regex + ')$';
       var regex = new RegExp(validationRegex);
       var matches = regex.test(field.value);
       if (!matches) {
