@@ -34,7 +34,11 @@ function _getStyles(current) {
               containerClass + " .IBMChat-outer-container textarea {\n  font-size: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
               containerClass + " .IBMChat-default-colors {\n  background-color: " + current.styles.background + ";\n  color: " + current.styles.text + ";\n}\n" +
               containerClass + " .IBMChat-secondary-colors {\n  background-color: " + current.styles.secondaryBackground + ";\n  color: " + current.styles.secondaryText + ";\n}\n" +
-              containerClass + " .IBMChat-accent-colors {\n  background-color: " + current.styles.accentBackground + ";\n  color: " + current.styles.accentText + ";\n}\n" +
+              containerClass + " .IBMChat-secondary-colors-button {\n  background-color: transparent; border: 1px solid " + current.styles.secondaryBackground + ";\n  color: " + current.styles.secondaryBackground + ";\n}\n" +
+              containerClass + " .IBMChat-accent-colors {\n  background-color: " + current.styles.accentBackground + ";\n  border: 1px solid " + current.styles.accentBackground + ";\n color: " + current.styles.accentText + ";\n}\n" +
+              containerClass + " .IBMChat-accent-colors-button {\n  background-color: transparent; border: 1px solid " + current.styles.accentBackground + ";\n  color: " + current.styles.accentBackground + ";\n}\n" +
+              containerClass + " .IBMChat-accent-colors-button:hover {\n  background-color: " + current.styles.accentBackground + ";\n border: 1px solid " + current.styles.accentBackground + ";\n  color: " + current.styles.accentText + ";\n}\n" +
+              containerClass + " .IBMChat-accent-colors-button[disabled]:hover {\n  background-color: transparent; border: 1px solid " + current.styles.accentBackground + ";\n  color: " + current.styles.accentBackground + ";\n}\n" +
               containerClass + " .IBMChat-error-colors {\n  background-color: " + current.styles.errorBackground + ";\n  color: " + current.styles.errorText + ";\n}\n" +
               containerClass + " .IBMChat-input-colors {\n  background-color: " + current.styles.inputBackground + ";\n  color: " + current.styles.inputText + ";\n}\n" +
               containerClass + " .IBMChat-watson-message-line-theme {\n\tborder-left: 3px solid " + current.styles.accentBackground + ";\n}\n" +

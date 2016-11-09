@@ -18,7 +18,7 @@ var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
 var activeClassName = 'IBMChat-accent-colors';
-var inactiveClassName = 'IBMChat-secondary-colors';
+var inactiveClassName = 'IBMChat-accent-colors-button';
 var utils = require('../../utils');
 
 var ns = 'IBMChat-islocationapi';
