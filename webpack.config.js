@@ -35,6 +35,7 @@ function checkEnvFlags() {
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var RewirePlugin = require("rewire-webpack");
 var version = require('./package.json').version;
 
 var DefinePlugin = webpack.DefinePlugin;
@@ -42,6 +43,7 @@ var NoErrorsPlugin = webpack.NoErrorsPlugin;
 var DedupePlugin = webpack.optimize.DedupePlugin;
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin;
+
 
 var MAPS_SERVER = {
   'development': 'https://dd1-i-serve-maps.mybluemix.net',
@@ -97,7 +99,10 @@ module.exports = {
   devtool: debug ? 'inline-sourcemap' : null,
   stats: { colors: true },
   resolve: {
-    extensions: ['', '.js', '.json']
+    extensions: ['', '.js', '.json'],
+    alias: {
+      'sinon': 'sinon/pkg/sinon'
+    }
   },
   env: env,
   context: paths.context,
@@ -126,9 +131,12 @@ module.exports = {
     }, {
       loader: 'json',
       test: /\.json$/
-    }]
+    }],
+    noParse: [
+      /node_modules\/sinon\//,
+    ]
   },
-  plugins: [ new NoErrorsPlugin(), new DedupePlugin(), new DefinePlugin({
+  plugins: [ new NoErrorsPlugin(), new DedupePlugin(), new RewirePlugin(), new DefinePlugin({
     'process.env.DEBUG': JSON.stringify(debug),
     'process.env.MAPS_SERVER': JSON.stringify(mapsServer),
     'process.env.CHAT_VERSION': JSON.stringify(version)

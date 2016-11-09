@@ -12,6 +12,7 @@
     "test": "node ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
     "test:selenium": "selenium-standalone install --silent && concurrently -k -s first \"selenium-standalone start\" \"npm run server:selenium\" \"wdio wdio.conf.js\" \"node ./test/selenium/mocks/server.js\"",
     "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
+    "test:debug": "node ./node_modules/karma/bin/karma start --browsers Chrome",
     "watch": "npm run server:watch"
   },
   "engines": {
@@ -45,6 +46,7 @@
   "devDependencies": {
     "axios": "0.12.0",
     "chai": "3.5.0",
+    "cheerio": "0.22.0",
     "concurrently": "3.1.0",
     "eslint": "3.0.0",
     "eslint-loader": "1.4.0",
@@ -63,7 +65,13 @@
     "mocha": "3.0.2",
     "phantomjs-prebuilt": "2.1.12",
     "raw-loader": "0.5.1",
+    "rewire": "2.5.2",
+    "rewire-webpack": "1.0.1",
     "selenium-standalone": "5.8.0",
+    "semver": "5.3.0",
+    "sinon": "1.17.6",
+    "sinon-chai": "2.8.0",
+    "sinon-stub-promise": "3.0.1",
     "source-map-loader": "0.1.5",
     "style-loader": "0.13.1",
     "svg-inline-loader": "0.4.1",
