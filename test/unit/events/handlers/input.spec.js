@@ -10,78 +10,78 @@ var expect = chai.expect;
 
 var input = rewire('../../../../src/events/handlers/input');
 describe('input handler', function() {
-	var stateMock, inputEl;
-	
-	before(function() {
+  var stateMock, inputEl;
+  
+  before(function() {
 
-	});
+  });
 
-	beforeEach(function() {
-		inputEl = {
-			focus: sinon.stub(),
-			removeAttribute: sinon.stub(),
-			setAttribute: sinon.stub()
-		};
-	});
+  beforeEach(function() {
+    inputEl = {
+      focus: sinon.stub(),
+      removeAttribute: sinon.stub(),
+      setAttribute: sinon.stub()
+    };
+  });
 
-	it('should set focus to input element', function() {
-		stateMock = {
-			getState: function() {
-				return {
-					input: inputEl
-				};
-			},
-			setState: function() {}
-		};
-		input.__set__('state', stateMock);
+  it('should set focus to input element', function() {
+    stateMock = {
+      getState: function() {
+        return {
+          input: inputEl
+        };
+      },
+      setState: function() {}
+    };
+    input.__set__('state', stateMock);
 
-		input.focusInput();
+    input.focusInput();
 
-		expect(inputEl.focus.calledOnce);
-		expect(inputEl.focus.getCalls(0).args).to.be.empty;
-	});
+    expect(inputEl.focus.calledOnce);
+    expect(inputEl.focus.getCalls(0).args).to.be.empty;
+  });
 
-	it('should enable the input', function() {
-		stateMock = {
-			getState: function() {
-				return {
-					disableInput: 0,
-					input: inputEl
-				};
-			},
-			setState: function() {}
-		};
-		input.__set__('state', stateMock);
-		
-		input.enableInput();
+  it('should enable the input', function() {
+    stateMock = {
+      getState: function() {
+        return {
+          disableInput: 0,
+          input: inputEl
+        };
+      },
+      setState: function() {}
+    };
+    input.__set__('state', stateMock);
+    
+    input.enableInput();
 
-		expect(inputEl.removeAttribute.calledOnce);
-		expect(inputEl.removeAttribute.calledWithExactly('disabled'));
-	});
-	
-	it('should disable the input', function() {
-		stateMock = {
-			getState: function() {
-				return {
-					disableInput: 0,
-					input: inputEl
-				};
-			},
-			setState: function() {}
-		};
-		input.__set__('state', stateMock);
-		
-		input.disableInput();
+    expect(inputEl.removeAttribute.calledOnce);
+    expect(inputEl.removeAttribute.calledWithExactly('disabled'));
+  });
+  
+  it('should disable the input', function() {
+    stateMock = {
+      getState: function() {
+        return {
+          disableInput: 0,
+          input: inputEl
+        };
+      },
+      setState: function() {}
+    };
+    input.__set__('state', stateMock);
+    
+    input.disableInput();
 
-		expect(inputEl.setAttribute.calledOnce);
-		expect(inputEl.setAttribute.calledWithExactly('disabled', 'disabled'));
-	});
+    expect(inputEl.setAttribute.calledOnce);
+    expect(inputEl.setAttribute.calledWithExactly('disabled', 'disabled'));
+  });
 
-	afterEach(function() {
-		// reset stubs
-		inputEl.focus.reset();
-		inputEl.removeAttribute.reset();
-		inputEl.setAttribute.reset();
-	});
+  afterEach(function() {
+    // reset stubs
+    inputEl.focus.reset();
+    inputEl.removeAttribute.reset();
+    inputEl.setAttribute.reset();
+  });
 
 });
