@@ -1,8 +1,8 @@
 # IBM Watson Virtual Agent Chat Widget
 
-![Chat Widget example screencap](https://github.com/watson-virtual-agents/chat-widget/blob/dev/images/screencap.gif)
+![Chat Widget example screencap](https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/master/images/screencap.gif)
 
-Lightweight chat widget for [Watson Virtual Agent](https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/). The widget is built on top of the [Client Bot SDK](https://github.com/watson-virtual-agents/client-sdk), which manages communications with a Watson Virtual Agent bot. 
+Lightweight chat widget for [Watson Virtual Agent](https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/). The widget is built on top of the [Client Bot SDK](https://github.com/watson-virtual-agents/client-sdk), which manages communications with a Watson Virtual Agent bot.
 
 It contains a configurable user interface and can be used as-is or customized. Alternatively, to have ultimate control you can use the [Client Bot SDK](https://github.com/watson-virtual-agents/client-sdk) to build a chat widget of your own.
 
@@ -13,7 +13,7 @@ It contains a configurable user interface and can be used as-is or customized. A
     ```bash
         git clone https://github.com/watson-virtual-agents/chat-widget
     ```
-  
+
 2. (if you don't already have one) Get a set of Watson Virtual Agent API keys:
     1. Sign in for a Free Trial in https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/
     2. Log in to [/api explorer](https://developer.ibm.com/api/) with the same IBM ID that you used to sign up for the trial subscription
@@ -21,15 +21,15 @@ It contains a configurable user interface and can be used as-is or customized. A
     4. Hover over the key fields, and then click SHOW to view the values. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.
 
 3. Get your bot ID.
-    
-    Your bot ID is assigned when you create the Watson Virtual Agent instance, and is provided in the bot ID parameter of the code snippet that is displayed in the Publish page. You can use the value that is provided there as-is. 
+
+    Your bot ID is assigned when you create the Watson Virtual Agent instance, and is provided in the bot ID parameter of the code snippet that is displayed in the Publish page. You can use the value that is provided there as-is.
     If, for some reason, you want to retrieve the bot ID yourself, follow these steps. The order is important.
-    1. When you get to the Watson Virtual Agent API details page, click KEYS`.
+    1. When you get to the Watson Virtual Agent API details page, click `KEYS`.
     2. Click **#1 - Key1**.
     The key you selected is now displayed.
     3. Now you should see a `TEST` button when you scroll down to the Retrieve Bot call.
 
-4. Open `src/index.html` in your favorite text editor and set the values for the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters:
+4. Open `dev-tools/index.html` in your favorite text editor and set the values for the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters:
     ```html
         <script>
             window.IBMChat.init({
@@ -57,7 +57,7 @@ It contains a configurable user interface and can be used as-is or customized. A
 
 ## Questions and issues
 
-Report bugs or feature requests to our [github issue tracker](https://github.com/watson-virtual-agents/chat-widget/issues). 
+Report bugs or feature requests to our [github issue tracker](https://github.com/watson-virtual-agents/chat-widget/issues).
 For questions please refer to [StackOverflow](http://stackoverflow.com/questions/tagged/watson-virtual-agent) under tag `watson-virtual-agent` or [DeveloperWorks Answers](https://developer.ibm.com/answers/topics/watson-virtual-agent).
 
 ## API

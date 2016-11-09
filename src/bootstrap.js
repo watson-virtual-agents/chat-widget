@@ -289,6 +289,7 @@ module.exports = {
   disableInput: disableInput,
   enableInput: enableInput,
   subscribe: events.subscribe,
+  subscribeOnce: events.subscribeOnce,
   publish: events.publish,
   debug: debug,
   destroy: destroy,

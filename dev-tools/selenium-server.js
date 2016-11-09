@@ -12,18 +12,9 @@
 * the License.
 */
 
-var state = require('../../state');
-var events = require('../../events');
-
-function sendInputMessage() {
-  var current = state.getState();
-  if (!current.inProgress && !current.disableInput) {
-    var text = current.root.querySelector('.IBMChat-chat-textbox').value.replace(/\n/g, "");
-    events.publish('send', {
-      text: text
-    });
-    text = '';
-  }
-}
-
-module.exports = sendInputMessage;
+const server = require('./server');
+server.run({
+  port: 3300,
+  hot: false,
+  index: 'selenium'
+});

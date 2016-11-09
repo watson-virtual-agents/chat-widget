@@ -30,13 +30,14 @@ var spinner = {
 
 function _getStyles(current) {
   var containerClass = ".chatID-" + current.chatID;
-  var styles = containerClass + " .IBMChat-outer-container, .IBMChat-outer-container textarea {\n  font-size: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
+  var styles = containerClass + " .IBMChat-outer-container {\n  font-size: " + current.styles.fontSize + ";\n line-height: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
+              containerClass + " .IBMChat-outer-container textarea {\n  font-size: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
               containerClass + " .IBMChat-default-colors {\n  background-color: " + current.styles.background + ";\n  color: " + current.styles.text + ";\n}\n" +
               containerClass + " .IBMChat-secondary-colors {\n  background-color: " + current.styles.secondaryBackground + ";\n  color: " + current.styles.secondaryText + ";\n}\n" +
               containerClass + " .IBMChat-accent-colors {\n  background-color: " + current.styles.accentBackground + ";\n  color: " + current.styles.accentText + ";\n}\n" +
               containerClass + " .IBMChat-error-colors {\n  background-color: " + current.styles.errorBackground + ";\n  color: " + current.styles.errorText + ";\n}\n" +
               containerClass + " .IBMChat-input-colors {\n  background-color: " + current.styles.inputBackground + ";\n  color: " + current.styles.inputText + ";\n}\n" +
-              containerClass + " .IBMChat-watson-message-theme {\n\tborder-left: 3px solid " + current.styles.accentBackground + ";\n}\n" +
+              containerClass + " .IBMChat-watson-message-line-theme {\n\tborder-left: 3px solid " + current.styles.accentBackground + ";\n}\n" +
               containerClass + " a,\n" +
               containerClass + " a:hover,\n" +
               containerClass + " a:visited,\n" +
