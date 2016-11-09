@@ -15,7 +15,6 @@
 require('./styles.css');
 
 var events = require('../../events');
-var state = require('../../state');
 var profile = require('../../profile');
 var subscribe = events.subscribe;
 var publish = events.publish;
@@ -95,12 +94,6 @@ CreditCard.prototype.removeError = function(name) {
 
 CreditCard.prototype.validate = function() {
   var valid = true;
-  this.formData = {};
-  for (var i = 0; i < this.fields.length; i++) {
-    var field = this.fields[i];
-    var name = field.getAttribute('name');
-    this.formData[name] = field.value;
-  }
 
   if (this.formData.cc_full_name.length === 0) {
     this.addError('cc_full_name', 'This field is required.');
@@ -139,7 +132,20 @@ CreditCard.prototype.validate = function() {
   return valid;
 };
 
+CreditCard.prototype.retrieveFormData = function() {
+  this.formData = {};
+  for (var i = 0; i < this.fields.length; i++) {
+    var field = this.fields[i];
+    var name = field.getAttribute('name');
+    // set month to 2 digit format
+    if (name === 'cc_exp_date_month' && /^[1-9]$/.test(field.value))
+      field.value = '0' + field.value;
+    this.formData[name] = field.value;
+  }
+};
+
 CreditCard.prototype.handleContinue = function() {
+  this.retrieveFormData();
   if (this.validate()) {
     var fd = this.formData;
     fd.cc_exp_date = fd.cc_exp_date_month + '/' + fd.cc_exp_date_year;
