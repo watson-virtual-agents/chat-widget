@@ -42,21 +42,10 @@ function destroy() {
   events = [];
 }
 
-function unsubscribe(event, handler) {
-	var isDebug = state.getState().DEBUG;
-	if (!event || !handler) {
-		if (isDebug) {
-			console.error('Must pass a valid event and handler to unsubscribe.');
-		}
-		return;
-	}
-	if(!hasSubscription(event)) {
-		if (isDebug) {
-			debugger;
-			console.error('Must pass a valid event and handler to unsubscribe.');
-		}
-		return;
-	}
+function unsubscribe(event, handler, context) {
+  if (typeof context === undefined)
+    context = handler;
+}
 
 function currentSubscriptions() {
   return events.slice(0);
