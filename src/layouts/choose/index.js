@@ -20,7 +20,7 @@ var publish = events.publish;
 var utils = require('../../utils');
 var ns = 'IBMChat-choose';
 var activeClassName = 'IBMChat-accent-colors';
-var inactiveClassName = 'IBMChat-secondary-colors';
+var inactiveClassName = 'IBMChat-accent-colors-button';
 var widgets = [];
 var templates = {
   button: require('./templates/button.html')
