@@ -35,8 +35,6 @@ module.exports = function(config) {
     frameworks: ['mocha'],
 
     preprocessors: {
-      // only specify one entry point
-      // and require all tests in there
       'test/**/*.spec.js': ['webpack']
     },
     

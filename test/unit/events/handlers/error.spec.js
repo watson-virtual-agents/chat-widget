@@ -31,7 +31,7 @@ describe('error handler', function() {
   });
 
   describe('#default()', function() {
-    it('should publish an error message', function() {
+    it('should deliver an error message', function() {
       events.publish = sinon.spy();
       error.__set__("events", events);
 
@@ -45,15 +45,15 @@ describe('error handler', function() {
   });
 
   describe('#tryIt()', function() {
-    it('should display an error message', function() {
+    it('should deliver a layout error when in tryIt mode', function() {
       events.publish = sinon.spy();
       error.__set__("events", events);
 
-      error.default("mock error message");
+      error.tryIt("mock error message");
 
       expect(state.getState().hadError).to.be.true;
       expect(events.publish.calledOnce);
-      expect(events.publish.firstCall.args[0]).to.equal("receive");
+      expect(events.publish.firstCall.args[0]).to.equal("layout:error");
       expect(events.publish.firstCall.args[1]).to.be.a("string");
     });
   });

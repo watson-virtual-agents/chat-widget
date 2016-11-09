@@ -102,9 +102,11 @@ describe('cc-validator layout', function() {
       expect(validateExp('01','9999')).to.eql(invalidOutput);
       expect(validateExp('01','abcd')).to.eql(invalidOutput);
       expect(validateExp('01','$%"_/')).to.eql(invalidOutput);
-      // var d = new Date();
-      // var invalidMonth = (d.getMonth() - 1) ? 0 : 1;
-      // expect(validateExp((d.getMonth() - 1)+'', d.getFullYear()+'')).to.eql(invalidOutput);
+      
+      var d = new Date();
+      // getMonth is 0 indexed, so it should always be behind by 1
+      // when compared to the current month
+      expect(validateExp((d.getMonth())+'', d.getFullYear()+'')).to.eql(invalidOutput);
     });
 
     it('should validate valid expiration dates', function() {

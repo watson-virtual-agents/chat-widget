@@ -12,6 +12,7 @@
 * the License.
 */
 
+/*
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
@@ -38,3 +39,5 @@ describe('form layout', function() {
 
   });
 });
+
+*/
