@@ -4,6 +4,7 @@
 **Kind**: global namespace  
 
 * [IBMChat](#IBMChat) : <code>object</code>
+    * [.version](#IBMChat.version)
     * [.profile](#IBMChat.profile) : <code>object</code>
         * [.get(key)](#IBMChat.profile.get) ⇒ <code>Any</code>
         * [.set(key, value)](#IBMChat.profile.set) ⇒ <code>[profile](#IBMChat.profile)</code>
@@ -25,10 +26,21 @@
     * [.disableInput()](#IBMChat.disableInput) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.enableInput()](#IBMChat.enableInput) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.subscribe(eventName, callback, context)](#IBMChat.subscribe) ⇒ <code>Object</code>
+    * [.subscribeOnce(eventName, callback, context)](#IBMChat.subscribeOnce) ⇒ <code>Object</code>
     * [.publish(eventName, data)](#IBMChat.publish) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.currentSubscriptions()](#IBMChat.currentSubscriptions) ⇒ <code>Array</code>
     * [.debug()](#IBMChat.debug) ⇒ <code>[IBMChat](#IBMChat)</code>
 
+<a name="IBMChat.version"></a>
+
+### IBMChat.version
+String of current version of the chat widget.
+
+**Kind**: static property of <code>[IBMChat](#IBMChat)</code>  
+**Example**  
+```js
+IBMChat.version
+```
 <a name="IBMChat.profile"></a>
 
 ### IBMChat.profile : <code>object</code>
@@ -409,6 +421,26 @@ Subscribe to an IBMChat event. See [./EVENTS.md](./EVENTS.md) for more details.
 var mySubscription = IBMChat.subscribe('the-end-of-the-world', function(message) {
   console.log(message);
   mySubscription.remove(); // remove subscription
+});
+```
+<a name="IBMChat.subscribeOnce"></a>
+
+### IBMChat.subscribeOnce(eventName, callback, context) ⇒ <code>Object</code>
+Subscribe to an IBMChat event and auto unsubscribe when called.
+
+**Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>Object</code> - - Returns object with a .remove function to destroy the subscription  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| eventName | <code>string</code> | Takes a string representing the name of the event |
+| callback | <code>function</code> | function to run when event is called |
+| context |  | optional: value of "this" in the function |
+
+**Example**  
+```js
+var mySubscription = IBMChat.subscribeOnce('the-end-of-the-world', function(message) {
+  console.log(message);
 });
 ```
 <a name="IBMChat.publish"></a>

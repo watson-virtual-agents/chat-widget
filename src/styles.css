@@ -92,6 +92,10 @@
   line-height: 1.5em;
   min-height: 1.5em;
   padding: 0 0 0 1em;
+  white-space: pre-wrap;
+  white-space: pre-line;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
 .IBMChat-watson-message-line {
@@ -122,6 +126,10 @@
   line-height: 1.5em;
   padding: 1em;
   text-align:left;
+  white-space: pre-wrap;
+  white-space: pre-line;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
 /* Input Component */
@@ -196,7 +204,7 @@
 
 /* validation error message */
 .IBMChat-validation-error {
-  padding: 0.25em;
+  padding: 0.5em;
   font-size: 0.9em;
 }
 

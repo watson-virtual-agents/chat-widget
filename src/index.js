@@ -261,6 +261,7 @@ var IBMChat = {
     return IBMChat;
   },
 
+
   /**
    * Subscribe to an IBMChat event. See [./EVENTS.md](./EVENTS.md) for more details.
    * @function subscribe
@@ -276,6 +277,21 @@ var IBMChat = {
    * });
    */
   subscribe: bootstrap.subscribe,
+
+  /**
+   * Subscribe to an IBMChat event and auto unsubscribe when called.
+   * @function subscribeOnce
+   * @memberof IBMChat
+   * @param {string} eventName - Takes a string representing the name of the event
+   * @param {function} callback - function to run when event is called
+   * @param context - optional: value of "this" in the function
+   * @returns {Object} - Returns object with a .remove function to destroy the subscription
+   * @example
+   * var mySubscription = IBMChat.subscribeOnce('the-end-of-the-world', function(message) {
+   *   console.log(message);
+   * });
+   */
+  subscribeOnce: bootstrap.subscribeOnce,
   /**
    * Publish an IBMChat event. See [./EVENTS.md](./EVENTS.md) for more details.
    * @function publish
@@ -290,7 +306,6 @@ var IBMChat = {
     bootstrap.publish(eventName, data);
     return IBMChat;
   },
-
   /**
    * @namespace profile
    * @memberof IBMChat
@@ -360,7 +375,6 @@ var IBMChat = {
     */
     forEach: bootstrap.profile.forEach
   },
-
   /**
    * See a list of current event subscriptions. See [./EVENTS.md](./EVENTS.md) for more details.
     * @function currentSubscriptions
@@ -390,7 +404,15 @@ var IBMChat = {
   debug: function() {
     bootstrap.debug();
     return IBMChat;
-  }
+  },
+
+  /**
+   * String of current version of the chat widget.
+   * @memberof IBMChat
+   * @example
+   * IBMChat.version
+   */
+  version: process.env.CHAT_VERSION
 
 };
 
