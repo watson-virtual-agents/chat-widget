@@ -159,7 +159,7 @@ function validateExp(userM, userY) {
   var monthRegexp = /^(0[1-9]|1[012])$/;
   var yearRegexp = /^(20)[0-9][0-9]$/;
   var d = new Date();
-  var month = d.getMonth();
+  var month = d.getMonth() + 1; // normalize, Date#getMonth is 0 indexed
   var year = d.getFullYear();
 
   if (userM.trim().length === 0 || userY.trim().length === 0)

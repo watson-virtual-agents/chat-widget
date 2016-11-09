@@ -43,7 +43,7 @@ var IBMChat = {
    * @param {string} config.styles.inputBackground=rgba(90,90,90,1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms
    * @param {string} config.styles.inputText=rgba(247,247,247,1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms
    * @param {string} config.styles.accentText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text
-   * @param {string} config.styles.accentBackground=rgba(175,110,232,1) - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
+   * @param {string} config.styles.accentBackground=#AF6EE8 - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
    * @param {string} config.styles.errorText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text
    * @param {string} config.styles.errorBackground=rgba(239,62,58,1) - optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons
    * @param {string} config.styles.fontFamily=HelveticaNeue,Helvetica,sans-serif - optional: comma seperated list of fonts to use
@@ -261,6 +261,7 @@ var IBMChat = {
     return IBMChat;
   },
 
+
   /**
    * Subscribe to an IBMChat event. See [./EVENTS.md](./EVENTS.md) for more details.
    * @function subscribe
@@ -276,6 +277,21 @@ var IBMChat = {
    * });
    */
   subscribe: bootstrap.subscribe,
+
+  /**
+   * Subscribe to an IBMChat event and auto unsubscribe when called.
+   * @function subscribeOnce
+   * @memberof IBMChat
+   * @param {string} eventName - Takes a string representing the name of the event
+   * @param {function} callback - function to run when event is called
+   * @param context - optional: value of "this" in the function
+   * @returns {Object} - Returns object with a .remove function to destroy the subscription
+   * @example
+   * var mySubscription = IBMChat.subscribeOnce('the-end-of-the-world', function(message) {
+   *   console.log(message);
+   * });
+   */
+  subscribeOnce: bootstrap.subscribeOnce,
   /**
    * Publish an IBMChat event. See [./EVENTS.md](./EVENTS.md) for more details.
    * @function publish
@@ -290,7 +306,6 @@ var IBMChat = {
     bootstrap.publish(eventName, data);
     return IBMChat;
   },
-
   /**
    * @namespace profile
    * @memberof IBMChat
@@ -360,7 +375,6 @@ var IBMChat = {
     */
     forEach: bootstrap.profile.forEach
   },
-
   /**
    * See a list of current event subscriptions. See [./EVENTS.md](./EVENTS.md) for more details.
     * @function currentSubscriptions
@@ -390,7 +404,15 @@ var IBMChat = {
   debug: function() {
     bootstrap.debug();
     return IBMChat;
-  }
+  },
+
+  /**
+   * String of current version of the chat widget.
+   * @memberof IBMChat
+   * @example
+   * IBMChat.version
+   */
+  version: process.env.CHAT_VERSION
 
 };
 

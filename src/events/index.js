@@ -61,15 +61,25 @@ function hasSubscription(action) {
   return false;
 }
 
-function subscribe(event, handler, context) {
+function subscribe(event, handler, context, subscribeOnce) {
   if (typeof context === undefined)
     context = handler;
-  var index = events.push({ event: event, handler: handler.bind(context) }) - 1;
-  return {
-    remove: function() {
-      delete events[index];
-    }
-  };
+  var index = events.push({ event: event, handler: handler.bind(context), subscribeOnce: (subscribeOnce) ? true : false }) - 1;
+  if (!subscribeOnce) {
+    return {
+      remove: function() {
+        delete events[index];
+      }
+    };
+  }
+}
+
+function subscribeMany(event, handler, context) {
+  return subscribe(event, handler, context, false);
+}
+
+function subscribeOnce(event, handler, context) {
+  subscribe(event, handler, context, true);
 }
 
 function publish(event, data, cb) {
@@ -82,6 +92,8 @@ function publish(event, data, cb) {
         console.log('Subscription to ' + event + ' was called: ', data);
       }
       events[i].handler.call(undefined, data, cb);
+      if (events[i] && events[i].subscribeOnce === true)
+        delete events[i];
     }
   }
   if (current.DEBUG && event.indexOf('layout') == -1 && !wasSubscription)
@@ -93,7 +105,8 @@ module.exports = {
   unsubscribe: unsubscribe,
   currentSubscriptions: currentSubscriptions,
   hasSubscription: hasSubscription,
-  subscribe: subscribe,
+  subscribe: subscribeMany,
+  subscribeOnce: subscribeOnce,
   publish: publish,
   completeEvent: completeEvent
 };
