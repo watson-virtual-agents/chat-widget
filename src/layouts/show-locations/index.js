@@ -391,7 +391,7 @@ ShowLocations.prototype.addLocation = function() {
       timezone: el.querySelectorAll('.' + ns + '-locations-item-data-timezone'),
       moreHours: el.querySelector('.' + ns + '-locations-item-data-more-hours'),
       distance: el.querySelector('.' + ns + '-locations-item-distance'),
-      backHolder: el.querySelector('.' + ns + '-locations-item-data-section'),
+      backHolder: el.querySelector('.' + ns + '-locations-all-holder'),
       back: el.querySelector('.' + ns + '-locations-all')
     };
   };
