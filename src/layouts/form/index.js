@@ -21,7 +21,7 @@ var subscribe = events.subscribe;
 var publish = events.publish;
 var ns = 'IBMChat-form';
 var activeClassName = 'IBMChat-accent-colors';
-var inactiveClassName = 'IBMChat-secondary-colors';
+var inactiveClassName = 'IBMChat-accent-colors-button';
 var templates = {
   base: require('./templates/base.html'),
   field: require('./templates/field.html')
@@ -82,6 +82,7 @@ Form.prototype.handleSubmit = function() {
   if (this.validateFields() === true) {
     for (var i = 0; i < this.fields.length; i++)
       profile.set(this.fields[i].getAttribute('name'), this.fields[i].value);
+    this.submitButton.classList.remove(inactiveClassName);
     this.submitButton.classList.add(activeClassName);
     publish('send', {
       silent: true,
@@ -167,6 +168,7 @@ Form.prototype.handleInput = function(e) {
 };
 
 Form.prototype.handleCancel = function() {
+  this.cancelButton.classList.remove(inactiveClassName);
   this.cancelButton.classList.add(activeClassName);
   publish('enable-input');
   publish('send', {
