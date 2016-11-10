@@ -25,7 +25,7 @@ var utils = require('../../utils');
 var first = true;
 var displayLength = 3;
 var breakpointWidths = ['720', '680', '640', '580', '512', '480', '420', '360', '320', '288', '256'];
-var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+var days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
 var showLocations = {};
 var locationIDs = [];
 var chatWidth = 748;
@@ -103,6 +103,28 @@ function sizeMap() {
   }
 }
 
+function createEmails(el, item) {
+  const linkEl = document.createElement('a');
+  linkEl.setAttribute('href', 'mailto:' + item.email);
+  linkEl.setAttribute('target', '_blank');
+  linkEl.textContent = item.email;
+  if (item.phones && item.phones.length > 0) {
+    var itemChild = document.createElement('div');
+    var text = templates.createDomArray;
+    itemChild.className = ns + '-contact-row';
+    itemChild.innerHTML = utils.compile(text, {
+      ns: ns
+    });
+    var typeEl = itemChild.querySelector('.' + ns + '-contact-type');
+    var dataEl = itemChild.querySelector('.' + ns + '-contact-data');
+    typeEl.textContent = 'Email';
+    dataEl.appendChild(linkEl);
+    el.appendChild(itemChild);
+  } else {
+    el.appendChild(linkEl);
+  }
+}
+
 function createPhoneArray(el, items) {
   if (items) {
     for (var i = 0; i < items.length; i++) {
@@ -168,7 +190,7 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
         ns: ns
       });
     }
-    hoursEl.appendChild(el);
+    utils.appendToEach(hoursEl, el);
     // timezone
     if (timezone) {
       var tzChildEl = document.createElement('div');
@@ -176,13 +198,14 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
         ns: ns,
         timezone: timezone
       });
-      timezoneEl.appendChild(tzChildEl);
+      utils.appendToEach(timezoneEl, tzChildEl);
     } else {
-      timezoneEl.parentNode.removeChild(timezoneEl);
+      for (var j = 0; j < timezoneEl.length; j++)
+        timezoneEl[j].parentNode.removeChild(timezoneEl[j]);
     }
     // more hours
     for (var i = 0; i < hours.length; i++) {
-      var childEl = document.createElement('div');
+      var childEl = document.createElement('span');
       childEl.setAttribute('class', ns + '-days-hours');
       if (hours[i] && hours[i].isOpen) {
         childEl.innerHTML = utils.compile(templates.hoursOpen, {
@@ -197,6 +220,8 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
           day: days[i]
         });
       }
+      if (i < (hours.length - 1))
+        childEl.querySelector('.' + ns + '-days-hours-hours').innerHTML += ', ';
       moreHoursEl.appendChild(childEl);
     }
   }
@@ -247,7 +272,8 @@ ShowLocations.prototype.init = function(data) {
     this.map.innerHTML = utils.compile(text, { ns: ns });
     this.mapElement = this.map.querySelector('.' + ns + '-img');
     this.dataElement = this.map.querySelector('.' + ns + '-data');
-    this.mapElement.appendChild(this.drawLocations());
+    if (this.data.length > 1)
+      this.mapElement.appendChild(this.drawLocations());
     this.dataElement.appendChild(this.addDetails());
     this.layoutElement.appendChild(this.map);
   }
@@ -261,7 +287,8 @@ ShowLocations.prototype.getWidth = function() {
 
 ShowLocations.prototype.reDrawMap = function() {
   this.mapElement.innerHTML = '';
-  this.mapElement.appendChild(this.drawLocations());
+  if (this.data.length > 1)
+    this.mapElement.appendChild(this.drawLocations());
 };
 
 ShowLocations.prototype.addDetails = function() {
@@ -290,7 +317,7 @@ ShowLocations.prototype.drawLocations = function() {
   var img = document.createElement('img');
   var width = this.getWidth();
   var config = {
-    size: width + 'x180',
+    size: width + 'x120',
     scale: pixelRatio
   };
   if (this.data.length === 1)
@@ -360,10 +387,8 @@ ShowLocations.prototype.addLocation = function() {
       address2: document.createElement('span'),
       phone: el.querySelector('.' + ns + '-locations-item-data-phone'),
       email: el.querySelector('.' + ns + '-locations-item-data-email'),
-      hours: el.querySelector('.' + ns + '-locations-item-data-hours'),
-      timezone: el.querySelector('.' + ns + '-locations-item-data-timezone'),
-      parentEl: el.querySelector('.' + ns + '-locations-item-data'),
-      hoursButton: el.querySelector('.' + ns + '-locations-item-data-hours-button'),
+      hours: el.querySelectorAll('.' + ns + '-locations-item-data-hours'),
+      timezone: el.querySelectorAll('.' + ns + '-locations-item-data-timezone'),
       moreHours: el.querySelector('.' + ns + '-locations-item-data-more-hours'),
       distance: el.querySelector('.' + ns + '-locations-item-distance'),
       backHolder: el.querySelector('.' + ns + '-locations-item-data-section'),
@@ -391,15 +416,10 @@ ShowLocations.prototype.addLocation = function() {
   dom.distance.textContent = distance(item) || '';
 
   // email
-  if (item.email) {
-    const linkEl = document.createElement('a');
-    linkEl.setAttribute('href', 'mailto:' + item.email);
-    linkEl.setAttribute('target', '_blank');
-    linkEl.textContent = item.email;
-    dom.email.appendChild(linkEl);
-  } else {
+  if (item.email)
+    createEmails(dom.email, item);
+  else
     dom.email.parentNode.removeChild(dom.email);
-  }
 
   // phones
   if (item.phones && item.phones.length > 0)
@@ -408,21 +428,10 @@ ShowLocations.prototype.addLocation = function() {
     dom.phone.parentNode.removeChild(dom.phone);
 
   // hours/timezone
-  if (item.days && item.days.length > 0) {
+  if (item.days && item.days.length > 0)
     createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
-    this.hoursFunction = function(e) {
-      e.preventDefault();
-      dom.parentEl.removeChild(dom.hoursButton);
-      dom.moreHours.setAttribute('class', ns + '-locations-item-data-more-hours');
-      publish('focus-input');
-      publish('scroll-to-bottom');
-    };
-    this.hoursButton = dom.hoursButton;
-    dom.hoursButton.addEventListener('click', this.hoursFunction);
-  } else {
+  else
     dom.hours.parentNode.removeChild(dom.hours);
-    dom.hoursButton.parentNode.removeChild(dom.hoursButton);
-  }
 
   if (locationData && locationData.length > 1) {
     this.locationsButton = dom.back;
@@ -476,7 +485,7 @@ ShowLocations.prototype.addLocations = function() {
     var item = this.data[i];
     var dom = createDom.call(this, el, i, this.uuid);
     var box = document.createElement('div');
-    box.setAttribute('style', 'font-weight:bold; color:' + current.styles.accentText + '; background: ' + current.styles.accentBackground + '; line-height: 24px; height:24px; width:24px; margin-left:8px;');
+    box.setAttribute('style', 'border-radius: 24px; color:' + current.styles.accentText + '; background: ' + current.styles.accentBackground + '; line-height: 24px; height:24px; width:24px; margin-left:8px;');
     box.textContent = alphaMap[i];
     dom.icon.appendChild(box);
     dom.label.textContent = item.label || '';

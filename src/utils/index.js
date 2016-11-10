@@ -45,7 +45,7 @@ function _getStyles(current) {
               containerClass + " a,\n" +
               containerClass + " a:hover,\n" +
               containerClass + " a:visited,\n" +
-              containerClass + " a:active {\n\tcolor: " + current.styles.link + ";\n}\n" +
+              containerClass + " a:active {\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n}\n" +
               containerClass + " .IBMChat-chat-textbox-theme {\n  border-bottom: solid 1px " + current.styles.text + ";\n}\n" +
               containerClass + " .IBMChat-chat-textbox-theme:focus {\n  border-bottom: solid 2px " + current.styles.accentBackground + ";\n}\n" +
               containerClass + " .IBMChat-ibm-spinner {\n\tstroke: " + current.styles.accentBackground + ";\n}";
@@ -124,7 +124,15 @@ function hasClass(element, className) {
   return ( (" " + element.className + " ").replace(/[\n\t]/g, " ").indexOf(thatClass) > -1 );
 }
 
+function appendToEach(appendTo, content) {
+  for (var i = 0; i < appendTo.length; i++) {
+    var clone = content.cloneNode(true);
+    appendTo[i].appendChild(clone);
+  }
+}
+
 module.exports = {
+  appendToEach: appendToEach,
   debounce: debounce,
   serialize: serialize,
   hasClass: hasClass,
