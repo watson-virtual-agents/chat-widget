@@ -45,7 +45,7 @@ function _getStyles(current) {
               containerClass + " a,\n" +
               containerClass + " a:hover,\n" +
               containerClass + " a:visited,\n" +
-              containerClass + " a:active {\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n}\n" +
+              containerClass + " a:active {\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n\ttext-decoration: underline;\n\tfont-size:1em;\n\n}\n" +
               containerClass + " .IBMChat-chat-textbox-theme {\n  border-bottom: solid 1px " + current.styles.text + ";\n}\n" +
               containerClass + " .IBMChat-chat-textbox-theme:focus {\n  border-bottom: solid 2px " + current.styles.accentBackground + ";\n}\n" +
               containerClass + " .IBMChat-ibm-spinner {\n\tstroke: " + current.styles.accentBackground + ";\n}";
