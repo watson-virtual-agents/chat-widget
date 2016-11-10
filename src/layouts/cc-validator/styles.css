@@ -37,10 +37,12 @@
 }
 
 .IBMChat-creditcard-buttons button {
-  float:left;
   width:90px;
+  float:left;
+  text-overflow: clip;
 }
 
 .IBMChat-creditcard-buttons button:last-child {
   float:right;
+  text-overflow: clip;
 }
