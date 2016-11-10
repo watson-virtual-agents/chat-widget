@@ -304,11 +304,9 @@
   display: none;
 }
 
-@media screen and (min-width: 480px) {
-  .IBMChat-small-show {
-    display: none;
-  }
-  .IBMChat-small-hide {
-    display: unset;
-  }
+.IBMChat-isLarge .IBMChat-small-show {
+  display: none;
+}
+.IBMChat-isLarge .IBMChat-small-hide {
+  display: unset;
 }

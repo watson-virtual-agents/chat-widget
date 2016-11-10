@@ -65,7 +65,7 @@
 
 }
 .IBMChat-map-locations-item-data-title {
-  font-size: 1.2em;
+  font-size: 1.4em;
 	font-weight:lighter;
   padding-bottom:0.5em;
 }
@@ -91,7 +91,6 @@
 }
 
 .IBMChat-map-contact-type {
-  font-style:italic;
   font-size:0.9em;
 }
 
@@ -112,10 +111,6 @@ button.IBMChat-map-locations-all {
 	font-weight: bold;
 }
 
-.IBMChat-map-hours-today {
-	font-weight:lighter;
-}
-
 .IBMChat-map-days-hours-day, .IBMChat-map-days-hours-hours, .IBMChat-map-days-hours-closed {
   overflow: hidden;
   word-wrap: break-word;
@@ -125,13 +120,8 @@ button.IBMChat-map-locations-all {
 	font-weight: bold;
 }
 
-.IBMChat-map-days-hours-hours, .IBMChat-map-days-hours-closed {
-  font-weight:lighter;
-}
-
 .IBMChat-map-hours-timezone {
   font-size: 0.8em;
-  font-style: italic;
   padding-bottom: 0.5em;
 }
 
@@ -139,15 +129,13 @@ button.IBMChat-map-locations-all {
 	margin-top:0.5em;
 }
 
-@media screen and (min-width: 480px) {
-	.IBMChat-map-locations-item-data {
-		float:left;
-		width:50%;
-	}
-	.IBMChat-map-locations-item-data-hours {
-		margin-top:0;
-	}
-	.IBMChat-map-locations-item-data-more-hours {
-		margin-top:0.5em;
-	}
+.IBMChat-isLarge .IBMChat-map-locations-item-data {
+	float:left;
+	width:50%;
+}
+.IBMChat-isLarge .IBMChat-map-locations-item-data-hours {
+	margin-top:0;
+}
+.IBMChat-isLarge .IBMChat-map-locations-item-data-more-hours {
+	margin-top:0.5em;
 }
