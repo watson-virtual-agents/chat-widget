@@ -21,6 +21,7 @@ var publish = events.publish;
 var utils = require('../../utils');
 var validation = require('./validation');
 var activeClassName = 'IBMChat-accent-colors';
+var inactiveClassName = 'IBMChat-accent-colors-button';
 var ns = 'IBMChat-creditcard';
 var widgets = [];
 var templates = {
@@ -62,6 +63,8 @@ CreditCard.prototype.drawForm = function() {
   this.layoutElement.appendChild(this.el);
   this.cancelButton = this.el.querySelector('.' + ns + '-cancel');
   this.continueButton = this.el.querySelector('.' + ns + '-continue');
+  this.cancelButton.classList.add(inactiveClassName);
+  this.continueButton.classList.add(inactiveClassName);
   this.formElements = {};
   this.fields = this.el.querySelectorAll('input');
   for (var i = 0; i < this.fields.length; i++) {
@@ -153,6 +156,8 @@ CreditCard.prototype.handleContinue = function() {
     Object.keys(fd).map(function(key) {
       profile.set(key, fd[key]);
     });
+    this.continueButton.classList.remove(inactiveClassName);
+    this.continueButton.classList.add(activeClassName);
     publish('enable-input');
     publish('send', {
       silent: true,
@@ -162,6 +167,7 @@ CreditCard.prototype.handleContinue = function() {
 };
 
 CreditCard.prototype.handleCancel = function() {
+  this.cancelButton.classList.remove(inactiveClassName);
   this.cancelButton.classList.add(activeClassName);
   publish('enable-input');
   publish('send', {
