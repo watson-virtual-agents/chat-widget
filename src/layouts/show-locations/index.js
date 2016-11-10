@@ -158,21 +158,6 @@ function formatAMPM(time) {
   }
 }
 
-function parseAddress(address) {
-  var arr = address.split(',');
-  var first = arr.shift();
-  var text = '';
-  for (var i = 0; i < arr.length; i++) {
-    text += arr[i];
-    if (i < (arr.length - 1))
-      text += ',';
-  }
-  return {
-    address1: first,
-    address2: text
-  };
-}
-
 function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
   if (hours) {
     // hours
@@ -383,8 +368,6 @@ ShowLocations.prototype.addLocation = function() {
       link: el.querySelector('.' + ns + '-locations-item-data-address-link'),
       label: el.querySelector('.' + ns + '-locations-item-data-title'),
       address: el.querySelector('.' + ns + '-locations-item-data-address'),
-      address1: document.createElement('span'),
-      address2: document.createElement('span'),
       phone: el.querySelector('.' + ns + '-locations-item-data-phone'),
       email: el.querySelector('.' + ns + '-locations-item-data-email'),
       hours: el.querySelectorAll('.' + ns + '-locations-item-data-hours'),
@@ -405,12 +388,7 @@ ShowLocations.prototype.addLocation = function() {
     dom.parentEl.removeChild(dom.label);
 
   // addresses
-  var addresses = parseAddress(item.address.address);
-  dom.address1.textContent = addresses.address1;
-  dom.address2.textContent = addresses.address2;
-  dom.address.appendChild(dom.address1);
-  dom.address.appendChild(document.createElement('br'));
-  dom.address.appendChild(dom.address2);
+  dom.address.textContent = item.address.address;
   dom.link.setAttribute('href', 'https://maps.google.com/?q=' + encodeURIComponent(item.address.address));
   dom.link.setAttribute('target', '_blank');
   dom.distance.textContent = distance(item) || '';
@@ -489,12 +467,7 @@ ShowLocations.prototype.addLocations = function() {
     box.textContent = alphaMap[i];
     dom.icon.appendChild(box);
     dom.label.textContent = item.label || '';
-    var addresses = parseAddress(item.address.address);
-    dom.address1.textContent = addresses.address1;
-    dom.address2.textContent = addresses.address2;
-    dom.address.appendChild(dom.address1);
-    dom.address.appendChild(document.createElement('br'));
-    dom.address.appendChild(dom.address2);
+    dom.address.textContent = item.address.address;
     dom.distance.textContent = distance(item) || '';
     container.appendChild(el);
   }
