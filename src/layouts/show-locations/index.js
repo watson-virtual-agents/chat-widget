@@ -48,7 +48,7 @@ var templates = {
 var strings = {
   locations: {
     none: 'We could not find any locations close to you.',
-    single: 'Here are the details for the ${location} location:',
+    single: 'Here are the details for this location:',
     list: 'Here are the locations I found close to you:'
   }
 };
@@ -255,7 +255,7 @@ ShowLocations.prototype.init = function(data) {
     this.msgElement.textContent = strings.locations.none;
     break;
   case 1:
-    this.msgElement.textContent = utils.compile(strings.locations.single, { location: this.data[0].address.address });
+    this.msgElement.textContent = strings.locations.single;
     break;
   default:
     this.msgElement.textContent = strings.locations.list;
