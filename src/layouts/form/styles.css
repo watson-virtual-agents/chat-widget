@@ -1,11 +1,8 @@
 .IBMChat-form-container {
   margin-top:1em;
-  text-align:center;
 }
 
 .IBMChat-form-fields {
-  margin:auto;
-  max-width:360px;
   text-align:left;
   width:100%;
 }
@@ -15,12 +12,12 @@
 }
 
 .IBMChat-form-fields-row input {
+  max-width:280px;
   width: 100%;
 }
 
 .IBMChat-form-buttons {
-  margin:auto;
-  max-width: 360px;
+  max-width: 280px;
   text-align:center;
   width: 100%;
 }

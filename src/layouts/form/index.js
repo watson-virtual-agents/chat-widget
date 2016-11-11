@@ -21,7 +21,7 @@ var subscribe = events.subscribe;
 var publish = events.publish;
 var ns = 'IBMChat-form';
 var activeClassName = 'IBMChat-accent-colors';
-var inactiveClassName = 'IBMChat-secondary-colors';
+var inactiveClassName = 'IBMChat-accent-colors-button';
 var templates = {
   base: require('./templates/base.html'),
   field: require('./templates/field.html')
@@ -82,6 +82,7 @@ Form.prototype.handleSubmit = function() {
   if (this.validateFields() === true) {
     for (var i = 0; i < this.fields.length; i++)
       profile.set(this.fields[i].getAttribute('name'), this.fields[i].value);
+    this.submitButton.classList.remove(inactiveClassName);
     this.submitButton.classList.add(activeClassName);
     publish('send', {
       silent: true,
@@ -107,10 +108,8 @@ Form.prototype.setFocusOnError = function() {
 Form.prototype.validateFields = function() {
   var allFieldsAreValid = true;
   for (var i = 0; i < this.data.length; i++) {
-    if (this.data[i].required === 'true') {
-      var fieldIsValid = this.validateField(this.fields[i], this.data[i]);
-      allFieldsAreValid = allFieldsAreValid && fieldIsValid;
-    }
+    var fieldIsValid = this.validateField(this.fields[i], this.data[i]);
+    allFieldsAreValid = allFieldsAreValid && fieldIsValid;
   }
   return allFieldsAreValid;
 };
@@ -122,11 +121,10 @@ Form.prototype.validateField = function(field, datum) {
     valid = false;
   } else if (datum.validations && datum.validations.length !== 0) {
     for (var i = 0; i < datum.validations.length; i++) {
+      // regexes received from backend should always include
+      // start/end of line anchors (^, $)
       var validation = datum.validations[i];
       var validationRegex = validation.regex;
-      //TODO: handle this better
-      if (validation.regex.indexOf('^(') !== 0)
-        validationRegex = '^(' + validation.regex + ')$';
       var regex = new RegExp(validationRegex);
       var matches = regex.test(field.value);
       if (!matches) {
@@ -170,6 +168,7 @@ Form.prototype.handleInput = function(e) {
 };
 
 Form.prototype.handleCancel = function() {
+  this.cancelButton.classList.remove(inactiveClassName);
   this.cancelButton.classList.add(activeClassName);
   publish('enable-input');
   publish('send', {

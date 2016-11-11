@@ -2,6 +2,8 @@
   border: none;
   box-sizing: border-box;
   display:table;
+  font-weight: normal;
+  line-height: 1em;
   height: 100%;
   margin: 0 auto 0 auto;
   max-width: 768px;
@@ -43,7 +45,7 @@
 .IBMChat-messages label {
   display:block;
   font-weight:bold;
-  padding-bottom:0.25em;
+  padding-bottom:0.5em;
   text-transform: capitalize;
 }
 
@@ -63,8 +65,10 @@
   font: inherit;
   line-height: 1.5em;
   margin: 0;
-  overflow: visible;
+  overflow: hidden;
   padding: 0.25em 1em 0.25em 1em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   -webkit-appearance: button; /* for input */
   -webkit-user-select: none; /* for button */
   -moz-user-select: none;
@@ -101,10 +105,6 @@
   top: 0;
 }
 
-.IBMChat-watson-layout {
-  margin: 0 1em 0 1em;
-}
-
 .IBMChat-disabled-layout {
   opacity: 0.7;
 }
@@ -117,11 +117,15 @@
 }
 
 .IBMChat-user-message {
-  border-radius: 0.5em;
+  border-radius: 4px;
   display: inline-block;
   line-height: 1.5em;
   padding: 1em;
   text-align:left;
+  white-space: pre-wrap;
+  white-space: pre-line;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
 /* Input Component */
@@ -196,7 +200,7 @@
 
 /* validation error message */
 .IBMChat-validation-error {
-  padding: 0.25em;
+  padding: 0.5em;
   font-size: 0.9em;
 }
 
@@ -288,4 +292,21 @@
   100% {
     opacity: 1;
   }
+}
+
+/* responsive */
+
+.IBMChat-small-show {
+  display: unset;
+}
+
+.IBMChat-small-hide {
+  display: none;
+}
+
+.IBMChat-isLarge .IBMChat-small-show {
+  display: none;
+}
+.IBMChat-isLarge .IBMChat-small-hide {
+  display: unset;
 }
