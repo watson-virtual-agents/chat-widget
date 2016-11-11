@@ -21,6 +21,7 @@ var publish = events.publish;
 var utils = require('../../utils');
 var validation = require('./validation');
 var activeClassName = 'IBMChat-accent-colors';
+var inactiveClassName = 'IBMChat-accent-colors-button';
 var ns = 'IBMChat-creditcard';
 var widgets = [];
 var templates = {
@@ -61,7 +62,9 @@ CreditCard.prototype.drawForm = function() {
   this.el.innerHTML = text;
   this.layoutElement.appendChild(this.el);
   this.cancelButton = this.el.querySelector('.' + ns + '-cancel');
-  this.continueButton = this.el.querySelector('.' + ns + '-continue');
+  this.submitButton = this.el.querySelector('.' + ns + '-submit');
+  this.cancelButton.classList.add(inactiveClassName);
+  this.submitButton.classList.add(inactiveClassName);
   this.formElements = {};
   this.fields = this.el.querySelectorAll('input');
   for (var i = 0; i < this.fields.length; i++) {
@@ -75,7 +78,7 @@ CreditCard.prototype.drawForm = function() {
 
 CreditCard.prototype.addListeners = function() {
   this.cancelButton.addEventListener('click', this.handleCancel.bind(this));
-  this.continueButton.addEventListener('click', this.handleContinue.bind(this));
+  this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
 };
 
 CreditCard.prototype.addError = function(name, msg) {
@@ -144,7 +147,7 @@ CreditCard.prototype.preprocessFormData = function() {
   }
 };
 
-CreditCard.prototype.handleContinue = function() {
+CreditCard.prototype.handleSubmit = function() {
   this.preprocessFormData();
   if (this.validate()) {
     var fd = this.formData;
@@ -153,6 +156,8 @@ CreditCard.prototype.handleContinue = function() {
     Object.keys(fd).map(function(key) {
       profile.set(key, fd[key]);
     });
+    this.submitButton.classList.remove(inactiveClassName);
+    this.submitButton.classList.add(activeClassName);
     publish('enable-input');
     publish('send', {
       silent: true,
@@ -162,6 +167,7 @@ CreditCard.prototype.handleContinue = function() {
 };
 
 CreditCard.prototype.handleCancel = function() {
+  this.cancelButton.classList.remove(inactiveClassName);
   this.cancelButton.classList.add(activeClassName);
   publish('enable-input');
   publish('send', {
@@ -173,8 +179,8 @@ CreditCard.prototype.handleCancel = function() {
 CreditCard.prototype.removeAllEventListeners = function() {
   this.cancelButton.removeEventListener('click', this.handleCancel.bind(this));
   this.cancelButton.setAttribute('disabled', true);
-  this.continueButton.removeEventListener('click', this.handleContinue.bind(this));
-  this.continueButton.setAttribute('disabled', true);
+  this.submitButton.removeEventListener('click', this.handleSubmit.bind(this));
+  this.submitButton.setAttribute('disabled', true);
   for (var j = 0; j < this.fields.length; j++)
     this.fields[j].setAttribute('disabled', true);
 

@@ -2,13 +2,9 @@
 	margin-top: 1em;
 }
 
-.IBMChat-map-img {
-  height:160px;
-}
-
 .IBMChat-map-img img {
-  height:160px;
-  padding: 0 0 1em 0;
+  height:120px;
+  margin: 0 0 0.5em 0;
 }
 
 .IBMChat-map-multiple-locations {
@@ -34,7 +30,7 @@
 
 .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
   cursor: pointer;
-  padding: 1em 0 1em 0;
+  padding: 0.5em 0 0.5em 0;
 }
 
 .IBMChat-disabled-layout .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
@@ -43,6 +39,15 @@
 
 .IBMChat-map-data-section {
   margin-top:0.5em;
+}
+
+.IBMChat-map-data-float-holder:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
 }
 
 .IBMChat-map-locations-item {
@@ -57,11 +62,12 @@
 }
 
 .IBMChat-map-locations-item-data {
-  font-size:0.9em;
-  padding:0 4px 0 4px;
+
 }
 .IBMChat-map-locations-item-data-title {
-  font-weight: bold;
+  font-size: 1.4em;
+	font-weight:300;
+	line-height:1.1em;
   padding-bottom:0.5em;
 }
 .IBMChat-map-locations-item-data-items {
@@ -69,48 +75,24 @@
 }
 
 .IBMChat-map-locations-item-data-section {
-  padding-bottom:1em;
+  padding-bottom:0.5em;
 }
 
 .IBMChat-map-locations-item-data-email {
-  padding-bottom:1em;
+  padding-bottom:0.5em;
 }
 
 .IBMChat-map-locations-item-data-phone {
   display: table;
   max-width:400px;
-  padding-bottom:1em;
   width: 100%;
 }
 .IBMChat-map-contact-row {
-  padding-bottom:1em;
-}
-
-.IBMChat-map-hours-open {
   padding-bottom:0.5em;
 }
 
 .IBMChat-map-contact-type {
-  font-style:italic;
   font-size:0.9em;
-<<<<<<< HEAD
-=======
-}
-.IBMChat-map-contact-data {
-
->>>>>>> dev
-}
-
-a.IBMChat-map-locations-item-data-address-link,
-a.IBMChat-map-locations-item-data-address-link:hover,
-a.IBMChat-map-locations-item-data-address-link:visited,
-a.IBMChat-map-locations-item-data-address-link:active,
-.IBMChat-map-contact-data a,
-.IBMChat-map-contact-data a:hover,
-.IBMChat-map-contact-data a:active,
-.IBMChat-map-contact-data a:visited {
-  font-size:0.9em;
-  font-weight:normal;
 }
 
 .IBMChat-map-locations-item-distance {
@@ -118,45 +100,43 @@ a.IBMChat-map-locations-item-data-address-link:active,
   width:64px;
 }
 
-button.IBMChat-map-locations-item-data-hours-button {
-  font-size:0.9em;
-  line-height:1.5em;
-  margin-top:1em;
-  padding: 0 1em 0 1em;
-}
-
 button.IBMChat-map-locations-all {
   font-size:0.9em;
   line-height:1.5em;
-  padding: 0 1em 0 1em;
+	margin: 0.5em 0 0 0;
+  padding: 0 0.5em 0 0.5em;
 }
 
-.IBMChat-map-locations-item-data-more-hours {
-  display: table;
-}
 
-.IBMChat-map-locations-item-data-more-hours.IBMChat-map-hidden {
-  display: none;
-}
-
-.IBMChat-map-days-hours {
-  display: table-row;
+.IBMChat-map-hours-open {
+	font-weight: bold;
 }
 
 .IBMChat-map-days-hours-day, .IBMChat-map-days-hours-hours, .IBMChat-map-days-hours-closed {
-  display: table-cell;
-  margin: 0;
   overflow: hidden;
-  padding:0.75em 1em 0 0;
   word-wrap: break-word;
+}
+
+.IBMChat-map-days-hours-day {
+	font-weight: bold;
 }
 
 .IBMChat-map-hours-timezone {
   font-size: 0.8em;
-  font-style: italic;
-  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
-.IBMChat-map-days-hours > div:last-child {
-  padding: 0.75em 0 0 0 !important;
+.IBMChat-map-locations-item-data-hours {
+	margin-top:0.5em;
+}
+
+.IBMChat-isLarge .IBMChat-map-locations-item-data {
+	float:left;
+	width:50%;
+}
+.IBMChat-isLarge .IBMChat-map-locations-item-data-hours {
+	margin-top:0;
+}
+.IBMChat-isLarge .IBMChat-map-locations-item-data-more-hours {
+	margin-top:0.5em;
 }

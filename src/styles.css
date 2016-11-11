@@ -2,6 +2,8 @@
   border: none;
   box-sizing: border-box;
   display:table;
+  font-weight: normal;
+  line-height: 1em;
   height: 100%;
   margin: 0 auto 0 auto;
   max-width: 768px;
@@ -101,10 +103,6 @@
   height: 1.5em;
   position: absolute;
   top: 0;
-}
-
-.IBMChat-watson-layout {
-  margin: 0 1em 0 1em;
 }
 
 .IBMChat-disabled-layout {
@@ -294,4 +292,21 @@
   100% {
     opacity: 1;
   }
+}
+
+/* responsive */
+
+.IBMChat-small-show {
+  display: unset;
+}
+
+.IBMChat-small-hide {
+  display: none;
+}
+
+.IBMChat-isLarge .IBMChat-small-show {
+  display: none;
+}
+.IBMChat-isLarge .IBMChat-small-hide {
+  display: unset;
 }
