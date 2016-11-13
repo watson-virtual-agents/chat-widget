@@ -1,0 +1,16 @@
+{
+  "name": "basic-custom-layout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@watson-virtual-agent/chat-widget": "1.2.5",
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
+  }
+}
