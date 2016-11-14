@@ -6,6 +6,7 @@ In the example we'll override a built in layout (the `choose` layout ) so that w
 
 ## Installing and Running Locally
   1. set the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters in [src/index.js](./src/index.js) (see [Getting Started](https://github.com/watson-virtual-agents/chat-widget/blob/master/README.md#getting-started) for further details on this):
+  
   ```javascript
         IBMChat.init({
             el: 'ibm_el',
