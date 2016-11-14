@@ -1,0 +1,21 @@
+html {
+  height:100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  height:100%;
+  margin: 0;
+  padding: 0;
+  background:#000;
+  text-align:center;
+}
+#ibm_el {
+  margin: auto;
+  margin-top:5%;
+  display:block;
+  height:80%;
+  width:100%;
+  max-width:768px;
+  min-width:288px;
+}

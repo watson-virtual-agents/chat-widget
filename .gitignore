@@ -40,4 +40,5 @@ creds
 
 dev-tools/creds.html
 dist/index.html
+examples/**/dist
 selenium/errorShots
