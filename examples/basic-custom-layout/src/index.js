@@ -160,7 +160,7 @@ IBMChat.registerLayout('choose', layoutInit);
 IBMChat.init({
   el: 'ibm_el',
   baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
-  botID: 'ab6b87d9-ec6b-448a-be3b-037edf36e3e1',
-  XIBMClientID: 'a9020123-6dd1-4894-bfd2-45d69ad5b1cd',
-  XIBMClientSecret: 'X1sJ7uR0lI4gM8wV3iS1hK7jI2kC3hU5jE8nO2oY8kB1oW5cG1'
+  botID: '',              // replace with Bot ID
+  XIBMClientID: '',       // replace with Client ID
+  XIBMClientSecret: ''    // replace with Client Secret
 });
