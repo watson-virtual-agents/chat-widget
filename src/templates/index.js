@@ -1,6 +1,6 @@
 module.exports = {
-	input: require('./input.html'),
-	receive: require('./receive.html'),
-	send: require('./send.html'),
-	start: require('./start.html')
+  input: require('./input.html'),
+  receive: require('./receive.html'),
+  send: require('./send.html'),
+  start: require('./start.html')
 };

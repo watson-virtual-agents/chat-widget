@@ -14,6 +14,7 @@
 
 var start = require('./start');
 var resize = require('./resize');
+var resizeInput = require('./resize-input');
 var receive = require('./receive');
 var send = require('./send');
 var sendMock = require('./send-mock');
@@ -22,16 +23,142 @@ var input = require('./input');
 var error = require('./error');
 var playback = require('./playback');
 var scrollToBottom = require('./scroll-to-bottom');
+var tryIt = require('./try-it');
 
 module.exports = {
-	resize: resize,
-	start: start,
-	send: send,
-	sendMock: sendMock,
-	receive: receive,
-	input: input,
-	error: error,
-	scrollToBottom: scrollToBottom,
-	sendInputMessage: sendInputMessage,
-	playback: playback
+  /**
+  * Resize event. Forces a resize of the Chat UI elements to fix current parent element.
+  *
+  * @event resize
+  * @example
+  * IBMChat.publish('resize');
+  * IBMChat.subscribe('resize', function(){
+  *
+  * });
+  */
+  resize: resize,
+  /**
+  * @ignore
+  */
+  resizeInput: resizeInput,
+  /**
+  * @ignore
+  */
+  start: start,
+  /**
+  * Send event. Sends a message.
+  *
+  * @event send
+  * @property {Object} data
+  * @property {string} data.text - Text to send to Watson Virtual Agent
+  * @property {boolean} data.sendSilently - whether or not to show in UI, defaults to true
+  * @example
+  * IBMChat.publish('send', data);
+  * IBMChat.subscribe('send', function(data){
+  *
+  * });
+  */
+  send: send,
+  /**
+  * sendMock event. Displays a message in the UI, but does not send it to the Watson Virtual Agent.
+  *
+  * @event sendMock
+  * @property {Object} data
+  * @property {string} data.text - Text to send to Watson Virtual Agent
+  * @property {boolean} data.sendSilently - whether or not to show in UI, defaults to true
+  * @example
+  * IBMChat.publish('sendMock', data);
+  * IBMChat.subscribe('sendMock', function(data){
+  *
+  * });
+  */
+  sendMock: sendMock,
+  /**
+  * Receive event.
+  *
+  * @event receive
+  * @property {Object} message - A message object.
+  * @example
+  * IBMChat.publish('receive', message);
+  * IBMChat.subscribe('receive', function(message){
+  *
+  * });
+  */
+  receive: receive,
+  /**
+  * Enable Input event. Allows submitting from input field when it has been disabled.
+  *
+  * @event enable-input
+  * @example
+  * IBMChat.publish('enable-input');
+  * IBMChat.subscribe('enable-input', function(){
+  *
+  * });
+  */
+  /**
+  * Disable Input event. Disallows submitting from input field.
+  *
+  * @event disable-input
+  * @example
+  * IBMChat.publish('disable-input');
+  * IBMChat.subscribe('disable-input', function(){
+  *
+  * });
+  */
+  /**
+  * Enable Loading event. Shows loading spinner.
+  *
+  * @event enable-loading
+  * @example
+  * IBMChat.publish('enable-loading');
+  * IBMChat.subscribe('enable-loading', function(){
+  *
+  * });
+  */
+  /**
+  * Disable loading event. Hide loading spinner.
+  *
+  * @event disable-loading
+  * @example
+  * IBMChat.publish('disable-loading');
+  * IBMChat.subscribe('disable-loading', function(){
+  *
+  * });
+  */
+  input: input,
+  /**
+  * Error event.
+  *
+  * @event error
+  * @property {Object} error - Error object.
+  * @example
+  * IBMChat.publish('error', error);
+  * IBMChat.subscribe('error', function(error){
+  *
+  * });
+  */
+  error: error,
+  /**
+  * Scroll to bottom event. Scrolls chat content into correct positioning.
+  *
+  * @event scroll-to-bottom
+  * @example
+  * IBMChat.publish('scroll-to-bottom');
+  * IBMChat.subscribe('scroll-to-bottom', function(){
+  *
+  * });
+  */
+  scrollToBottom: scrollToBottom,
+  /**
+  * @ignore
+  */
+  sendInputMessage: sendInputMessage,
+  /**
+  * @ignore
+  */
+  playback: playback,
+  /**
+  * @ignore
+  */
+  tryIt: tryIt
 };
