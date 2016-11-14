@@ -21,4 +21,4 @@ In the example we'll override a built in layout (the `choose` layout ) so that w
   4.  open `http://localhost:3030`
 
 ## Additional Documentation
-Please see [registering a custom layout documentation](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/DOCS.md#registering-a-custom-layout) for additional information.
+Please see [registering a custom layout](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/DOCS.md#registering-a-custom-layout) for additional information.
