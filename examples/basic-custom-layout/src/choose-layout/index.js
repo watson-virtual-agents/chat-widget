@@ -5,7 +5,7 @@
       var templates = {
         button: '<button style="background-color: yellow;" class="IBMChat-accent-colors-button" data-input="${text}" data-custom-layout=true>${text}</button>'
       };
-      
+
       function compile(str, options) {
         if (options && Object.keys(options).length > 0) {
           Object.keys(options).forEach(function(key) {
@@ -14,7 +14,7 @@
         }
         return str;
       }
-      
+
       function hasClass(element, className) {
         var thatClass = " " + className + " ";
         return ( (" " + element.className + " ").replace(/[\n\t]/g, " ").indexOf(thatClass) > -1 );
