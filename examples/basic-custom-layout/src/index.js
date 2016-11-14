@@ -1,32 +1,25 @@
-require('./styles.css');
-var IBMChat = require('@watson-virtual-agent/chat-widget');
-
-/*
-  Helpers
+/**
+* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+*
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+* in compliance with the License. You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under the License
+* is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+* or implied. See the License for the specific language governing permissions and limitations under
+* the License.
 */
 
-function compile(str, options) {
-  if (options && Object.keys(options).length > 0) {
-    Object.keys(options).forEach(function(key) {
-      str = str.split('${' + key + '}').join(options[key]);
-    });
-  }
-  return str;
-}
-
-function hasClass(element, className) {
-  var thatClass = " " + className + " ";
-  return ( (" " + element.className + " ").replace(/[\n\t]/g, " ").indexOf(thatClass) > -1 );
-}
+var IBMChat = require('@watson-virtual-agent/chat-widget');
+require('./styles.css');
 
 
 /*
   Custom Choose Layout
 */
 
-var ns = 'IBMChat-choose';
-var activeClassName = 'IBMChat-accent-colors';
-var inactiveClassName = 'IBMChat-accent-colors-button';
 var widgets = [];
 var templates = {
   button: '<button style="background-color: yellow;" class="IBMChat-accent-colors-button" data-input="${text}" data-custom-layout=true>${text}</button>',
@@ -53,10 +46,9 @@ function Choose(data) {
 Choose.prototype.init = function(data) {
   this.allowMultiple = (data.message.inputvalidation.someOf !== undefined);
   this.values = [];
-  this.eventListeners = []
+  this.eventListeners = [];
   this.data = (this.allowMultiple) ? data.message.inputvalidation.someOf : data.message.inputvalidation.oneOf;
   this.uuid = data.uuid;
-  this.parentElement = data.element;
   this.layoutElement = data.layoutElement;
   this.msgElement = data.msgElement;
   this.drawDropdown();
@@ -64,12 +56,13 @@ Choose.prototype.init = function(data) {
 };
 
 
-Choose.prototype.drawDropdown = function(){
-  // main div container
+Choose.prototype.drawDropdown = function() {
+  // main dropdown container
   this.el = document.createElement('div');
   this.el.classList.add('dropdown');
   this.el.setAttribute('data-isopen', false);
 
+  // button to display/hide options
   var buttonEl = document.createElement('button');
   buttonEl.classList.add('selected-option');
   buttonEl.innerHTML = this.data[0];
@@ -77,16 +70,15 @@ Choose.prototype.drawDropdown = function(){
   this.eventListeners.push({ el: buttonEl, cb: this.handleDropdownClick.bind(this) });
   this.el.append(buttonEl);
 
-  // options inside select
+  // dropdown options
   var ulEl = document.createElement('ul');
   ulEl.classList.add('options-container');
-  for (var i = 0; i < this.data.length; i++){
+  for (var i = 0; i < this.data.length; i++) {
     var liEl = document.createElement('li');
     liEl.classList.add('option');
     liEl.innerHTML = this.data[i];
     liEl.addEventListener('click', this.handleOptionClick.bind(this));
     this.eventListeners.push({ el: liEl, cb: this.handleOptionClick.bind(this) });
-
     if (i === 0)
       liEl.setAttribute('data-selected', true);
     else
@@ -95,9 +87,10 @@ Choose.prototype.drawDropdown = function(){
   }
   this.el.append(ulEl);
 
-
+  // append dropdown to
   this.layoutElement.append(this.el);
 
+  // hide all options on creation
   this.hideOptions();
 };
 
@@ -162,7 +155,8 @@ Choose.prototype.removeAllEventListeners = function() {
 // the init function
 IBMChat.registerLayout('choose', layoutInit);
 
-// initialize chat widget
+// initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
+// with the corresponding values
 IBMChat.init({
   el: 'ibm_el',
   baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
