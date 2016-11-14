@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --port 3030 --content-base ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@watson-virtual-agent/chat-widget": "1.2.5",
+    "css-loader": "0.25.0",
+    "style-loader": "0.13.1",
     "webpack": "1.13.1",
     "webpack-dev-server": "1.14.1"
   }
