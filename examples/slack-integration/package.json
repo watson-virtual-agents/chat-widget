@@ -1,0 +1,30 @@
+{
+  "name": "slack-integration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack && node ./server"
+  },
+  "license": "Apache-2.0",
+  "author": "IBM Corp",
+  "contributors": [
+    {
+      "name": "Ethan Winters",
+      "email": "ewinters@us.ibm.com"
+    }
+  ],
+  "dependencies": {
+    "@watson-virtual-agent/chat-widget": "1.2.5",
+    "body-parser": "1.15.2",
+    "express": "4.14.0",
+    "request": "2.75.0",
+    "socket.io": "1.4.8"
+  },
+  "devDependencies": {
+    "css-loader": "0.25.0",
+    "style-loader": "0.13.1",
+    "webpack": "1.13.1"
+  }
+}
