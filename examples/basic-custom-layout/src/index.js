@@ -1,16 +1,11 @@
+require('./styles.css');
 var IBMChat = require('@watson-virtual-agent/chat-widget');
 
-var ns = 'IBMChat-choose';
-var activeClassName = 'IBMChat-accent-colors';
-var inactiveClassName = 'IBMChat-accent-colors-button';
-var widgets = [];
-var templates = {
-  button: '<button style="background-color: yellow;" class="IBMChat-accent-colors-button" data-input="${text}" data-custom-layout=true>${text}</button>'
-};
 
 /*
   Helpers
-*/      
+*/
+
 function compile(str, options) {
   if (options && Object.keys(options).length > 0) {
     Object.keys(options).forEach(function(key) {
@@ -19,7 +14,7 @@ function compile(str, options) {
   }
   return str;
 }
-      
+
 function hasClass(element, className) {
   var thatClass = " " + className + " ";
   return ( (" " + element.className + " ").replace(/[\n\t]/g, " ").indexOf(thatClass) > -1 );
@@ -28,7 +23,50 @@ function hasClass(element, className) {
 
 /*
   Custom Choose Layout
-*/ 
+*/
+
+var ns = 'IBMChat-choose';
+var activeClassName = 'IBMChat-accent-colors';
+var inactiveClassName = 'IBMChat-accent-colors-button';
+var widgets = [];
+var templates = {
+  button: '<button style="background-color: yellow;" class="IBMChat-accent-colors-button" data-input="${text}" data-custom-layout=true>${text}</button>',
+  dropdown: '<div class="select" tabindex="1"></div>',
+  // first one have to add the checked attriubte
+  option:
+  '<input id="${optionId}" class="selectopt" name="test" type="radio"> <label for="${optionId}" class="option">${label}</label>'
+  // <input id="opt1" class="selectopt" name="test" type="radio" checked>
+  // <label for="opt1" class="option">Oranges</label>
+};
+
+
+/*
+            <!-- content language selector -->
+                <div id="qa--language-dropdown"
+                    class="language-dropdown"
+                    init="ctrl.isOpen = false"
+                    class="{'open': ctrl.isOpen}"
+                    click="ctrl.isOpen = !ctrl.isOpen">
+                    <button class="btn btn-default dropdown-toggle qa--dropdown-toggle"
+                            type="button"
+                            class="{'qa--dropdown-toggle-rtl': ctrl.isUiRtl()}"
+                            dir="{{ctrl.contentDirection()}}">
+                        <span class="dropdown-text qa--dropdown-text" model="ctrl.selectedLanguage">
+                            {{ctrl.selectedLanguage.description}}
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu qa--dropdown-menu">
+                        <li class="qa--lang-dropdown-option" repeat="lang in ctrl.languages" >
+                            <a class="qa--lang-dropdown-option-text"
+                                click="ctrl.changeLanguage(lang)">
+                                {{lang.description}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+ */
+
 function layoutInit() {
   IBMChat.subscribe('layout:choose', function(data) {
     var widget = new Choose(data);
@@ -52,9 +90,63 @@ Choose.prototype.init = function(data) {
   this.parentElement = data.element;
   this.layoutElement = data.layoutElement;
   this.msgElement = data.msgElement;
-  this.drawButtons();
+
+  this.drawDropdown();
   this.subscribeSend = IBMChat.subscribe('send', this.removeAllEventListeners.bind(this));
 };
+
+
+Choose.prototype.drawDropdown = function(){
+  var selectTmpl = templates.dropdown;
+
+  // main div container
+  this.el = document.createElement('div');
+  this.el.classList.add('dropdown');
+  this.el.setAttribute('data-isopen', false);
+  this.el.addEventListener('click', function(){
+    var isOpen = (this.el.dataset.isopen === 'true') ? true : false;
+    this.el.setAttribute('data-isopen', !isOpen);
+  }.bind(this));
+
+  // span that shows current selected value
+  var spanEl = document.createElement('span');
+  spanEl.classList.add('selected-option');
+  spanEl.innerHTML = this.data[0];
+  this.el.append(spanEl);
+
+  // options inside select
+  var ulEl = document.createElement('ul');
+  ulEl.classList.add('options-container');
+  for (var i = 0; i < this.data.length; i++){
+    var liEl = document.createElement('li');
+    liEl.classList.add('option');
+    liEl.innerHTML = this.data[i];
+    this.el.append(liEl);
+  }
+
+
+  this.layoutElement.append(this.el);
+
+  // this(addListeners)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Choose.prototype.eventListeners = [];
 
