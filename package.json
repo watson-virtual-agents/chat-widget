@@ -6,7 +6,7 @@
   "main": "dist/chat.js",
   "scripts": {
     "build": "webpack -production && webpack -minify -production && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
-    "server:embed": "node ./dev-tools/embed-server.js",
+    "server:embed": "node ./dev-tools/embed-server.js -minify",
     "server:selenium": "node ./dev-tools/selenium-server.js",
     "server:watch": "node ./dev-tools/dev-server.js",
     "test": "node ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",

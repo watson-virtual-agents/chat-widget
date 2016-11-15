@@ -264,11 +264,13 @@ function restart() {
   return new Promise(function(resolve, reject) {
     var current = state.getState();
     destroy().then(function() {
-      init({ el: current.root, botID: current.botID, baseURL: current.baseURL }).then(function() {
-        resolve();
-      })['catch'](function(e) {
-        reject(e);
-      });
+      setTimeout(function() {
+        init({ el: current.root, botID: current.botID, baseURL: current.baseURL }).then(function() {
+          resolve();
+        })['catch'](function(e) {
+          reject(e);
+        });
+      }, 10);
     })['catch'](function(e) {
       reject(e);
     });
