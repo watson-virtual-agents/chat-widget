@@ -189,25 +189,47 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
         timezoneEl[j].parentNode.removeChild(timezoneEl[j]);
     }
     // more hours
-    for (var i = 0; i < hours.length; i++) {
+    var compressedHours = [];
+    var current;
+    for (var n = 0; n < hours.length; n++) {
+      var bothClosed, sameHours;
+      var day = days[n];
+      var last = (compressedHours.length > 0) ? compressedHours[compressedHours.length - 1] : false;
+      current = hours[n];
+      bothClosed = last && (last.isOpen === current.isOpen && current.isOpen === false);
+      sameHours = last && (last.open === current.open && last.close === current.close);
+      if (compressedHours.length > 0 && last && (bothClosed || sameHours)) {
+        last.endDay = day;
+      } else {
+        compressedHours.push({
+          startDay: day,
+          endDay: day,
+          isOpen: current.isOpen,
+          open: current.open,
+          close: current.close
+        });
+      }
+    }
+    for (var i = 0; i < compressedHours.length; i++) {
       var childEl = document.createElement('span');
       childEl.setAttribute('class', ns + '-days-hours');
-      if (hours[i] && hours[i].isOpen) {
+      current = compressedHours[i];
+      if (current && current.isOpen) {
         childEl.innerHTML = utils.compile(templates.hoursOpen, {
           ns: ns,
-          day: days[i],
-          open: formatAMPM(hours[i].open),
-          close: formatAMPM(hours[i].close)
+          day: (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay,
+          open: formatAMPM(current.open),
+          close: formatAMPM(current.close)
         });
       } else {
         childEl.innerHTML = utils.compile(templates.hoursClosed, {
           ns: ns,
-          day: days[i]
+          day: (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay
         });
       }
-      if (i < (hours.length - 1))
-        childEl.querySelector('.' + ns + '-days-hours-hours').innerHTML += ', ';
-      moreHoursEl.appendChild(childEl);
+      if (i < (compressedHours.length - 1))
+        childEl.querySelector('.' + ns + '-days-hours-hours').innerHTML += '<br />';
+      utils.appendToEach(moreHoursEl, childEl);
     }
   }
 }
@@ -372,7 +394,7 @@ ShowLocations.prototype.addLocation = function() {
       email: el.querySelector('.' + ns + '-locations-item-data-email'),
       hours: el.querySelectorAll('.' + ns + '-locations-item-data-hours'),
       timezone: el.querySelectorAll('.' + ns + '-locations-item-data-timezone'),
-      moreHours: el.querySelector('.' + ns + '-locations-item-data-more-hours'),
+      moreHours: el.querySelectorAll('.' + ns + '-locations-item-data-more-hours'),
       distance: el.querySelector('.' + ns + '-locations-item-distance'),
       backHolder: el.querySelector('.' + ns + '-locations-all-holder'),
       back: el.querySelector('.' + ns + '-locations-all')

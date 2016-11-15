@@ -79,7 +79,7 @@
 }
 
 .IBMChat-map-locations-item-data-email {
-  padding-bottom:0.5em;
+  padding-bottom:0;
 }
 
 .IBMChat-map-locations-item-data-phone {
@@ -103,7 +103,7 @@
 button.IBMChat-map-locations-all {
   font-size:0.9em;
   line-height:1.5em;
-	margin: 0.5em 0 0 0;
+	margin: 1em 0 0 0;
   padding: 0 0.5em 0 0.5em;
 }
 
