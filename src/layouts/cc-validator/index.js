@@ -98,7 +98,7 @@ CreditCard.prototype.removeError = function(name) {
 CreditCard.prototype.validate = function() {
   var valid = true;
 
-  if (this.formData.cc_full_name.length === 0) {
+  if (this.formData.cc_full_name.trim().length === 0) {
     this.addError('cc_full_name', 'This field is required.');
     if (valid) this.formElements['cc_full_name'].focus();
     valid = false;
