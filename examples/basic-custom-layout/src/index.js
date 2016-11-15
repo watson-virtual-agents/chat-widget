@@ -16,28 +16,16 @@ var IBMChat = require('@watson-virtual-agent/chat-widget');
 require('./styles.css');
 
 
-/*
-  Custom Choose Layout
-*/
+/**
+ * This example shows how to create a custom layout to replace the chat widget's
+ * built-in 'choose' layout.
+ *
+ * Our basic custom layout displays the options via a dropdown instead of a series
+ * of buttons which is the chat widgets default behavior.
+ *
+ */
 
 var widgets = [];
-var templates = {
-  button: '<button style="background-color: yellow;" class="IBMChat-accent-colors-button" data-input="${text}" data-custom-layout=true>${text}</button>',
-  dropdown: '<div class="select" tabindex="1"></div>',
-  option:
-  '<input id="${optionId}" class="selectopt" name="test" type="radio"> <label for="${optionId}" class="option">${label}</label>'
-};
-
-function layoutInit() {
-  IBMChat.subscribe('layout:choose', function(data) {
-    var widget = new Choose(data);
-    widgets[data.uuid] = widget;
-  });
-  IBMChat.subscribe('layout:confirm', function(data) {
-    var widget = new Choose(data);
-    widgets[data.uuid] = widget;
-  });
-}
 
 function Choose(data) {
   this.init(data);
@@ -50,7 +38,6 @@ Choose.prototype.init = function(data) {
   this.data = (this.allowMultiple) ? data.message.inputvalidation.someOf : data.message.inputvalidation.oneOf;
   this.uuid = data.uuid;
   this.layoutElement = data.layoutElement;
-  this.msgElement = data.msgElement;
   this.drawDropdown();
   this.subscribeSend = IBMChat.subscribe('send', this.removeAllEventListeners.bind(this));
 };
@@ -77,24 +64,21 @@ Choose.prototype.drawDropdown = function() {
     var liEl = document.createElement('li');
     liEl.classList.add('option');
     liEl.innerHTML = this.data[i];
+    liEl.setAttribute('data-selected', (i === 0) ? true : false);
     liEl.addEventListener('click', this.handleOptionClick.bind(this));
     this.eventListeners.push({ el: liEl, cb: this.handleOptionClick.bind(this) });
-    if (i === 0)
-      liEl.setAttribute('data-selected', true);
-    else
-      liEl.setAttribute('data-selected', false);
     ulEl.append(liEl);
   }
   this.el.append(ulEl);
 
-  // append dropdown to
+  // append dropdown to layout container
   this.layoutElement.append(this.el);
 
   // hide all options on creation
   this.hideOptions();
 };
 
-Choose.prototype.handleDropdownClick = function(e) {
+Choose.prototype.handleDropdownClick = function() {
   var isOpen = (this.el.dataset.isopen === 'true');
   if (!isOpen)
     this.showOptions();
@@ -140,23 +124,32 @@ Choose.prototype.submit = function() {
 };
 
 Choose.prototype.removeAllEventListeners = function() {
-  if (this.eventListeners.length > 0) {
-    for (var i = 0; i < this.eventListeners.length; i++) {
-      this.eventListeners[i].el.removeEventListener('click', this.eventListeners[i].cb);
-      this.eventListeners[i].el.setAttribute('disabled', true);
-    }
-    this.eventListeners = [];
-    this.subscribeSend.remove();
+  for (var i = 0; i < this.eventListeners.length; i++) {
+    this.eventListeners[i].el.removeEventListener('click', this.eventListeners[i].cb);
+    this.eventListeners[i].el.setAttribute('disabled', true);
   }
+  this.eventListeners = [];
+  this.subscribeSend.remove();
 };
 
+// Our layout's init function where we subscribe
+function layoutInit() {
+  IBMChat.subscribe('layout:choose', function(data) {
+    var widget = new Choose(data);
+    widgets[data.uuid] = widget;
+  });
+  IBMChat.subscribe('layout:confirm', function(data) {
+    var widget = new Choose(data);
+    widgets[data.uuid] = widget;
+  });
+}
 
-// register the custom choose layout overriding the default 'choose' layout, passing
+// Register the custom layout overriding the default 'choose' one, passing
 // the init function
 IBMChat.registerLayout('choose', layoutInit);
 
-// initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
-// with the corresponding values
+// Initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
+// with the corresponding values.
 IBMChat.init({
   el: 'ibm_el',
   baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
