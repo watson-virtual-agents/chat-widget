@@ -29,10 +29,11 @@ var messages = {
     if (length === 1) {
       text += cardData[cards[0]].human;
     } else {
-      var middle = cards.slice(1, length - 1).map(function(c) {
-        return ', ' + cardData[c].human;
-      });
-      text += cardData[cards[0]].human + middle + ' and ' + cardData[cards[length - 1]].human;
+      var middle = cards.slice(1, length - 1);
+      text += cardData[cards[0]].human;
+      for (var i = 0; i < middle.length; i++)
+        text += ', ' + cardData[middle[i]].human;
+      text += ' and ' + cardData[cards[length - 1]].human;
     }
     text += '. Please use a valid card.';
     return text;
