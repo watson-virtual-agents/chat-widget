@@ -15,7 +15,6 @@
 var IBMChat = require('@watson-virtual-agent/chat-widget');
 require('./styles.css');
 
-
 /**
  * This example shows how to create a custom layout to replace the chat widget's
  * built-in 'choose' layout.
@@ -134,7 +133,7 @@ Choose.prototype.removeAllEventListeners = function() {
   this.subscribeSend.remove();
 };
 
-// Our layout's init function. We subscribe to both 'choose' and
+// our layout's init function. We subscribe to both 'choose' and
 // 'confirm' layout events so this is used to render both.
 function layoutInit() {
   IBMChat.subscribe('layout:choose', function(data) {
@@ -147,11 +146,11 @@ function layoutInit() {
   });
 }
 
-// Register the custom layout overriding the default 'choose' one, passing
+// register the custom layout overriding the default 'choose' one, passing
 // the init function
 IBMChat.registerLayout('choose', layoutInit);
 
-// Initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
+// initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
 // with the corresponding values.
 IBMChat.init({
   el: 'ibm_el',
