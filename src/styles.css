@@ -124,7 +124,6 @@
   text-align:left;
   white-space: pre-wrap;
   white-space: pre-line;
-  word-break: break-all;
   word-wrap: break-word;
 }
 
@@ -158,7 +157,6 @@
   position: relative;
   white-space: pre-wrap;
   white-space: pre-line;
-  word-break: break-all;
   word-wrap: break-word;
   visibility: hidden;
 }
@@ -181,7 +179,6 @@
   width:100%;
   white-space: pre-wrap;
   white-space: pre-line;
-  word-break: break-all;
   word-wrap: break-word;
 }
 
