@@ -21,8 +21,7 @@ require('./styles.css');
  * built-in 'choose' layout.
  *
  * Our basic custom layout displays the options via a dropdown instead of a series
- * of buttons which is the chat widgets default behavior.
- *
+ * of buttons which is the chat widgets' default behavior.
  */
 
 var widgets = [];
@@ -42,7 +41,6 @@ Choose.prototype.init = function(data) {
   this.subscribeSend = IBMChat.subscribe('send', this.removeAllEventListeners.bind(this));
 };
 
-
 Choose.prototype.drawDropdown = function() {
   // main dropdown container
   this.el = document.createElement('div');
@@ -53,8 +51,7 @@ Choose.prototype.drawDropdown = function() {
   var buttonEl = document.createElement('button');
   buttonEl.classList.add('selected-option');
   buttonEl.innerHTML = this.data[0];
-  buttonEl.addEventListener('click', this.handleDropdownClick.bind(this));
-  this.eventListeners.push({ el: buttonEl, cb: this.handleDropdownClick.bind(this) });
+  this.addListener(buttonEl, this.handleDropdownClick.bind(this));
   this.el.append(buttonEl);
 
   // dropdown options
@@ -64,9 +61,8 @@ Choose.prototype.drawDropdown = function() {
     var liEl = document.createElement('li');
     liEl.classList.add('option');
     liEl.innerHTML = this.data[i];
-    liEl.setAttribute('data-selected', (i === 0) ? true : false);
-    liEl.addEventListener('click', this.handleOptionClick.bind(this));
-    this.eventListeners.push({ el: liEl, cb: this.handleOptionClick.bind(this) });
+    liEl.setAttribute('data-selected', (i === 0));
+    this.addListener(liEl, this.handleOptionClick.bind(this));
     ulEl.append(liEl);
   }
   this.el.append(ulEl);
@@ -80,18 +76,20 @@ Choose.prototype.drawDropdown = function() {
 
 Choose.prototype.handleDropdownClick = function() {
   var isOpen = (this.el.dataset.isopen === 'true');
-  if (!isOpen)
-    this.showOptions();
-  else
+  if (isOpen)
     this.hideOptions();
+  else
+    this.showOptions();
   this.el.setAttribute('data-isopen', !isOpen);
 };
 
 Choose.prototype.handleOptionClick = function(e) {
   this.hideOptions();
+
   // remove current selection
   var current = this.el.querySelector('[data-selected="true"]');
   current.dataset.selected = false;
+
   // set new selected option
   var target = e.target;
   target.setAttribute('data-selected', true);
@@ -99,7 +97,6 @@ Choose.prototype.handleOptionClick = function(e) {
   button.innerHTML = target.innerHTML;
 
   IBMChat.publish('scroll-to-bottom');
-
   this.submit();
 };
 
@@ -123,6 +120,11 @@ Choose.prototype.submit = function() {
   this.el.disabled = true;
 };
 
+Choose.prototype.addListener = function(el, handler) {
+  el.addEventListener('click', handler);
+  this.eventListeners.push({ el: el, cb: handler });
+};
+
 Choose.prototype.removeAllEventListeners = function() {
   for (var i = 0; i < this.eventListeners.length; i++) {
     this.eventListeners[i].el.removeEventListener('click', this.eventListeners[i].cb);
@@ -132,7 +134,8 @@ Choose.prototype.removeAllEventListeners = function() {
   this.subscribeSend.remove();
 };
 
-// Our layout's init function where we subscribe
+// Our layout's init function. We subscribe to both 'choose' and
+// 'confirm' layout events so this is used to render both.
 function layoutInit() {
   IBMChat.subscribe('layout:choose', function(data) {
     var widget = new Choose(data);
