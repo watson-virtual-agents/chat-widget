@@ -192,10 +192,13 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
     var compressedHours = [];
     var current;
     for (var n = 0; n < hours.length; n++) {
+      var bothClosed, sameHours;
       var day = days[n];
       var last = (compressedHours.length > 0) ? compressedHours[compressedHours.length - 1] : false;
       current = hours[n];
-      if (compressedHours.length > 0 && last && ((last.isOpen === current.isOpen && current.isOpen === false) || (last.open === current.open && last.close === current.close))) {
+      bothClosed = last && (last.isOpen === current.isOpen && current.isOpen === false);
+      sameHours = last && (last.open === current.open && last.close === current.close);
+      if (compressedHours.length > 0 && last && (bothClosed || sameHours)) {
         last.endDay = day;
       } else {
         compressedHours.push({
@@ -226,7 +229,6 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
       }
       if (i < (compressedHours.length - 1))
         childEl.querySelector('.' + ns + '-days-hours-hours').innerHTML += '<br />';
-      //moreHoursEl.appendChild(childEl);
       utils.appendToEach(moreHoursEl, childEl);
     }
   }
