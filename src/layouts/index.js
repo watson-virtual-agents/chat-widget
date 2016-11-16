@@ -22,12 +22,12 @@ var creditCardLayout = require('./cc-validator');
 var errorLayout = require('./error');
 
 module.exports = {
-	showLocations: showLocationsLayout,
-	requestGeolocationLatlong: requestGeolocationLatlongLayout,
-	requestGeolocationZipcode: requestGeolocationZipcodeLayout,
-	chooseLocationType: chooseLocationTypeLayout,
-	choose: chooseLayout,
-	creditCard: creditCardLayout,
-	form: formLayout,
-	error: errorLayout
+  showLocations: showLocationsLayout,
+  requestGeolocationLatlong: requestGeolocationLatlongLayout,
+  requestGeolocationZipcode: requestGeolocationZipcodeLayout,
+  chooseLocationType: chooseLocationTypeLayout,
+  choose: chooseLayout,
+  creditCard: creditCardLayout,
+  form: formLayout,
+  error: errorLayout
 };

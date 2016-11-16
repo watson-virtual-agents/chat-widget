@@ -15,13 +15,17 @@
 var state = require('../../state');
 
 function resize() {
-	setTimeout(function() {
-		var current = state.getState();
-		if (current.active) {
-			current.chatHolder.style.maxHeight = (current.root.getBoundingClientRect().height - current.inputHolder.getBoundingClientRect().height) + 'px';
-			current.chatHolder.style.maxWidth = ((current.root.getBoundingClientRect().width > 288) ? current.root.getBoundingClientRect().width : 288) + 'px';
-		}
-	}, 300);
+  setTimeout(function() {
+    var current = state.getState();
+    if (current.active) {
+      current.chatHolder.style.maxHeight = (current.root.getBoundingClientRect().height - current.inputHolder.getBoundingClientRect().height) + 'px';
+      current.chatHolder.style.maxWidth = ((current.root.getBoundingClientRect().width > 288) ? current.root.getBoundingClientRect().width : 288) + 'px';
+      if (current.root.getBoundingClientRect().width >= 480)
+        current.root.classList.add('IBMChat-isLarge');
+      else
+        current.root.classList.remove('IBMChat-isLarge');
+    }
+  }, 100);
 }
 
 module.exports = resize;

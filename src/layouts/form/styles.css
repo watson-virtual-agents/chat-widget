@@ -1,41 +1,42 @@
 .IBMChat-form-container {
-	text-align:center;
-	padding:0 0 1em 0;
+  margin-top:1em;
 }
 
 .IBMChat-form-fields {
-	margin:auto;
-	text-align:left;
-	max-width:360px;
-	width:100%;
+  text-align:left;
+  width:100%;
 }
 
 .IBMChat-form-fields-row {
-	padding-bottom:0.75em;
+  padding-bottom:0.75em;
 }
 
 .IBMChat-form-fields-row input {
-	width: 100%;
+  max-width:280px;
+  width: 100%;
 }
 
 .IBMChat-form-buttons {
-	width: 100%;
-	max-width: 360px;
-	height: 2.5em;
-	text-align:center;
-	margin:auto;
+  max-width: 280px;
+  text-align:center;
+  width: 100%;
 }
 
-.IBMChat-form-buttons button {
-	line-height: 2.5em;
-	width: 100px;
+.IBMChat-form-buttons:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
+
 
 .IBMChat-form-cancel {
-	float:left;
-	max-width: 50%;
+  float:left;
+  max-width: 50%;
 }
 .IBMChat-form-submit {
-	float:right;
-	max-width: 50%;
+  float:right;
+  max-width: 50%;
 }

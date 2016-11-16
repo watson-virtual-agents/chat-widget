@@ -15,199 +15,183 @@
 //https://en.wikipedia.org/wiki/Payment_card_number
 
 var state = {
-	acceptedCards: [],
-	cardNumber: '',
-	cardType: ''
+  acceptedCards: [],
+  cardNumber: '',
+  cardType: ''
 };
 
 var messages = {
-	required: 'This field is required.',
-	acceptedCard: function() {
-		var text = 'We accept ';
-		for (i = 0; i < state.acceptedCards.length; i++) {
-			if (i > 0)
-				text += ', ';
-			if (i === (state.acceptedCards.length - 1))
-				text += ' and ';
-			text += cardData[state.acceptedCards[i]].human;
-		}
-		text += '. Please use a valid card.';
-		return text;
-	},
-	invalid: 'Your credit card number is invalid.',
-	invalidExpiration: 'Your credit card expiration date is invalid.',
-	invalidCvv: 'Your CVV is invalid.'
+  required: 'This field is required.',
+  acceptedCard: function() {
+    var cards = state.acceptedCards;
+    var length = cards.length;
+    var text = 'We accept ';
+    if (length === 1) {
+      text += cardData[cards[0]].human;
+    } else {
+      var middle = cards.slice(1, length - 1);
+      text += cardData[cards[0]].human;
+      for (var i = 0; i < middle.length; i++)
+        text += ', ' + cardData[middle[i]].human;
+      text += ' and ' + cardData[cards[length - 1]].human;
+    }
+    text += '. Please use a valid card.';
+    return text;
+  },
+  invalid: 'Your credit card number is invalid.',
+  invalidExpiration: 'Your credit card expiration date is invalid.',
+  invalidCvv: 'Your CVV is invalid.'
 };
 
 var cardData = {
-	"visa": {
-		human: "Visa",
-		prefixes: [4],
-		lengths: [13, 16, 19]
-	},
-	"mastercard": {
-		human: "MasterCard",
-		prefixes: [51, 52, 53, 54, 55],
-		lengths: [16]
-	},
-	"amex": {
-		human: "American Express",
-		prefixes: [34, 37],
-		lengths: [15]
-	},
-	"discover": {
-		human: "Discover",
-		prefixes: [6011, 65],
-		lengths: [16, 19]
-	}
+  "visa": {
+    human: "Visa",
+    prefixes: [4],
+    lengths: [13, 16, 19]
+  },
+  "mastercard": {
+    human: "MasterCard",
+    prefixes: [51, 52, 53, 54, 55],
+    lengths: [16]
+  },
+  "amex": {
+    human: "American Express",
+    prefixes: [34, 37],
+    lengths: [15]
+  },
+  "discover": {
+    human: "Discover",
+    prefixes: [6011, 65],
+    lengths: [16, 19]
+  }
 };
 
 var i;
 //MasterCard adding these numbers in 2017
 for (i = 2221; i <= 2720; i++)
-	cardData.mastercard.prefixes.push(i);
+  cardData.mastercard.prefixes.push(i);
 
 for (i = 622126; i <= 622925; i++)
-	cardData.discover.prefixes.push(i);
+  cardData.discover.prefixes.push(i);
 
 for (i = 644; i <= 649; i++)
-	cardData.discover.prefixes.push(i);
+  cardData.discover.prefixes.push(i);
 
 function _detectCard() {
-	for (var i = 0; i < state.acceptedCards.length; i++) {
-		var data = cardData[state.acceptedCards[i]];
-		for (var j = 0; j < data.prefixes.length; j++) {
-			var x = data.prefixes[j].toString();
-			if (state.cardNumber.substring(0, x.length) === x) {
-				state.cardType = state.acceptedCards[i];
-				return true;
-			}
-		}
-	}
-	return false;
+  for (var i = 0; i < state.acceptedCards.length; i++) {
+    var data = cardData[state.acceptedCards[i]];
+    for (var j = 0; j < data.prefixes.length; j++) {
+      var x = data.prefixes[j].toString();
+      if (state.cardNumber.substring(0, x.length) === x) {
+        state.cardType = state.acceptedCards[i];
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
-function _checkKuhn() {
-	var checksum = 0; // running checksum total
-	var j = 1; // takes value of 1 or 2
+function _checkLuhn() {
+  var checksum = 0; // running checksum total
+  var j = 1; // takes value of 1 or 2
 
-	// Process each digit one by one starting at the right
-	var calc;
-	for (var i = state.cardNumber.length - 1; i >= 0; i--) {
-		// Extract the next digit and multiply by 1 or 2 on alternative digits.
-		calc = Number(state.cardNumber.charAt(i)) * j;
+  // Process each digit one by one starting at the right
+  var calc;
+  for (var i = state.cardNumber.length - 1; i >= 0; i--) {
+    // Extract the next digit and multiply by 1 or 2 on alternative digits.
+    calc = Number(state.cardNumber.charAt(i)) * j;
 
-		// If the result is in two digits add 1 to the checksum total
-		if (calc > 9) {
-			checksum = checksum + 1;
-			calc = calc - 10;
-		}
+    // If the result is in two digits add 1 to the checksum total
+    if (calc > 9) {
+      checksum = checksum + 1;
+      calc = calc - 10;
+    }
 
-		// Add the units element to the checksum total
-		checksum = checksum + calc;
+    // Add the units element to the checksum total
+    checksum = checksum + calc;
 
-		// Switch the value of j
-		j = (j == 1) ? 2 : 1;
-	}
+    // Switch the value of j
+    j = (j == 1) ? 2 : 1;
+  }
 
-	// All done - if checksum is divisible by 10, it is a valid modulus 10.
-	// If not, report an error.
-	return (checksum % 10 != 0) ? false : true;
+  // All done - if checksum is divisible by 10, it is a valid modulus 10.
+  // If not, report an error.
+  return (checksum % 10 != 0) ? false : true;
+}
+
+function _invalid(message) {
+  return {
+    'message': message,
+    'valid': false
+  };
+}
+
+function _valid() {
+  return {
+    'valid': true
+  };
 }
 
 function validateCard(acceptedCards, cardNumber) {
-	state.acceptedCards = acceptedCards;
-	state.cardNumber = cardNumber.replace(/\D/g,''); //strip extra characters
-	if (cardNumber.length === 0) {
-		return {
-			"message": messages.required,
-			"valid": false
-		};
-	}
-	if (state.cardNumber.length === 0) {
-		return {
-			"message": messages.required,
-			"valid": false
-		};
-	}
-	if (_detectCard()) {
-		if (state.acceptedCards.indexOf(state.cardType) === -1) {
-			return {
-				"message": messages.acceptedCard(),
-				"valid": false
-			};
-		}
-		if (cardData[state.cardType].lengths.indexOf(state.cardNumber.length) === -1) {
-			return {
-				"message": messages.invalid,
-				"valid": false
-			};
-		}
-		if (_checkKuhn() === false) {
-			return {
-				"message": messages.invalid,
-				"valid": false
-			};
-		}
-	} else {
-		return {
-			"message": messages.invalid,
-			"valid": false
-		};
-	}
+  state.acceptedCards = acceptedCards;
+  state.cardNumber = cardNumber.replace(/\D/g,''); //strip extra characters
 
-	return {
-		"valid": true
-	};
+  if (cardNumber.trim().length === 0)
+    return _invalid(messages.required);
+
+  if (state.cardNumber.length === 0)
+    return _invalid(messages.invalid);
+
+  if (_detectCard()) {
+    if (cardData[state.cardType].lengths.indexOf(state.cardNumber.length) === -1)
+      return _invalid(messages.invalid);
+    if (_checkLuhn() === false)
+      return _invalid(messages.invalid);
+  } else {
+    if (state.acceptedCards.indexOf(state.cardType) === -1)
+      return _invalid(messages.acceptedCard());
+    return _invalid(messages.invalid);
+  }
+
+  return _valid();
 }
 
 function validateExp(userM, userY) {
-	var d = new Date();
-	var month = d.getMonth();
-	var year = d.getFullYear();
+  var monthRegexp = /^(0[1-9]|1[012])$/;
+  var yearRegexp = /^(20)[0-9][0-9]$/;
+  var d = new Date();
+  var month = d.getMonth() + 1; // normalize, Date#getMonth is 0 indexed
+  var year = d.getFullYear();
 
-	if (userM.length === 0 || userY.length === 0 || userM.replace(/\D/g,'').length === 0 || userY.replace(/\D/g,'').length === 0) {
-		return {
-			"message": messages.required,
-			"valid": false
-		};
-	}
+  if (userM.trim().length === 0 || userY.trim().length === 0)
+    return _invalid(messages.required);
 
-	userM = parseInt(userM, 10);
-	userY = parseInt(userY, 10);
+  var invalidDigits = !userM.match(monthRegexp) || !userY.match(yearRegexp);
+  userM = parseInt(userM, 10);
+  userY = parseInt(userY, 10);
+  var yearNotInRange = (userY > year + 20) || (userY < year);
+  var beforeCurrentMonth = (userY === year && userM < month);
+  if (invalidDigits || yearNotInRange || beforeCurrentMonth)
+    return _invalid(messages.invalidExpiration);
 
-	if (userM > 12 || userM < 1 || (userY > year + 20) || (userY < year || (userY === year && userM < month))) {
-		return {
-			"message": messages.invalidExpiration,
-			"valid": false
-		};
-	}
-	return {
-		"valid": true
-	};
+  return _valid();
 }
 
 function validateCVV(CVV) {
-	if (CVV.length === 0) {
-		return {
-			"message": messages.required,
-			"valid": false
-		};
-	}
-	if (!isNaN(CVV) && (CVV > 9999 || CVV < 100)) {
-		return {
-			"message": messages.invalidCvv,
-			"valid": false
-		};
-	}
-	return {
-		"valid": true
-	};
+  // 3 or 4 digits
+  var CVVRegex = /^[0-9]{3,4}$/;
+  if (CVV.trim().length === 0)
+    return _invalid(messages.required);
+
+  if (!CVV.match(CVVRegex))
+    return _invalid(messages.invalidCvv);
+
+  return _valid();
 }
 
 module.exports = {
-	validateCard: validateCard,
-	validateExp: validateExp,
-	validateCVV: validateCVV,
-	cardData: cardData
+  validateCard: validateCard,
+  validateExp: validateExp,
+  validateCVV: validateCVV,
+  cardData: cardData
 };

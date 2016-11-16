@@ -1,33 +1,33 @@
 {
-	"extends": ["eslint:recommended"],
-	"parserOptions": {
-		"ecmaVersion": 5,
-		"sourceType": "module",
-	},
-	"env": {
-		"browser": true,
-    	"node": true,
-    	"mocha": true
-	},
-	"rules": {
-		"camelcase": [0],
-		"curly": [1, "multi-or-nest", "consistent"],
-		"eol-last": [1],
-		"indent": [1, "tab"],
-		"key-spacing": [1],
-		"new-cap": [1],
-		"no-debugger": [0],
-		"no-console": [0],
-		"no-lonely-if": [1],
-		"no-mixed-spaces-and-tabs": [1],
-		"no-spaced-func": [1],
-		"no-trailing-spaces": [1, { "skipBlankLines": true }],
-		"no-unused-vars": [1, { "varsIgnorePattern": "^h$" }],
-		"object-curly-spacing": [1, "always"],
-		"semi": [1, "always"],
-		"keyword-spacing": [1],
-		"space-before-blocks": [1],
-		"space-before-function-paren": [1, "never"],
-		"wrap-iife": [1, "inside"]
-	}
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": 5,
+    "sourceType": "module",
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "camelcase": [0],
+    "curly": [1, "multi-or-nest", "consistent"],
+    "eol-last": [1],
+    "indent": ["error", 2],
+    "key-spacing": [1],
+    "new-cap": [1],
+    "no-debugger": [0],
+    "no-console": [0],
+    "no-lonely-if": [1],
+    "no-mixed-spaces-and-tabs": [1],
+    "no-spaced-func": [1],
+    "no-trailing-spaces": [1, { "skipBlankLines": true }],
+    "no-unused-vars": [1, { "varsIgnorePattern": "^h$" }],
+    "object-curly-spacing": [1, "always"],
+    "semi": [1, "always"],
+    "keyword-spacing": [1],
+    "space-before-blocks": [1],
+    "space-before-function-paren": [1, "never"],
+    "wrap-iife": [1, "inside"]
+  }
 }
