@@ -29,19 +29,19 @@ describe('events', function() {
     handler2 = sinon.stub();
     consoleErrStub = sinon.stub(console, 'error');
   });
-  
+
   describe('#subscribe()', function() {
     it('should subscribe a handler to a given event', function() {
       events.subscribe('dummy-event', handler);
       expect(events.currentSubscriptions()[0].event).to.equal('dummy-event');
-    });      
-  });      
+    });
+  });
 
   describe('#remove()', function() {
     // TODO: enable this test once events/index.js is refactored
     it.skip('should remove a handler', function() {
       var subscriptions = events.currentSubscriptions;
-          
+
       // subscribe 3 events and verify that if we remove the
       // second one ('event-2') we obtain an array of 2 events
       // without 'event-2'
@@ -53,13 +53,13 @@ describe('events', function() {
       expect(subscriptions()[2].event).to.equal('event-3');
 
       subscription.remove();
-          
+
       expect(subscriptions().length).to.equal(2);
       expect(subscriptions()[0].event).to.equal('event-1');
       expect(subscriptions()[1].event).to.equal('event-3');
     });
   });
-  
+
   describe('#unsubscribe()', function() {
     it.skip('should unsubscribe handler from events', function() {
       stateMock = {
@@ -70,7 +70,7 @@ describe('events', function() {
       events.__set__('state', stateMock);
 
       var invalidArgsMsg = 'Must pass a valid event and handler to unsubscribe.';
-          
+
       // invalid params
       events.unsubscribe('dummy-event', undefined);
       events.unsubscribe(undefined, handler);
@@ -78,10 +78,10 @@ describe('events', function() {
       events.unsubscribe('dummy-event', null);
       expect(consoleErrStub.callCount).to.equal(4);
       expect(consoleErrStub.alwaysCalledWith(invalidArgsMsg));
-          
+
       // remove stub and restore console.error's behavior
       consoleErrStub.restore();
-          
+
       var noSubscriptionMsg = 'No subscriptions exist for the given event and handler.';
       consoleErrStub = sinon.stub(console, 'error');
       events.subscribe('subscribed-event', handler); // no context passed
@@ -96,13 +96,13 @@ describe('events', function() {
     it('should remove all events', function() {
       events.subscribe('dummy-event', sinon.stub());
       expect(events.currentSubscriptions().length).to.equal(1);
-          
+
       events.destroy();
 
       expect(events.currentSubscriptions()).to.be.empty;
     });
   });
-  
+
   describe('API', function() {
     it('should have the expected API', function() {
       expect(events).itself.to.respondTo('destroy');

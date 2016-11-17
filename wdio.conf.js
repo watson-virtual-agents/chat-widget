@@ -24,7 +24,7 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './test/selenium/specs/start.js', './test/selenium/specs/**/*.js'
+    './test/selenium/specs/**/*.spec.js'
   ],
   // Patterns to exclude.
   exclude: [],
@@ -44,7 +44,7 @@ exports.config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: 1,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -54,7 +54,7 @@ exports.config = {
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instance available you can make sure that not more than
     // 5 instance gets started at a time.
-    maxInstances: 5,
+    maxInstances: 1,
     //
     browserName: 'chrome'
   }],
@@ -70,13 +70,13 @@ exports.config = {
   sync: true,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
-  logLevel: 'error',
+  logLevel: 'silent',
   //
   // Enables colors for log output.
   coloredLogs: true,
   //
   // Saves a screenshot to a given path if a command fails.
-  screenshotPath: './selenium/errorShots',
+  screenshotPath: './test/selenium/errorShots',
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,

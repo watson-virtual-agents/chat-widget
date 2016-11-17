@@ -12,40 +12,37 @@
 * the License.
 */
 
-/* eslint-disable */
-var assert = require('assert');
+var expect = require('chai').expect;
+var config = require('../../config');
+var page = require('./page');
 
-describe('Visit IBM Chat Page', function() {
+describe('Widget properly starts up', function() {
   it('should have the right title', function() {
-    browser.url('http://localhost:3300');
-    var title = browser.getTitle();
-    assert.equal(title, 'IBM Watson Virtual Agent Chat Widget Demo');
+    browser.url('http://localhost:3300/');
+    expect(browser.getTitle()).to.be.equal('IBM Watson Virtual Agent Chat Widget Demo');
   });
-});
 
-describe('Destroy Chat Widget', function() {
   it('should have empty ibm_el', function() {
     browser.execute(function() {
       window.IBMChat.destroy();
     });
-    browser.getHTML('#ibm_el', false, function(html){
-      assert.equal(html, '');
-    });
+    expect(page.chat.getHTML()).to.be.equal('<div id="ibm_el"></div>');
   });
-});
 
-describe('Create Chat Widget', function() {
   it('should create a new Chat Widget', function() {
     browser.execute(function() {
       window.IBMChat.init({
         el: 'ibm_el',
-        baseURL: 'http://localhost:3201',
+        baseURL: 'http://localhost:3201/',
         botID: 77
       });
     });
-    browser.getHTML('#ibm_el', false, function(html){
-      assert.notEqual(html, '');
-    });
+    browser.pause(1000);
+    expect(page.chat.getHTML()).not.to.be.equal('<div id="ibm_el"></div>');
+  });
+
+  it('should display the Welcome text', function() {
+    browser.pause(2000);
+    expect(browser.element(config.lastMessageSelector).getText()).to.be.equal('Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?');
   });
 });
-/* eslint-enable */

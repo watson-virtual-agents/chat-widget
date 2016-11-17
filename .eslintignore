@@ -1,0 +1,2 @@
+test/selenium/**/*.spec.js
+test/selenium/page/index.js

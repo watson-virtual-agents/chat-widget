@@ -16,6 +16,8 @@ var http = require("http");
 var url = require("url");
 var PORT = 3201;
 var botID = '77', chatID = '42', message;
+var AccessControlAllowHeaders = 'X-Request-ID, Content-Type, X-IBM-Client-ID, X-IBM-Client-Secret';
+var headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': AccessControlAllowHeaders };
 
 function router(handle, pathname, req, res) {
   if (typeof handle[pathname] === 'function') {
@@ -39,19 +41,27 @@ function init(req, res) {
       "text": ["Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?"]
     }
   });
-  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.writeHead(200, headers);
   res.end(response);
 }
 
 function receive(req, res) {
   var string = JSON.stringify(message);
-  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.writeHead(200, headers);
   res.end(string);
 }
 
 function setMessage(req, res) {
-  res.writeHead(200);
-  res.end();
+  var body = '';
+  req.on('data', function(data) {
+    body += data;
+  });
+  req.on('end', function() {
+    message = body;
+    console.log('message', message);
+    res.writeHead(200, headers);
+    res.end(JSON.stringify(message));
+  });
 }
 
 var handle = {};
