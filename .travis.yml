@@ -1,6 +1,6 @@
 language: node_js
 sudo: true
 node_js:
-- stable
+- 4.4.0
 script:
 - npm run test
