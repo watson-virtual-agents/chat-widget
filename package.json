@@ -1,6 +1,6 @@
 {
   "name": "@watson-virtual-agent/chat-widget",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/chat.js",
@@ -11,6 +11,7 @@
     "server:watch": "node ./dev-tools/dev-server.js",
     "test": "node ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
     "test:selenium": "selenium-standalone install --silent && concurrently -k -s first \"selenium-standalone start\" \"npm run server:selenium\" \"wdio wdio.conf.js\" \"node ./test/selenium/mocks/server.js\"",
+    "test:selenium:watch": "npm-watch",
     "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
     "test:debug": "node ./node_modules/karma/bin/karma start --browsers Chrome",
     "watch": "npm run server:watch"
@@ -63,6 +64,7 @@
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "1.8.0",
     "mocha": "3.0.2",
+    "npm-watch": "^0.1.6",
     "phantomjs-prebuilt": "2.1.12",
     "raw-loader": "0.5.1",
     "rewire": "2.5.2",
@@ -85,5 +87,8 @@
   },
   "directories": {
     "doc": "./docs"
+  },
+  "watch": {
+    "test:selenium": "test/selenium/specs/*.js"
   }
 }
