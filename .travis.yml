@@ -13,3 +13,7 @@ notifications:
     on_failure: always   # default: always
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+addons:
+  sauce_connect:
+    username: SAUCE_USERNAME
+    access_key: SAUCE_ACCESS_KEY
