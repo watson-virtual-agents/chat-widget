@@ -14,6 +14,7 @@ notifications:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 addons:
-  sauce_connect:
-    username: SAUCE_USERNAME
-    access_key: SAUCE_ACCESS_KEY
+  sauce_connect: true
+  # sauce_connect:
+  #   username: SAUCE_USERNAME
+  #   access_key: SAUCE_ACCESS_KEY
