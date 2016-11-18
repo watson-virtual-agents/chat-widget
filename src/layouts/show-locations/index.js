@@ -40,8 +40,10 @@ var templates = {
   addLocationItem: require('./templates/add-location-item.html'),
   hoursClosed: require('./templates/hours-closed.html'),
   hoursOpen: require('./templates/hours-open.html'),
+  hoursUnknown: require('./templates/hours-unknown.html'),
   hoursTodayOpen: require('./templates/hours-today-open.html'),
   hoursTodayClosed: require('./templates/hours-today-closed.html'),
+  hoursTodayUnknown: require('./templates/hours-today-unknown.html'),
   hoursTimezone: require('./templates/hours-timezone.html')
 };
 
@@ -154,7 +156,7 @@ function formatAMPM(time) {
     return hours + ':' + minutes + ' ' + ampm;
   }
   catch (e) {
-    return '-';
+    return false;
   }
 }
 
@@ -165,11 +167,19 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
     var todaysHours = hours[today];
     var el = document.createElement('div');
     if (todaysHours && todaysHours.isOpen) {
-      el.innerHTML = utils.compile(templates.hoursTodayOpen, {
-        ns: ns,
-        open: formatAMPM(todaysHours.open),
-        close: formatAMPM(todaysHours.close)
-      });
+      var open = formatAMPM(todaysHours.open);
+      var close = formatAMPM(todaysHours.close);
+      if (open && close) {
+        el.innerHTML = utils.compile(templates.hoursTodayOpen, {
+          ns: ns,
+          open: open,
+          close: close
+        });
+      } else {
+        el.innerHTML = utils.compile(templates.hoursTodayUnknown, {
+          ns: ns
+        });
+      }
     } else {
       el.innerHTML = utils.compile(templates.hoursTodayClosed, {
         ns: ns
@@ -215,12 +225,22 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
       childEl.setAttribute('class', ns + '-days-hours');
       current = compressedHours[i];
       if (current && current.isOpen) {
-        childEl.innerHTML = utils.compile(templates.hoursOpen, {
-          ns: ns,
-          day: (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay,
-          open: formatAMPM(current.open),
-          close: formatAMPM(current.close)
-        });
+        var openDay = formatAMPM(current.open);
+        var closeDay = formatAMPM(current.close);
+        var currentDay = (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay;
+        if (openDay && closeDay) {
+          childEl.innerHTML = utils.compile(templates.hoursOpen, {
+            ns: ns,
+            day: currentDay,
+            open: openDay,
+            close: closeDay
+          });
+        } else {
+          childEl.innerHTML = utils.compile(templates.hoursUnknown, {
+            ns: ns,
+            day: currentDay
+          });
+        }
       } else {
         childEl.innerHTML = utils.compile(templates.hoursClosed, {
           ns: ns,
@@ -428,10 +448,16 @@ ShowLocations.prototype.addLocation = function() {
     dom.phone.parentNode.removeChild(dom.phone);
 
   // hours/timezone
-  if (item.days && item.days.length === 7)
+  if (item.days && item.days.length === 7) {
     createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
-  else
-    dom.hours.parentNode.removeChild(dom.hours);
+  } else {
+    for (var i = 0; i < dom.hours; i++)
+      dom.hours[i].parentNode.removeChild(dom.hours[i]);
+    for (var j = 0; j < dom.timezone; j++)
+      dom.timezone[j].parentNode.removeChild(dom.timezone[j]);
+    for (var n = 0; n < dom.moreHours; i++)
+      dom.moreHours[n].parentNode.removeChild(dom.moreHours[n]);
+  }
 
   if (locationData && locationData.length > 1) {
     this.locationsButton = dom.back;
