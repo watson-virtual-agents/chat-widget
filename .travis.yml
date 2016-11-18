@@ -1,0 +1,15 @@
+language: node_js
+sudo: true
+node_js:
+- 4.4.0
+script:
+- npm run test
+notifications:
+  email:
+    recipients:
+      - ewinters@us.ibm.com
+      - najimovi@ar.ibm.com
+    on_success: always  # default is change, update if this gets too annoying
+    on_failure: always   # default: always
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

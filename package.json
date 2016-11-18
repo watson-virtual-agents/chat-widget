@@ -1,6 +1,6 @@
 {
   "name": "@watson-virtual-agent/chat-widget",
-  "version": "1.2.7",
+  "version": "1.2.10",
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/chat.js",
@@ -14,6 +14,7 @@
     "test:selenium:watch": "npm-watch",
     "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
     "test:debug": "node ./node_modules/karma/bin/karma start --browsers Chrome",
+    "codecov": "npm run test && (codecov || true)",
     "watch": "npm run server:watch"
   },
   "engines": {
@@ -49,6 +50,7 @@
     "chai": "3.5.0",
     "chai-as-promised": "6.0.0",
     "cheerio": "0.22.0",
+    "codecov": "1.0.1",
     "concurrently": "3.1.0",
     "eslint": "3.0.0",
     "eslint-loader": "1.4.0",

@@ -132,7 +132,8 @@ button.IBMChat-map-locations-all {
 
 .IBMChat-isLarge .IBMChat-map-locations-item-data {
 	float:left;
-	width:50%;
+	padding-right:5%;
+	width:45%;
 }
 .IBMChat-isLarge .IBMChat-map-locations-item-data-hours {
 	margin-top:0;
