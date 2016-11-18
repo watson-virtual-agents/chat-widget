@@ -159,7 +159,7 @@ function formatAMPM(time) {
 }
 
 function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
-  if (hours) {
+  if (hours && hours.length === 7) {
     // hours
     var today = new Date().getDay();
     var todaysHours = hours[today];
@@ -190,12 +190,12 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
     }
     // more hours
     var compressedHours = [];
-    var current;
+    var current = {};
     for (var n = 0; n < hours.length; n++) {
       var bothClosed, sameHours;
       var day = days[n];
       var last = (compressedHours.length > 0) ? compressedHours[compressedHours.length - 1] : false;
-      current = hours[n];
+      current = hours[n] || { isOpen: false };
       bothClosed = last && (last.isOpen === current.isOpen && current.isOpen === false);
       sameHours = last && (last.open === current.open && last.close === current.close);
       if (compressedHours.length > 0 && last && (bothClosed || sameHours)) {
@@ -428,7 +428,7 @@ ShowLocations.prototype.addLocation = function() {
     dom.phone.parentNode.removeChild(dom.phone);
 
   // hours/timezone
-  if (item.days && item.days.length > 0)
+  if (item.days && item.days.length === 7)
     createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
   else
     dom.hours.parentNode.removeChild(dom.hours);
