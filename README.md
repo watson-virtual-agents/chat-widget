@@ -77,6 +77,10 @@ For more details about what you can do once the widget is up and running, see:
 - [JSDOCS.md](./docs/JSDOCS.md)
 - [EVENTS.md](./docs/EVENTS.md)
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 
 This code is licensed under Apache 2.0. Full license text is available in [LICENSE](https://github.com/watson-virtual-agents/chat-widget/blob/master/LICENSE).
