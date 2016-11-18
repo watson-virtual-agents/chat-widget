@@ -428,10 +428,16 @@ ShowLocations.prototype.addLocation = function() {
     dom.phone.parentNode.removeChild(dom.phone);
 
   // hours/timezone
-  if (item.days && item.days.length === 7)
+  if (item.days && item.days.length === 7) {
     createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
-  else
-    dom.hours.parentNode.removeChild(dom.hours);
+  } else {
+    for (var i = 0; i < dom.hours; i++)
+      dom.hours[i].parentNode.removeChild(dom.hours[i]);
+    for (var j = 0; j < dom.timezone; j++)
+      dom.timezone[j].parentNode.removeChild(dom.timezone[j]);
+    for (var n = 0; n < dom.moreHours; i++)
+      dom.moreHours[n].parentNode.removeChild(dom.moreHours[n]);
+  }
 
   if (locationData && locationData.length > 1) {
     this.locationsButton = dom.back;
