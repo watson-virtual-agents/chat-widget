@@ -14,10 +14,23 @@
 
 var config = require('../config');
 
-function Page() {}
-
-Page.prototype.open = function() {
-  browser.url(config.pageUrl);
+module.exports = {
+  url: config.pageUrl,
+  elements: {
+    main: {
+      selector: '#ibm_el'
+    },
+    lastMessage: {
+      selector: '.IBMChat-watson-message:last-of-type'
+    },
+    lastLayout: {
+      selector: '.IBMChat-watson-layout:last-of-type'
+    },
+    input: {
+      selector: '.IBMChat-chat-textbox'
+    },
+    outerContainer: {
+      selector: '.IBMChat-outer-container'
+    }
+  }
 };
-
-module.exports = new Page();

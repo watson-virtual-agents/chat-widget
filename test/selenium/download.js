@@ -12,14 +12,9 @@
 * the License.
 */
 
-var Page = require('../../page');
-
-var PO = Object.create(Page, {
-  chat: {
-    get: function() {
-      return browser.element('#ibm_el');
-    }
-  }
+require('selenium-download').ensure('./bin', function(error) {
+  if (error)
+    return console.log(error);
+  else
+    console.log('✔ Selenium & Chromedriver downloaded to:', './bin');
 });
-
-module.exports = PO;
