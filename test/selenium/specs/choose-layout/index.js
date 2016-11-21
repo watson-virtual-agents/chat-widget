@@ -11,35 +11,19 @@
 * or implied. See the License for the specific language governing permissions and limitations under
 * the License.
 */
-/*
+
 var config = require('../../config');
-var responses = require('./responses');
-var expect = require('chai').expect;
-var axios = require('axios');
-var page = require('./page');
 
-beforeEach(function() {
-  page.open();
-  browser.execute(function() {
-    window.IBMChat.destroy();
-  });
-  browser.execute(function() {
-    window.IBMChat.init({
-      el: 'ibm_el',
-      baseURL: 'http://localhost:3201/',
-      botID: 77
-    });
-  });
-});
-
-describe('Validated Choose Layout', function() {
-  it('should display a choose layout', function(done) {
-    config.setMessage(responses.getLayout).then(function(){
-      page.textarea.setValue('Show me a layout.');
-      browser.keys('Enter');
-      browser.pause(1000);
-      expect(browser.element(config.lastMessageSelector).getText()).to.be.equal(responses.getLayout);
-    });
-  });
-});
-*/
+module.exports = {
+  'Widget properly starts up': function (client) {
+    var PO = client.page.default();
+    PO.navigate()
+      .waitForElementVisible('body')
+      .assert.title('IBM Watson Virtual Agent Chat Widget Demo');
+    config.createChat(client).pause(1000);
+    PO.assert.elementPresent('@outerContainer')
+      .assert.visible('@input')
+      .assert.containsText('@lastMessage', 'Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?');
+    client.end();
+  }
+};

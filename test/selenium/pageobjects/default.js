@@ -21,10 +21,10 @@ module.exports = {
       selector: '#ibm_el'
     },
     lastMessage: {
-      selector: '.IBMChat-watson-message:last-of-type'
+      selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message'
     },
     lastLayout: {
-      selector: '.IBMChat-watson-layout:last-of-type'
+      selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-layout'
     },
     input: {
       selector: '.IBMChat-chat-textbox'

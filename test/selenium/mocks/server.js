@@ -29,8 +29,13 @@ function router(handle, pathname, req, res) {
 }
 
 function onRequest(req, res) {
-  var pathname = url.parse(req.url).pathname;
-  router(handle, pathname, req, res);
+  if (req.method === 'OPTIONS') {
+    res.writeHead(201, headers);
+    res.end();
+  } else {
+    var pathname = url.parse(req.url).pathname;
+    router(handle, pathname, req, res);
+  }
 }
 
 function init(req, res) {

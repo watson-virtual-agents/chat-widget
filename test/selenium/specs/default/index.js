@@ -12,24 +12,15 @@
 * the License.
 */
 
+var config = require('../../config');
+
 module.exports = {
   'Widget properly starts up': function (client) {
     var PO = client.page.default();
     PO.navigate()
       .waitForElementVisible('body')
       .assert.title('IBM Watson Virtual Agent Chat Widget Demo');
-    client.execute(function() {
-      window.IBMChat.destroy();
-    });
-    PO.assert.elementNotPresent('@outerContainer');
-    client.execute(function() {
-      window.IBMChat.init({
-        el: 'ibm_el',
-        baseURL: 'http://localhost:3201/',
-        botID: 77
-      });
-    });
-    client.pause(1000);
+    config.createChat(client).pause(1000);
     PO.assert.elementPresent('@outerContainer')
       .assert.visible('@input')
       .assert.containsText('@lastMessage', 'Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?');
