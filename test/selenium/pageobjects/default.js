@@ -14,23 +14,21 @@
 
 var config = require('../config');
 
+var localCommands = {
+
+};
+
+var localElements = {
+  outerContainer: {
+    selector: '.IBMChat-outer-container'
+  }
+};
+
 module.exports = {
   url: config.pageUrl,
-  elements: {
-    main: {
-      selector: '#ibm_el'
-    },
-    lastMessage: {
-      selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message'
-    },
-    lastLayout: {
-      selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-layout'
-    },
-    input: {
-      selector: '.IBMChat-chat-textbox'
-    },
-    outerContainer: {
-      selector: '.IBMChat-outer-container'
-    }
-  }
+  elements: [
+    config.sharedElements,
+    localElements
+  ],
+  commands: [Object.assign({}, localCommands, config.sharedCommands)]
 };

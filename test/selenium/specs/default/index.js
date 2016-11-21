@@ -14,16 +14,26 @@
 
 var config = require('../../config');
 
+var strings = {
+  'welcomeMessage': 'Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?',
+  'hello': 'hello!',
+  'receiveMessage': 'Right back at you.'
+};
+
 module.exports = {
-  'Widget properly starts up': function (client) {
+  'Widget properly starts up and can send and receive a message': function (client) {
     var PO = client.page.default();
     PO.navigate()
       .waitForElementVisible('body')
-      .assert.title('IBM Watson Virtual Agent Chat Widget Demo');
-    config.createChat(client).pause(1000);
-    PO.assert.elementPresent('@outerContainer')
+      .assert.title('IBM Watson Virtual Agent Chat Widget Demo')
+      .createWidget()
+      .assert.elementPresent('@outerContainer')
       .assert.visible('@input')
-      .assert.containsText('@lastMessage', 'Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?');
+      .assert.containsText('@lastMessage', strings.welcomeMessage)
+      .setMessage(strings.receiveMessage)
+      .typeMessage(strings.hello)
+      .assert.containsText('@lastSentMessage', strings.hello)
+      .assert.containsText('@lastMessage', strings.receiveMessage);
     client.end();
   }
 };

@@ -12,35 +12,61 @@
 * the License.
 */
 
-
-var axios = require('axios');
 var pageUrl = 'http://localhost:3300/';
 var baseUrl = 'http://localhost:3201/';
+var axios = require('axios');
 var instance = axios.create({
   baseURL: baseUrl
 });
 
-function createChat(client) {
-  client.execute(function(){
-    window.IBMChat.destroy();
-    setTimeout(function(){
-      window.IBMChat.init({
-        el: 'ibm_el',
-        baseURL: 'http://localhost:3201/',
-        botID: 77
-      });
-    }, 0);
-  });
-  return client;
-}
+var sharedElements = {
+  main: {
+    selector: '#ibm_el'
+  },
+  lastMessage: {
+    selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message'
+  },
+  lastSentMessage: {
+    selector: '.IBMChat-messages div:nth-last-of-type(2) .IBMChat-user-message'
+  },
+  lastLayout: {
+    selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-layout'
+  },
+  input: {
+    selector: '.IBMChat-chat-textbox'
+  }
+};
 
-function setMessage(message) {
-  return instance.post('/setmessage', message);
-}
+var sharedCommands = {
+  createWidget: function() {
+    this.api.execute(function(){
+      window.IBMChat.destroy();
+      setTimeout(function(){
+        window.IBMChat.init({
+          el: 'ibm_el',
+          baseURL: 'http://localhost:3201/',
+          botID: 77
+        });
+      }, 0);
+    });
+    return this.waitForElementPresent('@outerContainer');
+  },
+  setMessage: function(message) {
+    instance.post('/setmessage', { message: message });
+    this.api.pause(1000);
+    return this;
+  },
+  typeMessage: function(message) {
+    this.setValue('@input', message);
+    this.api.keys(this.api.Keys.ENTER);
+    this.api.pause(1000);
+    return this;
+  }
+};
 
 module.exports = {
-  setMessage: setMessage,
-  createChat: createChat,
   pageUrl: pageUrl,
-  baseUrl: baseUrl
+  baseUrl: baseUrl,
+  sharedElements: sharedElements,
+  sharedCommands: sharedCommands
 };

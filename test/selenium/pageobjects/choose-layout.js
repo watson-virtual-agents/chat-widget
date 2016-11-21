@@ -14,9 +14,19 @@
 
 var config = require('../config');
 
+var localCommands = {
+
+};
+
+var localElements = {
+
+};
+
 module.exports = {
   url: config.pageUrl,
-  elements: {
-    
-  }
+  elements: [
+    config.sharedElements,
+    localElements
+  ],
+  commands: [Object.assign({}, localCommands, config.sharedCommands)]
 };
