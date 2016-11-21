@@ -42,3 +42,5 @@ dev-tools/creds.html
 dist/index.html
 test/selenium/errorShots
 selenium/errorShots
+bin
+reports

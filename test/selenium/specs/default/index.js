@@ -12,14 +12,18 @@
 * the License.
 */
 
-var Page = require('../../page');
+var config = require('../../config');
 
-var PO = Object.create(Page, {
-  textarea: {
-    get: function() {
-      return browser.element('.IBMChat-chat-textbox');
-    }
+module.exports = {
+  'Widget properly starts up': function (client) {
+    var PO = client.page.default();
+    PO.navigate()
+      .waitForElementVisible('body')
+      .assert.title('IBM Watson Virtual Agent Chat Widget Demo');
+    config.createChat(client).pause(1000);
+    PO.assert.elementPresent('@outerContainer')
+      .assert.visible('@input')
+      .assert.containsText('@lastMessage', 'Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?');
+    client.end();
   }
-});
-
-module.exports = PO;
+};

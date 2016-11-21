@@ -1,2 +1,5 @@
-test/selenium/**/*.spec.js
-test/selenium/page/index.js
+test/**/*.js
+dist/*.js
+dev-tools/*.js
+docs
+examples

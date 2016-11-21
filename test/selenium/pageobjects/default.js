@@ -12,35 +12,25 @@
 * the License.
 */
 
-
-var axios = require('axios');
-var pageUrl = 'http://localhost:3300/';
-var baseUrl = 'http://localhost:3201/';
-var instance = axios.create({
-  baseURL: baseUrl
-});
-
-function createChat(client) {
-  client.execute(function(){
-    window.IBMChat.destroy();
-    setTimeout(function(){
-      window.IBMChat.init({
-        el: 'ibm_el',
-        baseURL: 'http://localhost:3201/',
-        botID: 77
-      });
-    }, 0);
-  });
-  return client;
-}
-
-function setMessage(message) {
-  return instance.post('/setmessage', message);
-}
+var config = require('../config');
 
 module.exports = {
-  setMessage: setMessage,
-  createChat: createChat,
-  pageUrl: pageUrl,
-  baseUrl: baseUrl
+  url: config.pageUrl,
+  elements: {
+    main: {
+      selector: '#ibm_el'
+    },
+    lastMessage: {
+      selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message'
+    },
+    lastLayout: {
+      selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-layout'
+    },
+    input: {
+      selector: '.IBMChat-chat-textbox'
+    },
+    outerContainer: {
+      selector: '.IBMChat-outer-container'
+    }
+  }
 };

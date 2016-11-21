@@ -14,10 +14,9 @@
 
 var config = require('../config');
 
-function Page() {}
-
-Page.prototype.open = function() {
-  browser.url(config.pageUrl);
+module.exports = {
+  url: config.pageUrl,
+  elements: {
+    
+  }
 };
-
-module.exports = new Page();
