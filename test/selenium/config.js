@@ -34,6 +34,9 @@ var sharedElements = {
   },
   input: {
     selector: '.IBMChat-chat-textbox'
+  },
+  outerContainer: {
+    selector: '.IBMChat-outer-container'
   }
 };
 
@@ -52,14 +55,15 @@ var sharedCommands = {
     return this.waitForElementPresent('@outerContainer');
   },
   setMessage: function(message) {
+    this.api.pause(250);
     instance.post('/setmessage', { message: message });
-    this.api.pause(1000);
+    this.api.pause(250);
     return this;
   },
   typeMessage: function(message) {
     this.setValue('@input', message);
     this.api.keys(this.api.Keys.ENTER);
-    this.api.pause(1000);
+    this.api.pause(250);
     return this;
   }
 };

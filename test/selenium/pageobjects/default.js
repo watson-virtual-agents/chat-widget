@@ -19,9 +19,7 @@ var localCommands = {
 };
 
 var localElements = {
-  outerContainer: {
-    selector: '.IBMChat-outer-container'
-  }
+  
 };
 
 module.exports = {

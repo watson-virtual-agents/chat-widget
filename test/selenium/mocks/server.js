@@ -15,7 +15,7 @@
 var http = require("http");
 var url = require("url");
 var PORT = 3201;
-var botID = '77', chatID = '42', message = {};
+var botID = '77', chatID = '42', message = false;
 var AccessControlAllowHeaders = 'X-Request-ID, Content-Type, X-IBM-Client-ID, X-IBM-Client-Secret';
 var headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': AccessControlAllowHeaders };
 
@@ -51,8 +51,18 @@ function init(req, res) {
 }
 
 function receive(req, res) {
-  var string = JSON.stringify(message);
-  console.log('receive', string);
+  var string;
+  if (message) {
+    string = JSON.stringify(message);
+  } else {
+    var queryData = url.parse(req.url, true).query;
+    string = JSON.stringify({
+      "message": {
+        "text": ['You sent: ' + queryData.message]
+      }
+    });
+  }
+  message = false;
   res.writeHead(200, headers);
   res.end(string);
 }

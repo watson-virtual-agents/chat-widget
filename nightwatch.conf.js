@@ -14,36 +14,36 @@
 
 module.exports = {
   "src_folders": [
-    "test/selenium/specs"// Where you are storing your Nightwatch e2e/UAT tests
+    "test/selenium/specs"
   ],
   "page_objects_path": "test/selenium/pageobjects",
-  "output_folder": "./reports", // reports (test outcome) output by nightwatch
-  "selenium": { // downloaded by selenium-download module (see readme)
-    "start_process": true, // tells nightwatch to start/stop the selenium process
+  "output_folder": "./reports",
+  "selenium": {
+    "start_process": true,
     "server_path": "./bin/selenium.jar",
     "host": "127.0.0.1",
-    "port": 4444, // standard selenium port
-    "cli_args": { // chromedriver is downloaded by selenium-download (see readme)
+    "port": 4444,
+    "cli_args": {
       "webdriver.chrome.driver": "./bin/chromedriver"
     }
   },
   "test_settings": {
     "default": {
       "screenshots": {
-        "enabled": true, // if you want to keep screenshots
-        "path": './test/selenium/errorShots' // save screenshots here
+        "enabled": true,
+        "path": './test/selenium/errorShots'
       },
       "globals": {
-        "waitForConditionTimeout": 10000 // sometimes internet is slow so wait.
+        "waitForConditionTimeout": 10000
       },
-      "desiredCapabilities": { // use Chrome as the default browser for tests
+      "desiredCapabilities": {
         "browserName": "chrome"
       }
     },
     "chrome": {
       "desiredCapabilities": {
         "browserName": "chrome",
-        "javascriptEnabled": true // set to false to test progressive enhancement
+        "javascriptEnabled": true
       }
     }
   }

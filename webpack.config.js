@@ -57,7 +57,7 @@ var mapsServer = MAPS_SERVER[env] || 'https://dd1-i-serve-maps.mybluemix.net';
 var filename = (minify) ? 'chat.min.js' : 'chat.js';
 var debug = env === 'development';
 var selenium = (process.argv.indexOf('-selenium') > -1) ? true : false;
-console.log('process.argv', process.argv);
+
 var paths = {
   'context': path.resolve(__dirname),
   'entry': path.resolve(__dirname, 'src', 'index.js'),

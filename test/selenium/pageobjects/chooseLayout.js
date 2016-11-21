@@ -19,7 +19,18 @@ var localCommands = {
 };
 
 var localElements = {
-
+  firstButton: {
+    selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message-container .IBMChat-watson-layout button:first-child'
+  },
+  firstButtonSomeOf: {
+    selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message-container .IBMChat-watson-layout .IBMChat-choose-option:first-child button'
+  },
+  secondButtonSomeOf: {
+    selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message-container .IBMChat-watson-layout .IBMChat-choose-option:nth-child(2) button'
+  },
+  enterButton: {
+    selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message-container .IBMChat-watson-layout .IBMChat-choose-submit button'
+  }
 };
 
 module.exports = {

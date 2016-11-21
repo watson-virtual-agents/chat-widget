@@ -13,7 +13,7 @@
 */
 
 var responses = {
-  getLayout: {
+  getOneOfLayout: {
     "bot_id": "20b35cea-062e-45ef-92be-4fe351d64834",
     "dialog_id": "55049ff6-2b44-4356-9f02-f76c08c694bd",
     "message": {
@@ -55,7 +55,52 @@ var responses = {
         }]
       }
     }
+  },
+  getSomeOfLayout: {
+    "bot_id": "20b35cea-062e-45ef-92be-4fe351d64834",
+    "dialog_id": "55049ff6-2b44-4356-9f02-f76c08c694bd",
+    "message": {
+      "text": ["Which email addresses are you looking to change?"],
+      "context": {
+        "conversation_id": "712d8d38-7ae1-4021-bf4c-67cca7535fdf",
+        "system": {
+          "dialog_request_counter": 2.0,
+          "dialog_turn_counter": 2.0,
+          "dialog_stack": ["node_2_1470928876329"]
+        },
+        "email_input_counter": 0.0
+      },
+      "layout": {
+        "name": "choose"
+      },
+      "inputvalidation": {
+        "someOf": ["Profile Notifications", "Account Notifications", "Security/Usage Notifications", "eBilling Notifications", "All Notifications"]
+      },
+      "intents": [{
+        "confidence": 1.0,
+        "intent": "Account_Management-Email_Change"
+      }],
+      "entities": [{
+        "entity": "receiptType",
+        "location": [7, 12],
+        "value": "email"
+      }],
+      "nodePosition": "ROOT",
+      "log_data": {
+        "intents": [{
+          "confidence": 1.0,
+          "intent": "Account_Management-Email_Change"
+        }],
+        "entities": [{
+          "entity": "receiptType",
+          "location": [7, 12],
+          "value": "email"
+        }]
+      }
+    }
   }
 };
 
-module.exports = responses;
+module.exports = {
+  responses: responses
+};
