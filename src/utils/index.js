@@ -84,29 +84,6 @@ function appendToEach(appendTo, content) {
   }
 }
 
-function normalizeToHex(color) {
-  function rgb2hex(rgb) {
-    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    return (rgb && rgb.length === 4) ?
-    ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-    ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-    ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
-  }
-  if (color.indexOf('#') > -1)
-    return color;
-  else
-    return '#' + rgb2hex(color);
-}
-
-function convertHexToRGBA(hex, opacity) {
-  var r,g,b;
-  hex = hex.replace('#','');
-  r = parseInt(hex.substring(0,2), 16);
-  g = parseInt(hex.substring(2,4), 16);
-  b = parseInt(hex.substring(4,6), 16);
-  return 'rgba('+r+','+g+','+b+','+opacity/100+')';
-}
-
 module.exports = {
   appendToEach: appendToEach,
   debounce: debounce,
@@ -115,8 +92,8 @@ module.exports = {
   getUUID: getUUID,
   attachStyles: styles.attachStyles,
   attachPlaybackStyles: styles.attachPlaybackStyles,
-  convertHexToRGBA: convertHexToRGBA,
-  normalizeToHex: normalizeToHex,
+  convertHexToRGBA: styles.convertHexToRGBA,
+  normalizeToHex: styles.normalizeToHex,
   spinner: spinner,
   compile: compile,
   writeMessage: writeMessage

@@ -17,7 +17,7 @@
 }
 
 .IBMChat-creditcard-col:nth-child(2) {
-  float:right;
+  padding-left:1.5em;
 }
 
 .IBMChat-creditcard-buttons {

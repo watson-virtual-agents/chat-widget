@@ -63,6 +63,7 @@ Form.prototype.drawForm = function() {
     field.innerHTML = utils.compile(templates.field, {
       label: datum.label || '',
       name: datum.name,
+      uuid: utils.getUUID(),
       value: ''
     });
     field.className = ns + '-fields-row';

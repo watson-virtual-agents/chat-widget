@@ -30,9 +30,60 @@ function _getStyles(current) {
               containerClass + " a:active {\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n\ttext-decoration: underline;\n\tfont-size:1em;\n\n}\n" +
               containerClass + " .IBMChat-chat-textbox-theme {\n  border-bottom: solid 1px " + current.styles.text + ";\n}\n" +
               containerClass + " .IBMChat-chat-textbox-theme:focus {\n  border-bottom: solid 2px " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " .IBMChat-ibm-spinner {\n\tstroke: " + current.styles.accentBackground + ";\n}";
+              containerClass + " .IBMChat-ibm-spinner {\n\tstroke: " + current.styles.accentBackground + ";\n}" +
+              containerClass + " ::-webkit-input-placeholder {\n  color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";\n}\n" +
+              containerClass + " ::-moz-placeholder {\n  color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";\n  opacity: 1;\n}\n" +
+              containerClass + " :-ms-input-placeholder {\n  color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";\n  opacity: 1;\n}\n";
   return styles;
 }
+
+function _placeHolderColor(text, background) {
+  var rgb_beginning = _hexToRGBArray(normalizeToHex(text)),
+    rgb_end = _hexToRGBArray(normalizeToHex(background)),
+    p = 0.5,
+    w = p * 2 - 1,
+    w1 = (w + 1) / 2.0,
+    w2 = 1 - w1,
+    rgb = [
+      parseInt(rgb_beginning[0] * w1 + rgb_end[0] * w2),
+      parseInt(rgb_beginning[1] * w1 + rgb_end[1] * w2),
+      parseInt(rgb_beginning[2] * w1 + rgb_end[2] * w2)
+    ];
+  var rgba = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+  return normalizeToHex(rgba);
+}
+
+function normalizeToHex(color) {
+  function rgb2hex(rgb) {
+    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return (rgb && rgb.length === 4) ?
+    ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+    ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+    ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+  }
+  if (color.indexOf('#') > -1)
+    return color;
+  else
+    return '#' + rgb2hex(color);
+}
+
+function _hexToRGBArray(hex) {
+  var rgb = [];
+  hex = hex.replace('#','');
+  rgb.push(parseInt(hex.substring(0,2), 16));
+  rgb.push(parseInt(hex.substring(2,4), 16));
+  rgb.push(parseInt(hex.substring(4,6), 16));
+  return rgb;
+}
+
+function convertHexToRGBA(hex, opacity) {
+  var rgb = _hexToRGBArray(hex),
+    r = rgb[0],
+    g = rgb[1],
+    b = rgb[2];
+  return 'rgba('+r+','+g+','+b+','+opacity/100+')';
+}
+
 
 function attachPlaybackStyles(chatID) {
   var current = state.getState()[chatID];
@@ -48,5 +99,7 @@ function attachStyles() {
 
 module.exports = {
   attachStyles: attachStyles,
-  attachPlaybackStyles: attachPlaybackStyles
+  attachPlaybackStyles: attachPlaybackStyles,
+  convertHexToRGBA: convertHexToRGBA,
+  normalizeToHex: normalizeToHex
 };
