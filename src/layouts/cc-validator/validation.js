@@ -132,11 +132,11 @@ function _valid() {
   };
 }
 
-function validateCard(acceptedCards, cardNumber) {
+function validateCard(acceptedCards, cardNumber, cardElement) {
   state.acceptedCards = acceptedCards;
-  state.cardNumber = cardNumber.replace(/\D/g,''); //strip extra characters
+  state.cardNumber = cardNumber.replace(/\D/g,'');
 
-  if (cardNumber.trim().length === 0)
+  if (cardNumber.length === 0)
     return _invalid(messages.required);
 
   if (state.cardNumber.length === 0)
@@ -153,7 +153,10 @@ function validateCard(acceptedCards, cardNumber) {
     return _invalid(messages.invalid);
   }
 
-  return _valid();
+  var valid =  _valid();
+  if (valid && state.cardNumber !== cardNumber && cardElement)
+    cardElement.value = state.cardNumber;
+  return valid;
 }
 
 function validateExp(userM, userY) {
@@ -163,8 +166,8 @@ function validateExp(userM, userY) {
   var month = d.getMonth() + 1; // normalize, Date#getMonth is 0 indexed
   var year = d.getFullYear();
 
-  if (userM.trim().length === 0 || userY.trim().length === 0)
-    return _invalid(messages.required);
+  if (userM.length === 0 || userY.length === 0)
+    return _invalid(messages.invalidExpiration);
 
   var invalidDigits = !userM.match(monthRegexp) || !userY.match(yearRegexp);
   userM = parseInt(userM, 10);
@@ -180,8 +183,8 @@ function validateExp(userM, userY) {
 function validateCVV(CVV) {
   // 3 or 4 digits
   var CVVRegex = /^[0-9]{3,4}$/;
-  if (CVV.trim().length === 0)
-    return _invalid(messages.required);
+  if (CVV.length === 0)
+    return _invalid(messages.invalidCvv);
 
   if (!CVV.match(CVVRegex))
     return _invalid(messages.invalidCvv);
