@@ -56,7 +56,11 @@ exports.config = {
     // 5 instance gets started at a time.
     maxInstances: 5,
     //
-    browserName: 'chrome'
+    browserName: 'chrome',
+    // see http://webdriver.io/guide/testrunner/cloudservices.html
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    //
+    build: process.env.TRAVIS_BUILD_NUMBER
   }],
   //
   // ===================

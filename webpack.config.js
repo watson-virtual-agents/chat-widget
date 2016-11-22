@@ -122,6 +122,12 @@ module.exports = {
     loader: 'source-map'
   }])),
   module: {
+    preLoaders: [{
+      // instrument only testing sources with Istanbul
+      test: /\.js$/,
+      include: path.resolve('src/'),
+      loader: 'istanbul-instrumenter'
+    }],
     loaders: [{
       loader: 'raw',
       test: /\.html$/

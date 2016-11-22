@@ -1,5 +1,7 @@
 # IBM Watson Virtual Agent Chat Widget
 
+[![codecov](https://codecov.io/gh/watson-virtual-agents/chat-widget/branch/master/graph/badge.svg)](https://codecov.io/gh/watson-virtual-agents/chat-widget)
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/master/images/screencap.gif" alt="Chat Widget demo"/>
 </p>
@@ -76,6 +78,10 @@ For more details about what you can do once the widget is up and running, see:
 - [DOCS.md](./docs/DOCS.md)
 - [JSDOCS.md](./docs/JSDOCS.md)
 - [EVENTS.md](./docs/EVENTS.md)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
