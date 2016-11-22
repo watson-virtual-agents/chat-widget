@@ -1,21 +1,14 @@
 .IBMChat-creditcard-container {
   margin-top: 1em;
-  text-align: center;
-}
-
-.IBMChat-creditcard-rows {
-  margin: auto;
-  max-width: 360px;
-  text-align: left;
-  width: 100%;
+  padding: 0.75em 1.5em 0.75em 1.5em;
+  width: 240px;
 }
 
 .IBMChat-creditcard-row {
   padding-bottom: 1em;
-  text-align: left;
 }
 
-.IBMChat-creditcard-row input {
+.IBMChat-creditcard-row input[name="cc_full_name"], .IBMChat-creditcard-row input[name="cc_number"] {
   width: 100%;
 }
 
@@ -23,13 +16,8 @@
   display: inline-block;
 }
 
-.IBMChat-creditcard-col input {
-  text-align: center;
-  width: 40px;
-}
-
-.IBMChat-creditcard-col:last-child input {
-  width: 60px;
+.IBMChat-creditcard-col:nth-child(2) {
+  float:right;
 }
 
 .IBMChat-creditcard-buttons {

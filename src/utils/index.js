@@ -12,7 +12,7 @@
 * the License.
 */
 
-var state = require('../state');
+var styles = require('./styles');
 var writeMessage = require('./writeMessage');
 
 function _render(el, state) {
@@ -27,31 +27,6 @@ var spinner = {
     _render(el, 'end');
   }
 };
-
-function _getStyles(current) {
-  var containerClass = ".chatID-" + current.chatID;
-  var styles = containerClass + " .IBMChat-outer-container {\n  font-size: " + current.styles.fontSize + ";\n line-height: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
-              containerClass + " .IBMChat-outer-container textarea {\n  font-size: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
-              containerClass + " .IBMChat-default-colors {\n  background-color: " + current.styles.background + ";\n  color: " + current.styles.text + ";\n}\n" +
-              containerClass + " .IBMChat-secondary-colors {\n  background-color: " + current.styles.secondaryBackground + ";\n  color: " + current.styles.secondaryText + ";\n}\n" +
-              containerClass + " .IBMChat-secondary-colors-button {\n  background-color: transparent; border: 1px solid " + current.styles.secondaryBackground + ";\n  color: " + current.styles.secondaryBackground + ";\n}\n" +
-              containerClass + " .IBMChat-accent-colors {\n  background-color: " + current.styles.accentBackground + ";\n  border: 1px solid " + current.styles.accentBackground + ";\n color: " + current.styles.accentText + ";\n}\n" +
-              containerClass + " .IBMChat-accent-colors-button {\n  background-color: transparent; border: 1px solid " + current.styles.accentBackground + ";\n  color: " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " .IBMChat-accent-colors-button:hover {\n  background-color: " + current.styles.accentBackground + ";\n border: 1px solid " + current.styles.accentBackground + ";\n  color: " + current.styles.accentText + ";\n}\n" +
-              containerClass + " .IBMChat-accent-colors-button[disabled]:hover {\n  background-color: transparent; border: 1px solid " + current.styles.accentBackground + ";\n  color: " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " .IBMChat-error-colors {\n  background-color: " + current.styles.errorBackground + ";\n  color: " + current.styles.errorText + ";\n}\n" +
-              containerClass + " .IBMChat-input-colors {\n  background-color: " + current.styles.inputBackground + ";\n  color: " + current.styles.inputText + ";\n}\n" +
-              containerClass + " .IBMChat-watson-message-line-theme {\n\tborder-left: 3px solid " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " a,\n" +
-              containerClass + " a:hover,\n" +
-              containerClass + " a:visited,\n" +
-              containerClass + " a:active {\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n\ttext-decoration: underline;\n\tfont-size:1em;\n\n}\n" +
-              containerClass + " .IBMChat-chat-textbox-theme {\n  border-bottom: solid 1px " + current.styles.text + ";\n}\n" +
-              containerClass + " .IBMChat-chat-textbox-theme:focus {\n  border-bottom: solid 2px " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " .IBMChat-ibm-spinner {\n\tstroke: " + current.styles.accentBackground + ";\n}";
-  return styles;
-}
-
 
 function debounce(func, wait, immediate) {
   var timeout;
@@ -97,28 +72,6 @@ function getUUID() {
   }));
 }
 
-function _attachStylesToDOM(styles) {
-  var css = document.createElement('style');
-  css.type = "text/css";
-  if (css.styleSheet)
-    css.styleSheet.cssText = styles;
-  else
-    css.appendChild(document.createTextNode(styles));
-  document.getElementsByTagName("head")[0].appendChild(css);
-}
-
-function attachPlaybackStyles(chatID) {
-  var current = state.getState()[chatID];
-  var styles = _getStyles(current);
-  _attachStylesToDOM(styles);
-}
-
-function attachStyles() {
-  var current = state.getState();
-  var styles = _getStyles(current);
-  _attachStylesToDOM(styles);
-}
-
 function hasClass(element, className) {
   var thatClass = " " + className + " ";
   return ( (" " + element.className + " ").replace(/[\n\t]/g, " ").indexOf(thatClass) > -1 );
@@ -131,14 +84,39 @@ function appendToEach(appendTo, content) {
   }
 }
 
+function normalizeToHex(color) {
+  function rgb2hex(rgb) {
+    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return (rgb && rgb.length === 4) ?
+    ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+    ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+    ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+  }
+  if (color.indexOf('#') > -1)
+    return color;
+  else
+    return '#' + rgb2hex(color);
+}
+
+function convertHexToRGBA(hex, opacity) {
+  var r,g,b;
+  hex = hex.replace('#','');
+  r = parseInt(hex.substring(0,2), 16);
+  g = parseInt(hex.substring(2,4), 16);
+  b = parseInt(hex.substring(4,6), 16);
+  return 'rgba('+r+','+g+','+b+','+opacity/100+')';
+}
+
 module.exports = {
   appendToEach: appendToEach,
   debounce: debounce,
   serialize: serialize,
   hasClass: hasClass,
   getUUID: getUUID,
-  attachStyles: attachStyles,
-  attachPlaybackStyles: attachPlaybackStyles,
+  attachStyles: styles.attachStyles,
+  attachPlaybackStyles: styles.attachPlaybackStyles,
+  convertHexToRGBA: convertHexToRGBA,
+  normalizeToHex: normalizeToHex,
   spinner: spinner,
   compile: compile,
   writeMessage: writeMessage
