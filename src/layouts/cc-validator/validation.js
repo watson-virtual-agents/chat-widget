@@ -134,7 +134,10 @@ function _valid() {
 
 function validateCard(acceptedCards, cardNumber, cardElement) {
   state.acceptedCards = acceptedCards;
-  state.cardNumber = cardNumber.replace(/\D/g,''); //strip extra characters
+  state.cardNumber = cardNumber.replace(/\D/g,'');
+
+  if (cardNumber.length === 0)
+    return _invalid(messages.required);
 
   if (state.cardNumber.length === 0)
     return _invalid(messages.invalid);
@@ -151,7 +154,7 @@ function validateCard(acceptedCards, cardNumber, cardElement) {
   }
 
   var valid =  _valid();
-  if (valid && state.cardNumber !== cardNumber)
+  if (valid && state.cardNumber !== cardNumber && cardElement)
     cardElement.value = state.cardNumber;
   return valid;
 }

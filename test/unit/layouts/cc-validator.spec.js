@@ -25,7 +25,7 @@ var validation = rewire('../../../src/layouts/cc-validator/validation.js');
 
 describe('cc-validator layout', function() {
   var messages;
-    
+
   before(function() {
     messages = {
       required: 'This field is required.',
@@ -34,12 +34,12 @@ describe('cc-validator layout', function() {
       invalidCvv: 'Your CVV is invalid.'
     };
   });
-    
+
   describe('#validateCVV()', function() {
     var validateCVV = validation.validateCVV;
 
     it('should validate empty values', function() {
-      var fieldRequiredOutput = { message: messages.required, valid: false };
+      var fieldRequiredOutput = { message: messages.invalidCvv, valid: false };
       expect(validateCVV('')).to.eql(fieldRequiredOutput);
       expect(validateCVV('   ')).to.eql(fieldRequiredOutput);
     });
@@ -68,13 +68,13 @@ describe('cc-validator layout', function() {
     });
 
   });
-    
+
   describe('#validateExp()', function() {
     var validateExp = validation.validateExp;
     var validYear = String(new Date().getFullYear() + 10);
-        
+
     it('should validate empty expiration dates', function() {
-      var fieldRequiredOutput = { message: messages.required, valid: false };
+      var fieldRequiredOutput = { message: messages.invalidExpiration, valid: false };
       expect(validateExp('', validYear)).to.eql(fieldRequiredOutput);
       expect(validateExp('  ', validYear)).to.eql(fieldRequiredOutput);
       expect(validateExp('01','')).to.eql(fieldRequiredOutput);
@@ -91,7 +91,7 @@ describe('cc-validator layout', function() {
       expect(validateExp('13', validYear)).to.eql(invalidOutput);
       expect(validateExp('99', validYear)).to.eql(invalidOutput);
       expect(validateExp('a', validYear)).to.eql(invalidOutput);
-            
+
       expect(validateExp('01','01')).to.eql(invalidOutput);
       expect(validateExp('01','20')).to.eql(invalidOutput);
       expect(validateExp('01','099')).to.eql(invalidOutput);
@@ -102,7 +102,7 @@ describe('cc-validator layout', function() {
       expect(validateExp('01','9999')).to.eql(invalidOutput);
       expect(validateExp('01','abcd')).to.eql(invalidOutput);
       expect(validateExp('01','$%"_/')).to.eql(invalidOutput);
-      
+
       var d = new Date();
       // getMonth is 0 indexed, so it should always be behind by 1
       // when compared to the current month
@@ -115,17 +115,16 @@ describe('cc-validator layout', function() {
       expect(validateExp('12', String(new Date().getFullYear() + 15))).to.eql(validOutput);
       expect(validateExp('06', String(new Date().getFullYear() + 19))).to.eql(validOutput);
     });
-        
+
   });
 
   describe('#validateCard()', function() {
     var validateCard = validation.validateCard;
     var allCards = ['visa','mastercard','discover','amex'];
-        
+
     it('should validate empty card numbers', function() {
       var fieldRequiredOutput = { message: messages.required, valid: false };
       expect(validateCard(allCards, '')).to.eql(fieldRequiredOutput);
-      expect(validateCard(allCards, '  ')).to.eql(fieldRequiredOutput);
     });
 
     it('should validate non supported cards', function() {
@@ -139,7 +138,7 @@ describe('cc-validator layout', function() {
     it('should validate invalid card numbers', function() {
       var invalidCardOutput = { message: messages.invalid, valid: false };
       expect(validateCard(allCards, 'abcdefghijklmnop')).to.eql(invalidCardOutput);
-
+      expect(validateCard(allCards, '  ')).to.eql(invalidCardOutput);
       // Amex: supported, right prefix, wrong length
       expect(validateCard(allCards, '3782822463100')).to.eql(invalidCardOutput);
       expect(validateCard(allCards, '3482822463100')).to.eql(invalidCardOutput);
@@ -175,7 +174,7 @@ describe('cc-validator layout', function() {
       // invalid Luhn
       expect(validateCard(allCards, '4111111111111112')).to.eql(invalidCardOutput);
     });
-        
+
     it('should validate valid card numbers', function() {
       var validOutput = { valid: true };
       // Visa
