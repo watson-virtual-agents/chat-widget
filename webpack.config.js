@@ -77,6 +77,7 @@ function conditionalPlugins() {
   if (minify) {
     arr = [
       new OccurenceOrderPlugin(),
+      new DedupePlugin(),
       new UglifyJsPlugin({
         output: { comments: false }
       }),
@@ -100,7 +101,7 @@ module.exports = {
   target: 'web',
   debug: debug,
   cache: debug,
-  devtool: debug ? 'inline-sourcemap' : null,
+  devtool: (debug && !minify) ? 'inline-sourcemap' : null,
   stats: { colors: true },
   resolve: {
     extensions: ['', '.js', '.json'],
@@ -128,8 +129,8 @@ module.exports = {
   module: {
     preLoaders: [{
       // instrument only testing sources with Istanbul
-      test: /\.js$/,
-      include: path.resolve('src/'),
+      test: /\.spec.js$/,
+      include: path.resolve('test/unit'),
       loader: 'istanbul-instrumenter'
     }],
     loaders: [{

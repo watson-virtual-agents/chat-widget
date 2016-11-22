@@ -5,7 +5,7 @@
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/chat.js",
   "scripts": {
-    "build": "webpack -production && webpack -minify -production && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
+    "build": "webpack -production && webpack -minify -production --json > stats.json && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
     "codecov": "npm run test && (codecov || true)",
     "postinstall": "node ./test/selenium/download.js",
     "server:embed": "node ./dev-tools/embed-server.js -minify",

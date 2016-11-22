@@ -44,3 +44,4 @@ test/selenium/errorShots
 selenium/errorShots
 bin
 reports
+stats.json
