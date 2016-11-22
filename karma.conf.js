@@ -16,6 +16,7 @@ var webpackConfig = require('./webpack.config.js');
 
 module.exports = function(config) {
   config.set({
+
     // enable / disable colors in the output (reporters and logs)
     colors: true,
 
@@ -35,13 +36,14 @@ module.exports = function(config) {
     frameworks: ['mocha'],
 
     preprocessors: {
-      'test/**/*.spec.js': ['webpack']
+      'test/**/*.spec.js': ['webpack'],
+      'src/**/*.js': ['coverage']
     },
-    
-    reporters: ['spec', 'coverage'],
+
+    reporters: ['spec', 'progress', 'coverage'],
 
     coverageReporter: {
-      type: 'html',
+      type: 'lcov',
       dir: 'build/coverage/'
     },
 

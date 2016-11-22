@@ -13,7 +13,7 @@
     "test:selenium": "selenium-standalone install --silent && concurrently -k -s first \"selenium-standalone start\" \"npm run server:selenium\" \"wdio wdio.conf.js\" \"node ./test/selenium/mocks/server.js\"",
     "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
     "test:debug": "node ./node_modules/karma/bin/karma start --browsers Chrome",
-    "codecov": "npm run test && (codecov || true)",
+    "test:codecov": "npm run test && codecov",
     "watch": "npm run server:watch"
   },
   "engines": {
