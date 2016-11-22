@@ -1,0 +1,5 @@
+test/**/*.js
+dist/*.js
+dev-tools/*.js
+docs
+examples

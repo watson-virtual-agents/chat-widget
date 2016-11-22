@@ -15,7 +15,9 @@
 var http = require("http");
 var url = require("url");
 var PORT = 3201;
-var botID = '77', chatID = '42', message;
+var botID = '77', chatID = '42', message = false;
+var AccessControlAllowHeaders = 'X-Request-ID, Content-Type, X-IBM-Client-ID, X-IBM-Client-Secret';
+var headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': AccessControlAllowHeaders };
 
 function router(handle, pathname, req, res) {
   if (typeof handle[pathname] === 'function') {
@@ -27,8 +29,13 @@ function router(handle, pathname, req, res) {
 }
 
 function onRequest(req, res) {
-  var pathname = url.parse(req.url).pathname;
-  router(handle, pathname, req, res);
+  if (req.method === 'OPTIONS') {
+    res.writeHead(201, headers);
+    res.end();
+  } else {
+    var pathname = url.parse(req.url).pathname;
+    router(handle, pathname, req, res);
+  }
 }
 
 function init(req, res) {
@@ -39,19 +46,46 @@ function init(req, res) {
       "text": ["Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?"]
     }
   });
-  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.writeHead(200, headers);
   res.end(response);
 }
 
 function receive(req, res) {
-  var string = JSON.stringify(message);
-  res.writeHead(200, { 'Content-Type': 'application/json' });
+  var string;
+  if (message) {
+    string = JSON.stringify(message);
+  } else {
+    var queryData = url.parse(req.url, true).query;
+    string = JSON.stringify({
+      "message": {
+        "text": ['You sent: ' + queryData.message]
+      }
+    });
+  }
+  message = false;
+  res.writeHead(200, headers);
   res.end(string);
 }
 
 function setMessage(req, res) {
-  res.writeHead(200);
-  res.end();
+  var body = '';
+  req.on('data', function(data) {
+    body += data;
+  });
+  req.on('end', function() {
+    body = JSON.parse(body);
+    if(typeof body.message === 'string') {
+      message = {
+        "message": {
+          "text": [body.message]
+        }
+      };
+    } else {
+      message = body.message;
+    }
+    res.writeHead(200, headers);
+    res.end(JSON.stringify(message));
+  });
 }
 
 var handle = {};
