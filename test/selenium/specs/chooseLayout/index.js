@@ -18,7 +18,7 @@ var strings = {
   whichEmailOneOf: 'Which email address are you looking to change?',
   whichEmailSomeOf: 'Which email addresses are you looking to change?',
   buttonText: 'Profile Notifications',
-  clickedTextOneOf: 'You clicked Profile Notifications!',
+  clickedTextOneOf: 'You sent: Profile Notifications',
   clickedTextSomeOf: 'You sent: Profile Notifications,Account Notifications'
 }
 module.exports = {
@@ -33,7 +33,7 @@ module.exports = {
       .typeMessage(strings.showLayout)
       .assert.containsText('@lastMessage', strings.whichEmailOneOf);
   },
-  'Click on choose layout': function(client) {
+  'Click on choose layout (oneOf)': function(client) {
     var PO = client.page.chooseLayout();
     PO.setMessage(strings.clickedTextOneOf)
       .assert.elementPresent('@firstButton')
@@ -53,7 +53,7 @@ module.exports = {
       .typeMessage(strings.showLayout)
       .assert.containsText('@lastMessage', strings.whichEmailSomeOf);
   },
-  'Click on choose layout': function(client) {
+  'Click on choose layout (someOf)': function(client) {
     var PO = client.page.chooseLayout();
     PO.assert.elementPresent('@firstButtonSomeOf')
       .assert.elementPresent('@secondButtonSomeOf')

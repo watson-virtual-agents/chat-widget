@@ -68,7 +68,7 @@
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "1.8.0",
     "mocha": "3.0.2",
-    "nightwatch": "^0.9.9",
+    "nightwatch": "0.9.9",
     "npm-watch": "0.1.6",
     "phantomjs-prebuilt": "2.1.12",
     "raw-loader": "0.5.1",
