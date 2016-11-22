@@ -24,7 +24,7 @@ module.exports = {
   'Widget properly starts up and can send and receive a message': function (client) {
     var PO = client.page.default();
     PO.navigate()
-      .waitForElementVisible('body')
+      .waitForElementVisible('@main')
       .assert.title('IBM Watson Virtual Agent Chat Widget Demo')
       .createWidget()
       .assert.elementPresent('@outerContainer')
