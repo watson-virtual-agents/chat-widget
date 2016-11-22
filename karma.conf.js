@@ -13,10 +13,10 @@
 */
 
 var webpackConfig = require('./webpack.config.js');
-var path = require('path');
 
 module.exports = function(config) {
   config.set({
+
     // enable / disable colors in the output (reporters and logs)
     colors: true,
 
