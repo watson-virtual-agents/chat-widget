@@ -16,8 +16,6 @@
 // do it ourselves once they finish running.
 // (based on https://gist.github.com/mikberg/ce463e09d6adf46f987c)
 
-var https = require('https');
-// require('es6-promise').polyfill();
 var Axios = require('axios');
 
 module.exports = function sauce(client, callback) {
@@ -35,77 +33,26 @@ module.exports = function sauce(client, callback) {
 
   var data = JSON.stringify({ passed });
 
-  var requestPath = "/rest/v1/" + username + "/jobs/" + sessionId;
-  
   var axios = Axios.create({
     baseURL: 'https://saucelabs.com',
     auth: {
       username: username,
       password: accessKey
     },
+    timeout: 3000,
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': data.length,
+      'Content-Length': data.length
     }
   });
 
-  axios.put(requestPath, data)
+  axios.put("/rest/v1/" + username + "/jobs/" + sessionId, data)
     .then(function(res){
-      console.log('Response: ', res.statusCode, JSON.stringify(res.headers));
+      console.log('Response: ', res.statusText);
     })
     .catch(function(err){
       console.error(err);
     });
+
   callback();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /*
-  function responseCallback(res) {
-    res.setEncoding('utf8');
-    console.log('Response: ', res.statusCode, JSON.stringify(res.headers));
-    res.on('data', function(chunk) {
-      console.log('BODY: ' + chunk);
-    });
-    res.on('end', function() {
-      console.info('Finished updating saucelabs');
-      callback();
-    });
-  }
-  */
-  // try {
-  //   console.log('Updating saucelabs', requestPath);
-  //   var req = https.request({
-  //     hostname: 'saucelabs.com',
-  //     path: requestPath,
-  //     method: 'PUT',
-  //     auth: `${username}:${accessKey}`,
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Content-Length': data.length,
-  //     },
-  //   }, responseCallback);
-
-  //   req.on('error', function (e) {
-  //     console.log('problem with request: ' + e.message);
-  //   });
-  //   req.write(data);
-  //   req.end();
-  // } catch (error) {
-  //   console.log('Error', error);
-  //   callback();
-  // }
 };

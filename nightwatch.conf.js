@@ -88,7 +88,7 @@ module.exports = {
           "args": ["disable-web-security", "ignore-certificate-errors"]
         },    
         "build": `build-${TRAVIS_JOB_NUMBER}`,
-        "tunnel-identifier": TRAVIS_JOB_NUMBER,
+        "tunnel-identifier": TRAVIS_JOB_NUMBER
       },
       "selenium" : {
         "start_process" : false
