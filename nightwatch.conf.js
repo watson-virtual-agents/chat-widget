@@ -46,17 +46,19 @@ module.exports = {
         "javascriptEnabled": true
       }
     },
-    "saucelabs" : {
+    "travis" : {
       "selenium_host" : "ondemand.saucelabs.com",
       "selenium_port" : 80,
       "username" : "${SAUCE_USERNAME}",
       "access_key" : "${SAUCE_ACCESS_KEY}",
       "use_ssl" : false,
-      "silent" : true,
       "output" : true,
       "screenshots": {
         "enabled": true,
         "path": './test/selenium/errorShots/travis'
+      },
+      "globals": {
+        "waitForConditionTimeout": 20000
       },
       "desiredCapabilities": {
         // "browserName": "firefox",
