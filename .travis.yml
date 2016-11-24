@@ -5,6 +5,9 @@ node_js:
 script:
 - npm run test:codecov
 - npm run test:selenium:travis
+after_script:
+  # hacky workaround to hanging chromedriver processes
+  - pkill chromedriver
 cache:
   directories:
   - node_modules
