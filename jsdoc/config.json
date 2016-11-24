@@ -1,0 +1,9 @@
+{
+  "source": {
+    "include": [ "./src/index.js" ]
+  },
+  "opts": {
+    "readme": "README.md",
+    "destination": "./doc/"
+  }
+}
