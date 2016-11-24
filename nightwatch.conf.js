@@ -12,6 +12,8 @@
 * the License.
 */
 
+var TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
+
 module.exports = {
   "src_folders": [
     "test/selenium/specs"
@@ -52,6 +54,7 @@ module.exports = {
       "username" : "${SAUCE_USERNAME}",
       "access_key" : "${SAUCE_ACCESS_KEY}",
       "use_ssl" : false,
+      "silent": false,
       "output" : true,
       "screenshots": {
         "enabled": true,
@@ -63,7 +66,9 @@ module.exports = {
       "desiredCapabilities": {
         // "browserName": "firefox",
         "browserName": "chrome",
-        "javascriptEnabled": true
+        "javascriptEnabled": true,
+        "build": `build-${TRAVIS_JOB_NUMBER}`,
+        "tunnel-identifier": TRAVIS_JOB_NUMBER,
       },
       "selenium" : {
         "start_process" : false
