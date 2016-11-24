@@ -17,7 +17,7 @@
 /* eslint no-console:0 */
 var https = require('https');
 
-function sauce(callback) {
+module.exports = function sauce(callback) {
   var currentTest = this.client.currentTest;
   var username = this.client.options.username;
   var sessionId = this.client.capabilities['webdriver.remote.sessionid'];
@@ -77,10 +77,4 @@ function sauce(callback) {
     console.log('Error', error);
     callback();
   }
-}
-
-
-module.exports = {
-  sauce: sauce
 };
-

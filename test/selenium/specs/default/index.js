@@ -13,7 +13,7 @@
 */
 
 var config = require('../../config');
-var callSauce = require('../sauce');
+var callSauce = require('../../sauce');
 
 var strings = {
   'welcomeMessage': 'Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?',
