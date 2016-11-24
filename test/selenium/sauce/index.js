@@ -37,13 +37,16 @@ module.exports = function sauce(client, callback) {
 
   var requestPath = "/rest/v1/" + username + "/jobs/" + sessionId;
   
-  const axios = Axios.create({
-    baseURL: 'saucelabs.com',
-    auth: `${username}:${accessKey}`,
+  var axios = Axios.create({
+    baseURL: 'https://saucelabs.com',
+    auth: {
+      username: username,
+      password: accessKey
+    },
     headers: {
       'Content-Type': 'application/json',
       'Content-Length': data.length,
-    },
+    }
   });
 
   axios.put(requestPath, data)
