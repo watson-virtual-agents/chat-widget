@@ -67,6 +67,17 @@ module.exports = {
         // "browserName": "firefox",
         "browserName": "chrome",
         "javascriptEnabled": true,
+        "databaseEnabled": true,
+        "locationContextEnabled": true,
+        "applicationCacheEnabled": true,
+        "browserConnectionEnabled": true,
+        "webStorageEnabled": true,
+        "acceptSslCerts": true,
+        "rotatable": true,
+        "nativeEvents": true,
+        "chromeOptions": {
+          "args": ["disable-web-security", "ignore-certificate-errors"]
+        },        
         "build": `build-${TRAVIS_JOB_NUMBER}`,
         "tunnel-identifier": TRAVIS_JOB_NUMBER,
       },
