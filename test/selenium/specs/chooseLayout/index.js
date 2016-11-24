@@ -20,7 +20,9 @@ var strings = {
   buttonText: 'Profile Notifications',
   clickedTextOneOf: 'You sent: Profile Notifications',
   clickedTextSomeOf: 'You sent: Profile Notifications,Account Notifications'
-}
+};
+var callSauce = require('../call-sauce');
+
 module.exports = {
   'Displays choose layout (oneOf)': function (client) {
     var PO = client.page.chooseLayout();
@@ -64,5 +66,7 @@ module.exports = {
       .click('@enterButton')
       .assert.containsText('@lastMessage', strings.clickedTextSomeOf);
     client.end();
-  }
+  },
+
+  tearDown: callSauce
 };

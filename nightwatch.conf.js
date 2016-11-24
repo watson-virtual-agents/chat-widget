@@ -12,7 +12,7 @@
 * the License.
 */
 
-var callSauce = require('./test/selenium/call-sauce');
+// var callSauce = require('./test/selenium/call-sauce');
 
 var TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
 
@@ -64,7 +64,7 @@ module.exports = {
       },
       "globals": {
         "waitForConditionTimeout": 20000,
-        "afterEach": callSauce
+        // "afterEach": callSauce
       },
       "desiredCapabilities": {
         // "browserName": "firefox",
