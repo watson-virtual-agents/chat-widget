@@ -12,6 +12,17 @@
 * the License.
 */
 
+var sauce = require('./test/selenium/sauce');
+
+var TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
+var IS_TRAVIS = process.env.TRAVIS;
+
+var callSauce = function(browser, cb) {
+  if (IS_TRAVIS) {
+    sauce(browser, cb);
+  }
+};
+
 module.exports = {
   "src_folders": [
     "test/selenium/specs"
@@ -44,6 +55,43 @@ module.exports = {
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true
+      }
+    },
+    "travis" : {
+      "selenium_host" : "ondemand.saucelabs.com",
+      "selenium_port" : 80,
+      "username" : "${SAUCE_USERNAME}",
+      "access_key" : "${SAUCE_ACCESS_KEY}",
+      "use_ssl" : false,
+      // "silent": false,
+      "output" : true,
+      "screenshots": {
+        "enabled": true,
+        "path": './test/selenium/errorShots/travis'
+      },
+      "globals": {
+        "waitForConditionTimeout": 30000,
+        "afterEach": callSauce
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "databaseEnabled": true,
+        "locationContextEnabled": true,
+        "applicationCacheEnabled": true,
+        "browserConnectionEnabled": true,
+        "webStorageEnabled": true,
+        "acceptSslCerts": true,
+        "rotatable": true,
+        "nativeEvents": true,
+        "chromeOptions": {
+          "args": ["disable-web-security", "ignore-certificate-errors"]
+        },    
+        "build": `build-${TRAVIS_JOB_NUMBER}`,
+        "tunnel-identifier": TRAVIS_JOB_NUMBER
+      },
+      "selenium" : {
+        "start_process" : false
       }
     }
   }

@@ -20,7 +20,8 @@ var strings = {
   buttonText: 'Profile Notifications',
   clickedTextOneOf: 'You sent: Profile Notifications',
   clickedTextSomeOf: 'You sent: Profile Notifications,Account Notifications'
-}
+};
+
 module.exports = {
   'Displays choose layout (oneOf)': function (client) {
     var PO = client.page.chooseLayout();
