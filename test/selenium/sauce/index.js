@@ -39,7 +39,7 @@ module.exports = function sauce(client, callback) {
       username: username,
       password: accessKey
     },
-    timeout: 3000,
+    timeout: 10000,
     headers: {
       'Content-Type': 'application/json',
       'Content-Length': data.length

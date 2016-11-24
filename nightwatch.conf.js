@@ -63,14 +63,14 @@ module.exports = {
       "username" : "${SAUCE_USERNAME}",
       "access_key" : "${SAUCE_ACCESS_KEY}",
       "use_ssl" : false,
-      "silent": false,
+      // "silent": false,
       "output" : true,
       "screenshots": {
         "enabled": true,
         "path": './test/selenium/errorShots/travis'
       },
       "globals": {
-        "waitForConditionTimeout": 20000,
+        "waitForConditionTimeout": 30000,
         "afterEach": callSauce
       },
       "desiredCapabilities": {
