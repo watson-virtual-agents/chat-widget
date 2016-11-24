@@ -4,6 +4,7 @@ node_js:
 - 4.4.0
 script:
 - npm run test:codecov
+- npm run test:selenium:travis
 notifications:
   email:
     recipients:
@@ -13,5 +14,5 @@ notifications:
     on_failure: always    # default: always
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-# addons:
-#   sauce_connect: true
+addons:
+  sauce_connect: true
