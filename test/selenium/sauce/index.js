@@ -17,19 +17,19 @@
 /* eslint no-console:0 */
 var https = require('https');
 
-module.exports = function sauce(callback) {
-  var currentTest = this.client.currentTest;
-  var username = this.client.options.username;
-  var sessionId = this.client.capabilities['webdriver.remote.sessionid'];
-  var accessKey = this.client.options.accessKey;
+module.exports = function sauce(client, callback) {
+  var currentTest = client.currentTest;
+  var username = client.options.username;
+  var sessionId = client.capabilities['webdriver.remote.sessionid'];
+  var accessKey = client.options.accessKey;
 
-  if (!this.client.launch_url.match(/saucelabs/)) {
+  if (!client.launch_url.match(/saucelabs/)) {
     console.log('Not saucelabs ...');
     return callback();
   }
 
   if (!username || !accessKey || !sessionId) {
-    console.log(this.client);
+    console.log(client);
     console.log('No username, accessKey or sessionId');
     return callback();
   }

@@ -38,5 +38,8 @@ module.exports = {
     client.end();
   },
 
-  tearDown: callSauce
+  afterEach: function(client, cb){
+    callSauce(client, cb);
+  }
+
 };
