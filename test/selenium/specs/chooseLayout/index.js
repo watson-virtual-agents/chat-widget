@@ -68,7 +68,9 @@ module.exports = {
     client.end();
   },
 
-  afterEach: function(client, cb){
-    callSauce(client, cb);
-  }
+  // afterEach: function(client, cb) {
+  //   if (process.env.TRAVIS) {
+  //     callSauce(client, cb);
+  //   }
+  // }
 };

@@ -26,12 +26,6 @@ module.exports = function sauce(client, callback) {
   console.log("client.options  ---> " + JSON.stringify(client.options));
   console.log("client.currentTest  ---> " + JSON.stringify(client.currentTest));
   console.log("client.capabilities  ---> " + JSON.stringify(client.capabilities));
-  // console.log("client   " + client.toString());
-  
-  // if (!client.launch_url.match(/saucelabs/)) {
-  //   console.log('Not saucelabs ...');
-  //   return callback();
-  // }
 
   if (!username || !accessKey || !sessionId) {
     console.log(client);
