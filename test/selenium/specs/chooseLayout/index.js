@@ -21,7 +21,6 @@ var strings = {
   clickedTextOneOf: 'You sent: Profile Notifications',
   clickedTextSomeOf: 'You sent: Profile Notifications,Account Notifications'
 };
-var callSauce = require('../../sauce');
 
 module.exports = {
   'Displays choose layout (oneOf)': function (client) {
@@ -66,11 +65,5 @@ module.exports = {
       .click('@enterButton')
       .assert.containsText('@lastMessage', strings.clickedTextSomeOf);
     client.end();
-  },
-
-  // afterEach: function(client, cb) {
-  //   if (process.env.TRAVIS) {
-  //     callSauce(client, cb);
-  //   }
-  // }
+  }
 };

@@ -13,7 +13,6 @@
 */
 
 var config = require('../../config');
-var callSauce = require('../../sauce');
 
 var strings = {
   'welcomeMessage': 'Hi my name is Virtual Agent. I am here to answer questions about our company. What can I help you with?',
@@ -36,11 +35,5 @@ module.exports = {
       .assert.containsText('@lastSentMessage', strings.hello)
       .assert.containsText('@lastMessage', strings.receiveMessage);
     client.end();
-  },
-
-  // afterEach: function(client, cb) {
-  //   if (process.env.TRAVIS) {
-  //     callSauce(client, cb);
-  //   }
-  // }
+  }
 };

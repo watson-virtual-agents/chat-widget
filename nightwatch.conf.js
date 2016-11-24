@@ -12,9 +12,16 @@
 * the License.
 */
 
-var callSauce = require('./test/selenium/sauce');
+var sauce = require('./test/selenium/sauce');
 
 var TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
+var IS_TRAVIS = process.env.TRAVIS;
+
+var callSauce = function(browser, cb) {
+  if (IS_TRAVIS) {
+    sauce(browser, cb);
+  }
+};
 
 module.exports = {
   "src_folders": [
@@ -64,13 +71,9 @@ module.exports = {
       },
       "globals": {
         "waitForConditionTimeout": 20000,
-        "afterEach": function(browser, cb) {
-          if (process.env.TRAVIS)
-            callSauce(browser, cb);
-        }
+        "afterEach": callSauce
       },
       "desiredCapabilities": {
-        // "browserName": "firefox",
         "browserName": "chrome",
         "javascriptEnabled": true,
         "databaseEnabled": true,
@@ -83,7 +86,7 @@ module.exports = {
         "nativeEvents": true,
         "chromeOptions": {
           "args": ["disable-web-security", "ignore-certificate-errors"]
-        },        
+        },    
         "build": `build-${TRAVIS_JOB_NUMBER}`,
         "tunnel-identifier": TRAVIS_JOB_NUMBER,
       },
@@ -91,6 +94,5 @@ module.exports = {
         "start_process" : false
       }
     }
-
   }
 };
