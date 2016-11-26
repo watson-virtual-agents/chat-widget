@@ -2,6 +2,9 @@ language: node_js
 sudo: false
 node_js:
   - 4.4.0
+env:
+  global:
+    - secure: CPkkha1xKo09h8NXO9kr3lng0z2PImyoHgdy5N67FFbwKDvaiJsQBxPbL0yXb77u+QhiFmqeQPh7QxiEsfLRvxqLTUeLfWWkZ2JxoU83SbzhP0dQx6OJ4sYTb3SA9jKoGZ1kM8uG6X/FZRpBzUzoBhuhM9GmaLmtlwRyEX1xpmktqkRp5be7KJOGk5ctyh1FBxA17ubDmBvH2nKHHCmVqjtiwfuYDhRQ9z3V2NJ2KXrXeCF0xSHleNjXgRFrDWefRhp1M9blhp6qbt0NnyoxcJi62DILHWwk4hHRNCkGwOVtL7+wr2qSg+ECaXu62xa6B9lSlukh1m2qmUv6Bda/nE9n6Y+avtfApGOyERdi7yCTSm9VGyUi0Cc/ewpWMIg+sNH+rX3O1apLkjHmRNZ27+h65UM+THBcuo+F98SIXMKS4O9dRDKf9RfmCc+vqezu19EVr1wW8fD4Mof4gVCYWsrv/Diua2ZDb+IkwnTkl5O+xEDV9oPFiEQFyyn3IevMCE42mP9jCdBLjobjiQZIUsHoq4koRvjmH98Mqy1pGQD78tpOj2k5OysKbdoivz68sSoZMZ+pK200V9amHWxk+dMAPd49QwYbNlB7drRmSmMMgxqxjmvrJjbY5ntaKscbNrsaEKqyUaW5WQt5UDUP5JVlMJDtNnOir5Sniavg028=
 before_install:
   - 'openssl aes-256-cbc -K $encrypted_989954bb41cf_key -iv $encrypted_989954bb41cf_iv -in auth.js.enc -out test/resources/auth.js -d'
 script:
@@ -13,9 +16,6 @@ after_success:
 after_script:
   # hacky workaround for hanging chromedriver processes
   - pkill chromedriver
-env:
-  global:
-    - secure: CPkkha1xKo09h8NXO9kr3lng0z2PImyoHgdy5N67FFbwKDvaiJsQBxPbL0yXb77u+QhiFmqeQPh7QxiEsfLRvxqLTUeLfWWkZ2JxoU83SbzhP0dQx6OJ4sYTb3SA9jKoGZ1kM8uG6X/FZRpBzUzoBhuhM9GmaLmtlwRyEX1xpmktqkRp5be7KJOGk5ctyh1FBxA17ubDmBvH2nKHHCmVqjtiwfuYDhRQ9z3V2NJ2KXrXeCF0xSHleNjXgRFrDWefRhp1M9blhp6qbt0NnyoxcJi62DILHWwk4hHRNCkGwOVtL7+wr2qSg+ECaXu62xa6B9lSlukh1m2qmUv6Bda/nE9n6Y+avtfApGOyERdi7yCTSm9VGyUi0Cc/ewpWMIg+sNH+rX3O1apLkjHmRNZ27+h65UM+THBcuo+F98SIXMKS4O9dRDKf9RfmCc+vqezu19EVr1wW8fD4Mof4gVCYWsrv/Diua2ZDb+IkwnTkl5O+xEDV9oPFiEQFyyn3IevMCE42mP9jCdBLjobjiQZIUsHoq4koRvjmH98Mqy1pGQD78tpOj2k5OysKbdoivz68sSoZMZ+pK200V9amHWxk+dMAPd49QwYbNlB7drRmSmMMgxqxjmvrJjbY5ntaKscbNrsaEKqyUaW5WQt5UDUP5JVlMJDtNnOir5Sniavg028=
 cache:
   directories:
   - node_modules
