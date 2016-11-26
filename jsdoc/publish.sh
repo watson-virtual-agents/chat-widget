@@ -4,20 +4,20 @@
 
 # checking the build/job numbers allows it to only publish once even though we test against multiple node.js versions
 
-if [ "$TRAVIS_REPO_SLUG" == "najimovi/chat-widget" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" ] && [ "$TRAVIS_BUILD_NUMBER.1" == "$TRAVIS_JOB_NUMBER" ]; then
+if [ "$TRAVIS_REPO_SLUG" == "watson-virtual-agents/chat-widget" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" ] && [ "$TRAVIS_BUILD_NUMBER.1" == "$TRAVIS_JOB_NUMBER" ]; then
 
   echo "Publishing JSDoc..."
 
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
-  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/najimovi/chat-widget gh-pages > /dev/null
+  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/watson-virtual-agents/chat-widget gh-pages > /dev/null
 
   pushd gh-pages
     # make a directory named after the branch/tag for the current build, replacing the previous one if present
     # on tagged builds, $TRAVIS_BRANCH is the tag (e.g. v1.2.3), otherwise it's the branch name (e.g. master)
     rm -rf $TRAVIS_BRANCH
     mkdir $TRAVIS_BRANCH
-    cp -Rf ../doc/* ./$TRAVIS_BRANCH
+    cp -Rf ../jsdoc-output/* ./$TRAVIS_BRANCH
 
     # update the latest/ symlink
     # on tagged builds, $TRAVIS_TAG is set to the tag, but it's blank on regular builds, unlike $TRAVIS_BRANCH

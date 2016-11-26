@@ -17,10 +17,8 @@ echo '<!DOCTYPE html>
         <h1>IBM Watson Virtual Agent Chat Widget</h1>
     </div>
 
-    <p><a href="http://www.ibm.com/watson/developercloud/">Info</a>
-        | <a href="http://www.ibm.com/watson/developercloud/doc/">Documentation</a>
-        | <a href="https://github.com/watson-developer-cloud/node-sdk">GitHub</a>
-        | <a href="https://npmjs.org/package/watson-developer-cloud">npm</a>
+    <p> <a href="https://github.com/watson-virtual-agents/chat-widget">GitHub</a>
+        | <a href="https://www.npmjs.com/package/@watson-virtual-agent/chat-widget">npm</a>
     </p>
 
     <p>JSDoc by branch/tag:</p>
