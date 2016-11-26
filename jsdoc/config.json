@@ -12,7 +12,7 @@
       "./test/",
       "./karma.conf.js",
       "./nightwatch.conf.js",
-      "./webpack.config.js",
+      "./webpack.config.js"
     ]
   },
   "opts": {
