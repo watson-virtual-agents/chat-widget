@@ -1,15 +1,24 @@
 language: node_js
-sudo: true
+sudo: false
 node_js:
 - 4.4.0
 script:
-- npm run test
+- npm run test:codecov
+- npm run test:selenium:travis
+after_script:
+  # hacky workaround for hanging chromedriver processes
+  - pkill chromedriver
+cache:
+  directories:
+  - node_modules
 notifications:
   email:
     recipients:
       - ewinters@us.ibm.com
       - najimovi@ar.ibm.com
-    on_success: always  # default is change, update if this gets too annoying
-    on_failure: always   # default: always
+    on_success: always    # default is change, update if this gets too annoying
+    on_failure: always    # default: always
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+addons:
+  sauce_connect: true

@@ -12,20 +12,9 @@
 * the License.
 */
 
-var defaultStyles = {
-  background: 'rgba(61, 61, 61, 1)',
-  accentBackground: '#AF6EE8',
-  accentText: '#ffffff',
-  text: '#ffffff',
-  link: '#ffffff',
-  secondaryBackground: 'rgba(90, 90, 90, 1)',
-  secondaryText: 'rgba(247, 247, 247, 1)',
-  inputBackground: 'rgba(90, 90, 90, 1)',
-  inputText: 'rgba(247, 247, 247, 1)',
-  errorBackground: '#e86e6e',
-  errorText: '#ffffff',
-  fontSize: '15px',
-  fontFamily: '"Helvetica Neue",HelveticaNeue,Helvetica,sans-serif'
-};
-
-module.exports = defaultStyles;
+require('selenium-download').ensure('./bin', function(error) {
+  if (error)
+    return console.log(error);
+  else
+    console.log('✔ Selenium & Chromedriver downloaded to:', './bin');
+});

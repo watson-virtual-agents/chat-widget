@@ -23,7 +23,8 @@ var activeClassName = 'IBMChat-accent-colors';
 var inactiveClassName = 'IBMChat-accent-colors-button';
 var widgets = [];
 var templates = {
-  button: require('./templates/button.html')
+  button: require('./templates/button.html'),
+  submit: require('./templates/submit.html')
 };
 
 var chooseLayout = {
@@ -80,10 +81,10 @@ Choose.prototype.drawButtons = function() {
 
   if (this.allowMultiple) {
     var submit = document.createElement('div');
-    var submitBtn = utils.compile(templates.field, {
+    var submitBtn = utils.compile(templates.submit, {
       text: 'Submit'
     });
-    submit.className = ns + '-submit';
+    submit.classList.add(ns + '-submit');
     submit.innerHTML = submitBtn;
     this.submitButton = submit.querySelector('button');
     this.submitButton.classList.add(activeClassName);
@@ -101,7 +102,8 @@ Choose.prototype.handleClick = function() {
     text: null
   };
   data.text = this.dataset.input;
-  this.className = activeClassName + ' IBMChat-accent-colors';
+  this.classList.add(activeClassName);
+  this.classList.add('IBMChat-accent-colors');
   publish('send', data);
 };
 
@@ -128,7 +130,7 @@ Choose.prototype.handleSubmit = function() {
     this.values.push(buttons[i].dataset.input);
   publish('send', {
     silent: true,
-    text: this.values.toString()
+    text: this.values.toString().slice(0, -1)
   });
 };
 

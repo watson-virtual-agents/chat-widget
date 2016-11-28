@@ -12,20 +12,21 @@
 * the License.
 */
 
-var defaultStyles = {
-  background: 'rgba(61, 61, 61, 1)',
-  accentBackground: '#AF6EE8',
-  accentText: '#ffffff',
-  text: '#ffffff',
-  link: '#ffffff',
-  secondaryBackground: 'rgba(90, 90, 90, 1)',
-  secondaryText: 'rgba(247, 247, 247, 1)',
-  inputBackground: 'rgba(90, 90, 90, 1)',
-  inputText: 'rgba(247, 247, 247, 1)',
-  errorBackground: '#e86e6e',
-  errorText: '#ffffff',
-  fontSize: '15px',
-  fontFamily: '"Helvetica Neue",HelveticaNeue,Helvetica,sans-serif'
+var config = require('../config');
+
+var localCommands = {
+
 };
 
-module.exports = defaultStyles;
+var localElements = {
+  
+};
+
+module.exports = {
+  url: config.pageUrl,
+  elements: [
+    config.sharedElements,
+    localElements
+  ],
+  commands: [Object.assign({}, localCommands, config.sharedCommands)]
+};
