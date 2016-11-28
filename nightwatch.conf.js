@@ -18,9 +18,8 @@ var TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
 var IS_TRAVIS = process.env.TRAVIS;
 
 var callSauce = function(browser, cb) {
-  if (IS_TRAVIS) {
+  if (IS_TRAVIS)
     sauce(browser, cb);
-  }
 };
 
 module.exports = {
@@ -28,7 +27,7 @@ module.exports = {
     "test/selenium/specs"
   ],
   "page_objects_path": "test/selenium/pageobjects",
-  "output_folder": "./reports",
+  "output_folder": "./reports/selenium",
   "selenium": {
     "start_process": true,
     "server_path": "./bin/selenium.jar",
@@ -57,14 +56,14 @@ module.exports = {
         "javascriptEnabled": true
       }
     },
-    "travis" : {
-      "selenium_host" : "ondemand.saucelabs.com",
-      "selenium_port" : 80,
-      "username" : "${SAUCE_USERNAME}",
-      "access_key" : "${SAUCE_ACCESS_KEY}",
-      "use_ssl" : false,
+    "travis": {
+      "selenium_host": "ondemand.saucelabs.com",
+      "selenium_port": 80,
+      "username": "${SAUCE_USERNAME}",
+      "access_key": "${SAUCE_ACCESS_KEY}",
+      "use_ssl": false,
       // "silent": false,
-      "output" : true,
+      "output": true,
       "screenshots": {
         "enabled": true,
         "path": './test/selenium/errorShots/travis'
@@ -86,12 +85,12 @@ module.exports = {
         "nativeEvents": true,
         "chromeOptions": {
           "args": ["disable-web-security", "ignore-certificate-errors"]
-        },    
-        "build": `build-${TRAVIS_JOB_NUMBER}`,
+        },
+        "build": "build-" + TRAVIS_JOB_NUMBER,
         "tunnel-identifier": TRAVIS_JOB_NUMBER
       },
-      "selenium" : {
-        "start_process" : false
+      "selenium": {
+        "start_process": false
       }
     }
   }

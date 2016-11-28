@@ -11,8 +11,8 @@
 * or implied. See the License for the specific language governing permissions and limitations under
 * the License.
 */
-var config = require('../../config');
-var mocks = require('../../mocks/chooseLayout');
+var config = require('../../../config');
+var mocks = require('../../../mocks/layout/choose');
 var strings = {
   showLayout: 'Show me the layout',
   whichEmailOneOf: 'Which email address are you looking to change?',
@@ -23,8 +23,8 @@ var strings = {
 };
 
 module.exports = {
-  'Displays choose layout (oneOf)': function (client) {
-    var PO = client.page.chooseLayout();
+  'it should display choose layout (oneOf)': function (client) {
+    var PO = client.page.choose();
     PO.navigate()
       .waitForElementVisible('@main')
       .createWidget()
@@ -34,8 +34,8 @@ module.exports = {
       .typeMessage(strings.showLayout)
       .assert.containsText('@lastMessage', strings.whichEmailOneOf);
   },
-  'Click on choose layout (oneOf)': function(client) {
-    var PO = client.page.chooseLayout();
+  'it should click on choose layout (oneOf)': function(client) {
+    var PO = client.page.choose();
     PO.setMessage(strings.clickedTextOneOf)
       .assert.elementPresent('@firstButton')
       .assert.containsText('@firstButton', strings.buttonText)
@@ -43,8 +43,8 @@ module.exports = {
       .assert.containsText('@lastMessage', strings.clickedTextOneOf);
     client.end();
   },
-  'Displays choose layout (someOf)': function (client) {
-    var PO = client.page.chooseLayout();
+  'it should display choose layout (someOf)': function (client) {
+    var PO = client.page.choose();
     PO.navigate()
       .waitForElementVisible('body')
       .createWidget()
@@ -54,8 +54,8 @@ module.exports = {
       .typeMessage(strings.showLayout)
       .assert.containsText('@lastMessage', strings.whichEmailSomeOf);
   },
-  'Click on choose layout (someOf)': function(client) {
-    var PO = client.page.chooseLayout();
+  'it should click on choose layout (someOf)': function(client) {
+    var PO = client.page.choose();
     PO.assert.elementPresent('@firstButtonSomeOf')
       .assert.elementPresent('@secondButtonSomeOf')
       .assert.containsText('@firstButtonSomeOf', strings.buttonText)
