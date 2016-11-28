@@ -46,7 +46,7 @@ module.exports = {
   'it should display choose layout (someOf)': function (client) {
     var PO = client.page.choose();
     PO.navigate()
-      .waitForElementVisible('body')
+      .waitForElementVisible('@main')
       .createWidget()
       .assert.elementPresent('@outerContainer')
       .assert.visible('@input')
