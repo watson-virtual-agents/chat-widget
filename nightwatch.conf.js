@@ -27,7 +27,7 @@ module.exports = {
     "test/selenium/specs"
   ],
   "page_objects_path": "test/selenium/pageobjects",
-  "output_folder": "./reports",
+  "output_folder": "./reports/selenium",
   "selenium": {
     "start_process": true,
     "server_path": "./bin/selenium.jar",
