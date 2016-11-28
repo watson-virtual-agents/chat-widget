@@ -1,27 +1,35 @@
 <div class="${ns}-container IBMChat-secondary-colors">
   <div class="${ns}-row">
-    <label class="IBMChat-screen-reader-text" for="cc_full_name_${uuid}">Name on Card</label>
-    <input type="text" class="IBMChat-input-colors" id="cc_full_name_${uuid}" name="cc_full_name" placeholder="Name on Card"/>
-    <div class="IBMChat-validation-error IBMChat-error-colors" data-validation-for="cc_full_name" data-valid="true" style="display:none;"></div>
+    <fieldset aria-describedby="cc_full_name_${uuid}_error">
+      <label class="IBMChat-screen-reader-text" for="cc_full_name_${uuid}">Name on Card</label>
+      <input type="text" class="IBMChat-input-colors" id="cc_full_name_${uuid}" name="cc_full_name" placeholder="Name on Card"/>
+      <div id="cc_full_name_${uuid}_error" class="IBMChat-validation-error IBMChat-error-colors" data-validation-for="cc_full_name" data-valid="true" style="display:none;"></div>
+    </fieldset>
   </div>
   <div class="${ns}-row">
-    <label class="IBMChat-screen-reader-text" for="cc_number_${uuid}">Credit Card Number</label>
-    <input type="text" class="IBMChat-input-colors" id="cc_number_${uuid}" name="cc_number"  placeholder="Credit Card Number"/>
-    <div class="IBMChat-validation-error IBMChat-error-colors" data-validation-for="cc_number" data-valid="true" style="display:none;"></div>
+    <fieldset aria-describedby="cc_number_${uuid}_error">
+      <label class="IBMChat-screen-reader-text" for="cc_number_${uuid}">Credit Card Number</label>
+      <input type="text" class="IBMChat-input-colors" id="cc_number_${uuid}" name="cc_number"  placeholder="Credit Card Number"/>
+      <div id="cc_number_${uuid}_error" class="IBMChat-validation-error IBMChat-error-colors" data-validation-for="cc_number" data-valid="true" style="display:none;"></div>
+    </fieldset>
   </div>
   <div class="${ns}-row">
     <div class="${ns}-col">
-      <label class="IBMChat-screen-reader-text" for="cc_exp_date_month_${uuid}">Expiration Date Month</label>
-      <input class="${ns}-date IBMChat-input-colors" type="text" id="cc_exp_date_month_${uuid}" name="cc_exp_date_month" placeholder="MM" size="3" />
-      <label class="IBMChat-screen-reader-text" for="cc_exp_date_year_${uuid}">Expiration Date Year</label>
-      <input class="${ns}-date IBMChat-input-colors" type="text" id="cc_exp_date_year_${uuid}" name="cc_exp_date_year" placeholder="YYYY" size="5" />
+      <fieldset aria-describedby="cc_exp_date_${uuid}_error">
+        <label class="IBMChat-screen-reader-text" for="cc_exp_date_month_${uuid}">Expiration Date Month</label>
+        <input class="${ns}-date IBMChat-input-colors" type="text" id="cc_exp_date_month_${uuid}" name="cc_exp_date_month" placeholder="MM" size="3" />
+        <label class="IBMChat-screen-reader-text" for="cc_exp_date_year_${uuid}">Expiration Date Year</label>
+        <input class="${ns}-date IBMChat-input-colors" type="text" id="cc_exp_date_year_${uuid}" name="cc_exp_date_year" placeholder="YYYY" size="5" />
+      </fieldset>
     </div>
     <div class="${ns}-col">
-      <label class="IBMChat-screen-reader-text" for="cc_code_${uuid}">CVV</label>
-      <input class="${ns}-cvv IBMChat-input-colors" type="text" id="cc_code_${uuid}" name="cc_code" placeholder="CVV" size="5"/>
+      <fieldset aria-describedby="cc_code_${uuid}_error">
+        <label class="IBMChat-screen-reader-text" for="cc_code_${uuid}">CVV</label>
+        <input class="${ns}-cvv IBMChat-input-colors" type="text" id="cc_code_${uuid}" name="cc_code" placeholder="CVV" size="5"/>
+      </fieldset>
     </div>
-    <div class="IBMChat-validation-error IBMChat-error-colors" data-validation-for="cc_exp_date" data-valid="true" style="display:none;"></div>
-    <div class="IBMChat-validation-error IBMChat-error-colors" data-validation-for="cc_code" data-valid="true" style="display:none;"></div>
+    <div id="cc_exp_date_${uuid}_error" class="IBMChat-validation-error IBMChat-error-colors" data-validation-for="cc_exp_date" data-valid="true" style="display:none;"></div>
+    <div id="cc_code_${uuid}_error" class="IBMChat-validation-error IBMChat-error-colors" data-validation-for="cc_code" data-valid="true" style="display:none;"></div>
   </div>
   <div class="${ns}-buttons">
     <button class="${ns}-cancel">Cancel</button>

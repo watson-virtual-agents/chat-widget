@@ -87,7 +87,13 @@ module.exports = {
     PO.setValue('@cvvInput', strings.cvv)
       .click('@submitButton')
       .assert.containsText('@lastMessage', strings.success);
-      client.end();
+  },
+  'it should update user profile with credit card information': function (client) {
+    var PO = client.page.ccValidator();
+      PO.profileCheck('cc_full_name', strings.name)
+      .profileCheck('cc_number', strings.cc)
+      .profileCheck('cc_code', strings.cvv);
+    client.end();
   },
   'it should cancel the credit card layout': function (client) {
     var PO = client.page.ccValidator();
