@@ -35,7 +35,9 @@ function start(data) {
     var chatBox = document.createElement('div');
     chatBox.classList.add('IBMChat-input-container');
     chatBox.classList.add('IBMChat-input-container-theme');
-    chatBox.innerHTML = templates.input;
+    chatBox.innerHTML = utils.compile(templates.input, {
+      placeholder: 'Enter message...'
+    });
     outerContainer.appendChild(chatBox);
     elements.inputHolder = current.root.querySelector('.IBMChat-input-container');
     elements.input = current.root.querySelector('.IBMChat-chat-textbox');
