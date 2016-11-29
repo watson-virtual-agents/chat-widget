@@ -23,7 +23,7 @@ function resizeInput() {
     maxInputHeight = (maxInputHeight > 96) ? maxInputHeight : 96;
     if (maxInputHeight !== current.inputHeight) {
       var cloneHeight;
-      current.inputClone.innerHTML = current.input.value.replace(/\n/g, '<br />');
+      current.inputClone.innerHTML = (current.input.value && current.input.value.length > 0) ? current.input.value.replace(/\n/g, '<br />') : 'Enter message...';
       setTimeout(function() {
         cloneHeight = window.getComputedStyle(current.inputClone).getPropertyValue('height').replace('px', '');
         if (cloneHeight !== current.inputHeight) {
