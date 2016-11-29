@@ -55,6 +55,7 @@ var sharedCommands = {
     return this.waitForElementPresent('@outerContainer');
   },
   setMessage: function(message) {
+    this.api.pause(1000);
     instance.post('/setmessage', { message: message });
     this.api.pause(1000);
     return this;

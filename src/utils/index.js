@@ -16,7 +16,8 @@ var styles = require('./styles');
 var writeMessage = require('./writeMessage');
 
 function _render(el, state) {
-  el.setAttribute('class', 'IBMChat-ibm-spinner IBMChat-input-loading IBMChat-' + state + '-spin');
+  if (el)
+    el.setAttribute('class', 'IBMChat-ibm-spinner IBMChat-input-loading IBMChat-' + state + '-spin');
 }
 
 var spinner = {
