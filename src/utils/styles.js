@@ -40,7 +40,7 @@ function _getStyles(current) {
 function _placeHolderColor(text, background) {
   var rgb_beginning = _hexToRGBArray(normalizeToHex(text)),
     rgb_end = _hexToRGBArray(normalizeToHex(background)),
-    p = 0.5,
+    p = 0.55,
     w = p * 2 - 1,
     w1 = (w + 1) / 2.0,
     w2 = 1 - w1,

@@ -4,6 +4,12 @@
   width: 240px;
 }
 
+.IBMChat-creditcard-container fieldset {
+  border:none;
+  margin:0;
+  padding:0;
+}
+
 .IBMChat-creditcard-row {
   padding-bottom: 1em;
 }
