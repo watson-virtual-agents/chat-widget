@@ -111,7 +111,9 @@ function init(config) {
       if (config.playback === true) {
         defaultState.chatID = 'playback';
         events.publish('start', defaultState);
-        resolve();
+        setTimeout(function() {
+          resolve();
+        }, 0);
       } else if (config.botID) {
         BotSDK
           .configure( SDKconfig )
@@ -121,7 +123,9 @@ function init(config) {
             window.sessionStorage.setItem('IBMChatChatID', res.chatID);
             events.publish('start', defaultState);
             events.publish('receive', res);
-            resolve();
+            setTimeout(function() {
+              resolve();
+            }, 0);
           })['catch']( function(err) {
             console.error(err);
             destroy();
