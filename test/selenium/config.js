@@ -55,15 +55,22 @@ var sharedCommands = {
     return this.waitForElementPresent('@outerContainer');
   },
   setMessage: function(message) {
-    this.api.pause(250);
     instance.post('/setmessage', { message: message });
-    this.api.pause(250);
+    this.api.pause(1000);
     return this;
   },
   typeMessage: function(message) {
     this.setValue('@input', message);
     this.api.keys(this.api.Keys.ENTER);
-    this.api.pause(250);
+    this.api.pause(1000);
+    return this;
+  },
+  profileCheck: function(key, value) {
+    this.api.execute(function(obj) {
+      return window.IBMChat.profile.get(obj.key);
+    }, [{ key: key, value: value }], function(result) {
+      this.assert.equal(key + ':' + result.value, key + ':' + value);
+    });
     return this;
   }
 };
