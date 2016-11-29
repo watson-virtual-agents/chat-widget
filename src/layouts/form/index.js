@@ -117,10 +117,11 @@ Form.prototype.validateFields = function() {
 
 Form.prototype.validateField = function(field, datum) {
   var valid = true;
-  if (!field.value || field.value.trim().length === 0) {
+  if ((!field.value || field.value.trim().length === 0) && datum.required == 'true') {
     this.addError(field.getAttribute('name'), 'This field is required.');
     valid = false;
-  } else if (datum.validations && datum.validations.length !== 0) {
+  }
+  if (valid === true && datum.validations && datum.validations.length !== 0) {
     for (var i = 0; i < datum.validations.length; i++) {
       // regexes received from backend should always include
       // start/end of line anchors (^, $)
