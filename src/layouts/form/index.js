@@ -139,17 +139,21 @@ Form.prototype.validateField = function(field, datum) {
 };
 
 Form.prototype.addError = function(name, msg) {
-  var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
-  el.dataset.valid = false;
-  el.textContent = msg;
-  el.style.display = 'block';
+  var field = this.layoutElement.querySelector('[name="' + name + '"]');
+  var errorEl = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
+  field.setAttribute('aria-invalid', true);
+  errorEl.dataset.valid = false;
+  errorEl.textContent = msg;
+  errorEl.style.display = 'block';
 };
 
 Form.prototype.removeError = function(name) {
-  var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
-  el.dataset.valid = true;
-  el.textContent = '';
-  el.style.display = 'none';
+  var field = this.layoutElement.querySelector('[name="' + name + '"]');
+  var errorEl = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
+  field.removeAttribute('aria-invalid');
+  errorEl.dataset.valid = true;
+  errorEl.textContent = '';
+  errorEl.style.display = 'none';
 };
 
 Form.prototype.removeAllErrors = function() {
