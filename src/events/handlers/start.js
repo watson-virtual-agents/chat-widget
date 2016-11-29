@@ -25,11 +25,6 @@ function start(data) {
   current.root.className += " chatID-" + current.chatID;
   current.root.innerHTML = templates.start;
   var outerContainer = current.root.querySelector('.IBMChat-outer-container');
-  var chatBox = document.createElement('div');
-  chatBox.classList.add('IBMChat-input-container');
-  chatBox.classList.add('IBMChat-input-container-theme');
-  chatBox.innerHTML = templates.input;
-  outerContainer.appendChild(chatBox);
   var elements = {
     container: current.root.querySelector('.IBMChat-chat-container'),
     chatHolder: current.root.querySelector('.IBMChat-messages'),
@@ -37,6 +32,11 @@ function start(data) {
   };
   //TODO: remove if conditional after Dashboard implements new playback
   if (current.playback !== true) {
+    var chatBox = document.createElement('div');
+    chatBox.classList.add('IBMChat-input-container');
+    chatBox.classList.add('IBMChat-input-container-theme');
+    chatBox.innerHTML = templates.input;
+    outerContainer.appendChild(chatBox);
     elements.inputHolder = current.root.querySelector('.IBMChat-input-container');
     elements.input = current.root.querySelector('.IBMChat-chat-textbox');
     elements.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');

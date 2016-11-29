@@ -1,7 +1,13 @@
 .IBMChat-creditcard-container {
   margin-top: 1em;
-  padding: 0.75em 1.5em 0.75em 1.5em;
+  padding: 1em 1.5em 1em 1.5em;
   width: 240px;
+}
+
+.IBMChat-creditcard-container fieldset {
+  border:none;
+  margin:0;
+  padding:0;
 }
 
 .IBMChat-creditcard-row {
@@ -12,6 +18,14 @@
   width: 100%;
 }
 
+.IBMChat-creditcard-row input[name="cc_exp_date_month"] {
+  max-width: 32px;
+}
+
+.IBMChat-creditcard-row input[name="cc_exp_date_year"], .IBMChat-creditcard-row input[name="cc_code"]  {
+  max-width: 64px;
+}
+
 .IBMChat-creditcard-col {
   display: inline-block;
 }
@@ -20,8 +34,13 @@
   padding-left:1.5em;
 }
 
-.IBMChat-creditcard-buttons {
-  height: 2.5em;
+.IBMChat-creditcard-buttons:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 
 .IBMChat-creditcard-buttons button {

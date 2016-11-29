@@ -1,7 +1,13 @@
 .IBMChat-form-container {
   margin-top: 1em;
-  padding: 1.5em;
+  padding: 1em 1.5em 1em 1.5em;
   width: 240px;
+}
+
+.IBMChat-form-container fieldset {
+  border:none;
+  margin:0;
+  padding:0;
 }
 
 .IBMChat-form-fields {

@@ -83,14 +83,34 @@ CreditCard.prototype.addListeners = function() {
 };
 
 CreditCard.prototype.addError = function(name, msg) {
-  var errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
+  var field, errorElement;
+  if (name === 'cc_exp_date') {
+    field = this.el.querySelector('[name="cc_exp_date_month"]');
+    field.setAttribute('aria-invalid', true);
+    field = this.el.querySelector('[name="cc_exp_date_year"]');
+    field.setAttribute('aria-invalid', true);
+  } else {
+    field = this.el.querySelector('[name="' + name + '"]');
+    field.setAttribute('aria-invalid', true);
+  }
+  errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
   errorElement.style.display = 'block';
   errorElement.dataset.valid = false;
   errorElement.textContent = msg;
 };
 
 CreditCard.prototype.removeError = function(name) {
-  var errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
+  var field, errorElement;
+  if (name === 'cc_exp_date') {
+    field = this.el.querySelector('[name="cc_exp_date_month"]');
+    field.removeAttribute('aria-invalid');
+    field = this.el.querySelector('[name="cc_exp_date_year"]');
+    field.removeAttribute('aria-invalid');
+  } else {
+    field = this.el.querySelector('[name="' + name + '"]');
+    field.removeAttribute('aria-invalid');
+  }
+  errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
   errorElement.style.display = 'none';
   errorElement.dataset.valid = true;
   errorElement.textContent = '';
