@@ -55,10 +55,7 @@ var sharedCommands = {
     return this.waitForElementPresent('@outerContainer');
   },
   setMessage: function(message) {
-<<<<<<< HEAD
     this.api.pause(1000);
-=======
->>>>>>> dev
     instance.post('/setmessage', { message: message });
     this.api.pause(1000);
     return this;
@@ -67,8 +64,6 @@ var sharedCommands = {
     this.setValue('@input', message);
     this.api.keys(this.api.Keys.ENTER);
     this.api.pause(1000);
-<<<<<<< HEAD
-=======
     return this;
   },
   profileCheck: function(key, value) {
@@ -77,7 +72,6 @@ var sharedCommands = {
     }, [{ key: key, value: value }], function(result) {
       this.assert.equal(key + ':' + result.value, key + ':' + value);
     });
->>>>>>> dev
     return this;
   }
 };
