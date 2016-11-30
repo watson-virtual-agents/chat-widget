@@ -39,6 +39,7 @@ RequestGeolocationLatlong.prototype = {
     this.uuid = data.uuid;
     this.parentElement = data.element;
     this.layoutElement = data.layoutElement;
+    this.msgElement = data.msgElement;
     this.timedOut = false;
     this.timeoutCheck = setTimeout(function() {
       this.timedOut = true;
@@ -46,6 +47,15 @@ RequestGeolocationLatlong.prototype = {
     }.bind(this), LOCATION_TIMEOUT);
     publish('enable-loading');
     publish('disable-input');
+    try {
+      var msgElement = this.msgElement;
+      navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
+        if (result.state === 'granted')
+          msgElement.textContent = 'Finding your current location.';
+      });
+    } catch (e) {
+      console.log('navigator.permissions not supported.');
+    }
     navigator.geolocation.getCurrentPosition(
       function(position) {
         if (this.timedOut) return false;

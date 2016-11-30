@@ -57,7 +57,8 @@ CreditCard.prototype.drawForm = function() {
   var text = templates.base;
   this.el = document.createElement('div');
   text = utils.compile(templates.base, {
-    ns: ns
+    ns: ns,
+    uuid: utils.getUUID()
   });
   this.el.innerHTML = text;
   this.layoutElement.appendChild(this.el);
@@ -82,14 +83,34 @@ CreditCard.prototype.addListeners = function() {
 };
 
 CreditCard.prototype.addError = function(name, msg) {
-  var errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
+  var field, errorElement;
+  if (name === 'cc_exp_date') {
+    field = this.el.querySelector('[name="cc_exp_date_month"]');
+    field.setAttribute('aria-invalid', true);
+    field = this.el.querySelector('[name="cc_exp_date_year"]');
+    field.setAttribute('aria-invalid', true);
+  } else {
+    field = this.el.querySelector('[name="' + name + '"]');
+    field.setAttribute('aria-invalid', true);
+  }
+  errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
   errorElement.style.display = 'block';
   errorElement.dataset.valid = false;
   errorElement.textContent = msg;
 };
 
 CreditCard.prototype.removeError = function(name) {
-  var errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
+  var field, errorElement;
+  if (name === 'cc_exp_date') {
+    field = this.el.querySelector('[name="cc_exp_date_month"]');
+    field.removeAttribute('aria-invalid');
+    field = this.el.querySelector('[name="cc_exp_date_year"]');
+    field.removeAttribute('aria-invalid');
+  } else {
+    field = this.el.querySelector('[name="' + name + '"]');
+    field.removeAttribute('aria-invalid');
+  }
+  errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
   errorElement.style.display = 'none';
   errorElement.dataset.valid = true;
   errorElement.textContent = '';
@@ -98,7 +119,7 @@ CreditCard.prototype.removeError = function(name) {
 CreditCard.prototype.validate = function() {
   var valid = true;
 
-  if (this.formData.cc_full_name.length === 0) {
+  if (this.formData.cc_full_name.trim().length === 0) {
     this.addError('cc_full_name', 'This field is required.');
     if (valid) this.formElements['cc_full_name'].focus();
     valid = false;
@@ -106,7 +127,7 @@ CreditCard.prototype.validate = function() {
     this.removeError('cc_full_name');
   }
 
-  var cc = validation.validateCard(this.data.acceptedCards, this.formData.cc_number);
+  var cc = validation.validateCard(this.data.acceptedCards, this.formData.cc_number, this.formElements.cc_number);
   if (!cc.valid) {
     this.addError('cc_number', cc.message);
     if (valid) this.formElements['cc_number'].focus();

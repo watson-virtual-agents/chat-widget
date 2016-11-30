@@ -40,8 +40,10 @@ var templates = {
   addLocationItem: require('./templates/add-location-item.html'),
   hoursClosed: require('./templates/hours-closed.html'),
   hoursOpen: require('./templates/hours-open.html'),
+  hoursUnknown: require('./templates/hours-unknown.html'),
   hoursTodayOpen: require('./templates/hours-today-open.html'),
   hoursTodayClosed: require('./templates/hours-today-closed.html'),
+  hoursTodayUnknown: require('./templates/hours-today-unknown.html'),
   hoursTimezone: require('./templates/hours-timezone.html')
 };
 
@@ -154,22 +156,30 @@ function formatAMPM(time) {
     return hours + ':' + minutes + ' ' + ampm;
   }
   catch (e) {
-    return '-';
+    return false;
   }
 }
 
 function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
-  if (hours) {
+  if (hours && hours.length === 7) {
     // hours
     var today = new Date().getDay();
     var todaysHours = hours[today];
     var el = document.createElement('div');
     if (todaysHours && todaysHours.isOpen) {
-      el.innerHTML = utils.compile(templates.hoursTodayOpen, {
-        ns: ns,
-        open: formatAMPM(todaysHours.open),
-        close: formatAMPM(todaysHours.close)
-      });
+      var open = formatAMPM(todaysHours.open);
+      var close = formatAMPM(todaysHours.close);
+      if (open && close) {
+        el.innerHTML = utils.compile(templates.hoursTodayOpen, {
+          ns: ns,
+          open: open,
+          close: close
+        });
+      } else {
+        el.innerHTML = utils.compile(templates.hoursTodayUnknown, {
+          ns: ns
+        });
+      }
     } else {
       el.innerHTML = utils.compile(templates.hoursTodayClosed, {
         ns: ns
@@ -189,25 +199,57 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
         timezoneEl[j].parentNode.removeChild(timezoneEl[j]);
     }
     // more hours
-    for (var i = 0; i < hours.length; i++) {
+    var compressedHours = [];
+    var current = {};
+    for (var n = 0; n < hours.length; n++) {
+      var bothClosed, sameHours;
+      var day = days[n];
+      var last = (compressedHours.length > 0) ? compressedHours[compressedHours.length - 1] : false;
+      current = hours[n] || { isOpen: false };
+      bothClosed = last && (last.isOpen === current.isOpen && current.isOpen === false);
+      sameHours = last && (last.open === current.open && last.close === current.close);
+      if (compressedHours.length > 0 && last && (bothClosed || sameHours)) {
+        last.endDay = day;
+      } else {
+        compressedHours.push({
+          startDay: day,
+          endDay: day,
+          isOpen: current.isOpen,
+          open: current.open,
+          close: current.close
+        });
+      }
+    }
+    for (var i = 0; i < compressedHours.length; i++) {
       var childEl = document.createElement('span');
       childEl.setAttribute('class', ns + '-days-hours');
-      if (hours[i] && hours[i].isOpen) {
-        childEl.innerHTML = utils.compile(templates.hoursOpen, {
-          ns: ns,
-          day: days[i],
-          open: formatAMPM(hours[i].open),
-          close: formatAMPM(hours[i].close)
-        });
+      current = compressedHours[i];
+      if (current && current.isOpen) {
+        var openDay = formatAMPM(current.open);
+        var closeDay = formatAMPM(current.close);
+        var currentDay = (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay;
+        if (openDay && closeDay) {
+          childEl.innerHTML = utils.compile(templates.hoursOpen, {
+            ns: ns,
+            day: currentDay,
+            open: openDay,
+            close: closeDay
+          });
+        } else {
+          childEl.innerHTML = utils.compile(templates.hoursUnknown, {
+            ns: ns,
+            day: currentDay
+          });
+        }
       } else {
         childEl.innerHTML = utils.compile(templates.hoursClosed, {
           ns: ns,
-          day: days[i]
+          day: (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay
         });
       }
-      if (i < (hours.length - 1))
-        childEl.querySelector('.' + ns + '-days-hours-hours').innerHTML += ', ';
-      moreHoursEl.appendChild(childEl);
+      if (i < (compressedHours.length - 1))
+        childEl.querySelector('.' + ns + '-days-hours-hours').innerHTML += '<br />';
+      utils.appendToEach(moreHoursEl, childEl);
     }
   }
 }
@@ -284,17 +326,7 @@ ShowLocations.prototype.addDetails = function() {
 };
 
 ShowLocations.prototype.convertColor = function(color) {
-  function rgb2hex(rgb) {
-    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    return (rgb && rgb.length === 4) ?
-    ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-    ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-    ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
-  }
-  if (color.indexOf('#') > -1)
-    return color.replace('#', '');
-  else
-    return rgb2hex(color);
+  return utils.normalizeToHex(color).replace('#', '');
 };
 
 ShowLocations.prototype.drawLocations = function() {
@@ -372,7 +404,7 @@ ShowLocations.prototype.addLocation = function() {
       email: el.querySelector('.' + ns + '-locations-item-data-email'),
       hours: el.querySelectorAll('.' + ns + '-locations-item-data-hours'),
       timezone: el.querySelectorAll('.' + ns + '-locations-item-data-timezone'),
-      moreHours: el.querySelector('.' + ns + '-locations-item-data-more-hours'),
+      moreHours: el.querySelectorAll('.' + ns + '-locations-item-data-more-hours'),
       distance: el.querySelector('.' + ns + '-locations-item-distance'),
       backHolder: el.querySelector('.' + ns + '-locations-all-holder'),
       back: el.querySelector('.' + ns + '-locations-all')
@@ -406,10 +438,16 @@ ShowLocations.prototype.addLocation = function() {
     dom.phone.parentNode.removeChild(dom.phone);
 
   // hours/timezone
-  if (item.days && item.days.length > 0)
+  if (item.days && item.days.length === 7) {
     createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
-  else
-    dom.hours.parentNode.removeChild(dom.hours);
+  } else {
+    for (var i = 0; i < dom.hours; i++)
+      dom.hours[i].parentNode.removeChild(dom.hours[i]);
+    for (var j = 0; j < dom.timezone; j++)
+      dom.timezone[j].parentNode.removeChild(dom.timezone[j]);
+    for (var n = 0; n < dom.moreHours; i++)
+      dom.moreHours[n].parentNode.removeChild(dom.moreHours[n]);
+  }
 
   if (locationData && locationData.length > 1) {
     this.locationsButton = dom.back;

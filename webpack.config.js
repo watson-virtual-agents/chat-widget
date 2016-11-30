@@ -56,6 +56,7 @@ var minify = (process.argv.indexOf('-minify') > -1) ? true : false;
 var mapsServer = MAPS_SERVER[env] || 'https://dd1-i-serve-maps.mybluemix.net';
 var filename = (minify) ? 'chat.min.js' : 'chat.js';
 var debug = env === 'development';
+var selenium = (process.argv.indexOf('-selenium') > -1) ? true : false;
 
 var paths = {
   'context': path.resolve(__dirname),
@@ -66,6 +67,9 @@ var paths = {
 if (debug)
   paths.template = path.resolve(__dirname, 'dev-tools', 'index.html');
 
+if (selenium)
+  paths.template = path.resolve(__dirname, 'test', 'selenium', 'index.html');
+
 var copyright = "\n* (C) Copyright IBM Corp. 2016. All Rights Reserved.\n*\n* Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except\n* in compliance with the License. You may obtain a copy of the License at\n*\n* http://www.apache.org/licenses/LICENSE-2.0\n*\n* Unless required by applicable law or agreed to in writing, software distributed under the License\n* is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n* or implied. See the License for the specific language governing permissions and limitations under\n* the License.\n";
 
 function conditionalPlugins() {
@@ -73,6 +77,7 @@ function conditionalPlugins() {
   if (minify) {
     arr = [
       new OccurenceOrderPlugin(),
+      new DedupePlugin(),
       new UglifyJsPlugin({
         output: { comments: false }
       }),
@@ -96,7 +101,7 @@ module.exports = {
   target: 'web',
   debug: debug,
   cache: debug,
-  devtool: debug ? 'inline-sourcemap' : null,
+  devtool: (debug && !minify) ? 'inline-sourcemap' : null,
   stats: { colors: true },
   resolve: {
     extensions: ['', '.js', '.json'],
@@ -122,6 +127,12 @@ module.exports = {
     loader: 'source-map'
   }])),
   module: {
+    preLoaders: [{
+      // instrument only testing sources with Istanbul
+      test: /\.spec.js$/,
+      include: path.resolve('test/unit'),
+      loader: 'istanbul-instrumenter'
+    }],
     loaders: [{
       loader: 'raw',
       test: /\.html$/

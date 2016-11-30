@@ -1,6 +1,10 @@
 # IBM Watson Virtual Agent Chat Widget
 
-![Chat Widget example screencap](https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/master/images/screencap.gif)
+[![codecov](https://codecov.io/gh/watson-virtual-agents/chat-widget/branch/master/graph/badge.svg)](https://codecov.io/gh/watson-virtual-agents/chat-widget)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/master/images/screencap.gif" alt="Chat Widget demo"/>
+</p>
 
 Lightweight chat widget for [Watson Virtual Agent](https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/). The widget is built on top of the [Client Bot SDK](https://github.com/watson-virtual-agents/client-sdk), which manages communications with a Watson Virtual Agent bot.
 
@@ -46,7 +50,7 @@ It contains a configurable user interface and can be used as-is or customized. A
 
     **Important**: Keep the values of the IBMClientID and IBMClientSecret as private as possible.
 
-6. Run the following commands using [Node 4.x](https://nodejs.org/) or higher:
+6. Run the following commands using [Node 4.2.1](https://nodejs.org/) or higher:
 
     ```bash
     npm install
@@ -62,7 +66,7 @@ For questions please refer to [StackOverflow](http://stackoverflow.com/questions
 
 ## API
 
-For detailed documentation on the Watson Virtual Agent Chat Widget API please see [JSDOCS.md](./docs/JSDOCS.md).
+For detailed documentation on the Watson Virtual Agent Chat Widget API please see [JSDOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/JSDOCS.md).
 
 ## Watson Virtual Agent Documentation
 
@@ -71,9 +75,13 @@ Additional documentation related to Watson Virtual Agent can be found in [www.ib
 ## Customization
 
 For more details about what you can do once the widget is up and running, see:
-- [DOCS.md](./docs/DOCS.md)
-- [JSDOCS.md](./docs/JSDOCS.md)
-- [EVENTS.md](./docs/EVENTS.md)
+- [DOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/DOCS.md)
+- [JSDOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/JSDOCS.md)
+- [EVENTS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/EVENTS.md)
+
+## Contributing
+
+See [CONTRIBUTING.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/CONTRIBUTING.md).
 
 ## License
 

@@ -63,6 +63,7 @@ Form.prototype.drawForm = function() {
     field.innerHTML = utils.compile(templates.field, {
       label: datum.label || '',
       name: datum.name,
+      uuid: utils.getUUID(),
       value: ''
     });
     field.className = ns + '-fields-row';
@@ -116,10 +117,11 @@ Form.prototype.validateFields = function() {
 
 Form.prototype.validateField = function(field, datum) {
   var valid = true;
-  if (!field.value || field.value.trim().length === 0) {
+  if ((!field.value || field.value.trim().length === 0) && datum.required == 'true') {
     this.addError(field.getAttribute('name'), 'This field is required.');
     valid = false;
-  } else if (datum.validations && datum.validations.length !== 0) {
+  }
+  if (valid === true && datum.validations && datum.validations.length !== 0) {
     for (var i = 0; i < datum.validations.length; i++) {
       // regexes received from backend should always include
       // start/end of line anchors (^, $)
@@ -138,17 +140,21 @@ Form.prototype.validateField = function(field, datum) {
 };
 
 Form.prototype.addError = function(name, msg) {
-  var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
-  el.dataset.valid = false;
-  el.textContent = msg;
-  el.style.display = 'block';
+  var field = this.layoutElement.querySelector('[name="' + name + '"]');
+  var errorEl = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
+  field.setAttribute('aria-invalid', true);
+  errorEl.dataset.valid = false;
+  errorEl.textContent = msg;
+  errorEl.style.display = 'block';
 };
 
 Form.prototype.removeError = function(name) {
-  var el = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
-  el.dataset.valid = true;
-  el.textContent = '';
-  el.style.display = 'none';
+  var field = this.layoutElement.querySelector('[name="' + name + '"]');
+  var errorEl = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
+  field.removeAttribute('aria-invalid');
+  errorEl.dataset.valid = true;
+  errorEl.textContent = '';
+  errorEl.style.display = 'none';
 };
 
 Form.prototype.removeAllErrors = function() {

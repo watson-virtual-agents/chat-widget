@@ -65,6 +65,14 @@ function registerLayouts() {
 }
 
 function init(config) {
+  var current = state.get();
+  if (current.active === true) {
+    return destroy()
+      .then(function() {
+        init(config);
+      });
+  }
+
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
   var SDKconfig = {};
   SDKconfig.baseURL = config.baseURL || 'https://api.ibm.com/virtualagent/run/api/v1/';
@@ -78,7 +86,6 @@ function init(config) {
     SDKconfig.userID = config.userID;
 
   return new Promise(function(resolve, reject) {
-    var current = state.getState();
     var defaultState = {
       active: true,
       root: root,
@@ -93,10 +100,6 @@ function init(config) {
       tryIt: config.tryIt || false,
       playback: config.playback || false //TODO: remove playback when Dashboard code is updated
     };
-    if (current.active === true) {
-      resolve();
-      return;
-    }
     if (root) {
       if (config.errorHandler)
         events.subscribe('error', config.errorHandler, config.errorHandlerContext);
@@ -108,7 +111,9 @@ function init(config) {
       if (config.playback === true) {
         defaultState.chatID = 'playback';
         events.publish('start', defaultState);
-        resolve();
+        setTimeout(function() {
+          resolve();
+        }, 0);
       } else if (config.botID) {
         BotSDK
           .configure( SDKconfig )
@@ -118,19 +123,24 @@ function init(config) {
             window.sessionStorage.setItem('IBMChatChatID', res.chatID);
             events.publish('start', defaultState);
             events.publish('receive', res);
-            resolve();
+            setTimeout(function() {
+              resolve();
+            }, 0);
           })['catch']( function(err) {
             console.error(err);
+            destroy();
             reject(err);
           });
       } else {
         console.error('BotID is required!');
+        destroy();
         reject({
           error: 'BotID is required!'
         });
       }
     } else {
       console.error('Element for chat does not exist!');
+      destroy();
       reject({
         error: 'Element for chat does not exist!'
       });
@@ -246,17 +256,14 @@ function debug() {
 }
 
 function destroy() {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     var current = state.getState();
-    if (current.root) {
-      events.publish('destroy');
-      events.destroy(); //remove all events
-      current.root.innerHTML = current.originalContent; //restore original content to div
-      state.destroyState();
-      resolve();
-    } else {
-      reject('IBMChat has no instance to destroy.');
-    }
+    events.publish('destroy');
+    events.destroy();
+    if (typeof current.originalContent !== 'undefined')
+      current.root.innerHTML = current.originalContent;
+    state.destroyState();
+    resolve();
   });
 }
 
@@ -264,11 +271,13 @@ function restart() {
   return new Promise(function(resolve, reject) {
     var current = state.getState();
     destroy().then(function() {
-      init({ el: current.root, botID: current.botID, baseURL: current.baseURL }).then(function() {
-        resolve();
-      })['catch'](function(e) {
-        reject(e);
-      });
+      setTimeout(function() {
+        init({ el: current.root, botID: current.botID, baseURL: current.baseURL }).then(function() {
+          resolve();
+        })['catch'](function(e) {
+          reject(e);
+        });
+      }, 10);
     })['catch'](function(e) {
       reject(e);
     });

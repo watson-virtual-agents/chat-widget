@@ -1,23 +1,28 @@
 .IBMChat-form-container {
-  margin-top:1em;
+  margin-top: 1em;
+  padding: 1em 1.5em 1em 1.5em;
+  width: 240px;
+}
+
+.IBMChat-form-container fieldset {
+  border:none;
+  margin:0;
+  padding:0;
 }
 
 .IBMChat-form-fields {
-  text-align:left;
   width:100%;
 }
 
 .IBMChat-form-fields-row {
-  padding-bottom:0.75em;
+  padding-bottom:1.5em;
 }
 
 .IBMChat-form-fields-row input {
-  max-width:280px;
   width: 100%;
 }
 
 .IBMChat-form-buttons {
-  max-width: 280px;
   text-align:center;
   width: 100%;
 }
@@ -30,7 +35,6 @@
   clear: both;
   height: 0;
 }
-
 
 .IBMChat-form-cancel {
   float:left;
