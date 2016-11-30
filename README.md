@@ -81,7 +81,7 @@ For more details about what you can do once the widget is up and running, see:
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/watson-virtual-agents/chat-widget/blob/dev/CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/CONTRIBUTING.md).
 
 ## License
 
