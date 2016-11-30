@@ -41,6 +41,7 @@ creds
 dev-tools/creds.html
 dist/index.html
 test/selenium/errorShots
+test/resources/auth.js
 selenium/errorShots
 bin
 reports

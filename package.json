@@ -7,6 +7,7 @@
   "scripts": {
     "build": "webpack -production && webpack -minify -production -p --json > stats.json && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
     "codecov": "npm run test && (codecov || true)",
+    "jsdoc": "jsdoc -c jsdoc/config.json",
     "postinstall": "node ./test/selenium/download.js",
     "server:embed": "node ./dev-tools/embed-server.js -minify",
     "server:selenium": "node ./dev-tools/selenium-server.js -selenium",
@@ -60,6 +61,7 @@
     "eslint-plugin-mocha": "4.5.1",
     "html-webpack-plugin": "2.9.0",
     "istanbul-instrumenter-loader": "1.0.0",
+    "jsdoc": "3.4.3",
     "jsdoc-to-markdown": "1.3.7",
     "json-loader": "0.5.4",
     "karma": "1.3.0",
