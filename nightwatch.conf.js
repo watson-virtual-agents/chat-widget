@@ -62,6 +62,7 @@ module.exports = {
       "username": "${SAUCE_USERNAME}",
       "access_key": "${SAUCE_ACCESS_KEY}",
       "use_ssl": false,
+      "startConnect": false,
       // "silent": false,
       "output": true,
       "screenshots": {
