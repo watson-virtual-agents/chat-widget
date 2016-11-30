@@ -42,6 +42,7 @@ function registerEvents(tryIt, playback) {
   if (playback === true) { //TODO: remove if playback when Dashboard code is updated
     events.subscribe('send', eventHandlers.sendMock);
   } else {
+    events.subscribe('clear', eventHandlers.clear);
     events.subscribe('resize-input', eventHandlers.resizeInput);
     events.subscribe('send', eventHandlers.send);
     events.subscribe('send-input-message', eventHandlers.sendInputMessage);
@@ -284,6 +285,40 @@ function restart() {
   });
 }
 
+function clear() {
+  return new Promise(function(resolve, reject) {
+    var current = state.get();
+    var SDKconfig = {};
+    SDKconfig.baseURL = current.baseURL;
+    if (current.withCredentials)
+      SDKconfig.withCredentials = current.withCredentials;
+    if (current.XIBMClientID)
+      SDKconfig.XIBMClientID = current.XIBMClientID;
+    if (current.XIBMClientSecret)
+      SDKconfig.XIBMClientSecret = current.XIBMClientSecret;
+    if (current.userID)
+      SDKconfig.userID = current.userID;
+    BotSDK
+      .configure( SDKconfig )
+      .start( current.botID )
+      .then( function(res) {
+        state.set({
+          chatID: res.chatID
+        });
+        window.sessionStorage.setItem('IBMChatChatID', res.chatID);
+        events.publish('clear');
+        events.publish('receive', res);
+        setTimeout(function() {
+          resolve();
+        }, 0);
+      })['catch']( function(err) {
+        console.error(err);
+        destroy();
+        reject(err);
+      });
+  });
+}
+
 module.exports = {
   profile: profile,
   init: init,
@@ -307,5 +342,6 @@ module.exports = {
   hasSubscription: events.hasSubscription,
   completeEvent: events.completeEvent,
   playback: playback,
-  state: state
+  state: state,
+  clear: clear
 };
