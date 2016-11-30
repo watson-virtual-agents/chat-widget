@@ -1,0 +1,15 @@
+# Default codecov.yml from https://github.com/codecov/support/blob/master/codecov.yml.
+# Refer to http://docs.codecov.io/docs/codecov-yaml for further details.
+coverage:
+  precision: 2
+  round: down
+  range: 70...100
+  status:
+    # Learn more at https://codecov.io/docs#yaml_default_commit_status
+    project: true
+    patch: true
+    changes: false
+comment:
+  layout: "header, diff"
+  # Update if exists else create new
+  behavior: default
