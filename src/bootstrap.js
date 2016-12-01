@@ -23,6 +23,7 @@ var Promise = require('es6-promise').Promise;
 var assign = require('lodash/assign');
 var defaultStyles = require('./styles');
 
+var baseURL = 'https://api.ibm.com/virtualagent/run/api/v1/';
 var layoutInit = {};
 var registeredLayouts = [];
 
@@ -42,6 +43,7 @@ function registerEvents(tryIt, playback) {
   if (playback === true) { //TODO: remove if playback when Dashboard code is updated
     events.subscribe('send', eventHandlers.sendMock);
   } else {
+    events.subscribe('clear', eventHandlers.clear);
     events.subscribe('resize-input', eventHandlers.resizeInput);
     events.subscribe('send', eventHandlers.send);
     events.subscribe('send-input-message', eventHandlers.sendInputMessage);
@@ -75,7 +77,7 @@ function init(config) {
 
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
   var SDKconfig = {};
-  SDKconfig.baseURL = config.baseURL || 'https://api.ibm.com/virtualagent/run/api/v1/';
+  SDKconfig.baseURL = config.baseURL || baseURL;
   if (config.withCredentials)
     SDKconfig.withCredentials = config.withCredentials;
   if (config.XIBMClientID)
@@ -268,6 +270,7 @@ function destroy() {
 }
 
 function restart() {
+  console.warning('The IBMChat.restart method is deprecated.');
   return new Promise(function(resolve, reject) {
     var current = state.getState();
     destroy().then(function() {
@@ -281,6 +284,40 @@ function restart() {
     })['catch'](function(e) {
       reject(e);
     });
+  });
+}
+
+function clear() {
+  return new Promise(function(resolve, reject) {
+    var current = state.get();
+    var SDKconfig = {};
+    SDKconfig.baseURL = current.baseURL || baseURL;
+    if (current.withCredentials)
+      SDKconfig.withCredentials = current.withCredentials;
+    if (current.XIBMClientID)
+      SDKconfig.XIBMClientID = current.XIBMClientID;
+    if (current.XIBMClientSecret)
+      SDKconfig.XIBMClientSecret = current.XIBMClientSecret;
+    if (current.userID)
+      SDKconfig.userID = current.userID;
+    BotSDK
+      .configure( SDKconfig )
+      .start( current.botID )
+      .then( function(res) {
+        state.set({
+          chatID: res.chatID
+        });
+        window.sessionStorage.setItem('IBMChatChatID', res.chatID);
+        events.publish('clear');
+        events.publish('receive', res);
+        setTimeout(function() {
+          resolve();
+        }, 0);
+      })['catch']( function(err) {
+        console.error(err);
+        destroy();
+        reject(err);
+      });
   });
 }
 
@@ -307,5 +344,6 @@ module.exports = {
   hasSubscription: events.hasSubscription,
   completeEvent: events.completeEvent,
   playback: playback,
-  state: state
+  state: state,
+  clear: clear
 };
