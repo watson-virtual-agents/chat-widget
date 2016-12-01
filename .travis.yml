@@ -13,7 +13,7 @@ script:
   - npm run jsdoc
   - npm run eslint
 after_success:
-  - jsdoc/publish.sh
+  - tools/jsdoc/publish.sh
   - bash <(curl -s https://codecov.io/bash)
 after_script:
   # hacky workaround for hanging chromedriver processes

@@ -1,8 +1,7 @@
 test/**/*.js
 dist/*.js
-dev-tools/*.js
 docs
 examples
-jsdoc/**/*.js
+tools/**/*.js
 jsdoc-output/**/*.js
 build/**/*.js
