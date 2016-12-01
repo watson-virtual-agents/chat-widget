@@ -39,6 +39,7 @@ module.exports = {
     }
   },
   "test_settings": {
+
     "default": {
       "screenshots": {
         "enabled": true,
@@ -51,12 +52,14 @@ module.exports = {
         "browserName": "chrome"
       }
     },
+
     "chrome": {
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true
       }
     },
+
     "travis": {
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
@@ -103,11 +106,10 @@ module.exports = {
       "access_key": "${SAUCE_ACCESS_KEY}",
       "use_ssl": false,
       "startConnect": false,
-      // "silent": false,
       "output": true,
       "screenshots": {
         "enabled": true,
-        "path": './test/selenium/errorShots/travis'
+        "path": './test/selenium/errorShots/travis/firefox'
       },
       "globals": {
         "waitForConditionTimeout": 30000,
@@ -130,6 +132,42 @@ module.exports = {
       "selenium": {
         "start_process": false
       }
+    },
+
+    "safari": {
+      "selenium_host": "ondemand.saucelabs.com",
+      "selenium_port": 80,
+      "username": "${SAUCE_USERNAME}",
+      "access_key": "${SAUCE_ACCESS_KEY}",
+      "use_ssl": false,
+      "startConnect": false,
+      "output": true,
+      "screenshots": {
+        "enabled": true,
+        "path": './test/selenium/errorShots/travis/safari'
+      },
+      "globals": {
+        "waitForConditionTimeout": 30000,
+        "afterEach": callSauce
+      },
+      "desiredCapabilities": {
+        "browserName": "safari",
+        "javascriptEnabled": true,
+        "databaseEnabled": true,
+        "locationContextEnabled": true,
+        "applicationCacheEnabled": true,
+        "browserConnectionEnabled": true,
+        "webStorageEnabled": true,
+        "acceptSslCerts": true,
+        "rotatable": true,
+        "nativeEvents": true,
+        "build": "build-" + TRAVIS_JOB_NUMBER,
+        "tunnel-identifier": TRAVIS_JOB_NUMBER
+      },
+      "selenium": {
+        "start_process": false
+      }
     }
+
   }
 };
