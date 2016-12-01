@@ -23,6 +23,7 @@ var Promise = require('es6-promise').Promise;
 var assign = require('lodash/assign');
 var defaultStyles = require('./styles');
 
+var baseURL = 'https://api.ibm.com/virtualagent/run/api/v1/';
 var layoutInit = {};
 var registeredLayouts = [];
 
@@ -76,7 +77,7 @@ function init(config) {
 
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
   var SDKconfig = {};
-  SDKconfig.baseURL = config.baseURL || 'https://api.ibm.com/virtualagent/run/api/v1/';
+  SDKconfig.baseURL = config.baseURL || baseURL;
   if (config.withCredentials)
     SDKconfig.withCredentials = config.withCredentials;
   if (config.XIBMClientID)
@@ -269,6 +270,7 @@ function destroy() {
 }
 
 function restart() {
+  console.warning('The IBMChat.restart method is deprecated.');
   return new Promise(function(resolve, reject) {
     var current = state.getState();
     destroy().then(function() {
@@ -289,7 +291,7 @@ function clear() {
   return new Promise(function(resolve, reject) {
     var current = state.get();
     var SDKconfig = {};
-    SDKconfig.baseURL = current.baseURL;
+    SDKconfig.baseURL = current.baseURL || baseURL;
     if (current.withCredentials)
       SDKconfig.withCredentials = current.withCredentials;
     if (current.XIBMClientID)

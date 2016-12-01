@@ -212,7 +212,7 @@ IBMChat.init({
 ### ~~IBMChat.restart() ⇒ <code>Promise</code>~~
 ***Deprecated***
 
-Destroy the chat widget and recreate it. The same chat widget is rendered in the same html element as was specified in the init method. Action subscriptions and custom layouts are not reincluded.
+Please use either IBMChat.clear() or IBMChat.destroy() and IBMChat.init() in conjunction instead of this method. This method destroys the chat widget and re-intitializes it. The same chat widget is rendered in the same html element as was specified in the init method. **Action subscriptions and custom layouts are NOT reincluded**.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
 **Returns**: <code>Promise</code> - Returns: A promise so you can call functions after the widget has been initialized.  
@@ -241,7 +241,7 @@ IBMChat.destroy().then(function(){
 Clear the chat widget of its current conversation and start a new conversation with the Virtual Agent
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
-**Returns**: <code>Promise</code> - Returns: A promise so you can call functions after the widget has been clear.  
+**Returns**: <code>Promise</code> - Returns: A promise so you can call functions after the widget has been cleared.  
 **Example**  
 ```js
 IBMChat.clear().then(function(){
