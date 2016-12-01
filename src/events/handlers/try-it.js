@@ -13,6 +13,7 @@
 */
 
 var events = require('../../events');
+var activeClassName = 'IBMChat-accent-colors';
 
 function actionError(action) {
   events.publish('receive', {
@@ -36,7 +37,20 @@ function layoutError(layout) {
   });
 }
 
+function intent(data) {
+  var element = data.element;
+  var intent = data.intent;
+  var button = document.createElement('button');
+  button.textContent = 'Edit the ' + intent + ' intent';
+  button.classList.add(activeClassName);
+  button.addEventListener('click', function() {
+    events.publish('action:showIntent', intent);
+  });
+  element.appendChild(button);
+}
+
 module.exports = {
   actionError: actionError,
-  layoutError: layoutError
+  layoutError: layoutError,
+  intent: intent
 };
