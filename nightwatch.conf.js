@@ -93,6 +93,20 @@ module.exports = {
       "selenium": {
         "start_process": false
       }
-    }
+    },
+    "chrome_mac": {
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "platform": "OS X 10.11",
+        "version": "47"
+      }
+    },
+    "ie11_win10": {
+      "desiredCapabilities": {
+        "browserName": "internet explorer",
+        "platform": "Windows 10",
+        "version": "11.0"
+      }
+    },
   }
 };
