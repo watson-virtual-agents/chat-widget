@@ -28,7 +28,6 @@ var breakpointWidths = ['720', '680', '640', '580', '512', '480', '420', '360', 
 var days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
 var showLocations = {};
 var locationIDs = [];
-var chatWidth = 748;
 var currentBreakpointKey = 0;
 var pixelRatio = window.devicePixelRatio || 1;
 var ns = 'IBMChat-map';
@@ -76,7 +75,6 @@ function initialSize(width) {
   for (var i = 0; i < breakpointWidths.length; i++) {
     if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
       currentBreakpointKey = i;
-      chatWidth = width;
       return;
     }
   }
@@ -94,7 +92,6 @@ function sizeMap() {
     for (var i = 0; i < breakpointWidths.length; i++) {
       if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
         currentBreakpointKey = i;
-        chatWidth = width;
         for (var j = 0; j < locationIDs.length; j++) {
           if (showLocations[locationIDs[j]].data.length > 0)
             showLocations[locationIDs[j]].reDrawMap();
@@ -106,7 +103,7 @@ function sizeMap() {
 }
 
 function createEmails(el, item) {
-  const linkEl = document.createElement('a');
+  var linkEl = document.createElement('a');
   linkEl.setAttribute('href', 'mailto:' + item.email);
   linkEl.setAttribute('target', '_blank');
   linkEl.textContent = item.email;
@@ -364,9 +361,7 @@ ShowLocations.prototype.handleClick = function() {
         index: 0
       },
       data: {
-        /* jshint ignore:start */
         location_data: [showLocations[this.dataset.uuid].data[this.dataset.id - 1]]
-        /* jshint ignore:end */
       }
     }
   });
@@ -461,9 +456,7 @@ ShowLocations.prototype.addLocation = function() {
             index: 0
           },
           data: {
-            /* jshint ignore:start */
             location_data: locationData
-            /* jshint ignore:end */
           }
         }
       });
