@@ -44,7 +44,7 @@ function intent(data) {
   button.textContent = 'Edit the ' + intent + ' intent';
   button.classList.add(activeClassName);
   button.addEventListener('click', function() {
-    events.publish('action:showIntent', intent);
+    events.publish('showAdminUIIntent', intent);
   });
   element.appendChild(button);
 }
