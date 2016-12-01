@@ -134,7 +134,7 @@ module.exports = {
       }
     },
 
-    "safari": {
+    "edge": {
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
       "username": "${SAUCE_USERNAME}",
@@ -144,14 +144,15 @@ module.exports = {
       "output": true,
       "screenshots": {
         "enabled": true,
-        "path": './test/selenium/errorShots/travis/safari'
+        "path": './test/selenium/errorShots/travis/edge'
       },
       "globals": {
         "waitForConditionTimeout": 30000,
         "afterEach": callSauce
       },
       "desiredCapabilities": {
-        "browserName": "safari",
+        "browserName": "MicrosoftEdge",
+        "platform": "WIN10",
         "javascriptEnabled": true,
         "databaseEnabled": true,
         "locationContextEnabled": true,
