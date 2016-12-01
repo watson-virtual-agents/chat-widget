@@ -276,7 +276,7 @@ function(t,e,n){function i(){setTimeout(function(){var t=r.getState();if(t.activ
 function(t,e,n){function i(){var t=r.getState();t.chatHolder.scrollTop=t.chatHolder.scrollHeight}var r=n(/*! ../../state */2);t.exports=i},/*!***************************************************!*\
   !*** ./src/events/handlers/send-input-message.js ***!
   \***************************************************/
-function(t,e,n){function i(){var t=r.getState();if(!t.inProgress&&!t.disableInput){var e=t.root.querySelector(".IBMChat-chat-textbox").value.replace(/\n/g,"");o.publish("send",{text:e}),e=""}}var r=n(/*! ../../state */2),o=n(/*! ../../events */1);t.exports=i},/*!******************************************!*\
+function(t,e,n){function i(){var t=r.getState();if(!t.inProgress&&!t.disableInput){var e=t.root.querySelector(".IBMChat-chat-textbox").value.trim().replace(/(\r\n|\n|\r)/gm,"");o.publish("send",{text:e}),e=""}}var r=n(/*! ../../state */2),o=n(/*! ../../events */1);t.exports=i},/*!******************************************!*\
   !*** ./src/events/handlers/send-mock.js ***!
   \******************************************/
 function(t,e,n){function i(t){if(t.text&&t.text.length>0){var e=r.getState(),n=s({},t,{uuid:a.getUUID()});e.chatHolder.innerHTML+=a.compile(c.send,{"data.uuid":n.uuid}),e.chatHolder.querySelector("#"+n.uuid+" .IBMChat-user-message").textContent=t.text,o.publish("scroll-to-bottom")}}var r=n(/*! ../../state */2),o=n(/*! ../../events */1),a=n(/*! ../../utils */3),s=n(/*! lodash/assign */4),c=n(/*! ../../templates */6);t.exports=i},/*!*************************************!*\
