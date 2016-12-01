@@ -9,7 +9,7 @@ before_install:
   - 'openssl aes-256-cbc -K $encrypted_989954bb41cf_key -iv $encrypted_989954bb41cf_iv -in auth.js.enc -out test/resources/auth.js -d'
 script:
   - npm run test:codecov
-  - npm run test:selenium:chrome
+  - npm run test:selenium:travis
   - npm run test:selenium:firefox
   - npm run jsdoc
 after_success:
