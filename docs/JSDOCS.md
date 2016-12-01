@@ -13,8 +13,9 @@
         * [.delete(key)](#IBMChat.profile.delete) ⇒ <code>[profile](#IBMChat.profile)</code>
         * [.forEach(callback, this)](#IBMChat.profile.forEach) ⇒ <code>[profile](#IBMChat.profile)</code>
     * [.init(config)](#IBMChat.init) ⇒ <code>Promise</code>
-    * [.restart()](#IBMChat.restart) ⇒ <code>Promise</code>
+    * ~~[.restart()](#IBMChat.restart) ⇒ <code>Promise</code>~~
     * [.destroy()](#IBMChat.destroy) ⇒ <code>Promise</code>
+    * [.clear()](#IBMChat.clear) ⇒ <code>Promise</code>
     * [.send(message)](#IBMChat.send) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.receive(message)](#IBMChat.receive) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.sendMock(message)](#IBMChat.sendMock) ⇒ <code>[IBMChat](#IBMChat)</code>
@@ -208,8 +209,10 @@ IBMChat.init({
 ```
 <a name="IBMChat.restart"></a>
 
-### IBMChat.restart() ⇒ <code>Promise</code>
-Restart the chat widget. The same chat widget is rendered in the same html element as was specified in the init method.
+### ~~IBMChat.restart() ⇒ <code>Promise</code>~~
+***Deprecated***
+
+Please use either IBMChat.clear() or IBMChat.destroy() and IBMChat.init() in conjunction instead of this method. This method destroys the chat widget and re-intitializes it. The same chat widget is rendered in the same html element as was specified in the init method. **Action subscriptions and custom layouts are NOT reincluded**.
 
 **Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
 **Returns**: <code>Promise</code> - Returns: A promise so you can call functions after the widget has been initialized.  
@@ -230,6 +233,19 @@ Destroy the chat widget and restore the original HTML content. Useful if the cha
 ```js
 IBMChat.destroy().then(function(){
     console.log('destroyed');
+});
+```
+<a name="IBMChat.clear"></a>
+
+### IBMChat.clear() ⇒ <code>Promise</code>
+Clear the chat widget of its current conversation and start a new conversation with the Virtual Agent
+
+**Kind**: static method of <code>[IBMChat](#IBMChat)</code>  
+**Returns**: <code>Promise</code> - Returns: A promise so you can call functions after the widget has been cleared.  
+**Example**  
+```js
+IBMChat.clear().then(function(){
+    console.log('cleared');
 });
 ```
 <a name="IBMChat.send"></a>
