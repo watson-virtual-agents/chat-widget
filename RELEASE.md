@@ -11,7 +11,7 @@ git push origin master
 `npm version *` will update the package.json version field appropriately and create a git commit and tag for the version.
 `git push --tags` will publish the tag to github., and then immediately.
 `git push origin master` will publish the changes to package.json.
-`npm publish` will publish the npm package
+`npm publish` will publish the npm package.
 
 The reason for this is that it allows someone to easily view the source code (and README) for whatever version they happen to have downloaded from npm. This is particularly helpful when github is ahead of npm.
 
@@ -22,7 +22,7 @@ This puts out a beta version that can be downloaded from npm if the specific ver
 
 First version it with the version number that it will be eventually followed by -beta.number after the version number. Then publish with `--tag beta`.
 
-For example, this was the commands for publishing the third beta of v1.0.0:
+For example, would be the commands for publishing the third beta of v1.0.0:
 ```
 npm version 1.0.0-beta.3
 npm publish --tag beta
