@@ -94,19 +94,41 @@ module.exports = {
         "start_process": false
       }
     },
-    "chrome_mac": {
+
+    "firefox": {
+      "selenium_host": "ondemand.saucelabs.com",
+      "selenium_port": 80,
+      "username": "${SAUCE_USERNAME}",
+      "access_key": "${SAUCE_ACCESS_KEY}",
+      "use_ssl": false,
+      "startConnect": false,
+      // "silent": false,
+      "output": true,
+      "screenshots": {
+        "enabled": true,
+        "path": './test/selenium/errorShots/travis'
+      },
+      "globals": {
+        "waitForConditionTimeout": 30000,
+        "afterEach": callSauce
+      },
       "desiredCapabilities": {
-        "browserName": "chrome",
-        "platform": "OS X 10.11",
-        "version": "47"
+        "browserName": "firefox",
+        "javascriptEnabled": true,
+        "databaseEnabled": true,
+        "locationContextEnabled": true,
+        "applicationCacheEnabled": true,
+        "browserConnectionEnabled": true,
+        "webStorageEnabled": true,
+        "acceptSslCerts": true,
+        "rotatable": true,
+        "nativeEvents": true,
+        "build": "build-" + TRAVIS_JOB_NUMBER,
+        "tunnel-identifier": TRAVIS_JOB_NUMBER
+      },
+      "selenium": {
+        "start_process": false
       }
-    },
-    "ie11_win10": {
-      "desiredCapabilities": {
-        "browserName": "internet explorer",
-        "platform": "Windows 10",
-        "version": "11.0"
-      }
-    },
+    }
   }
 };
