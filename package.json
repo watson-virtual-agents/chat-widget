@@ -8,6 +8,7 @@
     "build": "webpack -production && webpack -minify -production -p --json > stats.json && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
     "codecov": "npm run test && (codecov || true)",
     "jsdoc": "jsdoc -c jsdoc/config.json",
+    "eslint": "eslint .",
     "server:embed": "node ./dev-tools/embed-server.js -minify",
     "server:selenium": "node ./dev-tools/selenium-server.js -selenium",
     "server:watch": "node ./dev-tools/dev-server.js",

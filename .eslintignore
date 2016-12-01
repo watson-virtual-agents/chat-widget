@@ -3,3 +3,6 @@ dist/*.js
 dev-tools/*.js
 docs
 examples
+jsdoc/**/*.js
+jsdoc-output/**/*.js
+build/**/*.js

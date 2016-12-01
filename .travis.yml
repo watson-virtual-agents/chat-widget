@@ -13,6 +13,7 @@ script:
   - npm run test:selenium:firefox
   - npm run test:selenium:edge
   - npm run jsdoc
+  - npm run eslint
 after_success:
   - jsdoc/publish.sh
   - bash <(curl -s https://codecov.io/bash)
