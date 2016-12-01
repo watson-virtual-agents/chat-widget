@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>IBM Watson Virtual Agent Chat Widget</h1><p><a href="https://codecov.io/gh/watson-virtual-agents/chat-widget"><img src="https://codecov.io/gh/watson-virtual-agents/chat-widget/branch/master/graph/badge.svg" alt="codecov"></a></p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/master/images/screencap.gif" alt="Chat Widget demo"/>
+</p>
+
+<p>Lightweight chat widget for <a href="https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/">Watson Virtual Agent</a>. The widget is built on top of the <a href="https://github.com/watson-virtual-agents/client-sdk">Client Bot SDK</a>, which manages communications with a Watson Virtual Agent bot.</p>
+<p>It contains a configurable user interface and can be used as-is or customized. Alternatively, to have ultimate control you can use the <a href="https://github.com/watson-virtual-agents/client-sdk">Client Bot SDK</a> to build a chat widget of your own.</p>
+<h2>Getting Started</h2><ol>
+<li><p>Clone this repository</p>
+<pre class="prettyprint source lang-bash"><code>     git clone https://github.com/watson-virtual-agents/chat-widget</code></pre></li>
+<li><p>(if you don't already have one) Get a set of Watson Virtual Agent API keys:</p>
+<ol>
+<li>Sign in for a Free Trial in https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/</li>
+<li>Log in to <a href="https://developer.ibm.com/api/">/api explorer</a> with the same IBM ID that you used to sign up for the trial subscription</li>
+<li>Click the My APIs link, and look for the IBM Watson Virtual Agent tile. Click the key icon, and select the default key.</li>
+<li>Hover over the key fields, and then click SHOW to view the values. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.</li>
+</ol>
+</li>
+<li><p>Get your bot ID.</p>
+<p> Your bot ID is assigned when you create the Watson Virtual Agent instance, and is provided in the bot ID parameter of the code snippet that is displayed in the Publish page. You can use the value that is provided there as-is.
+ If, for some reason, you want to retrieve the bot ID yourself, follow these steps. The order is important.</p>
+<ol>
+<li>When you get to the Watson Virtual Agent API details page, click <code>KEYS</code>.</li>
+<li>Click <strong>#1 - Key1</strong>.
+The key you selected is now displayed.</li>
+<li>Now you should see a <code>TEST</code> button when you scroll down to the Retrieve Bot call.</li>
+</ol>
+</li>
+<li><p>Open <code>dev-tools/index.html</code> in your favorite text editor and set the values for the <code>botID</code>, <code>XIBMClientID</code> and <code>XIBMClientSecret</code> parameters:</p>
+<pre class="prettyprint source lang-html"><code>     &lt;script>
+         window.IBMChat.init({
+             el: 'ibm_element',
+             baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
+             botID: '',              // replace with Bot ID
+             XIBMClientID: '',       // replace with Client ID
+             XIBMClientSecret: ''    // replace with Client Secret
+         });
+     &lt;/script></code></pre></li>
+<li><p>Save your changes.</p>
+<p> <strong>Important</strong>: Keep the values of the IBMClientID and IBMClientSecret as private as possible.</p>
+</li>
+<li><p>Run the following commands using <a href="https://nodejs.org/">Node 4.2.1</a> or higher:</p>
+<pre class="prettyprint source lang-bash"><code> npm install
+ npm run watch</code></pre></li>
+<li><p>Navigate to <code>http://localhost:3100</code>.</p>
+</li>
+</ol>
+<h2>Questions and issues</h2><p>Report bugs or feature requests to our <a href="https://github.com/watson-virtual-agents/chat-widget/issues">github issue tracker</a>.
+For questions please refer to <a href="http://stackoverflow.com/questions/tagged/watson-virtual-agent">StackOverflow</a> under tag <code>watson-virtual-agent</code> or <a href="https://developer.ibm.com/answers/topics/watson-virtual-agent">DeveloperWorks Answers</a>.</p>
+<h2>API</h2><p>For detailed documentation on the Watson Virtual Agent Chat Widget API please see <a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/JSDOCS.md">JSDOCS.md</a>.</p>
+<h2>Watson Virtual Agent Documentation</h2><p>Additional documentation related to Watson Virtual Agent can be found in <a href="https://www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml">www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml</a>.</p>
+<h2>Customization</h2><p>For more details about what you can do once the widget is up and running, see:</p>
+<ul>
+<li><a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/DOCS.md">DOCS.md</a></li>
+<li><a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/JSDOCS.md">JSDOCS.md</a></li>
+<li><a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/EVENTS.md">EVENTS.md</a></li>
+</ul>
+<h2>Contributing</h2><p>See <a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<h2>License</h2><p>This code is licensed under Apache 2.0. Full license text is available in <a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/LICENSE">LICENSE</a>.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="IBMChat.html">IBMChat</a></li><li><a href="IBMChat.profile.html">profile</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Dec 01 2016 17:17:08 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
