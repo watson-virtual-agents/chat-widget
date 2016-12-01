@@ -11,6 +11,7 @@ script:
   - npm run test:codecov
   - npm run test:selenium:travis
   - npm run test:selenium:firefox
+  - npm run test:selenium:safari
   - npm run jsdoc
 after_success:
   - jsdoc/publish.sh

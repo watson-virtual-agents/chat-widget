@@ -18,6 +18,7 @@
     "test:selenium": "concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --suiteRetries 3\"",
     "test:selenium:travis": "concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --env travis --suiteRetries 3\"",
     "test:selenium:firefox": "concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --env firefox --suiteRetries 3\"",
+    "test:selenium:safari": "concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --env safari --suiteRetries 3\"",
     "test:selenium:watch": "npm-watch",
     "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
     "watch": "npm run server:watch"
