@@ -7,6 +7,7 @@
   "scripts": {
     "build": "webpack -production && webpack -minify -production -p --json > stats.json && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
     "codecov": "npm run test && (codecov || true)",
+    "lint": "eslint .",
     "jsdoc": "jsdoc -c jsdoc/config.json",
     "postinstall": "node ./test/selenium/download.js",
     "server:embed": "node ./dev-tools/embed-server.js -minify",
