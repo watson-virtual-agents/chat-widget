@@ -1,0 +1,31 @@
+{
+  "name": "basic-actions-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --port 3030"
+  },
+  "license": "Apache-2.0",
+  "author": "IBM Corp",
+  "contributors": [
+    {
+      "name": "Ethan Winters",
+      "email": "ewinters@us.ibm.com"
+    },
+    {
+      "name": "Pablo Najimovich",
+      "email": "najimovi@ar.ibm.com"
+    }
+  ],
+  "devDependencies": {
+    "css-loader": "0.25.0",
+    "style-loader": "0.13.1",
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
+  },
+  "dependencies": {
+    "@watson-virtual-agent/chat-widget": "1.2.11"
+  }
+}

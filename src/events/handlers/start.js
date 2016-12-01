@@ -22,7 +22,7 @@ function start(data) {
   state.set(data);
   current = state.get();
   utils.attachStyles();
-  current.root.className += " chatID-" + current.chatID;
+  current.root.classList.add("chatID-" + current.chatID);
   current.root.innerHTML = templates.start;
   var outerContainer = current.root.querySelector('.IBMChat-outer-container');
   var elements = {
