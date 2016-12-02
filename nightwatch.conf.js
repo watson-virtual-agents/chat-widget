@@ -54,13 +54,6 @@ module.exports = {
       }
     },
 
-    // "chrome": {
-    //   "desiredCapabilities": {
-    //     "browserName": "chrome",
-    //     "javascriptEnabled": true
-    //   }
-    // },
-
     "travis-chrome": {
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
@@ -68,7 +61,6 @@ module.exports = {
       "access_key": "${SAUCE_ACCESS_KEY}",
       "use_ssl": false,
       "startConnect": false,
-      // "silent": false,
       "output": true,
       "screenshots": {
         "enabled": true,
