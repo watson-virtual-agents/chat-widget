@@ -40,13 +40,14 @@ function layoutError(layout) {
 function intent(data) {
   var element = data.element;
   var intent = data.intent;
-  var button = document.createElement('button');
-  button.textContent = 'Edit the ' + intent + ' intent';
-  button.classList.add(activeClassName);
-  button.addEventListener('click', function() {
+  var human = data.intent;
+  var link = document.createElement('a');
+  link.textContent = human;
+  link.setAttribute('href', 'javascript:void(0)');
+  link.addEventListener('click', function() {
     events.publish('showAdminUIIntent', intent);
   });
-  element.appendChild(button);
+  element.appendChild(link);
 }
 
 module.exports = {
