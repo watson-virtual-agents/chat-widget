@@ -162,6 +162,36 @@ module.exports = {
       "selenium": {
         "start_process": false
       }
+    },
+
+    "travis-ipad2": {
+      "selenium_host": "ondemand.saucelabs.com",
+      "selenium_port": 80,
+      "username": "${SAUCE_USERNAME}",
+      "access_key": "${SAUCE_ACCESS_KEY}",
+      "use_ssl": false,
+      "startConnect": false,
+      "output": true,
+      "screenshots": {
+        "enabled": true,
+        "path": './test/selenium/errorShots/travis/ipad2'
+      },
+      "globals": {
+        "waitForConditionTimeout": 30000,
+        "afterEach": callSauce
+      },
+      "desiredCapabilities": {
+        "browserName": "iPad",
+        "platform": "MAC",
+        "device": "iPad 2 (5.0)",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true,
+        "build": "build-" + TRAVIS_JOB_NUMBER,
+        "tunnel-identifier": TRAVIS_JOB_NUMBER
+      },
+      "selenium": {
+        "start_process": false
+      }
     }
 
   }
