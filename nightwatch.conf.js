@@ -54,14 +54,14 @@ module.exports = {
       }
     },
 
-    "chrome": {
-      "desiredCapabilities": {
-        "browserName": "chrome",
-        "javascriptEnabled": true
-      }
-    },
+    // "chrome": {
+    //   "desiredCapabilities": {
+    //     "browserName": "chrome",
+    //     "javascriptEnabled": true
+    //   }
+    // },
 
-    "travis": {
+    "travis-chrome": {
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
       "username": "${SAUCE_USERNAME}",
@@ -100,7 +100,7 @@ module.exports = {
       }
     },
 
-    "firefox": {
+    "travis-firefox": {
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
       "username": "${SAUCE_USERNAME}",
@@ -135,7 +135,7 @@ module.exports = {
       }
     },
 
-    "ie": {
+    "travis-ie11": {
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
       "username": "${SAUCE_USERNAME}",
@@ -153,6 +153,7 @@ module.exports = {
       },
       "desiredCapabilities": {
         "browserName": "internet explorer",
+        "version": "11",
         "platform": "WIN10",
         "javascriptEnabled": true,
         "databaseEnabled": true,
