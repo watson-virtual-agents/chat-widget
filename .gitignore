@@ -38,7 +38,7 @@ node_modules
 public
 creds
 
-dev-tools/creds.html
+creds.html
 dist/index.html
 examples/**/dist
 test/selenium/errorShots

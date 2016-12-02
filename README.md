@@ -33,11 +33,11 @@ It contains a configurable user interface and can be used as-is or customized. A
     The key you selected is now displayed.
     3. Now you should see a `TEST` button when you scroll down to the Retrieve Bot call.
 
-4. Open `dev-tools/index.html` in your favorite text editor and set the values for the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters:
+4. Open `/index.html` in your favorite text editor and set the values for the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters:
     ```html
         <script>
             window.IBMChat.init({
-                el: 'ibm_element',
+                el: 'ibm_el',
                 baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
                 botID: '',              // replace with Bot ID
                 XIBMClientID: '',       // replace with Client ID
