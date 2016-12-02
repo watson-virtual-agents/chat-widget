@@ -135,7 +135,7 @@ module.exports = {
       }
     },
 
-    "edge": {
+    "ie": {
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
       "username": "${SAUCE_USERNAME}",
@@ -152,7 +152,7 @@ module.exports = {
         "afterEach": callSauce
       },
       "desiredCapabilities": {
-        "browserName": "MicrosoftEdge",
+        "browserName": "internet explorer",
         "platform": "WIN10",
         "javascriptEnabled": true,
         "databaseEnabled": true,

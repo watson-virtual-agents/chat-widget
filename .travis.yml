@@ -11,7 +11,7 @@ script:
   - npm run test:codecov
   # - npm run test:selenium:travis
   # - npm run test:selenium:firefox
-  - npm run test:selenium:edge
+  - npm run test:selenium:ie
   - npm run jsdoc
   - npm run eslint
 after_success:
