@@ -130,7 +130,7 @@ IBMChat.init(config);
 
 If you add a custom layout with the same name as a current layout, the custom layout overwrites the current layout.
 
-For a simple example of creating a custom layout please see `/examples/basic-actions-example`
+For a simple example of creating a custom layout please see `/examples/basic-custom-layout`
 
 ## Private Identifiable Information (PII)
 
