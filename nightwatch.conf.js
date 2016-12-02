@@ -166,7 +166,7 @@ module.exports = {
         "tunnel-identifier": TRAVIS_JOB_NUMBER
       },
       "selenium": {
-        "start_process": false
+        "start_process": true
       }
     }
 
