@@ -35,7 +35,8 @@ module.exports = {
     "port": 4444,
     "cli_args": {
       "webdriver.chrome.driver": "./bin/chromedriver",
-      "webdriver.gecko.driver": "./bin/geckodriver"
+      "webdriver.gecko.driver": "./bin/geckodriver",
+      "webdriver.ie.driver": "./node_modules/iedriver/lib/iedriver/IEDriverServer.exe"
     }
   },
   "test_settings": {
@@ -166,7 +167,7 @@ module.exports = {
         "tunnel-identifier": TRAVIS_JOB_NUMBER
       },
       "selenium": {
-        "start_process": true
+        "start_process": false
       }
     }
 
