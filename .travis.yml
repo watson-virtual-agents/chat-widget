@@ -9,7 +9,7 @@ before_install:
   - 'openssl aes-256-cbc -K $encrypted_989954bb41cf_key -iv $encrypted_989954bb41cf_iv -in auth.js.enc -out test/resources/auth.js -d'
 script:
   - npm run test:codecov
-  - bash selenium_custom_run.sh
+  - bash test/selenium/selenium_custom_run.sh
   - npm run jsdoc
   - npm run eslint
 after_success:
