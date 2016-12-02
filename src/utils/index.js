@@ -45,7 +45,7 @@ function debounce(func, wait, immediate) {
 }
 
 function serialize(obj) {
-  const str = [];
+  var str = [];
   for (var p in obj) {
     if (obj.hasOwnProperty(p))
       str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
