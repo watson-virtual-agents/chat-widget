@@ -19,6 +19,7 @@
     "test:selenium:travis-chrome": "node ./test/selenium/download.js && concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --env travis-chrome --suiteRetries 3\"",
     "test:selenium:travis-firefox": "node ./test/selenium/download.js && concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --env travis-firefox --suiteRetries 3\"",
     "test:selenium:travis-ie11": "npm install iedriver@2.53.1 && concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --env travis-ie11 --suiteRetries 3\"",
+    "test:selenium:all": "npm run test:selenium:travis-chrome && test:selenium:travis-firefox && test:selenium:travis-ie11",
     "test:selenium:watch": "node ./test/selenium/download.js && npm-watch",
     "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
     "watch": "npm run server:watch"
