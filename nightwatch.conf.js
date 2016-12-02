@@ -181,13 +181,19 @@ module.exports = {
         "afterEach": callSauce
       },
       "desiredCapabilities": {
-        "browserName": "iPad",
-        "platform": "MAC",
-        "device": "iPad 2 (5.0)",
-        "javascriptEnabled": true,
-        "acceptSslCerts": true,
+        "browserName": "Safari",
+        "platformName": "iOS",
+        "appiumVersion": "1.5.1",
+        "deviceName": "iPad Retina",
+        "deviceOrientation": "portrait",
+        "platformVersion": "8.4",
         "build": "build-" + TRAVIS_JOB_NUMBER,
         "tunnel-identifier": TRAVIS_JOB_NUMBER
+        // "browserName": "iPad",
+        // "platform": "MAC",
+        // "device": "iPad 2 (5.0)",
+        // "javascriptEnabled": true,
+        // "acceptSslCerts": true,
       },
       "selenium": {
         "start_process": false
