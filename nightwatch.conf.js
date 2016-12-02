@@ -181,12 +181,19 @@ module.exports = {
         "afterEach": callSauce
       },
       "desiredCapabilities": {
-        "browserName": "Safari",
-        "platformName": "iOS",
-        "appiumVersion": "1.5.1",
-        "deviceName": "iPad Retina",
-        "deviceOrientation": "portrait",
-        "platformVersion": "8.4",
+        // "browserName": "Safari",
+        // "platformName": "iOS",
+        // "appiumVersion": "1.5.1",
+        // "deviceName": "iPad Retina",
+        // "deviceOrientation": "portrait",
+        // "platformVersion": "8.4",
+
+        "browserName" = "Safari",
+        "platformName" = "iOS",
+        "appiumVersion" = "1.6.1",
+        "deviceName" = "iPad Retina Simulator",
+        "deviceOrientation" = "portrait",
+        "platformVersion" = "10.0",
         "build": "build-" + TRAVIS_JOB_NUMBER,
         "tunnel-identifier": TRAVIS_JOB_NUMBER
         // "browserName": "iPad",
