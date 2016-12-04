@@ -19,11 +19,11 @@ It contains a configurable user interface and can be used as-is or customized. A
     2. Log in to [/api explorer](https://developer.ibm.com/api/) with the same IBM ID that you used to sign up for the trial subscription
     3. Click the My APIs link, and look for the IBM Watson Virtual Agent tile. Click the key icon, and select the default key.
     <p align="center">
-      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_a.png" width="75%" height="auto" />
+      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/dev/images/api_keys_a.png" width="75%" height="auto" />
     </p>
     4. Hover over the key fields, and then click SHOW to view the values. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.
     <p align="center">
-      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_b.png" width="75%" height="auto" />
+      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/dev/images/api_keys_b.png" width="75%" height="auto" />
     </p>
 
 2. Get your bot ID.
@@ -33,12 +33,12 @@ It contains a configurable user interface and can be used as-is or customized. A
     1. When you get to the Watson Virtual Agent API details page, click `KEYS`.
     2. Click **#1 - Key1**.
     <p align="center">
-      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_c.png" width="50%" height="auto" />
+      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/dev/images/api_keys_c.png" width="40%" height="auto" />
     </p>
     The key you selected is now displayed.
     3. Now you should see a `TEST` button when you scroll down to the Retrieve Bot call.
     <p align="center">
-      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_d.png" width="75%" height="auto" />
+      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/dev/images/api_keys_d.png" width="50%" height="auto" />
     </p>
 
 ### Installation
