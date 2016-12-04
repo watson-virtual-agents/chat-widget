@@ -18,12 +18,13 @@ It contains a configurable user interface and can be used as-is or customized. A
     1. Sign in for a Free Trial in https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/
     2. Log in to [/api explorer](https://developer.ibm.com/api/) with the same IBM ID that you used to sign up for the trial subscription
     3. Click the My APIs link, and look for the IBM Watson Virtual Agent tile. Click the key icon, and select the default key.
-
-    ![WVA keys in tile](https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_a.png)
-
+    <p align="center">
+      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_a.png" width="75%" height="auto" />
+    </p>
     4. Hover over the key fields, and then click SHOW to view the values. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.
-
-    ![show keys](https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_b.png)
+    <p align="center">
+      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_b.png" width="75%" height="auto" />
+    </p>
 
 2. Get your bot ID.
 
@@ -31,10 +32,14 @@ It contains a configurable user interface and can be used as-is or customized. A
     If, for some reason, you want to retrieve the bot ID yourself, follow these steps. The order is important.
     1. When you get to the Watson Virtual Agent API details page, click `KEYS`.
     2. Click **#1 - Key1**.
-    ![select key in API Explorer](https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_c.png)
+    <p align="center">
+      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_c.png" width="50%" height="auto" />
+    </p>
     The key you selected is now displayed.
     3. Now you should see a `TEST` button when you scroll down to the Retrieve Bot call.
-    ![test key in API Explorer](https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_d.png)
+    <p align="center">
+      <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/update-readme/images/api_keys_d.png" width="75%" height="auto" />
+    </p>
 
 ### Installation
 
