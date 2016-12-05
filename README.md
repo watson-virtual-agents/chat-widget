@@ -41,46 +41,61 @@ It contains a configurable user interface and can be used as-is or customized. A
       <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/dev/images/api_keys_d.png" width="50%" height="auto" />
     </p>
 
-### Installation
+### Using the WVA Chat Widget on Your Site
 
-1. Clone this repository
+You can copy this HTML code block into a file, give it an .html extension, and view it in a browser to see a quick and basic example. Replace the values of the botID, XIBMClientID, and XIBMClientSecret parameters.
 
-    ```bash
-        git clone https://github.com/watson-virtual-agents/chat-widget
-    ```
+```html
+<html>
+<head>
+<title>IBM Watson Virtual Agent Chat Widget Sample</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<style>
+  html, body, iframe { width: 100%; height:100%; padding:0; margin:0; }
+  #ibm_chat_root { position:fixed; bottom:0; right: 20px; height: 80%; min-height:400px; width:300px; background:#000; }
+</style>
+</head>
+<body>
+<div id="ibm_chat_root"></div>
+<iframe style="width:100%; height:100%" src="http://www.ibm.com/en-us"></iframe>
+<!--
+https://unpkg.com/@watson-virtual-agent/chat-widget@X.X.X/dist/chat.min.js for a specific version, where X.X.X is the semantic version of the chat widget.
+In your production environment, we recommend locking down your widget version.
+-->
+<script src='https://unpkg.com/@watson-virtual-agent/chat-widget/dist/chat.min.js'></script>
+<script>
+  var config = {
+    el: 'ibm_chat_root',
+    baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
+    botID: 'YOUR_BOT_ID',
+    XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+    XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+  };
+  window.IBMChat.init(config);
+</script>
+</body>
+</html>
+```
 
-2. Open `/index.html` in your favorite text editor and set the values for the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters:
-    ```html
-        <script>
-            window.IBMChat.init({
-                el: 'ibm_el',
-                baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
-                botID: '',              // replace with Bot ID
-                XIBMClientID: '',       // replace with Client ID
-                XIBMClientSecret: ''    // replace with Client Secret
-            });
-        </script>
-    ```
-3. Save your changes.
+You can also install this package from npm with `npm install @watson-virtual-agent/chat-widget` and include it as part of your own scripts and build process.
 
-  **Important**: Keep the values of the IBMClientID and IBMClientSecret as private as possible.
+```js
+var IBMChat = require('@watson-virtual-agent/chat-widget');
+var config = {
+  el: 'ibm_chat_root',
+  baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
+  botID: 'YOUR_BOT_ID',
+  XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+  XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+};
+IBMChat.init(config);
+```
 
-
-### Run Locally
-
-1. Run the following commands using [Node 4.2.1](https://nodejs.org/) or higher:
-
-    ```bash
-    npm install
-    npm run watch
-    ```
-
-2. Navigate to `http://localhost:3100`.
-
-## Questions and issues
-
-Report bugs or feature requests to our [github issue tracker](https://github.com/watson-virtual-agents/chat-widget/issues).
-For questions please refer to [StackOverflow](http://stackoverflow.com/questions/tagged/watson-virtual-agent) under tag `watson-virtual-agent` or [DeveloperWorks Answers](https://developer.ibm.com/answers/topics/watson-virtual-agent).
+For more details about what you can do once the widget is up and running, see:
+- [DOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/DOCS.md)
+- [JSDOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/JSDOCS.md)
+- [EVENTS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/EVENTS.md)
 
 ## API
 
@@ -90,12 +105,11 @@ For detailed documentation on the Watson Virtual Agent Chat Widget API please se
 
 Additional documentation related to Watson Virtual Agent can be found in [www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml](https://www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml).
 
-## Customization
+## Questions and issues
 
-For more details about what you can do once the widget is up and running, see:
-- [DOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/DOCS.md)
-- [JSDOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/JSDOCS.md)
-- [EVENTS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/EVENTS.md)
+Report bugs or feature requests to our [github issue tracker](https://github.com/watson-virtual-agents/chat-widget/issues).
+For questions please refer to [StackOverflow](http://stackoverflow.com/questions/tagged/watson-virtual-agent) under tag `watson-virtual-agent` or [DeveloperWorks Answers](https://developer.ibm.com/answers/topics/watson-virtual-agent).
+
 
 ## Contributing
 
