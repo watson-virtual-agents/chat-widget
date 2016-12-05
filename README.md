@@ -92,14 +92,13 @@ var config = {
 IBMChat.init(config);
 ```
 
+## API
+
 For more details about what you can do once the widget is up and running, see:
 - [DOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/DOCS.md)
 - [JSDOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/JSDOCS.md)
 - [EVENTS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/EVENTS.md)
 
-## API
-
-For detailed documentation on the Watson Virtual Agent Chat Widget API please see [JSDOCS.md](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/JSDOCS.md).
 
 ## Watson Virtual Agent Documentation
 
