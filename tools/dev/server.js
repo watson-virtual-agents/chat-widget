@@ -14,7 +14,7 @@
 
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const config = require('../webpack.config.js');
+const config = require('../../webpack.config.js');
 const devServers = {};
 
 function run(conf) {

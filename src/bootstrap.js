@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -17,6 +17,7 @@ var events = require('./events');
 var eventHandlers = require('./events/handlers');
 var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var state = require('./state');
+var utils = require('./utils');
 var profile = require('./profile');
 var playback = require('./playback');
 var Promise = require('es6-promise').Promise;
@@ -45,7 +46,6 @@ function registerEvents(tryIt, playback) {
     events.subscribe('send', eventHandlers.sendMock);
   } else {
     events.subscribe('clear', eventHandlers.clear);
-    events.subscribe('resize-input', eventHandlers.resizeInput);
     events.subscribe('send', eventHandlers.send);
     events.subscribe('send-input-message', eventHandlers.sendInputMessage);
     events.subscribe('enable-input', eventHandlers.input.enableInput);
@@ -261,6 +261,7 @@ function debug() {
 function destroy() {
   return new Promise(function(resolve) {
     var current = state.getState();
+    utils.removeResizeListener(current.root, current.onResize);
     events.publish('destroy');
     events.destroy();
     if (typeof current.originalContent !== 'undefined')
@@ -271,7 +272,7 @@ function destroy() {
 }
 
 function restart() {
-  console.warning('The IBMChat.restart method is deprecated.');
+  console.warn('The IBMChat.restart method is deprecated.');
   return new Promise(function(resolve, reject) {
     var current = state.getState();
     destroy().then(function() {

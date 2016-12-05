@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -12,9 +12,11 @@
 * the License.
 */
 
+var state = require('../state');
+var events = require('../events');
 var styles = require('./styles');
 var writeMessage = require('./writeMessage');
-
+var resize = require('./resize');
 function _render(el, state) {
   if (el)
     el.setAttribute('class', 'IBMChat-ibm-spinner IBMChat-input-loading IBMChat-' + state + '-spin');
@@ -85,6 +87,32 @@ function appendToEach(appendTo, content) {
   }
 }
 
+function isVisible(elem) {
+  return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+}
+
+var _currentVisibilityCheck;
+
+function checkVisibility() {
+  var current = state.get();
+  if (_currentVisibilityCheck)
+    clearTimeout(_currentVisibilityCheck);
+  if (!current.isVisible && isVisible(current.root)) {
+    events.publish('resize');
+    state.set({
+      isVisible: true
+    });
+    _currentVisibilityCheck = setTimeout(checkVisibility, 3000);
+  } else {
+    if (current.isVisible) {
+      state.set({
+        isVisible: false
+      });
+    }
+    _currentVisibilityCheck = setTimeout(checkVisibility, 300);
+  }
+}
+
 module.exports = {
   appendToEach: appendToEach,
   debounce: debounce,
@@ -97,5 +125,9 @@ module.exports = {
   normalizeToHex: styles.normalizeToHex,
   spinner: spinner,
   compile: compile,
-  writeMessage: writeMessage
+  writeMessage: writeMessage,
+  addResizeListener: resize.addResizeListener,
+  removeResizeListener: resize.removeResizeListener,
+  isVisible: isVisible,
+  checkVisibility: checkVisibility
 };
