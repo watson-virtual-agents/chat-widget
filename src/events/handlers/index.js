@@ -24,6 +24,7 @@ var error = require('./error');
 var playback = require('./playback');
 var scrollToBottom = require('./scroll-to-bottom');
 var tryIt = require('./try-it');
+var clear = require('./clear');
 
 module.exports = {
   /**
@@ -45,6 +46,10 @@ module.exports = {
   * @ignore
   */
   start: start,
+  /**
+  * @ignore
+  */
+  clear: clear,
   /**
   * Send event. Sends a message.
   *

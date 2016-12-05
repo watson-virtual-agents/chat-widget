@@ -130,6 +130,8 @@ IBMChat.init(config);
 
 If you add a custom layout with the same name as a current layout, the custom layout overwrites the current layout.
 
+For a simple example of creating a custom layout please see `/examples/basic-custom-layout`
+
 ## Private Identifiable Information (PII)
 
 Do not send PII to the bot. Externally save PII by using functions subscribed to actions. To store PII for the chat widget to use, use the IBMChat.profile.set method.
