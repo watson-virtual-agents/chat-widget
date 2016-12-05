@@ -13,7 +13,6 @@
 */
 
 var events = require('../../events');
-var activeClassName = 'IBMChat-accent-colors';
 
 function actionError(action) {
   events.publish('receive', {
