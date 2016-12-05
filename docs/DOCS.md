@@ -17,39 +17,57 @@ You can copy this HTML code block into a file, give it an .html extension, and v
 <div id="ibm_chat_root"></div>
 <iframe style="width:100%; height:100%" src="http://www.ibm.com/en-us"></iframe>
 <!--
-https://unpkg.com/@watson-virtual-agent/chat-widget@X.X.X/dist/chat.min.js for a specific version
+https://unpkg.com/@watson-virtual-agent/chat-widget@X.X.X/dist/chat.min.js for a specific version, where X.X.X is the semantic version of the chat widget.
 In your production environment, we recommend locking down your widget version.
 -->
 <script src='https://unpkg.com/@watson-virtual-agent/chat-widget/dist/chat.min.js'></script>
 <script>
-  IBMChat.init({
+  var config = {
     el: 'ibm_chat_root',
     baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
     botID: 'YOUR_BOT_ID',
     XIBMClientID: 'YOUR_IBM_CLIENT_ID',
     XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
-  });
+  };
+  window.IBMChat.init(config);
 </script>
 </body>
 </html>
 ```
 
+You can also install this package from npm with `npm install @watson-virtual-agent/chat-widget` and include it as part of your own scripts and build process.
+
+```js
+var IBMChat = require('@watson-virtual-agent/chat-widget');
+var config = {
+  el: 'ibm_chat_root',
+  baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
+  botID: 'YOUR_BOT_ID',
+  XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+  XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+};
+IBMChat.init(config);
+```
+
 ## Advanced Configuration
 
-To extend the basic setup, you can manipulate the theme and securely hide your IBMClientID and IBMClientSecret values.
+To extend the basic setup, you can manipulate the theme and securely hide your XIBMClientID and XIBMClientSecret values.
 
-In the following code example, the baseURL adds the IBMClientID and IBMClientSecretToken to the request headers before the request is passed to the bot, and the theme colors are lightened.
+In the following code example, the baseURL adds the `X-IBM-Client-Id` and `X-IBM-Client-Secret` to the request headers before the request is passed to the bot, and the theme colors are lightened.
 
 For a full breakdown of the options for the init function, see [./JSDOCS.md](./JSDOCS.md);
 
 **Example**  
 ```js
+
+var IBMChat = require('@watson-virtual-agent/chat-widget');
+
 IBMChat.init({
  el: 'my_element',
  botID: 'YOUR_BOT_ID',
- baseURL: 'https://example.com/botProxy',
+ baseURL: 'https://example.com/botProxy', //this would be your own server
  styles: {
-	 background: 'rgba(255, 255, 255, 1)', //use rgba
+	 background: 'rgba(255, 255, 255, 0.8)', //use rgba
 	 text: 'rgba(0, 0, 0, 1)',
 	 accentBackground: '#31eaf1', //or a hex code
 	 accentText: '#ffffff',
@@ -105,6 +123,7 @@ Add a custom layout by using the registerLayout function. The registerLayout fun
 
 **Example**  
 ```js
+var IBMChat = require('@watson-virtual-agent/chat-widget');
 var PlumberBrothers = require('../plumber-brothers-game');
 var config = {};
 
