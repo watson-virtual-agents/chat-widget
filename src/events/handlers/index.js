@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -14,7 +14,6 @@
 
 var start = require('./start');
 var resize = require('./resize');
-var resizeInput = require('./resize-input');
 var receive = require('./receive');
 var send = require('./send');
 var sendMock = require('./send-mock');
@@ -38,10 +37,6 @@ module.exports = {
   * });
   */
   resize: resize,
-  /**
-  * @ignore
-  */
-  resizeInput: resizeInput,
   /**
   * @ignore
   */

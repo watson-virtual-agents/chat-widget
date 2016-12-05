@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -15,18 +15,38 @@
 var state = require('../../state');
 
 function resize() {
-  setTimeout(function() {
-    var current = state.getState();
-    if (current.active) {
-      var inputHeight = (current.inputHolder) ? (current.inputHolder.getBoundingClientRect().height) : 0;
-      current.chatHolder.style.maxHeight = (current.root.getBoundingClientRect().height - inputHeight) + 'px';
-      current.chatHolder.style.maxWidth = ((current.root.getBoundingClientRect().width > 288) ? current.root.getBoundingClientRect().width : 288) + 'px';
-      if (current.root.getBoundingClientRect().width >= 480)
-        current.root.classList.add('IBMChat-isLarge');
-      else
-        current.root.classList.remove('IBMChat-isLarge');
+  var current = state.getState();
+  if (current.isVisible) {
+    var maxInputPercentage = 35;
+    if (current.active && current.inputClone) {
+      var cloneHeight;
+      var maxInputHeight = (window.getComputedStyle(current.root).getPropertyValue('height').replace('px', '')) * (maxInputPercentage / 100);
+      maxInputHeight = (maxInputHeight > 96) ? maxInputHeight : 96;
+
+      current.inputClone.innerHTML = (current.input.value && current.input.value.length > 0) ? current.input.value.replace(/\n/g, '<br />') : 'Enter message...';
+      cloneHeight = window.getComputedStyle(current.inputClone).getPropertyValue('height').replace('px', '');
+      if (cloneHeight !== current.inputHeight) {
+        var inputHeight = (maxInputHeight > cloneHeight) ? cloneHeight : maxInputHeight;
+        current.input.style.overflow = 'hidden';
+        state.set({
+          inputHeight: inputHeight
+        });
+        current.input.style.height = inputHeight + "px";
+        current = state.getState();
+      }
     }
-  }, 100);
+    setTimeout(function() {
+      if (current.active) {
+        var inputHeight = (current.inputHolder) ? (current.inputHolder.getBoundingClientRect().height) : 0;
+        current.chatHolder.style.maxHeight = (current.root.getBoundingClientRect().height - inputHeight) + 'px';
+        current.chatHolder.style.maxWidth = ((current.root.getBoundingClientRect().width > 288) ? current.root.getBoundingClientRect().width : 288) + 'px';
+        if (current.root.getBoundingClientRect().width >= 480)
+          current.root.classList.add('IBMChat-isLarge');
+        else
+          current.root.classList.remove('IBMChat-isLarge');
+      }
+    }, 0);
+  }
 }
 
 module.exports = resize;

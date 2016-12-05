@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -25,7 +25,7 @@ function start(data) {
   current.root.classList.add("chatID-" + current.chatID);
   current.root.innerHTML = templates.start;
   var outerContainer = current.root.querySelector('.IBMChat-outer-container');
-  var elements = {
+  var addState = {
     container: current.root.querySelector('.IBMChat-chat-container'),
     chatHolder: current.root.querySelector('.IBMChat-messages'),
     innerContainer: current.root.querySelector('.IBMChat-inner-container'),
@@ -39,36 +39,38 @@ function start(data) {
       placeholder: 'Enter message...'
     });
     outerContainer.appendChild(chatBox);
-    elements.inputHolder = current.root.querySelector('.IBMChat-input-container');
-    elements.input = current.root.querySelector('.IBMChat-chat-textbox');
-    elements.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
-    elements.form = current.root.querySelector('.IBMChat-input-form');
-    elements.loader = current.root.querySelector('.IBMChat-input-loading');
-    elements.originalInputHeight = window.getComputedStyle(elements.input).getPropertyValue('height').replace('px', '');
-    elements.form.addEventListener('submit', function(e) {
+    addState.inputHolder = current.root.querySelector('.IBMChat-input-container');
+    addState.input = current.root.querySelector('.IBMChat-chat-textbox');
+    addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
+    addState.form = current.root.querySelector('.IBMChat-input-form');
+    addState.loader = current.root.querySelector('.IBMChat-input-loading');
+    addState.originalInputHeight = window.getComputedStyle(addState.input).getPropertyValue('height').replace('px', '');
+    addState.form.addEventListener('submit', function(e) {
       e.preventDefault();
     });
+    addState.onResize = function() {
+      events.publish('resize');
+    };
 
-    elements.input.addEventListener('keyup', function(e) {
+    addState.input.addEventListener('keyup', function(e) {
       if (e.keyCode === 13) {
         events.publish('send-input-message');
-        elements.inputClone.innerHTML = '';
-        elements.input.style.overflow = 'hidden';
-        elements.input.style.height = elements.originalInputHeight + "px";
+        addState.inputClone.innerHTML = '';
+        addState.input.style.overflow = 'hidden';
+        addState.input.style.height = addState.originalInputHeight + "px";
         state.set({
-          inputHeight: elements.originalInputHeight
+          inputHeight: addState.originalInputHeight
         });
         events.publish('resize');
-      } else {
-        events.publish('resize-input');
       }
-    });
-
-    elements.input.addEventListener('focus', function() {
       events.publish('resize');
     });
 
-    elements.input.addEventListener('blur', function() {
+    addState.input.addEventListener('focus', function() {
+      events.publish('resize');
+    });
+
+    addState.input.addEventListener('blur', function() {
       events.publish('resize');
     });
   }
@@ -81,8 +83,9 @@ function start(data) {
     events.publish('resize');
   });
 
-  state.setState(elements);
-  events.publish('resize-input');
+  state.setState(addState);
+  utils.checkVisibility();
+  utils.addResizeListener(current.root, addState.onResize);
   events.publish('resize');
 }
 

@@ -2,7 +2,7 @@
 
 <dl>
 <dt><a href="#event_resize">"resize"</a></dt>
-<dd><p>Resize event. Forces a resize of the Chat UI elements to fix current parent element.</p>
+<dd><p>Resize event. Forces a resize of the Chat UI elements to current parent element.</p>
 </dd>
 <dt><a href="#event_send">"send"</a></dt>
 <dd><p>Send event. Sends a message.</p>
