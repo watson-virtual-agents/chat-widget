@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -17,12 +17,14 @@ var events = require('./events');
 var eventHandlers = require('./events/handlers');
 var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var state = require('./state');
+var utils = require('./utils');
 var profile = require('./profile');
 var playback = require('./playback');
 var Promise = require('es6-promise').Promise;
 var assign = require('lodash/assign');
 var defaultStyles = require('./styles');
 
+var baseURL = 'https://api.ibm.com/virtualagent/run/api/v1/';
 var layoutInit = {};
 var registeredLayouts = [];
 
@@ -42,7 +44,7 @@ function registerEvents(tryIt, playback) {
   if (playback === true) { //TODO: remove if playback when Dashboard code is updated
     events.subscribe('send', eventHandlers.sendMock);
   } else {
-    events.subscribe('resize-input', eventHandlers.resizeInput);
+    events.subscribe('clear', eventHandlers.clear);
     events.subscribe('send', eventHandlers.send);
     events.subscribe('send-input-message', eventHandlers.sendInputMessage);
     events.subscribe('enable-input', eventHandlers.input.enableInput);
@@ -75,7 +77,7 @@ function init(config) {
 
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
   var SDKconfig = {};
-  SDKconfig.baseURL = config.baseURL || 'https://api.ibm.com/virtualagent/run/api/v1/';
+  SDKconfig.baseURL = config.baseURL || baseURL;
   if (config.withCredentials)
     SDKconfig.withCredentials = config.withCredentials;
   if (config.XIBMClientID)
@@ -258,6 +260,7 @@ function debug() {
 function destroy() {
   return new Promise(function(resolve) {
     var current = state.getState();
+    utils.removeResizeListener(current.root, current.onResize);
     events.publish('destroy');
     events.destroy();
     if (typeof current.originalContent !== 'undefined')
@@ -268,6 +271,7 @@ function destroy() {
 }
 
 function restart() {
+  console.warn('The IBMChat.restart method is deprecated.');
   return new Promise(function(resolve, reject) {
     var current = state.getState();
     destroy().then(function() {
@@ -281,6 +285,40 @@ function restart() {
     })['catch'](function(e) {
       reject(e);
     });
+  });
+}
+
+function clear() {
+  return new Promise(function(resolve, reject) {
+    var current = state.get();
+    var SDKconfig = {};
+    SDKconfig.baseURL = current.baseURL || baseURL;
+    if (current.withCredentials)
+      SDKconfig.withCredentials = current.withCredentials;
+    if (current.XIBMClientID)
+      SDKconfig.XIBMClientID = current.XIBMClientID;
+    if (current.XIBMClientSecret)
+      SDKconfig.XIBMClientSecret = current.XIBMClientSecret;
+    if (current.userID)
+      SDKconfig.userID = current.userID;
+    BotSDK
+      .configure( SDKconfig )
+      .start( current.botID )
+      .then( function(res) {
+        state.set({
+          chatID: res.chatID
+        });
+        window.sessionStorage.setItem('IBMChatChatID', res.chatID);
+        events.publish('clear');
+        events.publish('receive', res);
+        setTimeout(function() {
+          resolve();
+        }, 0);
+      })['catch']( function(err) {
+        console.error(err);
+        destroy();
+        reject(err);
+      });
   });
 }
 
@@ -307,5 +345,6 @@ module.exports = {
   hasSubscription: events.hasSubscription,
   completeEvent: events.completeEvent,
   playback: playback,
-  state: state
+  state: state,
+  clear: clear
 };

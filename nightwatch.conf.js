@@ -34,10 +34,13 @@ module.exports = {
     "host": "127.0.0.1",
     "port": 4444,
     "cli_args": {
-      "webdriver.chrome.driver": "./bin/chromedriver"
+      "webdriver.chrome.driver": "./bin/chromedriver",
+      "webdriver.gecko.driver": "./bin/geckodriver",
+      "webdriver.ie.driver": "./node_modules/iedriver/lib/iedriver/IEDriverServer.exe"
     }
   },
   "test_settings": {
+
     "default": {
       "screenshots": {
         "enabled": true,
@@ -50,20 +53,14 @@ module.exports = {
         "browserName": "chrome"
       }
     },
-    "chrome": {
-      "desiredCapabilities": {
-        "browserName": "chrome",
-        "javascriptEnabled": true
-      }
-    },
-    "travis": {
+
+    "travis-chrome": {
       "selenium_host": "ondemand.saucelabs.com",
       "selenium_port": 80,
       "username": "${SAUCE_USERNAME}",
       "access_key": "${SAUCE_ACCESS_KEY}",
       "use_ssl": false,
       "startConnect": false,
-      // "silent": false,
       "output": true,
       "screenshots": {
         "enabled": true,
@@ -93,6 +90,110 @@ module.exports = {
       "selenium": {
         "start_process": false
       }
-    }
+    },
+
+    "travis-firefox": {
+      "selenium_host": "ondemand.saucelabs.com",
+      "selenium_port": 80,
+      "username": "${SAUCE_USERNAME}",
+      "access_key": "${SAUCE_ACCESS_KEY}",
+      "use_ssl": false,
+      "startConnect": false,
+      "output": true,
+      "screenshots": {
+        "enabled": true,
+        "path": './test/selenium/errorShots/travis/firefox'
+      },
+      "globals": {
+        "waitForConditionTimeout": 30000,
+        "afterEach": callSauce
+      },
+      "desiredCapabilities": {
+        "browserName": "firefox",
+        "javascriptEnabled": true,
+        "databaseEnabled": true,
+        "locationContextEnabled": true,
+        "applicationCacheEnabled": true,
+        "browserConnectionEnabled": true,
+        "webStorageEnabled": true,
+        "acceptSslCerts": true,
+        "rotatable": true,
+        "nativeEvents": true,
+        "build": "build-" + TRAVIS_JOB_NUMBER,
+        "tunnel-identifier": TRAVIS_JOB_NUMBER
+      },
+      "selenium": {
+        "start_process": false
+      }
+    },
+
+    "travis-ie11": {
+      "selenium_host": "ondemand.saucelabs.com",
+      "selenium_port": 80,
+      "username": "${SAUCE_USERNAME}",
+      "access_key": "${SAUCE_ACCESS_KEY}",
+      "use_ssl": false,
+      "startConnect": false,
+      "output": true,
+      "screenshots": {
+        "enabled": true,
+        "path": './test/selenium/errorShots/travis/edge'
+      },
+      "globals": {
+        "waitForConditionTimeout": 30000,
+        "afterEach": callSauce
+      },
+      "desiredCapabilities": {
+        "browserName": "internet explorer",
+        "version": "11",
+        "platform": "WIN10",
+        "javascriptEnabled": true,
+        "databaseEnabled": true,
+        "locationContextEnabled": true,
+        "applicationCacheEnabled": true,
+        "browserConnectionEnabled": true,
+        "webStorageEnabled": true,
+        "acceptSslCerts": true,
+        "rotatable": true,
+        "nativeEvents": true,
+        "build": "build-" + TRAVIS_JOB_NUMBER,
+        "tunnel-identifier": TRAVIS_JOB_NUMBER
+      },
+      "selenium": {
+        "start_process": false
+      }
+    },
+
+    // "travis-ipad2": {
+    //   "selenium_host": "ondemand.saucelabs.com",
+    //   "selenium_port": 80,
+    //   "username": "${SAUCE_USERNAME}",
+    //   "access_key": "${SAUCE_ACCESS_KEY}",
+    //   "use_ssl": false,
+    //   "startConnect": false,
+    //   "output": true,
+    //   "screenshots": {
+    //     "enabled": true,
+    //     "path": './test/selenium/errorShots/travis/ipad2'
+    //   },
+    //   "globals": {
+    //     "waitForConditionTimeout": 30000,
+    //     "afterEach": callSauce
+    //   },
+    //   "desiredCapabilities": {
+    //     "browserName": "Safari",
+    //     "platformName": "iOS",
+    //     "appiumVersion": "1.6.1",
+    //     "deviceName": "iPad Retina Simulator",
+    //     "deviceOrientation": "portrait",
+    //     "platformVersion": "10.0",
+    //     "build": "build-" + TRAVIS_JOB_NUMBER,
+    //     "tunnel-identifier": TRAVIS_JOB_NUMBER
+    //   },
+    //   "selenium": {
+    //     "start_process": false
+    //   }
+    // }
+
   }
 };

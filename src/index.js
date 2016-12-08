@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -73,8 +73,9 @@ var IBMChat = {
    */
   init: bootstrap.init,
   /**
-   * Restart the chat widget. The same chat widget is rendered in the same html element as was specified in the init method.
+   * Please use either IBMChat.clear() or IBMChat.destroy() and IBMChat.init() in conjunction instead of this method. This method destroys the chat widget and re-intitializes it. The same chat widget is rendered in the same html element as was specified in the init method. **Action subscriptions and custom layouts are NOT reincluded**.
    * @function restart
+   * @deprecated
    * @memberof IBMChat
    * @example
    * IBMChat.restart().then(function(){
@@ -94,6 +95,17 @@ var IBMChat = {
    * @returns {Promise} Returns: A promise so you can call functions after the widget has been destroyed.
    */
   destroy: bootstrap.destroy,
+  /**
+   * Clear the chat widget of its current conversation and start a new conversation with the Virtual Agent
+   * @function clear
+   * @memberof IBMChat
+   * @example
+   * IBMChat.clear().then(function(){
+   *     console.log('cleared');
+   * });
+   * @returns {Promise} Returns: A promise so you can call functions after the widget has been cleared.
+   */
+  clear: bootstrap.clear,
   /**
    * Send a message to the chat widget from outside the chat widget. This message will be displayed in the interface.
    * @function send

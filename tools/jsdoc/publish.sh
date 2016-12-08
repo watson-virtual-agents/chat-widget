@@ -27,7 +27,7 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-virtual-agents/chat-widget" ] && [ "$TRAVIS_
     fi
 
     # generate an incdex file listing all of the versions
-    ../jsdoc/generate_index_html.sh > index.html
+    ../tools/jsdoc/generate_index_html.sh > index.html
 
     # add all changes to git, including deleted files
     git add -f -A .

@@ -6,10 +6,10 @@
       "./dist/",
       "./docs",
       "./images/",
-      "./jsdoc/",
       "./node_modules/",
       "./reports/",
       "./test/",
+      "./tools/",
       "./karma.conf.js",
       "./nightwatch.conf.js",
       "./webpack.config.js"

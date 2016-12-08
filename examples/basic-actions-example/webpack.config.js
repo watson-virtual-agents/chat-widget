@@ -1,4 +1,4 @@
-/*
+/**
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -12,20 +12,17 @@
 * the License.
 */
 
-var defaultStyles = {
-  background: 'rgba(61, 61, 61, 1)',
-  accentBackground: '#AF6EE8',
-  accentText: '#ffffff',
-  text: '#ffffff',
-  link: '#ffffff',
-  secondaryBackground: 'rgba(90, 90, 90, 1)',
-  secondaryText: 'rgba(247, 247, 247, 1)',
-  inputBackground: 'rgba(90, 90, 90, 1)',
-  inputText: 'rgba(247, 247, 247, 1)',
-  errorBackground: '#e86e6e',
-  errorText: '#ffffff',
-  fontSize: '15px',
-  fontFamily: '"Helvetica Neue",HelveticaNeue,Helvetica,sans-serif'
-};
+var path = require('path');
 
-module.exports = defaultStyles;
+module.exports = {
+  entry: path.resolve(__dirname, 'src', 'index.js'),
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: "bundle.js"
+  },
+  module: {
+    loaders: [
+        { test: /\.css$/, loader: "style!css" }
+    ]
+  }
+};

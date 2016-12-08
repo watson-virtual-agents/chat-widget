@@ -65,7 +65,7 @@ var paths = {
 };
 
 if (debug)
-  paths.template = path.resolve(__dirname, 'dev-tools', 'index.html');
+  paths.template = path.resolve(__dirname, 'index.html');
 
 if (selenium)
   paths.template = path.resolve(__dirname, 'test', 'selenium', 'index.html');
