@@ -18,15 +18,15 @@ function resize() {
   var current = state.getState();
   if (current.isVisible) {
     var maxInputPercentage = 35;
-    if (current.active && current.inputClone) {
-      var cloneHeight;
-      var maxInputHeight = (window.getComputedStyle(current.root).getPropertyValue('height').replace('px', '')) * (maxInputPercentage / 100);
-      maxInputHeight = (maxInputHeight > 96) ? maxInputHeight : 96;
-
-      current.inputClone.innerHTML = (current.input.value && current.input.value.length > 0) ? current.input.value.replace(/\n/g, '<br />') : 'Enter message...';
-      cloneHeight = window.getComputedStyle(current.inputClone).getPropertyValue('height').replace('px', '');
-      if (cloneHeight !== current.inputHeight) {
-        var inputHeight = (maxInputHeight > cloneHeight) ? cloneHeight : maxInputHeight;
+    setTimeout(function() {
+      if (current.active && current.inputClone) {
+        var cloneHeight;
+        var inputHeight;
+        var maxInputHeight = (window.getComputedStyle(current.root).getPropertyValue('height').replace('px', '')) * (maxInputPercentage / 100);
+        maxInputHeight = (maxInputHeight > 96) ? maxInputHeight : 96;
+        current.inputClone.innerHTML = (current.input.value && current.input.value.length > 0) ? current.input.value.replace(/\n/g, '<br />') : 'Enter message...';
+        cloneHeight = window.getComputedStyle(current.inputClone).getPropertyValue('height').replace('px', '');
+        inputHeight = (maxInputHeight > cloneHeight) ? cloneHeight : maxInputHeight;
         current.input.style.overflow = 'hidden';
         state.set({
           inputHeight: inputHeight
@@ -34,8 +34,9 @@ function resize() {
         current.input.style.height = inputHeight + "px";
         current = state.getState();
       }
-    }
+    }, 50);
     setTimeout(function() {
+      current = state.getState();
       if (current.active) {
         var inputHeight = (current.inputHolder) ? (current.inputHolder.getBoundingClientRect().height) : 0;
         current.chatHolder.style.maxHeight = (current.root.getBoundingClientRect().height - inputHeight) + 'px';
@@ -45,7 +46,7 @@ function resize() {
         else
           current.root.classList.remove('IBMChat-isLarge');
       }
-    }, 0);
+    }, 100);
   }
 }
 
