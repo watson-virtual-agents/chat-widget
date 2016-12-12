@@ -97,12 +97,14 @@ function checkVisibility() {
   var current = state.get();
   if (_currentVisibilityCheck)
     clearTimeout(_currentVisibilityCheck);
-  if (!current.isVisible && isVisible(current.root)) {
+  if (isVisible(current.root)) {
+    if (!current.isVisible) {
+      state.set({
+        isVisible: true
+      });
+    }
     events.publish('resize');
-    state.set({
-      isVisible: true
-    });
-    _currentVisibilityCheck = setTimeout(checkVisibility, 3000);
+    _currentVisibilityCheck = setTimeout(checkVisibility, 1000);
   } else {
     if (current.isVisible) {
       state.set({
