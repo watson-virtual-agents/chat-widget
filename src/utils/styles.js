@@ -38,7 +38,7 @@ function _getStyles(current) {
               containerClass + " .IBMChat-error-colors {\n  background-color: " + current.styles.errorBackground + ";\n  color: " + current.styles.errorText + ";\n}\n" +
               containerClass + " .IBMChat-input-colors {\n  background-color: " + current.styles.inputBackground + ";\n  color: " + current.styles.inputText + ";\n border-bottom: 1px solid " + current.styles.inputText + ";\n}\n" +
               containerClass + " .IBMChat-watson-message-line-theme {\n\tborder-left: 3px solid " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " a {\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n\ttext-decoration: none;\n\tfont-size:1em;\n}\n" +
+              containerClass + " a {\n\tborder: 0;\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n\ttext-decoration: none;\n\tfont-size:1em;\n}\n" +
               containerClass + " a:hover,\n" +
               containerClass + " a:visited,\n" +
               containerClass + " a:active {\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n\ttext-decoration: underline;\n\tfont-size:1em;\n}\n" +

@@ -38,16 +38,15 @@ function layoutError(layout) {
 
 function intent(data) {
   var element = data.element;
-  var intent = data.intent;
-  var human = data.human;
+  var label = data.blueprint.label;
   /* TODO: add switch
   var enabled = data.enabled;
   */
   var link = document.createElement('a');
-  link.textContent = human;
+  link.textContent = label;
   link.setAttribute('href', 'javascript:void(0)');
   link.addEventListener('click', function() {
-    events.publish('try-it-show-intent', intent);
+    events.publish('try-it-show-intent', data);
   });
   element.appendChild(link);
 }
