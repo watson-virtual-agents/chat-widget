@@ -39,12 +39,15 @@ function layoutError(layout) {
 function intent(data) {
   var element = data.element;
   var intent = data.intent;
-  var human = data.intent;
+  var human = data.human;
+  /* TODO: add switch
+  var enabled = data.enabled;
+  */
   var link = document.createElement('a');
   link.textContent = human;
   link.setAttribute('href', 'javascript:void(0)');
   link.addEventListener('click', function() {
-    events.publish('showAdminUIIntent', intent);
+    events.publish('try-it-show-intent', intent);
   });
   element.appendChild(link);
 }
