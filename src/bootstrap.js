@@ -40,6 +40,7 @@ function registerEvents(tryIt, playback) {
     events.subscribe('try-it-error', eventHandlers.error.tryIt);
     events.subscribe('try-it-layout-subscription', eventHandlers.tryIt.layoutError);
     events.subscribe('try-it-action-subscription', eventHandlers.tryIt.actionError);
+    events.subscribe('try-it-receive-intent-data', eventHandlers.tryIt.intent);
   }
   if (playback === true) { //TODO: remove if playback when Dashboard code is updated
     events.subscribe('send', eventHandlers.sendMock);

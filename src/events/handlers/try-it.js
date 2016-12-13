@@ -36,7 +36,23 @@ function layoutError(layout) {
   });
 }
 
+function intent(data) {
+  var element = data.element;
+  var label = data.blueprint.label;
+  /* TODO: add switch
+  var enabled = data.enabled;
+  */
+  var link = document.createElement('a');
+  link.textContent = label;
+  link.setAttribute('href', 'javascript:void(0)');
+  link.addEventListener('click', function() {
+    events.publish('try-it-show-intent', data);
+  });
+  element.appendChild(link);
+}
+
 module.exports = {
   actionError: actionError,
-  layoutError: layoutError
+  layoutError: layoutError,
+  intent: intent
 };
