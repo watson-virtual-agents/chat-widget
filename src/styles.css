@@ -85,6 +85,11 @@
   padding: 0;
 }
 
+.IBMChat-watson-intent a {
+  display:inline-block;
+  margin: 1em 0 1em 0;
+}
+
 /* WatsonMessage Component */
 
 .IBMChat-watson-message-container {

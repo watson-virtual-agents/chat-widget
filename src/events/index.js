@@ -89,7 +89,8 @@ function publish(event, data, cb) {
     if (events[i] && events[i].event && events[i].event === event) {
       if (current.DEBUG) {
         wasSubscription = true;
-        console.log('Subscription to ' + event + ' was called: ', data);
+        if (event !== 'resize')
+          console.log('Subscription to ' + event + ' was called: ', data);
       }
       events[i].handler.call(undefined, data, cb);
       if (events[i] && events[i].subscribeOnce === true)

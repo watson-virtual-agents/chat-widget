@@ -28,9 +28,6 @@ function resize() {
         cloneHeight = window.getComputedStyle(current.inputClone).getPropertyValue('height').replace('px', '');
         inputHeight = (maxInputHeight > cloneHeight) ? cloneHeight : maxInputHeight;
         current.input.style.overflow = 'hidden';
-        state.set({
-          inputHeight: inputHeight
-        });
         current.input.style.height = inputHeight + "px";
         current = state.getState();
       }
