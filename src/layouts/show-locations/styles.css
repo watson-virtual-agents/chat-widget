@@ -1,10 +1,12 @@
 .IBMChat-map {
-	margin-top: 1em;
+  margin-top: 1em;
 }
 
+
 .IBMChat-map-img img {
-  height:120px;
+  height: 120px;
   margin: 0 0 0.5em 0;
+  width: 100%;
 }
 
 .IBMChat-map-multiple-locations {
@@ -42,12 +44,12 @@
 }
 
 .IBMChat-map-data-float-holder:after {
-	visibility: hidden;
-	display: block;
-	font-size: 0;
-	content: " ";
-	clear: both;
-	height: 0;
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 
 .IBMChat-map-locations-item {
@@ -66,8 +68,8 @@
 }
 .IBMChat-map-locations-item-data-title {
   font-size: 1.4em;
-	font-weight:300;
-	line-height:1.1em;
+  font-weight:300;
+  line-height:1.1em;
   padding-bottom:0.5em;
 }
 .IBMChat-map-locations-item-data-items {
@@ -103,13 +105,13 @@
 button.IBMChat-map-locations-all {
   font-size:0.9em;
   line-height:1.5em;
-	margin: 1em 0 0 0;
+  margin: 1em 0 0 0;
   padding: 0 0.5em 0 0.5em;
 }
 
 
 .IBMChat-map-hours-open {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .IBMChat-map-days-hours-day, .IBMChat-map-days-hours-hours, .IBMChat-map-days-hours-closed {
@@ -118,7 +120,7 @@ button.IBMChat-map-locations-all {
 }
 
 .IBMChat-map-days-hours-day {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .IBMChat-map-hours-timezone {
@@ -127,17 +129,17 @@ button.IBMChat-map-locations-all {
 }
 
 .IBMChat-map-locations-item-data-hours {
-	margin-top:0.5em;
+  margin-top:0.5em;
 }
 
 .IBMChat-isLarge .IBMChat-map-locations-item-data {
-	float:left;
-	padding-right:5%;
-	width:45%;
+  float:left;
+  padding-right:5%;
+  width:45%;
 }
 .IBMChat-isLarge .IBMChat-map-locations-item-data-hours {
-	margin-top:0;
+  margin-top:0;
 }
 .IBMChat-isLarge .IBMChat-map-locations-item-data-more-hours {
-	margin-top:0.5em;
+  margin-top:0.5em;
 }
