@@ -1,12 +1,16 @@
 # Change Log
 
-## [Unreleased](https://github.com/watson-virtual-agents/chat-widget/tree/HEAD)
+## [1.2.15](https://github.com/watson-virtual-agents/chat-widget/tree/1.2.15) (2016-12-14)
+[Full Changelog](https://github.com/watson-virtual-agents/chat-widget/compare/1.2.14...1.2.15)
 
-[Full Changelog](https://github.com/watson-virtual-agents/chat-widget/compare/1.2.9...HEAD)
+## [1.2.14](https://github.com/watson-virtual-agents/chat-widget/tree/1.2.14) (2016-12-08)
+[Full Changelog](https://github.com/watson-virtual-agents/chat-widget/compare/1.2.11...1.2.14)
 
-**Merged pull requests:**
+## [1.2.11](https://github.com/watson-virtual-agents/chat-widget/tree/1.2.11) (2016-12-01)
+[Full Changelog](https://github.com/watson-virtual-agents/chat-widget/compare/1.2.10...1.2.11)
 
-- 1.2.10 [\#107](https://github.com/watson-virtual-agents/chat-widget/pull/107) ([ethanwinters](https://github.com/ethanwinters))
+## [1.2.10](https://github.com/watson-virtual-agents/chat-widget/tree/1.2.10) (2016-11-18)
+[Full Changelog](https://github.com/watson-virtual-agents/chat-widget/compare/1.2.9...1.2.10)
 
 ## [1.2.9](https://github.com/watson-virtual-agents/chat-widget/tree/1.2.9) (2016-11-18)
 [Full Changelog](https://github.com/watson-virtual-agents/chat-widget/compare/1.2.6...1.2.9)
