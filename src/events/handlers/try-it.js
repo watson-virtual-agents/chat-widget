@@ -45,9 +45,7 @@ function intent(data) {
   var link = document.createElement('a');
   link.textContent = label;
   link.setAttribute('href', 'javascript:void(0)');
-  link.addEventListener('click', function() {
-    events.publish('try-it-show-intent', data);
-  });
+  link.setAttribute('data-intent', JSON.stringify(data));
   element.appendChild(link);
 }
 

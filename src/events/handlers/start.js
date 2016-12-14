@@ -51,7 +51,15 @@ function start(data) {
     addState.onResize = function() {
       events.publish('resize');
     };
-
+    if (current.tryIt) {
+      addState.chatHolder.addEventListener('click', function(e) {
+        if (e.target.dataset && e.target.dataset.intent) {
+          var data = e.target.dataset.intent;
+          e.preventDefault();
+          events.publish('try-it-show-intent', JSON.parse(data));
+        }
+      });
+    }
     addState.input.addEventListener('keyup', function(e) {
       if (e.keyCode === 13) {
         events.publish('send-input-message');
