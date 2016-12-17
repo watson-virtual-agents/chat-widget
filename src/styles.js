@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -13,15 +13,19 @@
 */
 
 var defaultStyles = {
-	background: 'rgba(61, 61, 61, 1)',
-	accentBackground: 'rgba(175, 110, 232, 1)',
-	accentText: 'rgba(255, 255, 255, 1)',
-	text: 'rgba(255, 255, 255, 1)',
-	link: 'rgba(255, 255, 255, 1)',
-	secondaryBackground: 'rgba(70, 70, 70, 1)',
-	secondaryText: 'rgba(247, 247, 247, 1)',
-	inputBackground: 'rgba(70, 70, 70, 1)',
-	inputText: 'rgba(247, 247, 247, 1)'
+  background: 'rgba(61, 61, 61, 1)',
+  accentBackground: '#AF6EE8',
+  accentText: '#ffffff',
+  text: '#ffffff',
+  link: '#AF6EE8',
+  secondaryBackground: 'rgba(90, 90, 90, 1)',
+  secondaryText: 'rgba(247, 247, 247, 1)',
+  inputBackground: 'rgba(90, 90, 90, 1)',
+  inputText: 'rgba(247, 247, 247, 1)',
+  errorBackground: '#e86e6e',
+  errorText: '#ffffff',
+  fontSize: '15px',
+  fontFamily: '"Helvetica Neue",HelveticaNeue,Helvetica,sans-serif'
 };
 
 module.exports = defaultStyles;

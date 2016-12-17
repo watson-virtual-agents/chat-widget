@@ -1,14 +1,3 @@
-.IBMChat-islocationapi-container {
-	text-align:center;
-}
-
-.IBMChat-islocationapi-container button {
-	margin: 1em auto 0 auto;
-	min-width:200px;
-	max-width:240px;
-	width:75%;
-}
-
-.IBMChat-islocationapi-container div:last-child {
-	margin-bottom: 1em;
+.IBMChat-islocationapi-container > div {
+	margin-top: 1em;
 }

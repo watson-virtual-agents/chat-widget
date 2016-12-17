@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -18,58 +18,75 @@ var events = require('../../events');
 var templates = require('../../templates');
 
 function start(data) {
-	var current;
-	state.setState(data);
-	current = state.getState();
-	utils.attachStyles();
-	current.root.className += " chatID-" + current.chatID;
-	current.root.innerHTML = templates.start;
-	var outerContainer = current.root.querySelector('.IBMChat-outer-container');
-	var chatBox = document.createElement('div');
-	chatBox.classList.add('IBMChat-input-container');
-	chatBox.classList.add('IBMChat-input-container-theme');
-	chatBox.innerHTML = templates.input;
-	outerContainer.appendChild(chatBox);
-	var elements = {
-		container: current.root.querySelector('.IBMChat-chat-container'),
-		chatHolder: current.root.querySelector('.IBMChat-messages'),
-		innerContainer: current.root.querySelector('.IBMChat-inner-container')
-	};
-	//TODO: remove if conditional after Dashboard implements new playback
-	if (current.playback !== true) {
-		elements.inputHolder = current.root.querySelector('.IBMChat-input-container');
-		elements.input = current.root.querySelector('.IBMChat-chat-textbox');
-		elements.form = current.root.querySelector('.IBMChat-input-form');
-		elements.loader = current.root.querySelector('.IBMChat-input-loading');
+  var current;
+  state.set(data);
+  current = state.get();
+  utils.attachStyles();
+  current.root.classList.add("chatID-" + current.chatID);
+  current.root.innerHTML = templates.start;
+  var outerContainer = current.root.querySelector('.IBMChat-outer-container');
+  var addState = {
+    container: current.root.querySelector('.IBMChat-chat-container'),
+    chatHolder: current.root.querySelector('.IBMChat-messages'),
+    innerContainer: current.root.querySelector('.IBMChat-inner-container'),
+  };
+  //TODO: remove if conditional after Dashboard implements new playback
+  if (current.playback !== true) {
+    var chatBox = document.createElement('div');
+    chatBox.classList.add('IBMChat-input-container');
+    chatBox.classList.add('IBMChat-input-container-theme');
+    chatBox.innerHTML = utils.compile(templates.input, {
+      placeholder: 'Enter message...'
+    });
+    outerContainer.appendChild(chatBox);
+    addState.inputHolder = current.root.querySelector('.IBMChat-input-container');
+    addState.input = current.root.querySelector('.IBMChat-chat-textbox');
+    addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
+    addState.form = current.root.querySelector('.IBMChat-input-form');
+    addState.loader = current.root.querySelector('.IBMChat-input-loading');
+    addState.originalInputHeight = window.getComputedStyle(addState.input).getPropertyValue('height').replace('px', '');
+    addState.form.addEventListener('submit', function(e) {
+      e.preventDefault();
+    });
+    addState.onResize = function() {
+      events.publish('resize');
+    };
 
-		elements.form.addEventListener('submit', function(e) {
-			e.preventDefault();
-		});
+    addState.input.addEventListener('keyup', function(e) {
+      if (e.keyCode === 13) {
+        events.publish('send-input-message');
+        addState.inputClone.innerHTML = '';
+        addState.input.style.overflow = 'hidden';
+        addState.input.style.height = addState.originalInputHeight + "px";
+        state.set({
+          inputHeight: addState.originalInputHeight
+        });
+        events.publish('resize');
+      }
+      events.publish('resize');
+    });
 
-		elements.input.addEventListener('keypress', function(e) {
-			if (e.keyCode === 13)
-				events.publish('send-input-message');
-		});
+    addState.input.addEventListener('focus', function() {
+      events.publish('resize');
+    });
 
-		elements.input.addEventListener('focus', function() {
-			events.publish('resize');
-		});
+    addState.input.addEventListener('blur', function() {
+      events.publish('resize');
+    });
+  }
 
-		elements.input.addEventListener('blur', function() {
-			events.publish('resize');
-		});
-	}
+  window.addEventListener('resize', utils.debounce(function() {
+    events.publish('resize');
+  }, 300));
 
-	window.addEventListener('resize', utils.debounce(function() {
-		events.publish('resize');
-	}, 1000));
+  window.addEventListener('orientationchange', function() {
+    events.publish('resize');
+  });
 
-	window.addEventListener('orientationchange', function() {
-		events.publish('resize');
-	});
-
-	state.setState(elements);
-	events.publish('resize');
+  state.setState(addState);
+  utils.checkVisibility();
+  utils.addResizeListener(current.root, addState.onResize);
+  events.publish('resize');
 }
 
 module.exports = start;

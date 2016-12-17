@@ -25,436 +25,484 @@ var utils = require('../../utils');
 var first = true;
 var displayLength = 3;
 var breakpointWidths = ['720', '680', '640', '580', '512', '480', '420', '360', '320', '288', '256'];
-var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+var days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
 var showLocations = {};
 var locationIDs = [];
-var chatWidth = 748;
 var currentBreakpointKey = 0;
 var pixelRatio = window.devicePixelRatio || 1;
 var ns = 'IBMChat-map';
 
 var templates = {
-	base: require('./templates/base.html'),
-	createDomArray: require('./templates/create-dom-array.html'),
-	addLocationsItem: require('./templates/add-locations-item.html'),
-	addLocationItem: require('./templates/add-location-item.html'),
-	hoursClosed: require('./templates/hours-closed.html'),
-	hoursOpen: require('./templates/hours-open.html'),
-	hoursTodayOpen: require('./templates/hours-today-open.html'),
-	hoursTodayClosed: require('./templates/hours-today-closed.html'),
-	hoursTimezone: require('./templates/hours-timezone.html')
+  base: require('./templates/base.html'),
+  createDomArray: require('./templates/create-dom-array.html'),
+  addLocationsItem: require('./templates/add-locations-item.html'),
+  addLocationItem: require('./templates/add-location-item.html'),
+  hoursClosed: require('./templates/hours-closed.html'),
+  hoursOpen: require('./templates/hours-open.html'),
+  hoursUnknown: require('./templates/hours-unknown.html'),
+  hoursTodayOpen: require('./templates/hours-today-open.html'),
+  hoursTodayClosed: require('./templates/hours-today-closed.html'),
+  hoursTodayUnknown: require('./templates/hours-today-unknown.html'),
+  hoursTimezone: require('./templates/hours-timezone.html')
 };
 
 var strings = {
-	locations: {
-		none: 'We could not find any locations close to you.',
-		single: 'Here are the details for the ${location} location...',
-		list: 'Here are the locations I found close to you:'
-	}
+  locations: {
+    none: 'We could not find any locations close to you.',
+    single: 'Here are the details for this location:',
+    list: 'Here are the locations I found close to you:'
+  }
 };
 
 var showLocationsLayout = {
-	init: function() {
-		subscribe('layout:show-locations', function(data) {
-			var showLocation = new ShowLocations(data);
-			locationIDs.push(data.uuid);
-			showLocations[data.uuid] = showLocation;
-		});
-		window.addEventListener('resize', utils.debounce(function() {
-			setTimeout(function() {
-				sizeMap();
-			}, 500);
-		}, 500));
-	}
+  init: function() {
+    subscribe('layout:show-locations', function(data) {
+      var showLocation = new ShowLocations(data);
+      locationIDs.push(data.uuid);
+      showLocations[data.uuid] = showLocation;
+    });
+    window.addEventListener('resize', utils.debounce(function() {
+      setTimeout(function() {
+        sizeMap();
+      }, 200);
+    }, 200));
+  }
 };
 
 var alphaMap = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
 function initialSize(width) {
-	for (var i = 0; i < breakpointWidths.length; i++) {
-		if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
-			currentBreakpointKey = i;
-			chatWidth = width;
-			return;
-		}
-	}
+  for (var i = 0; i < breakpointWidths.length; i++) {
+    if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
+      currentBreakpointKey = i;
+      return;
+    }
+  }
 }
 
 function sameSize() {
-	var width = showLocations[locationIDs[0]].getWidth();
-	var isSameSize = (breakpointWidths[currentBreakpointKey] >= width && breakpointWidths[currentBreakpointKey + 1] < width);
-	return isSameSize;
+  var width = showLocations[locationIDs[0]].getWidth();
+  var isSameSize = (breakpointWidths[currentBreakpointKey] >= width && breakpointWidths[currentBreakpointKey + 1] < width);
+  return isSameSize;
 }
 
 function sizeMap() {
-	if (locationIDs.length > 0 && showLocations[locationIDs[0]].getWidth() && !sameSize()) {
-		var width = showLocations[locationIDs[0]].getWidth();
-		for (var i = 0; i < breakpointWidths.length; i++) {
-			if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
-				currentBreakpointKey = i;
-				chatWidth = width;
-				for (var j = 0; j < locationIDs.length; j++) {
-					if (showLocations[locationIDs[j]].data.length > 0)
-						showLocations[locationIDs[j]].reDrawMap();
-				}
-				return;
-			}
-		}
-	}
+  if (locationIDs.length > 0 && showLocations[locationIDs[0]].getWidth() && !sameSize()) {
+    var width = showLocations[locationIDs[0]].getWidth();
+    for (var i = 0; i < breakpointWidths.length; i++) {
+      if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
+        currentBreakpointKey = i;
+        for (var j = 0; j < locationIDs.length; j++) {
+          if (showLocations[locationIDs[j]].data.length > 0)
+            showLocations[locationIDs[j]].reDrawMap();
+        }
+        return;
+      }
+    }
+  }
+}
+
+function createEmails(el, item) {
+  var linkEl = document.createElement('a');
+  linkEl.setAttribute('href', 'mailto:' + item.email);
+  linkEl.setAttribute('target', '_blank');
+  linkEl.textContent = item.email;
+  if (item.phones && item.phones.length > 0) {
+    var itemChild = document.createElement('div');
+    var text = templates.createDomArray;
+    itemChild.className = ns + '-contact-row';
+    itemChild.innerHTML = utils.compile(text, {
+      ns: ns
+    });
+    var typeEl = itemChild.querySelector('.' + ns + '-contact-type');
+    var dataEl = itemChild.querySelector('.' + ns + '-contact-data');
+    typeEl.textContent = 'Email';
+    dataEl.appendChild(linkEl);
+    el.appendChild(itemChild);
+  } else {
+    el.appendChild(linkEl);
+  }
 }
 
 function createPhoneArray(el, items) {
-	if (items) {
-		for (var i = 0; i < items.length; i++) {
-			var itemChild = document.createElement('div');
-			var text = templates.createDomArray;
-			itemChild.className = ns + '-contact-row';
-			itemChild.innerHTML = utils.compile(text, {
-				ns: ns
-			});
-			var typeEl = itemChild.querySelector('.' + ns + '-contact-type');
-			var dataEl = itemChild.querySelector('.' + ns + '-contact-data');
-			typeEl.textContent = items[i].type;
-			dataEl.textContent = items[i].number;
-			el.appendChild(itemChild);
-		}
-	}
+  if (items) {
+    for (var i = 0; i < items.length; i++) {
+      var itemChild = document.createElement('div');
+      var text = templates.createDomArray;
+      itemChild.className = ns + '-contact-row';
+      itemChild.innerHTML = utils.compile(text, {
+        ns: ns
+      });
+      var typeEl = itemChild.querySelector('.' + ns + '-contact-type');
+      var dataEl = itemChild.querySelector('.' + ns + '-contact-data');
+      typeEl.textContent = items[i].type;
+      dataEl.textContent = items[i].number;
+      el.appendChild(itemChild);
+    }
+  }
 }
 
 function formatAMPM(time) {
-	try {
-		var split = time.split(':');
-		var hours = split[0];
-		var minutes = split[1];
-		var ampm = hours >= 12 ? 'pm' : 'am';
-		hours = hours % 12;
-		hours = hours ? hours : 12;
-		return hours + ':' + minutes + ' ' + ampm;
-	}
-	catch (e) {
-		return '-';
-	}
-}
-
-function parseAddress(address) {
-	var arr = address.split(',');
-	var first = arr.shift();
-	var text = '';
-	for (var i = 0; i < arr.length; i++) {
-		text += arr[i];
-		if (i < (arr.length - 1))
-			text += ',';
-	}
-	return {
-		address1: first,
-		address2: text
-	};
+  try {
+    var split = time.split(':');
+    var hours = split[0];
+    var minutes = split[1];
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    return hours + ':' + minutes + ' ' + ampm;
+  }
+  catch (e) {
+    return false;
+  }
 }
 
 function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
-	if (hours) {
-		// hours
-		var today = new Date().getDay();
-		var todaysHours = hours[today];
-		var el = document.createElement('div');
-		if (todaysHours && todaysHours.isOpen) {
-			el.innerHTML = utils.compile(templates.hoursTodayOpen, {
-				ns: ns,
-				open: formatAMPM(todaysHours.open),
-				close: formatAMPM(todaysHours.close)
-			});
-		} else {
-			el.innerHTML = utils.compile(templates.hoursTodayClosed, {
-				ns: ns
-			});
-		}
-		hoursEl.appendChild(el);
-		// timezone
-		if (timezone) {
-			var tzChildEl = document.createElement('div');
-			tzChildEl.innerHTML = utils.compile(templates.hoursTimezone, {
-				ns: ns,
-				timezone: timezone
-			});
-			timezoneEl.appendChild(tzChildEl);
-		} else {
-			timezoneEl.parentNode.removeChild(timezoneEl);
-		}
-		// more hours
-		for (var i = 0; i < hours.length; i++) {
-			var childEl = document.createElement('div');
-			childEl.setAttribute('class', ns + '-days-hours');
-			if (hours[i] && hours[i].isOpen) {
-				childEl.innerHTML = utils.compile(templates.hoursOpen, {
-					ns: ns,
-					day: days[i],
-					open: formatAMPM(hours[i].open),
-					close: formatAMPM(hours[i].close)
-				});
-			} else {
-				childEl.innerHTML = utils.compile(templates.hoursClosed, {
-					ns: ns,
-					day: days[i]
-				});
-			}
-			moreHoursEl.appendChild(childEl);
-		}
-	}
+  if (hours && hours.length === 7) {
+    // hours
+    var today = new Date().getDay();
+    var todaysHours = hours[today];
+    var el = document.createElement('div');
+    if (todaysHours && todaysHours.isOpen) {
+      var open = formatAMPM(todaysHours.open);
+      var close = formatAMPM(todaysHours.close);
+      if (open && close) {
+        el.innerHTML = utils.compile(templates.hoursTodayOpen, {
+          ns: ns,
+          open: open,
+          close: close
+        });
+      } else {
+        el.innerHTML = utils.compile(templates.hoursTodayUnknown, {
+          ns: ns
+        });
+      }
+    } else {
+      el.innerHTML = utils.compile(templates.hoursTodayClosed, {
+        ns: ns
+      });
+    }
+    utils.appendToEach(hoursEl, el);
+    // timezone
+    if (timezone) {
+      var tzChildEl = document.createElement('div');
+      tzChildEl.innerHTML = utils.compile(templates.hoursTimezone, {
+        ns: ns,
+        timezone: timezone
+      });
+      utils.appendToEach(timezoneEl, tzChildEl);
+    } else {
+      for (var j = 0; j < timezoneEl.length; j++)
+        timezoneEl[j].parentNode.removeChild(timezoneEl[j]);
+    }
+    // more hours
+    var compressedHours = [];
+    var current = {};
+    for (var n = 0; n < hours.length; n++) {
+      var bothClosed, sameHours;
+      var day = days[n];
+      var last = (compressedHours.length > 0) ? compressedHours[compressedHours.length - 1] : false;
+      current = hours[n] || { isOpen: false };
+      bothClosed = last && (last.isOpen === current.isOpen && current.isOpen === false);
+      sameHours = last && (last.open === current.open && last.close === current.close);
+      if (compressedHours.length > 0 && last && (bothClosed || sameHours)) {
+        last.endDay = day;
+      } else {
+        compressedHours.push({
+          startDay: day,
+          endDay: day,
+          isOpen: current.isOpen,
+          open: current.open,
+          close: current.close
+        });
+      }
+    }
+    for (var i = 0; i < compressedHours.length; i++) {
+      var childEl = document.createElement('span');
+      childEl.setAttribute('class', ns + '-days-hours');
+      current = compressedHours[i];
+      if (current && current.isOpen) {
+        var openDay = formatAMPM(current.open);
+        var closeDay = formatAMPM(current.close);
+        var currentDay = (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay;
+        if (openDay && closeDay) {
+          childEl.innerHTML = utils.compile(templates.hoursOpen, {
+            ns: ns,
+            day: currentDay,
+            open: openDay,
+            close: closeDay
+          });
+        } else {
+          childEl.innerHTML = utils.compile(templates.hoursUnknown, {
+            ns: ns,
+            day: currentDay
+          });
+        }
+      } else {
+        childEl.innerHTML = utils.compile(templates.hoursClosed, {
+          ns: ns,
+          day: (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay
+        });
+      }
+      if (i < (compressedHours.length - 1))
+        childEl.querySelector('.' + ns + '-days-hours-hours').innerHTML += '<br />';
+      utils.appendToEach(moreHoursEl, childEl);
+    }
+  }
 }
 
 function distance(item) {
-	if (!item.distance)
-		return;
-	var distanceLength = (item.distance.toFixed(1) === 0.0) ? 0.1 : item.distance.toFixed(1);
-	var distanceLengthMeasure = (item.distanceMeasure === 'miles') ? 'm' : 'km';
-	return distanceLength + distanceLengthMeasure;
+  if (!item.distance)
+    return;
+  var distanceLength = (item.distance.toFixed(1) === 0.0) ? 0.1 : item.distance.toFixed(1);
+  var distanceLengthMeasure = (item.distanceMeasure === 'miles') ? 'm' : 'km';
+  return distanceLength + distanceLengthMeasure;
 }
 
 function ShowLocations(data) {
-	this.init(data);
+  this.init(data);
 }
 
-ShowLocations.prototype = {
-	init: function(data) {
-		this.data = (data.message.data !== undefined && data.message.data.location_data !== undefined) ? data.message.data.location_data : [];
-		if (this.data.length > 1) {
-			setState({
-				location_data: this.data
-			});
-		}
-		this.eventListeners = [];
-		this.parentElement = data.element;
-		this.layoutElement = data.layoutElement;
-		this.msgElement = data.msgElement;
-		switch (this.data.length) {
-		case 0:
-			this.msgElement.textContent = strings.locations.none;
-			break;
-		case 1:
-			this.msgElement.textContent = utils.compile(strings.locations.single, { location: this.data[0].address.address });
-			break;
-		default:
-			this.msgElement.textContent = strings.locations.list;
-		}
+ShowLocations.prototype.init = function(data) {
+  this.data = (data.message.data !== undefined && data.message.data.location_data !== undefined) ? data.message.data.location_data : [];
+  if (this.data.length > 1) {
+    setState({
+      location_data: this.data
+    });
+  }
+  this.eventListeners = [];
+  this.parentElement = data.element;
+  this.layoutElement = data.layoutElement;
+  this.msgElement = data.msgElement;
+  switch (this.data.length) {
+  case 0:
+    this.msgElement.textContent = strings.locations.none;
+    break;
+  case 1:
+    this.msgElement.textContent = strings.locations.single;
+    break;
+  default:
+    this.msgElement.textContent = strings.locations.list;
+  }
 
-		if (this.data.length > 0) {
-			var text = templates.base;
-			this.uuid = data.uuid;
-			if (first) {
-				initialSize(this.getWidth());
-				first = false;
-			}
-			this.map = document.createElement('div');
-			this.map.innerHTML = utils.compile(text, { ns: ns });
-			this.mapElement = this.map.querySelector('.' + ns + '-img');
-			this.dataElement = this.map.querySelector('.' + ns + '-data');
-			this.mapElement.appendChild(this.drawLocations());
-			this.dataElement.appendChild(this.addDetails());
-			this.layoutElement.appendChild(this.map);
-		}
-	},
-	getWidth: function() {
-		var width = this.parentElement.querySelector('.IBMChat-watson-layout:last-child').clientWidth;
-		return width;
-	},
-	reDrawMap: function() {
-		this.mapElement.innerHTML = '';
-		this.mapElement.appendChild(this.drawLocations());
-	},
-	addDetails: function() {
-		if (this.data.length > 1)
-			return this.addLocations();
-		else
-			return this.addLocation();
-	},
-	drawLocations: function() {
-		var current = getState();
-		var img = document.createElement('img');
-		var width = this.getWidth();
-		var config = {
-			size: width + 'x180',
-			scale: pixelRatio
-		};
-		this.uri = current.mapsServer + '?';
-		this.uri += utils.serialize(config);
-		this.uri += '&locations=';
-		var locations = '';
-		for (var i = 0; (i < displayLength && i < this.data.length); i++) {
-			var item = this.data[i];
-			locations += (i === 0 ) ? item.address.lat + ',' + item.address.lng : '+' + item.address.lat + ',' + item.address.lng;
-		}
-		this.uri += encodeURIComponent(locations);
-		this.uri += '&color=' + encodeURIComponent(current.styles.accentBackground.replace('#', ''));
-		img.setAttribute('width', '100%');
-		img.setAttribute('src', this.uri);
-		return img;
-	},
-	handleClick: function() {
-		this.className = ns + '-location-active';
-		showLocations[this.dataset.uuid].removeAllEventListeners();
-		publish('receive', {
-			message: {
-				text: [utils.compile(strings.locations.single, { location: showLocations[this.dataset.uuid].data[this.dataset.id - 1].address.address })],
-				layout: {
-					name: 'show-locations'
-				},
-				data: {
-					/* jshint ignore:start */
-					location_data: [showLocations[this.dataset.uuid].data[this.dataset.id - 1]]
-					/* jshint ignore:end */
-				}
-			}
-		});
-	},
-	removeAllEventListeners: function() {
-		if (this.eventListeners.length > 0) {
-			this.dataElement.classList.remove(ns + '-clickable');
-			for (var i = 0; i < this.eventListeners.length; i++)
-				this.eventListeners[i].removeEventListener('click', this.handleClick);
-			this.eventListeners = [];
-		}
-	},
-	addLocation: function() {
-		var container = document.createElement('div');
-		var el = document.createElement('div');
-		var locationData = getState().location_data;
-		var item = this.data[0];
-		var createDom = function(el) {
-			var text = templates.addLocationItem;
-			el.innerHTML = utils.compile(text, { ns: ns });
-			return {
-				link: el.querySelector('.' + ns + '-locations-item-data-address-link'),
-				label: el.querySelector('.' + ns + '-locations-item-data-title'),
-				address: el.querySelector('.' + ns + '-locations-item-data-address'),
-				address1: document.createElement('span'),
-				address2: document.createElement('span'),
-				phone: el.querySelector('.' + ns + '-locations-item-data-phone'),
-				email: el.querySelector('.' + ns + '-locations-item-data-email'),
-				hours: el.querySelector('.' + ns + '-locations-item-data-hours'),
-				timezone: el.querySelector('.' + ns + '-locations-item-data-timezone'),
-				parentEl: el.querySelector('.' + ns + '-locations-item-data'),
-				hoursButton: el.querySelector('.' + ns + '-locations-item-data-hours-button'),
-				moreHours: el.querySelector('.' + ns + '-locations-item-data-more-hours'),
-				distance: el.querySelector('.' + ns + '-locations-item-distance'),
-				backHolder: el.querySelector('.' + ns + '-locations-item-data-section'),
-				back: el.querySelector('.' + ns + '-locations-all')
-			};
-		};
-		var dom = createDom(el);
+  if (this.data.length > 0) {
+    var text = templates.base;
+    this.uuid = data.uuid;
+    if (first) {
+      initialSize(this.getWidth());
+      first = false;
+    }
+    this.map = document.createElement('div');
+    this.map.innerHTML = utils.compile(text, { ns: ns });
+    this.mapElement = this.map.querySelector('.' + ns + '-img');
+    this.dataElement = this.map.querySelector('.' + ns + '-data');
+    if (this.data.length > 1)
+      this.mapElement.appendChild(this.drawLocations());
+    this.dataElement.appendChild(this.addDetails());
+    this.layoutElement.appendChild(this.map);
+  }
+  this.subscribeReceive = subscribe('receive', this.removeAllEventListeners, this);
+};
 
-		// name
-		if (item.label)
-			dom.label.textContent = item.label;
-		else
-			dom.parentEl.removeChild(dom.label);
-		
-		// addresses
-		var addresses = parseAddress(item.address.address);
-		dom.address1.textContent = addresses.address1;
-		dom.address2.textContent = addresses.address2;
-		dom.address.appendChild(dom.address1);
-		dom.address.appendChild(document.createElement('br'));
-		dom.address.appendChild(dom.address2);
-		dom.link.setAttribute('href', 'https://maps.google.com/?q=' + encodeURIComponent(item.address.address));
-		dom.link.setAttribute('target', '_blank');
-		dom.distance.textContent = distance(item) || '';
-		
-		// email
-		if (item.email) {
-			const linkEl = document.createElement('a');
-			linkEl.setAttribute('href', 'mailto:' + item.email);
-			linkEl.setAttribute('target', '_blank');
-			linkEl.textContent = item.email;
-			dom.email.appendChild(linkEl);
-		} else {
-			dom.email.parentNode.removeChild(dom.email);
-		}
-		
-		// phones
-		if (item.phones && item.phones.length > 0)
-			createPhoneArray(dom.phone, item.phones);
-		else
-			dom.phone.parentNode.removeChild(dom.phone);
-		
-		// hours/timezone
-		if (item.days && item.days.length > 0) {
-			createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
-			dom.hoursButton.addEventListener('click', function(e) {
-				e.preventDefault();
-				dom.parentEl.removeChild(dom.hoursButton);
-				dom.moreHours.setAttribute('class', ns + '-locations-item-data-more-hours');
-				publish('focus-input');
-				publish('scroll-to-bottom');
-			});
-		} else {
-			dom.hours.parentNode.removeChild(dom.hours);
-			dom.hoursButton.parentNode.removeChild(dom.hoursButton);
-		}
+ShowLocations.prototype.getWidth = function() {
+  var width = this.parentElement.querySelector('.IBMChat-watson-layout:last-child').clientWidth;
+  return width;
+};
 
-		if (locationData && locationData.length > 1) {
-			dom.back.addEventListener('click', function(e) {
-				e.preventDefault();
-				publish('receive', {
-					message: {
-						text: [strings.locations.list],
-						layout: {
-							name: 'show-locations'
-						},
-						data: {
-							/* jshint ignore:start */
-							location_data: locationData
-							/* jshint ignore:end */
-						}
-					}
-				});
-			});
-		} else {
-			dom.backHolder.parentNode.removeChild(dom.backHolder);
-		}
-		container.appendChild(el);
-		return container;
-	},
-	addLocations: function() {
-		var current = getState();
-		var createDom = function(el, i, uuid) {
-			el.addEventListener('click', this.handleClick);
-			el.dataset.uuid = uuid;
-			el.dataset.id = i + 1;
-			var text = templates.addLocationsItem;
-			el.innerHTML = utils.compile(text, { ns: ns });
-			this.eventListeners.push(el);
-			return {
-				icon: el.querySelector('.' + ns + '-locations-item-icon'),
-				label: el.querySelector('.' + ns + '-locations-item-data-title'),
-				address: el.querySelector('.' + ns + '-locations-item-data-address'),
-				address1: document.createElement('span'),
-				address2: document.createElement('span'),
-				distance: el.querySelector('.' + ns + '-locations-item-distance')
-			};
-		};
+ShowLocations.prototype.reDrawMap = function() {
+  this.mapElement.innerHTML = '';
+  if (this.data.length > 1)
+    this.mapElement.appendChild(this.drawLocations());
+};
 
-		var container = document.createElement('div');
+ShowLocations.prototype.addDetails = function() {
+  if (this.data.length > 1)
+    return this.addLocations();
+  else
+    return this.addLocation();
+};
 
-		for (var i = 0; (i < displayLength && i < this.data.length); i++) {
-			var el = document.createElement('div');
-			var item = this.data[i];
-			var dom = createDom.call(this, el, i, this.uuid);
-			var box = document.createElement('div');
-			box.setAttribute('style', 'font-weight:bold; color:' + current.styles.accentText + '; background: ' + current.styles.accentBackground + '; line-height: 24px; height:24px; width:24px; margin-left:8px;');
-			box.textContent = alphaMap[i];
-			dom.icon.appendChild(box);
-			dom.label.textContent = item.label || '';
-			var addresses = parseAddress(item.address.address);
-			dom.address1.textContent = addresses.address1;
-			dom.address2.textContent = addresses.address2;
-			dom.address.appendChild(dom.address1);
-			dom.address.appendChild(document.createElement('br'));
-			dom.address.appendChild(dom.address2);
-			dom.distance.textContent = distance(item) || '';
-			container.appendChild(el);
-		}
-		return container;
-	}
+ShowLocations.prototype.convertColor = function(color) {
+  return utils.normalizeToHex(color).replace('#', '');
+};
+
+ShowLocations.prototype.drawLocations = function() {
+  var current = getState();
+  var img = document.createElement('img');
+  var width = this.getWidth();
+  var config = {
+    size: width + 'x120',
+    scale: pixelRatio
+  };
+  if (this.data.length === 1)
+    config.zoom = 12;
+  this.uri = current.mapsServer + '?';
+  this.uri += utils.serialize(config);
+  this.uri += '&locations=';
+  var locations = '';
+  for (var i = 0; (i < displayLength && i < this.data.length); i++) {
+    var item = this.data[i];
+    locations += (i === 0 ) ? item.address.lat + ',' + item.address.lng : '+' + item.address.lat + ',' + item.address.lng;
+  }
+  this.uri += encodeURIComponent(locations);
+  this.uri += '&color=' + encodeURIComponent(this.convertColor(current.styles.accentBackground));
+  img.setAttribute('width', '100%');
+  img.setAttribute('src', this.uri);
+  return img;
+};
+
+ShowLocations.prototype.handleClick = function() {
+  this.className = ns + '-location-active';
+  publish('receive', {
+    message: {
+      text: [utils.compile(strings.locations.single, { location: showLocations[this.dataset.uuid].data[this.dataset.id - 1].address.address }), 'Is there anything else I can help you with?'],
+      layout: {
+        name: 'show-locations',
+        index: 0
+      },
+      data: {
+        location_data: [showLocations[this.dataset.uuid].data[this.dataset.id - 1]]
+      }
+    }
+  });
+};
+
+ShowLocations.prototype.removeAllEventListeners = function() {
+  var layout = document.querySelector('.' + this.uuid + ' .IBMChat-watson-layout');
+  layout.classList.add('IBMChat-disabled-layout');
+  var inputs = layout.querySelectorAll('input, button');
+  for (var i = 0; i < inputs.length; i++)
+    inputs[i].setAttribute('disabled', true);
+  for (var x = 0; x < this.eventListeners.length; x++)
+    this.eventListeners[x].removeEventListener('click', this.handleClick);
+  if (this.hoursFunction)
+    this.hoursButton.removeEventListener('click', this.hoursFunction);
+  if (this.locationsFunction)
+    this.locationsButton.removeEventListener('click', this.locationsFunction);
+  this.eventListeners = [];
+  this.subscribeReceive.remove();
+};
+
+ShowLocations.prototype.addLocation = function() {
+  var container = document.createElement('div');
+  var el = document.createElement('div');
+  var locationData = getState().location_data;
+  var item = this.data[0];
+  var createDom = function(el) {
+    var text = templates.addLocationItem;
+    el.innerHTML = utils.compile(text, { ns: ns });
+    return {
+      link: el.querySelector('.' + ns + '-locations-item-data-address-link'),
+      label: el.querySelector('.' + ns + '-locations-item-data-title'),
+      address: el.querySelector('.' + ns + '-locations-item-data-address'),
+      phone: el.querySelector('.' + ns + '-locations-item-data-phone'),
+      email: el.querySelector('.' + ns + '-locations-item-data-email'),
+      hours: el.querySelectorAll('.' + ns + '-locations-item-data-hours'),
+      timezone: el.querySelectorAll('.' + ns + '-locations-item-data-timezone'),
+      moreHours: el.querySelectorAll('.' + ns + '-locations-item-data-more-hours'),
+      distance: el.querySelector('.' + ns + '-locations-item-distance'),
+      backHolder: el.querySelector('.' + ns + '-locations-all-holder'),
+      back: el.querySelector('.' + ns + '-locations-all')
+    };
+  };
+
+  var dom = createDom(el);
+
+  // name
+  if (item.label)
+    dom.label.textContent = item.label;
+  else
+    dom.parentEl.removeChild(dom.label);
+
+  // addresses
+  dom.address.textContent = item.address.address;
+  dom.link.setAttribute('href', 'https://maps.google.com/?q=' + encodeURIComponent(item.address.address));
+  dom.link.setAttribute('target', '_blank');
+  dom.distance.textContent = distance(item) || '';
+
+  // email
+  if (item.email)
+    createEmails(dom.email, item);
+  else
+    dom.email.parentNode.removeChild(dom.email);
+
+  // phones
+  if (item.phones && item.phones.length > 0)
+    createPhoneArray(dom.phone, item.phones);
+  else
+    dom.phone.parentNode.removeChild(dom.phone);
+
+  // hours/timezone
+  if (item.days && item.days.length === 7) {
+    createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
+  } else {
+    for (var i = 0; i < dom.hours; i++)
+      dom.hours[i].parentNode.removeChild(dom.hours[i]);
+    for (var j = 0; j < dom.timezone; j++)
+      dom.timezone[j].parentNode.removeChild(dom.timezone[j]);
+    for (var n = 0; n < dom.moreHours; i++)
+      dom.moreHours[n].parentNode.removeChild(dom.moreHours[n]);
+  }
+
+  if (locationData && locationData.length > 1) {
+    this.locationsButton = dom.back;
+    this.locationsFunction = function(e) {
+      e.preventDefault();
+      publish('receive', {
+        message: {
+          text: [strings.locations.list, 'Is there anything else I can help you with?'],
+          layout: {
+            name: 'show-locations',
+            index: 0
+          },
+          data: {
+            location_data: locationData
+          }
+        }
+      });
+    };
+    dom.back.addEventListener('click', this.locationsFunction);
+  } else {
+    dom.backHolder.parentNode.removeChild(dom.backHolder);
+  }
+  container.appendChild(el);
+  return container;
+};
+ShowLocations.prototype.addLocations = function() {
+  var current = getState();
+  var createDom = function(el, i, uuid) {
+    el.addEventListener('click', this.handleClick);
+    el.dataset.uuid = uuid;
+    el.dataset.id = i + 1;
+    var text = templates.addLocationsItem;
+    el.innerHTML = utils.compile(text, { ns: ns });
+    this.eventListeners.push(el);
+    return {
+      icon: el.querySelector('.' + ns + '-locations-item-icon'),
+      label: el.querySelector('.' + ns + '-locations-item-data-title'),
+      address: el.querySelector('.' + ns + '-locations-item-data-address'),
+      address1: document.createElement('span'),
+      address2: document.createElement('span'),
+      distance: el.querySelector('.' + ns + '-locations-item-distance')
+    };
+  };
+
+  var container = document.createElement('div');
+
+  for (var i = 0; (i < displayLength && i < this.data.length); i++) {
+    var el = document.createElement('div');
+    var item = this.data[i];
+    var dom = createDom.call(this, el, i, this.uuid);
+    var box = document.createElement('div');
+    box.setAttribute('style', 'border-radius: 24px; color:' + current.styles.accentText + '; background: ' + current.styles.accentBackground + '; line-height: 24px; height:24px; width:24px; margin-left:8px;');
+    box.textContent = alphaMap[i];
+    dom.icon.appendChild(box);
+    dom.label.textContent = item.label || '';
+    dom.address.textContent = item.address.address;
+    dom.distance.textContent = distance(item) || '';
+    container.appendChild(el);
+  }
+  return container;
 };
 
 module.exports = showLocationsLayout;

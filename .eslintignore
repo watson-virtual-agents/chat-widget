@@ -1,0 +1,7 @@
+test/**/*.js
+dist/*.js
+docs
+examples
+tools/**/*.js
+jsdoc-output/**/*.js
+build/**/*.js

@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -16,14 +16,14 @@ var state = require('../../state');
 var events = require('../../events');
 
 function sendInputMessage() {
-	var current = state.getState();
-	if (!current.inProgress && !current.disableInput) {
-		var text = current.root.querySelector('.IBMChat-chat-textbox').value;
-		events.publish('send', {
-			text: text
-		});
-		text = '';
-	}
+  var current = state.getState();
+  if (!current.inProgress && !current.disableInput) {
+    var text = current.root.querySelector('.IBMChat-chat-textbox').value.trim().replace(/(\r\n|\n|\r)/gm,"");
+    events.publish('send', {
+      text: text
+    });
+    text = '';
+  }
 }
 
 module.exports = sendInputMessage;

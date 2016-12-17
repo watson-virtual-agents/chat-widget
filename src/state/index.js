@@ -16,44 +16,28 @@ var states = [];
 var state = {};
 var assign = require('lodash/assign');
 
-function getState() {
-	return state;
+function get() {
+  return state;
 }
-function destroyState() {
-	state = {};
-	setState({});
-}
-
-function setState(updated) {
-	state = assign({}, state, updated);
-	if (state.DEBUG) {
-		states.push(state);
-		console.log('STATE HISTORY: ', states);
-		console.log('NEW STATE: ', state);
-	}
+function destroy() {
+  state = {};
+  set({});
 }
 
-function getStyles() {
-	var current = getState();
-	return current.styles;
-}
-
-function getProfile() {
-	var current = getState();
-	return current.profile || {};
-}
-
-function setProfile(data) {
-	setState({
-		profile: assign({}, getProfile(), data)
-	});
+function set(updated) {
+  state = assign({}, state, updated);
+  if (state.DEBUG) {
+    states.push(state);
+    console.log('STATE HISTORY: ', states);
+    console.log('NEW STATE: ', state);
+  }
 }
 
 module.exports ={
-	getState: getState,
-	setState: setState,
-	destroyState: destroyState,
-	getProfile: getProfile,
-	setProfile: setProfile,
-	getStyles: getStyles
+  get: get,
+  set: set,
+  destroy: destroy,
+  getState: get,
+  setState: set,
+  destroyState: destroy
 };

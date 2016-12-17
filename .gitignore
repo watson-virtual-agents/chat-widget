@@ -38,5 +38,12 @@ node_modules
 public
 creds
 
-src/creds.html
+creds.html
 dist/index.html
+examples/**/dist
+test/selenium/errorShots
+test/resources/auth.js
+selenium/errorShots
+bin
+reports
+stats.json

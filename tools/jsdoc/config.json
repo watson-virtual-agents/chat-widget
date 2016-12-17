@@ -1,0 +1,22 @@
+{
+  "source": {
+    "include": [ "./src/index.js" ],
+    "exclude": [
+      "./coverage/",
+      "./dist/",
+      "./docs",
+      "./images/",
+      "./node_modules/",
+      "./reports/",
+      "./test/",
+      "./tools/",
+      "./karma.conf.js",
+      "./nightwatch.conf.js",
+      "./webpack.config.js"
+    ]
+  },
+  "opts": {
+    "readme": "README.md",
+    "destination": "./jsdoc-output/"
+  }
+}

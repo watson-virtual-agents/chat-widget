@@ -1,0 +1,32 @@
+language: node_js
+sudo: false
+node_js:
+  - 4.4.0
+env:
+  global:
+    - secure: U1pzFfM8Hvu+v2LxiW6D1fafbfMhynAAe1cwXdSQ2ACNDrx+1kGGm5XNFaYOHKFhg5uUgQFGubJs2i7qZvalJipB9fMfBjcLtqynGZPWZmO8UiSyKaCR5R69T9UVnmURG/LMe8g7hF05Zdol3M8scaUyLQEci0EXRt5coTKCxoHOKiGI0UVfurq6mt34QltCgMQKQdk9dYHyZ2MVKkC/B2tKukn6Y18QjLWlb0TX1dHnAhO/nyT96LYMnHq1wH+4OI0v8/jL/+Rc4Bq0QbNrLwC9owMV7OeWmHSSEfUsGthzoe6FMtKF6mw3gg/7BRXtS+uTpIl/Nc3VPHeUhqtyB99a2CuHVQLAvOw3ReKBQUjZVIKFpiC+n9wUt7E3eKX/dpUtwb4BgqYfYVhgdoUKfYm5/NkJUjSbeNMReuZAoHn2yxFGZZ5O0GANTjnL5GtYeo2in68PHIfkIjhQVxvM6wNVYxTL5PX8DXju/UK1xuFiX9B0893R65s1a78piRzXmqXt+cZ/v/ff27bZIKz3HtwBy7d1rWxQkX8U3gxsTEkqKiEt28N2o4JB6x20q9PqupJ6aDBUM5OEPz59gV6YNqt/cCvrwmxuO/kctOWx+NNyvJNSecQ52pM/yhQ45/7o1QR23Qzw7vq4VNlGvTtbQp+wbiapD/WZRHRsMBa5GsU=
+before_install:
+  - 'openssl aes-256-cbc -K $encrypted_989954bb41cf_key -iv $encrypted_989954bb41cf_iv -in auth.js.enc -out test/resources/auth.js -d'
+script:
+  - npm run test:codecov
+  - bash test/selenium/selenium_custom_run.sh
+  - npm run jsdoc
+  - npm run eslint
+after_success:
+  - tools/jsdoc/publish.sh
+  - bash <(curl -s https://codecov.io/bash)
+after_script:
+  # hacky workaround for hanging chromedriver processes
+  - pkill chromedriver
+cache:
+  directories:
+  - node_modules
+notifications:
+  email:
+    recipients:
+      - ewinters@us.ibm.com
+      - najimovi@ar.ibm.com
+    on_success: always    # default is change, update if this gets too annoying
+    on_failure: always    # default: always
+addons:
+  sauce_connect: true

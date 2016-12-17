@@ -17,39 +17,57 @@ You can copy this HTML code block into a file, give it an .html extension, and v
 <div id="ibm_chat_root"></div>
 <iframe style="width:100%; height:100%" src="http://www.ibm.com/en-us"></iframe>
 <!--
-https://dp1-bot-chat.mybluemix.net/IBMChatClient-vX.X.X.js for a specific version
-In your production environment, we recommend locking down your widget version. See https://www.npmjs.com/package/@watson-virtual-agent/chat-widget for the list of versions.
+https://unpkg.com/@watson-virtual-agent/chat-widget@X.X.X/dist/chat.min.js for a specific version, where X.X.X is the semantic version of the chat widget.
+In your production environment, we recommend locking down your widget version.
 -->
-<script src='https://dp1-bot-chat.mybluemix.net/IBMChatClient-latest.js'></script>
+<script src='https://unpkg.com/@watson-virtual-agent/chat-widget/dist/chat.min.js'></script>
 <script>
-  IBMChat.init({
+  var config = {
     el: 'ibm_chat_root',
     baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
     botID: 'YOUR_BOT_ID',
     XIBMClientID: 'YOUR_IBM_CLIENT_ID',
     XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
-  });
+  };
+  window.IBMChat.init(config);
 </script>
 </body>
 </html>
 ```
 
+You can also install this package from npm with `npm install @watson-virtual-agent/chat-widget` and include it as part of your own scripts and build process.
+
+```js
+var IBMChat = require('@watson-virtual-agent/chat-widget');
+var config = {
+  el: 'ibm_chat_root',
+  baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
+  botID: 'YOUR_BOT_ID',
+  XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+  XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+};
+IBMChat.init(config);
+```
+
 ## Advanced Configuration
 
-To extend the basic setup, you can manipulate the theme and securely hide your IBMClientID and IBMClientSecret values.
+To extend the basic setup, you can manipulate the theme and securely hide your XIBMClientID and XIBMClientSecret values.
 
-In the following code example, the baseURL adds the IBMClientID and IBMClientSecretToken to the request headers before the request is passed to the bot, and the theme colors are lightened.
+In the following code example, the baseURL adds the `X-IBM-Client-Id` and `X-IBM-Client-Secret` to the request headers before the request is passed to the bot, and the theme colors are lightened.
 
 For a full breakdown of the options for the init function, see [./JSDOCS.md](./JSDOCS.md);
 
 **Example**  
 ```js
+
+var IBMChat = require('@watson-virtual-agent/chat-widget');
+
 IBMChat.init({
  el: 'my_element',
  botID: 'YOUR_BOT_ID',
- baseURL: 'https://example.com/botProxy',
+ baseURL: 'https://example.com/botProxy', //this would be your own server
  styles: {
-	 background: 'rgba(255, 255, 255, 1)', //use rgba
+	 background: 'rgba(255, 255, 255, 0.8)', //use rgba
 	 text: 'rgba(0, 0, 0, 1)',
 	 accentBackground: '#31eaf1', //or a hex code
 	 accentText: '#ffffff',
@@ -63,6 +81,11 @@ IBMChat.init({
 ## Moving to production
 
 In your production environment, you should replace the baseURL with a server of your own. This server should add the `X-IBM-Client-Id` and `X-IBM-Client-Secret` headers to the request and forward them on to https://api.ibm.com/virtualagent/run/api/v1. `X-IBM-Client-Id` and `X-IBM-Client-Secret` are used for billing, so it is of utmost importance you keep them secret.
+
+## Events
+
+The Chat UI is written in a PubSub architecture and exposes many events that you may wish to subscribe to when creating your own custom layouts. For a list of events provided by default, see [./EVENTS.md](./EVENTS.md). You can subscribe to events using `IBMChat.subscribe(event, cb)` and publish an event using `IBMChat.publish(event, data)`. `Action` and `Layout` events are published with the `action:ACTION_NAME` and `layout:LAYOUT_NAME` format.
+
 
 ## Actions
 
@@ -100,6 +123,7 @@ Add a custom layout by using the registerLayout function. The registerLayout fun
 
 **Example**  
 ```js
+var IBMChat = require('@watson-virtual-agent/chat-widget');
 var PlumberBrothers = require('../plumber-brothers-game');
 var config = {};
 
@@ -124,6 +148,8 @@ IBMChat.init(config);
 ```
 
 If you add a custom layout with the same name as a current layout, the custom layout overwrites the current layout.
+
+For a simple example of creating a custom layout please see `/examples/basic-custom-layout`
 
 ## Private Identifiable Information (PII)
 

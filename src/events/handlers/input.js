@@ -1,4 +1,4 @@
-/**
+/*
 * (C) Copyright IBM Corp. 2016. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -16,48 +16,48 @@ var state = require('../../state');
 var utils = require('../../utils');
 
 function enableInput() {
-	var current = state.getState();
-	var disableInput = (current.disableInput) ? (current.disableInput - 1) :0;
-	state.setState({ disableInput: disableInput });
-	if (!disableInput)
-		current.input.removeAttribute('disabled');
+  var current = state.getState();
+  var disableInput = (current.disableInput) ? (current.disableInput - 1) :0;
+  state.setState({ disableInput: disableInput });
+  if (!disableInput)
+    current.input.removeAttribute('disabled');
 }
 
 function disableInput() {
-	var current = state.getState();
-	var disableInput = (current.disableInput) ? (current.disableInput + 1) : 1;
-	state.setState({ disableInput: disableInput });
-	current.input.setAttribute('disabled', 'disabled');
+  var current = state.getState();
+  var disableInput = (current.disableInput) ? (current.disableInput + 1) : 1;
+  state.setState({ disableInput: disableInput });
+  current.input.setAttribute('disabled', 'disabled');
 }
 
 function enableLoadingInput() {
-	var current = state.getState();
-	var loading = (current.loading) ? (current.loading + 1) : 1;
-	state.setState({
-		loading: loading
-	});
-	utils.spinner.show(current.loader);
+  var current = state.getState();
+  var loading = (current.loading) ? (current.loading + 1) : 1;
+  state.setState({
+    loading: loading
+  });
+  utils.spinner.show(current.loader);
 }
 
 function disableLoadingInput() {
-	var current = state.getState();
-	var loading = (current.loading) ? (current.loading - 1) : 0;
-	state.setState({
-		loading: loading
-	});
-	if (loading === 0)
-		utils.spinner.hide(current.loader);
+  var current = state.getState();
+  var loading = (current.loading) ? (current.loading - 1) : 0;
+  state.setState({
+    loading: loading
+  });
+  if (loading === 0)
+    utils.spinner.hide(current.loader);
 }
 
 function focusInput() {
-	var current = state.getState();
-	current.input.focus();
+  var current = state.getState();
+  current.input.focus();
 }
 
 module.exports = {
-	enableInput: enableInput,
-	disableInput: disableInput,
-	enableLoadingInput: enableLoadingInput,
-	disableLoadingInput: disableLoadingInput,
-	focusInput: focusInput
+  enableInput: enableInput,
+  disableInput: disableInput,
+  enableLoadingInput: enableLoadingInput,
+  disableLoadingInput: disableLoadingInput,
+  focusInput: focusInput
 };
