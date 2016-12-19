@@ -24,7 +24,7 @@ var utils = require('../../utils');
 
 var first = true;
 var displayLength = 3;
-var breakpointWidths = ['720', '680', '640', '580', '512', '480', '420', '360', '320', '288', '256'];
+var breakpointWidths = ['768', '640', '512', '480', '360'];
 var days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
 var showLocations = {};
 var locationIDs = [];
@@ -58,14 +58,11 @@ var showLocationsLayout = {
   init: function() {
     subscribe('layout:show-locations', function(data) {
       var showLocation = new ShowLocations(data);
+      if (locationIDs.length === 0)
+        subscribe('resize', sizeMap);
       locationIDs.push(data.uuid);
       showLocations[data.uuid] = showLocation;
     });
-    window.addEventListener('resize', utils.debounce(function() {
-      setTimeout(function() {
-        sizeMap();
-      }, 200);
-    }, 200));
   }
 };
 
@@ -90,7 +87,7 @@ function sizeMap() {
   if (locationIDs.length > 0 && showLocations[locationIDs[0]].getWidth() && !sameSize()) {
     var width = showLocations[locationIDs[0]].getWidth();
     for (var i = 0; i < breakpointWidths.length; i++) {
-      if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
+      if ((i === breakpointWidths.length - 1) || (i === 0 && width > breakpointWidths[i]) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
         currentBreakpointKey = i;
         for (var j = 0; j < locationIDs.length; j++) {
           if (showLocations[locationIDs[j]].data.length > 0)
@@ -305,7 +302,9 @@ ShowLocations.prototype.init = function(data) {
 };
 
 ShowLocations.prototype.getWidth = function() {
-  var width = this.parentElement.querySelector('.IBMChat-watson-layout:last-child').clientWidth;
+  var el = this.parentElement.querySelector('.IBMChat-watson-layout:last-child'), width = 0;
+  if (el)
+    width = el.clientWidth;
   return width;
 };
 
@@ -346,7 +345,6 @@ ShowLocations.prototype.drawLocations = function() {
   }
   this.uri += encodeURIComponent(locations);
   this.uri += '&color=' + encodeURIComponent(this.convertColor(current.styles.accentBackground));
-  img.setAttribute('width', '100%');
   img.setAttribute('src', this.uri);
   return img;
 };
