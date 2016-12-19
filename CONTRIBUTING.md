@@ -52,4 +52,4 @@ If you want to contribute to the repository, here's a quick guide:
 4. Test your changes: `npm run test`.
 5. Follow the instructions at [./DCO.txt](./DCO.txt).
 6. Commit your changes.
-7. Push to your fork and submit a pull request.
+7. Push to your fork and submit a pull request **to the "dev" branch**.
