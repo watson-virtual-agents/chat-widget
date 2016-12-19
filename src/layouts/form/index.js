@@ -44,6 +44,7 @@ function Form(data) {
 Form.prototype.init = function(data) {
   this.data = data.message.store || [];
   this.action = data.message.action || '';
+  this.label = data.message.layout.label || {};
   this.uuid = data.uuid;
   this.parentElement = data.element;
   this.layoutElement = data.layoutElement;
@@ -56,7 +57,10 @@ Form.prototype.init = function(data) {
 Form.prototype.drawForm = function() {
   var base = document.createElement('div');
   var formFields;
-  base.innerHTML = templates.base;
+  base.innerHTML = utils.compile(templates.base, {
+    submit: this.label.submit || 'Submit',
+    cancel: this.label.cancel || 'Cancel'
+  });
   formFields = base.querySelector('.IBMChat-form-fields');
   this.data.forEach(function(datum) {
     var field = document.createElement('div');
@@ -64,6 +68,7 @@ Form.prototype.drawForm = function() {
       label: datum.label || '',
       name: datum.name,
       uuid: utils.getUUID(),
+      type: datum.type || 'text',
       value: ''
     });
     field.className = ns + '-fields-row';
