@@ -12,6 +12,7 @@
 * the License.
 */
 
+var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var state = require('../../state');
 var events = require('../../events');
 var utils = require('../../utils');
@@ -71,6 +72,7 @@ function _intents(data) {
 
 function receive(data) {
   var parsed = (typeof data === 'string') ? { message: { text: data } } : data;
+  parsed = BotSDK.parse(parsed);
   var current = state.getState();
   state.setState({
     messages: [].concat(current.messages || [], parsed),
