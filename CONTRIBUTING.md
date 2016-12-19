@@ -2,6 +2,20 @@
 
 Report bugs or feature requests to our [github issue tracker](https://github.com/watson-virtual-agents/chat-widget/issues). Before that, please search for similar issues as it's possible that somebody has already run into it. If you want to contribute to the WVA Chat Widget, **please be sure to open an issue beforehand!**
 
+# Pull Requests
+
+**We accept pull requests to the "dev" branch and not to "master".** This enabled us combine changes into a single version bump and keep the code (and docs) in master pristine.
+
+If you want to contribute to the repository, here's a quick guide:
+
+1. Fork the repo.
+2. Install locally: `npm install`.
+3. Develop your code changes.
+4. Test your changes: `npm run test`.
+5. Follow the instructions at [./DCO.txt](./DCO.txt).
+6. Commit your changes.
+7. Push to your fork and submit a pull request **to the "dev" branch**.
+
 # Running Locally
 
 1. Clone this repository
@@ -40,16 +54,3 @@ Report bugs or feature requests to our [github issue tracker](https://github.com
 # Questions
 
 For questions please refer to [StackOverflow](http://stackoverflow.com/questions/tagged/watson-virtual-agent) under tag `watson-virtual-agent` or [DeveloperWorks Answers](https://developer.ibm.com/answers/topics/watson-virtual-agent).
-
-
-# Pull Requests
-
-If you want to contribute to the repository, here's a quick guide:
-
-1. Fork the repo.
-2. Install locally: `npm install`.
-3. Develop your code changes.
-4. Test your changes: `npm run test`.
-5. Follow the instructions at [./DCO.txt](./DCO.txt).
-6. Commit your changes.
-7. Push to your fork and submit a pull request.
