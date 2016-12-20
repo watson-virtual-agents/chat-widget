@@ -13,6 +13,7 @@
 */
 
 var state = require('../../state');
+var debugResize = false;
 
 function _cloneHeight(inputClone) {
   return Math.ceil(window.getComputedStyle(inputClone).getPropertyValue('height').replace('px', ''));
@@ -25,8 +26,9 @@ function resize() {
       var maxInputPercentage = 35,
         containerHeight,
         inputHolderHeight,
-        rootHeight = window.getComputedStyle(current.root).getPropertyValue('height').replace('px', ''),
-        rootWidth = window.getComputedStyle(current.root).getPropertyValue('width').replace('px', ''),
+        chatHolderHeight,
+        rootHeight = Math.floor(current.root.clientHeight),
+        rootWidth = Math.floor(current.root.clientWidth),
         maxInputHeight = rootHeight * (maxInputPercentage / 100),
         calculatedMaxInputHeight = (maxInputHeight > 96) ? maxInputHeight : 96,
         cloneHeight = _cloneHeight(current.inputClone),
@@ -36,17 +38,17 @@ function resize() {
         currentInputClone = current.inputClone.innerHTML;
 
       if (current.rootHeight !== rootHeight) {
-        if (current.DEBUG)
+        if (current.DEBUG && debugResize)
           console.log('New Root Height:', rootHeight);
         newState.rootHeight = rootHeight;
         current.outerContainer.style.height = rootHeight + "px";
       }
 
       if (current.inputClone && current.inputHeight !== inputHeight) {
-        if (current.DEBUG)
+        if (current.DEBUG && debugResize)
           console.log('Input height does not match:', current.inputHeight, inputHeight);
         if (currentInputClone !== newInputClone) {
-          if (current.DEBUG)
+          if (current.DEBUG && debugResize)
             console.log('Clone does not match input:', currentInputClone, newInputClone);
           current.inputClone.innerHTML = newInputClone;
           cloneHeight = _cloneHeight(current.inputClone);
@@ -55,31 +57,31 @@ function resize() {
       }
 
       if (current.inputHeight !== inputHeight) {
-        if (current.DEBUG)
+        if (current.DEBUG && debugResize)
           console.log('New Input Height:', current.inputHeight, inputHeight);
         current.input.style.height = inputHeight + "px";
         newState.inputHeight = inputHeight;
       }
 
       inputHolderHeight = Math.ceil(window.getComputedStyle(current.inputHolder).getPropertyValue('height').replace('px', ''));
-      containerHeight = rootHeight - inputHolderHeight;
+      chatHolderHeight = Math.floor(window.getComputedStyle(current.chatHolder).getPropertyValue('height').replace('px', ''));
+      containerHeight = Math.floor(rootHeight - inputHolderHeight);
+
       if (current.containerHeight !== containerHeight) {
-        if (current.DEBUG)
+        if (current.DEBUG && debugResize)
           console.log('New Container Height:', containerHeight);
         current.innerContainer.style.height = containerHeight + "px";
         newState.containerHeight = containerHeight;
       }
-
-      if (current.chatHolderHeight === undefined) {
-        if (current.DEBUG)
-          console.log('chatHolderHeight is undefined');
-        var chatHolderHeight = window.getComputedStyle(current.chatHolder).getPropertyValue('height').replace('px', '');
-        if ((rootHeight - chatHolderHeight - inputHolderHeight) <= 0) {
-          if (current.DEBUG)
-            console.log('New Chat Holder Height:', containerHeight);
-          current.chatHolder.style.height = containerHeight + "px";
-          newState.chatHolderHeight = true;
-        }
+      if (chatHolderHeight < containerHeight)
+        chatHolderHeight = 'auto';
+      else
+        chatHolderHeight = containerHeight + 'px';
+      if (current.chatHolderHeight !== chatHolderHeight) {
+        if (current.DEBUG && debugResize)
+          console.log('New Chat Holder Height: ' + chatHolderHeight);
+        newState.chatHolderHeight = chatHolderHeight;
+        current.chatHolder.style.height = chatHolderHeight;
       }
 
       if (rootWidth >= 480) {
@@ -91,7 +93,7 @@ function resize() {
         if (current.isLarge)
           newState.isLarge = false;
       }
-      if (newState.rootWidth !== rootWidth)
+      if (current.rootWidth !== rootWidth)
         newState.rootWidth = rootWidth;
 
       if (newState.rootWidth !== undefined || newState.chatHolderHeight !== undefined || newState.rootHeight !== undefined || newState.isLarge !== undefined || newState.containerHeight !== undefined || newState.inputHeight !== undefined)
