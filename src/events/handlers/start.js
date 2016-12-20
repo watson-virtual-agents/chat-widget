@@ -44,7 +44,7 @@ function start(data) {
     addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
     addState.form = current.root.querySelector('.IBMChat-input-form');
     addState.loader = current.root.querySelector('.IBMChat-input-loading');
-    addState.originalInputHeight = window.getComputedStyle(addState.input).getPropertyValue('height').replace('px', '');
+    addState.originalInputHeight = Math.ceil(window.getComputedStyle(addState.input).getPropertyValue('height').replace('px', ''));
     addState.form.addEventListener('submit', function(e) {
       e.preventDefault();
     });
