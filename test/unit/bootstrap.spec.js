@@ -36,12 +36,12 @@ describe('bootstrap', function() {
   describe('#send()', function() {
     it('should send error for invalid messages', function() {
       stateMock = {
-        getState: sinon.stub().returns({ active: true })
+        get: sinon.stub().returns({ active: true })
       };
       bootstrap.__set__('state', stateMock);
 
       var errorMsg = 'The message was empty.';
-      
+
       bootstrap.send(undefined);
       bootstrap.send(null);
       bootstrap.send('');
@@ -51,7 +51,7 @@ describe('bootstrap', function() {
 
     it('should deliver messages when these are valid', function() {
       stateMock = {
-        getState: sinon.stub().returns({ active: true })
+        get: sinon.stub().returns({ active: true })
       };
       bootstrap.__set__('state', stateMock);
 
@@ -68,12 +68,12 @@ describe('bootstrap', function() {
 
     it('should not deliver messages when widget is not active', function() {
       stateMock = {
-        getState: sinon.stub().returns({ active: false })
+        get: sinon.stub().returns({ active: false })
       };
       bootstrap.__set__('state', stateMock);
 
       bootstrap.send('update address');
-      
+
       expect(eventsMock.publish.notCalled);
     });
   });
@@ -103,7 +103,7 @@ describe('bootstrap', function() {
       expect(bootstrap).to.have.property('state');
     });
   });
-  
+
   afterEach(function() {
     // reset spy state
     publishSpy.reset();

@@ -63,7 +63,7 @@ describe('events', function() {
   describe('#unsubscribe()', function() {
     it.skip('should unsubscribe handler from events', function() {
       stateMock = {
-        getState: function() {
+        get: function() {
           return { DEBUG: true };
         }
       };

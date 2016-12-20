@@ -83,7 +83,7 @@ function subscribeOnce(event, handler, context) {
 }
 
 function publish(event, data, cb) {
-  var current = state.getState();
+  var current = state.get();
   var wasSubscription = false;
   for (var i = 0; i < events.length; i++) {
     if (events[i] && events[i].event && events[i].event === event) {

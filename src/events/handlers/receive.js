@@ -73,8 +73,8 @@ function _intents(data) {
 function receive(data) {
   var parsed = (typeof data === 'string') ? { message: { text: data } } : data;
   parsed = BotSDK.parse(parsed);
-  var current = state.getState();
-  state.setState({
+  var current = state.get();
+  state.set({
     messages: [].concat(current.messages || [], parsed),
     hasError: false
   });

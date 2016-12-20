@@ -1,3 +1,13 @@
+.IBMChat-fade {
+  left: 0;
+  height: 25%;
+  min-height:96px;
+  position:absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
 .IBMChat-outer-container {
   border: none;
   box-sizing: border-box;
@@ -10,6 +20,7 @@
   min-height:100px;
   min-width: 288px;
   padding:0;
+  position:relative;
   text-align: left;
   width:100%;
 }

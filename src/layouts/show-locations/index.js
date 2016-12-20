@@ -18,8 +18,6 @@ var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
 var state = require('../../state');
-var getState = state.getState;
-var setState = state.setState;
 var utils = require('../../utils');
 
 var first = true;
@@ -77,15 +75,19 @@ function initialSize(width) {
   }
 }
 
+function getWidth() {
+  return state.get().rootWidth;
+}
+
 function sameSize() {
-  var width = showLocations[locationIDs[0]].getWidth();
+  var width = getWidth();
   var isSameSize = (breakpointWidths[currentBreakpointKey] >= width && breakpointWidths[currentBreakpointKey + 1] < width);
   return isSameSize;
 }
 
 function sizeMap() {
-  if (locationIDs.length > 0 && showLocations[locationIDs[0]].getWidth() && !sameSize()) {
-    var width = showLocations[locationIDs[0]].getWidth();
+  if (locationIDs.length > 0 && !sameSize()) {
+    var width = getWidth();
     for (var i = 0; i < breakpointWidths.length; i++) {
       if ((i === breakpointWidths.length - 1) || (i === 0 && width > breakpointWidths[i]) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
         currentBreakpointKey = i;
@@ -263,7 +265,7 @@ function ShowLocations(data) {
 ShowLocations.prototype.init = function(data) {
   this.data = (data.message.data !== undefined && data.message.data.location_data !== undefined) ? data.message.data.location_data : [];
   if (this.data.length > 1) {
-    setState({
+    state.set({
       location_data: this.data
     });
   }
@@ -286,7 +288,7 @@ ShowLocations.prototype.init = function(data) {
     var text = templates.base;
     this.uuid = data.uuid;
     if (first) {
-      initialSize(this.getWidth());
+      initialSize(getWidth());
       first = false;
     }
     this.map = document.createElement('div');
@@ -301,13 +303,6 @@ ShowLocations.prototype.init = function(data) {
       this.layoutElement.querySelectorAll('.' + ns + '-locations-item')[0].focus();
   }
   this.subscribeReceive = subscribe('receive', this.removeAllEventListeners, this);
-};
-
-ShowLocations.prototype.getWidth = function() {
-  var el = this.parentElement.querySelector('.IBMChat-watson-layout:last-child'), width = 0;
-  if (el)
-    width = el.clientWidth;
-  return width;
 };
 
 ShowLocations.prototype.reDrawMap = function() {
@@ -328,9 +323,9 @@ ShowLocations.prototype.convertColor = function(color) {
 };
 
 ShowLocations.prototype.drawLocations = function() {
-  var current = getState();
+  var current = state.get();
   var img = document.createElement('img');
-  var width = this.getWidth();
+  var width = getWidth();
   var config = {
     size: width + 'x120',
     scale: pixelRatio
@@ -386,7 +381,7 @@ ShowLocations.prototype.removeAllEventListeners = function() {
 ShowLocations.prototype.addLocation = function() {
   var container = document.createElement('div');
   var el = document.createElement('div');
-  var locationData = getState().location_data;
+  var locationData = state.get().location_data;
   var item = this.data[0];
   var createDom = function(el) {
     var text = templates.addLocationItem;
