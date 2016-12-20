@@ -351,12 +351,6 @@ ShowLocations.prototype.drawLocations = function() {
   return img;
 };
 
-ShowLocations.prototype.handleEnter = function(e) {
-  console.log('e', e);
-  if (e.which === 13 || e.which === 32)
-    e.target.click();
-};
-
 ShowLocations.prototype.handleClick = function() {
   this.className = ns + '-location-active';
   publish('receive', {
@@ -379,10 +373,8 @@ ShowLocations.prototype.removeAllEventListeners = function() {
   var inputs = layout.querySelectorAll('input, button');
   for (var i = 0; i < inputs.length; i++)
     inputs[i].setAttribute('disabled', true);
-  for (var x = 0; x < this.eventListeners.length; x++) {
+  for (var x = 0; x < this.eventListeners.length; x++)
     this.eventListeners[x].removeEventListener('click', this.handleClick);
-    this.eventListeners[x].removeEventListener('keyup', this.handleEnter);
-  }
   if (this.hoursFunction)
     this.hoursButton.removeEventListener('click', this.hoursFunction);
   if (this.locationsFunction)
@@ -480,7 +472,6 @@ ShowLocations.prototype.addLocations = function() {
   var current = state.get();
   var createDom = function(el, i, uuid) {
     el.addEventListener('click', this.handleClick);
-    el.addEventListener('keyup', this.handeEnter);
     el.dataset.uuid = uuid;
     el.dataset.id = i + 1;
     var text = templates.addLocationsItem;
