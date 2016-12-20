@@ -13,7 +13,6 @@
 */
 
 var state = require('../../state');
-var events = require('../../events');
 
 function _cloneHeight(inputClone) {
   return Math.ceil(window.getComputedStyle(inputClone).getPropertyValue('height').replace('px', ''));
@@ -95,10 +94,8 @@ function resize() {
       if (newState.rootWidth !== rootWidth)
         newState.rootWidth = rootWidth;
 
-      if (newState.rootWidth !== undefined || newState.chatHolderHeight !== undefined || newState.rootHeight !== undefined || newState.isLarge !== undefined || newState.containerHeight !== undefined || newState.inputHeight !== undefined) {
+      if (newState.rootWidth !== undefined || newState.chatHolderHeight !== undefined || newState.rootHeight !== undefined || newState.isLarge !== undefined || newState.containerHeight !== undefined || newState.inputHeight !== undefined)
         state.set(newState);
-        events.publish('scroll-to-bottom');
-      }
     }, 0);
   }
 }
