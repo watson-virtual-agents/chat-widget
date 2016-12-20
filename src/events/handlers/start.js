@@ -24,8 +24,8 @@ function start(data) {
   utils.attachStyles();
   current.root.classList.add("chatID-" + current.chatID);
   current.root.innerHTML = templates.start;
-  var outerContainer = current.root.querySelector('.IBMChat-outer-container');
   var addState = {
+    outerContainer: current.root.querySelector('.IBMChat-outer-container'),
     container: current.root.querySelector('.IBMChat-chat-container'),
     chatHolder: current.root.querySelector('.IBMChat-messages'),
     innerContainer: current.root.querySelector('.IBMChat-inner-container'),
@@ -38,7 +38,7 @@ function start(data) {
     chatBox.innerHTML = utils.compile(templates.input, {
       placeholder: 'Enter message...'
     });
-    outerContainer.appendChild(chatBox);
+    addState.outerContainer.appendChild(chatBox);
     addState.inputHolder = current.root.querySelector('.IBMChat-input-container');
     addState.input = current.root.querySelector('.IBMChat-chat-textbox');
     addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');

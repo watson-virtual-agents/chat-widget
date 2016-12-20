@@ -339,7 +339,6 @@ var IBMChat = {
     * @function set
     * @param {string} key - The named key of the value you are setting.
     * @param {string} value - The value you are setting.
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @example
     * IBMChat.profile.set('first_name', 'john');
     */
@@ -358,7 +357,6 @@ var IBMChat = {
     * Clear the entire user profile.
     * @memberof IBMChat.profile
     * @function clear
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @example
     * IBMChat.profile.clear();
     */
@@ -367,7 +365,6 @@ var IBMChat = {
     * Delete an item from the user profile based on key.
     * @memberof IBMChat.profile
     * @function delete
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @param {string} key - The named key of the value you are deleting.
     * @example
     * IBMChat.profile.delete('first_name');
@@ -379,7 +376,6 @@ var IBMChat = {
     * @function forEach
     * @param {function} callback - The function you are calling on each item in the profile object. This function is passed key as the first argument and value as the second argument.
     * @param {Object} this - (optional) The context you wish to call the callback in.
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @example
     * IBMChat.profile.forEach(function(key, value) {
     *   console.log(key, value);
@@ -401,9 +397,35 @@ var IBMChat = {
   */
   playback: bootstrap.playback,
   /**
-  * @ignore
-  */
-  state: bootstrap.state,
+   * @namespace state
+   * @memberof IBMChat
+   */
+  state: {
+    /**
+    * Get an item from the user profile based on key.
+    * @memberof IBMChat.state
+    * @function get
+    * @example
+    * IBMChat.state.get();
+    * @returns {Object} Returns: the current application state.
+    */
+    get: bootstrap.state.get,
+    /**
+    * Set an item from the user profile based on key.
+    * @memberof IBMChat.state
+    * @function set
+    * @param {Object} newState - The key/value pairs put here will merge with current application state.
+    * @returns {IBMChat} - Returns IBMChat for chaining.
+    * @example
+    * IBMChat.state.set({
+    *      "first_name": "Bob"
+    * });
+    */
+    set: function(obj) {
+      bootstrap.state.set(obj);
+      return IBMChat;
+    }
+  },
 
   /**
    * Turns on a whole bunch of verbose console.log statements!

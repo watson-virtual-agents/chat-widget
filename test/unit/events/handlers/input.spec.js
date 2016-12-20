@@ -34,12 +34,12 @@ describe('input handler', function() {
   describe('#focusInput()', function() {
     it('should set focus to input element', function() {
       stateMock = {
-        getState: function() {
+        get: function() {
           return {
             input: inputEl
           };
         },
-        setState: function() {}
+        set: function() {}
       };
       input.__set__('state', stateMock);
 
@@ -53,36 +53,36 @@ describe('input handler', function() {
   describe('#enableInput()', function() {
     it('should enable the input box', function() {
       stateMock = {
-        getState: function() {
+        get: function() {
           return {
             disableInput: 0,
             input: inputEl
           };
         },
-        setState: function() {}
+        set: function() {}
       };
       input.__set__('state', stateMock);
-      
+
       input.enableInput();
 
       expect(inputEl.removeAttribute.calledOnce);
       expect(inputEl.removeAttribute.calledWithExactly('disabled'));
     });
   });
-  
+
   describe('#disableInput()', function() {
     it('should disable the input box', function() {
       stateMock = {
-        getState: function() {
+        get: function() {
           return {
             disableInput: 0,
             input: inputEl
           };
         },
-        setState: function() {}
+        set: function() {}
       };
       input.__set__('state', stateMock);
-      
+
       input.disableInput();
 
       expect(inputEl.setAttribute.calledOnce);
