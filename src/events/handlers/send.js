@@ -21,7 +21,7 @@ var templates = require('../../templates');
 
 function send(data) {
   if (data && data.text && data.text.length > 0) {
-    var current = state.getState();
+    var current = state.get();
     addToSendQueue(data);
     if (!current.inProgress)
       agentSend();
@@ -29,21 +29,21 @@ function send(data) {
 }
 
 function addToSendQueue(data) {
-  var current = state.getState();
+  var current = state.get();
   var queue = current.sendQueue || [];
   var newQueue = queue.slice(0);
   newQueue.push(data);
-  state.setState({
+  state.set({
     sendQueue: newQueue
   });
 }
 
 function always() {
   events.publish('disable-loading');
-  state.setState({
+  state.set({
     inProgress: false
   });
-  if (state.getState().sendQueue.length > 0)
+  if (state.get().sendQueue.length > 0)
     agentSend();
 }
 
@@ -58,7 +58,7 @@ function reject(e) {
 }
 
 function sendToBot(data) {
-  var current = state.getState();
+  var current = state.get();
   events.publish('enable-loading');
   events.publish('scroll-to-bottom');
   events.publish('focus-input');
@@ -74,10 +74,10 @@ function sendToBot(data) {
 }
 
 function agentSend() {
-  var current = state.getState();
+  var current = state.get();
   var newData = assign({}, current.sendQueue[0], { uuid: utils.getUUID() });
   var msg = newData.text || '';
-  state.setState({
+  state.set({
     inProgress: true,
     sendQueue: current.sendQueue.slice(1, current.sendQueue.length),
     messages: [].concat(current.messages || [], newData)

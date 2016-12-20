@@ -18,7 +18,7 @@ var state = require('../../state');
 function error(err) {
   var display = (err && err.stack) ? err.stack : err;
   console.error(display);
-  var current = state.getState();
+  var current = state.get();
   var text = 'I am sorry, I am having difficulties.';
   if (current.hadError)
     text += ' Please try again later.';
@@ -26,7 +26,7 @@ function error(err) {
     text += ' To speak with a human agent, type "agent".';
   if (err.status)
     text += ' (error: ' + err.status + ')';
-  state.setState({
+  state.set({
     hadError: true
   });
   events.publish('receive', text);

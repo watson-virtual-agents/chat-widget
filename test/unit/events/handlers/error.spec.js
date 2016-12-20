@@ -25,7 +25,7 @@ var events = rewire('../../../../src/events');
 
 describe('error handler', function() {
   var consoleErrStub;
-  
+
   beforeEach(function() {
     consoleErrStub = sinon.stub(console, 'error');
   });
@@ -37,7 +37,7 @@ describe('error handler', function() {
 
       error.default("mock error message");
 
-      expect(state.getState().hadError).to.be.true;
+      expect(state.get().hadError).to.be.true;
       expect(events.publish.calledOnce);
       expect(events.publish.firstCall.args[0]).to.equal("receive");
       expect(events.publish.firstCall.args[1]).to.be.a("string");
@@ -51,13 +51,13 @@ describe('error handler', function() {
 
       error.tryIt("mock error message");
 
-      expect(state.getState().hadError).to.be.true;
+      expect(state.get().hadError).to.be.true;
       expect(events.publish.calledOnce);
       expect(events.publish.firstCall.args[0]).to.equal("layout:error");
       expect(events.publish.firstCall.args[1]).to.be.a("string");
     });
   });
-  
+
   afterEach(function() {
     // remove stub and restore console.error's behavior
     consoleErrStub.restore();
