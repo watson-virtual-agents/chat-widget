@@ -94,6 +94,7 @@ Choose.prototype.drawButtons = function() {
   }
 
   this.layoutElement.appendChild(this.el);
+  this.layoutElement.querySelectorAll('button')[0].focus();
 };
 
 Choose.prototype.handleClick = function() {

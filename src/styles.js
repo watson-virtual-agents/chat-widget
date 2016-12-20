@@ -14,7 +14,7 @@
 
 var defaultStyles = {
   background: 'rgba(61, 61, 61, 1)',
-  accentBackground: '#AF6EE8',
+  accentBackground: '#BA8FF7',
   accentText: '#ffffff',
   text: '#ffffff',
   link: '#AF6EE8',

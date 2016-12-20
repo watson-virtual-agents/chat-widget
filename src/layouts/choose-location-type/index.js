@@ -62,6 +62,7 @@ ChooseLocationType.prototype = {
       });
       this.layoutElement.appendChild(this.el);
       this.buttons = this.layoutElement.querySelectorAll('button');
+      this.buttons[0].focus();
       for (var i = 0; i < this.buttons.length; i++) {
         this.buttons[i].dataset.uuid = this.uuid;
         this.buttons[i].addEventListener('click', this.handleClick);

@@ -297,6 +297,8 @@ ShowLocations.prototype.init = function(data) {
       this.mapElement.appendChild(this.drawLocations());
     this.dataElement.appendChild(this.addDetails());
     this.layoutElement.appendChild(this.map);
+    if (this.data.length > 1)
+      this.layoutElement.querySelectorAll('.' + ns + '-locations-item')[0].focus();
   }
   this.subscribeReceive = subscribe('receive', this.removeAllEventListeners, this);
 };
@@ -349,6 +351,12 @@ ShowLocations.prototype.drawLocations = function() {
   return img;
 };
 
+ShowLocations.prototype.handleEnter = function(e) {
+  console.log('e', e);
+  if (e.which === 13 || e.which === 32)
+    e.target.click();
+};
+
 ShowLocations.prototype.handleClick = function() {
   this.className = ns + '-location-active';
   publish('receive', {
@@ -371,8 +379,10 @@ ShowLocations.prototype.removeAllEventListeners = function() {
   var inputs = layout.querySelectorAll('input, button');
   for (var i = 0; i < inputs.length; i++)
     inputs[i].setAttribute('disabled', true);
-  for (var x = 0; x < this.eventListeners.length; x++)
+  for (var x = 0; x < this.eventListeners.length; x++) {
     this.eventListeners[x].removeEventListener('click', this.handleClick);
+    this.eventListeners[x].removeEventListener('keyup', this.handleEnter);
+  }
   if (this.hoursFunction)
     this.hoursButton.removeEventListener('click', this.hoursFunction);
   if (this.locationsFunction)
@@ -467,22 +477,23 @@ ShowLocations.prototype.addLocation = function() {
   return container;
 };
 ShowLocations.prototype.addLocations = function() {
-  var current = getState();
+  var current = state.get();
   var createDom = function(el, i, uuid) {
     el.addEventListener('click', this.handleClick);
+    el.addEventListener('keyup', this.handeEnter);
     el.dataset.uuid = uuid;
     el.dataset.id = i + 1;
     var text = templates.addLocationsItem;
-    el.innerHTML = utils.compile(text, { ns: ns });
+    el.innerHTML = utils.compile(text, {
+      ns: ns,
+      title: item.label || '',
+      address: item.address.address,
+      iconText: alphaMap[i],
+      accentText: current.styles.accentText,
+      accentBackground: current.styles.accentBackground,
+      distance: distance(item) || '',
+    });
     this.eventListeners.push(el);
-    return {
-      icon: el.querySelector('.' + ns + '-locations-item-icon'),
-      label: el.querySelector('.' + ns + '-locations-item-data-title'),
-      address: el.querySelector('.' + ns + '-locations-item-data-address'),
-      address1: document.createElement('span'),
-      address2: document.createElement('span'),
-      distance: el.querySelector('.' + ns + '-locations-item-distance')
-    };
   };
 
   var container = document.createElement('div');
@@ -490,14 +501,7 @@ ShowLocations.prototype.addLocations = function() {
   for (var i = 0; (i < displayLength && i < this.data.length); i++) {
     var el = document.createElement('div');
     var item = this.data[i];
-    var dom = createDom.call(this, el, i, this.uuid);
-    var box = document.createElement('div');
-    box.setAttribute('style', 'border-radius: 24px; color:' + current.styles.accentText + '; background: ' + current.styles.accentBackground + '; line-height: 24px; height:24px; width:24px; margin-left:8px;');
-    box.textContent = alphaMap[i];
-    dom.icon.appendChild(box);
-    dom.label.textContent = item.label || '';
-    dom.address.textContent = item.address.address;
-    dom.distance.textContent = distance(item) || '';
+    createDom.call(this, el, i, this.uuid);
     container.appendChild(el);
   }
   return container;
