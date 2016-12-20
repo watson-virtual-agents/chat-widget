@@ -2,6 +2,10 @@
   margin-top: 1em;
 }
 
+.IBMChat-map-data {
+  font-size:0.85em;
+}
+
 
 .IBMChat-map-img img {
   height: 120px;
@@ -54,26 +58,32 @@
 
 .IBMChat-map-locations-item {
   border-bottom:1px solid #505050;
+  text-align:left;
   padding: 1em;
 }
 
 
-.IBMChat-map-locations-item-icon {
+.IBMChat-map-locations-item-icon-holder {
   text-align:center;
   width: 40px;
+}
+
+.IBMChat-map-locations-item-icon {
+  border-radius: 24px;
+  height:24px;
+  line-height: 24px;
+  margin-left:8px;
+  width:24px;
 }
 
 .IBMChat-map-locations-item-data {
 
 }
 .IBMChat-map-locations-item-data-title {
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-weight:300;
   line-height:1.1em;
   padding-bottom:0.5em;
-}
-.IBMChat-map-locations-item-data-items {
-  font-size: 0.9em;
 }
 
 .IBMChat-map-locations-item-data-section {

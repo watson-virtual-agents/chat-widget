@@ -80,6 +80,10 @@
   opacity:.7;
 }
 
+.IBMChat-messages button[disabled="true"]:focus {
+  outline: none;
+}
+
 .IBMChat-messages button::-moz-focus-inner {
   border: 0;
   padding: 0;
@@ -198,6 +202,11 @@
 .IBMChat-chat-textbox:focus {
 	outline: none;
 	padding:0 0 2px 0;
+}
+
+/* Layout Component */
+.IBMChat-watson-layout {
+  padding:4px;
 }
 
 /* validation error message */
