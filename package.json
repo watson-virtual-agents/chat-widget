@@ -7,8 +7,9 @@
   "scripts": {
     "build": "webpack -production && webpack -minify -production -p --json > stats.json && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
     "codecov": "npm run test && (codecov || true)",
-    "jsdoc": "jsdoc -c ./tools/jsdoc/config.json",
+    "changelog": "node ./node_modules/.bin/conventional-changelog -p angular -i CHANGELOG.md -s",
     "eslint": "eslint .",
+    "jsdoc": "jsdoc -c ./tools/jsdoc/config.json",
     "server:embed": "node ./tools/dev/embed-server.js -minify",
     "server:selenium": "node ./tools/dev/selenium-server.js -selenium",
     "server:watch": "node ./tools/dev/dev-server.js",
