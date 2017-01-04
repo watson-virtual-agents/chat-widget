@@ -4,6 +4,7 @@
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/chat.js",
+  "unpkg": "dist/chat.min.js",
   "scripts": {
     "build": "webpack -production && webpack -minify -production -p --json > stats.json && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
     "codecov": "npm run test && (codecov || true)",
@@ -57,7 +58,6 @@
     "axios": "0.12.0",
     "chai": "3.5.0",
     "chai-as-promised": "6.0.0",
-    "cheerio": "0.22.0",
     "codecov": "1.0.1",
     "concurrently": "3.1.0",
     "conventional-changelog-cli": "1.2.0",
@@ -77,6 +77,7 @@
     "karma-phantomjs-launcher": "1.0.2",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "1.8.0",
+    "lodash-webpack-plugin": "0.10.6",
     "mocha": "3.0.2",
     "nightwatch": "0.9.9",
     "npm-watch": "0.1.6",
