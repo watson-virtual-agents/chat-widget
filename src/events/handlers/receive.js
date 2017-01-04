@@ -62,10 +62,10 @@ function _layouts(data, tryIt, debug) {
 
 function _intents(data) {
   var msg = data.message;
-  if (msg && msg.intents && msg.intents.length > 0 && msg.intents[0].intent) {
+  if (msg && msg.log_data && msg.log_data.intents && msg.log_data.intents.length > 0 && msg.log_data.intents[0].intent && msg.log_data.showIntentLink) {
     events.publish('try-it-get-intent-data', {
       element: data.intentElement,
-      intent: msg.intents[0].intent
+      intent: msg.log_data.intents[0].intent
     });
   }
 }
