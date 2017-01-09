@@ -39,12 +39,12 @@ function start(data) {
       placeholder: 'Enter message...'
     });
     addState.outerContainer.appendChild(chatBox);
-    addState.inputHolder = current.root.querySelector('.IBMChat-input-container');
+    addState.inputHolder = current.root.querySelector('.IBMChat-input-container form');
     addState.input = current.root.querySelector('.IBMChat-chat-textbox');
     addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
     addState.form = current.root.querySelector('.IBMChat-input-form');
     addState.loader = current.root.querySelector('.IBMChat-input-loading');
-    addState.originalInputHeight = Math.ceil(window.getComputedStyle(addState.input).getPropertyValue('height').replace('px', ''));
+    addState.originalInputHeight = Math.ceil(addState.input.offsetHeight);
     addState.form.addEventListener('submit', function(e) {
       e.preventDefault();
     });
