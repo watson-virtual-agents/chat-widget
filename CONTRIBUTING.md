@@ -13,7 +13,9 @@ If you want to contribute to the repository, here's a quick guide:
 3. Develop your code changes.
 4. Test your changes: `npm run test`.
 5. Follow the instructions at [./DCO.txt](./DCO.txt).
-6. Commit your changes. When writing the commit message, please follow [Angular Commit Message Guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-guidelines).
+6. Commit your changes. When writing the commit message, please follow [Angular Commit Message Guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-guidelines), but using past tense, for example:
+    - feat(intents): added link in messages to the corresponding intent in admin-ui
+    - bug(ie): fixed scrolling issue in IE11/Edge
 7. Push to your fork and submit a pull request **to the "dev" branch**.
 
 # Running Locally
