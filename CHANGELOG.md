@@ -1,5 +1,3 @@
-# Change Log
-
 ## [1.2.15](https://github.com/watson-virtual-agents/chat-widget/tree/1.2.15) (2016-12-14)
 [Full Changelog](https://github.com/watson-virtual-agents/chat-widget/compare/1.2.14...1.2.15)
 
