@@ -11,6 +11,7 @@
     "changelog": "./tools/release/update_changelog.sh",
     "eslint": "eslint .",
     "jsdoc": "jsdoc -c ./tools/jsdoc/config.json",
+    "release": "./tools/release/tag_release_publish.sh",
     "server:embed": "node ./tools/dev/embed-server.js -minify",
     "server:selenium": "node ./tools/dev/selenium-server.js -selenium",
     "server:watch": "node ./tools/dev/dev-server.js",
