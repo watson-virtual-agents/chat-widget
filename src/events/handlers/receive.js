@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -62,10 +62,10 @@ function _layouts(data, tryIt, debug) {
 
 function _intents(data) {
   var msg = data.message;
-  if (msg && msg.intents && msg.intents.length > 0 && msg.intents[0].intent) {
+  if (msg && msg.log_data && msg.log_data.intents && msg.log_data.intents.length > 0 && msg.log_data.intents[0].intent && msg.log_data.show_intent_link === true) {
     events.publish('try-it-get-intent-data', {
       element: data.intentElement,
-      intent: msg.intents[0].intent
+      intent: msg.log_data.intents[0].intent
     });
   }
 }
