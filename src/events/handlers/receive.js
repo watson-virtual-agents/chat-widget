@@ -62,7 +62,7 @@ function _layouts(data, tryIt, debug) {
 
 function _intents(data) {
   var msg = data.message;
-  if (msg && msg.log_data && msg.log_data.intents && msg.log_data.intents.length > 0 && msg.log_data.intents[0].intent && msg.log_data.showIntentLink) {
+  if (msg && msg.log_data && msg.log_data.intents && msg.log_data.intents.length > 0 && msg.log_data.intents[0].intent && msg.log_data.show_intent_link === true) {
     events.publish('try-it-get-intent-data', {
       element: data.intentElement,
       intent: msg.log_data.intents[0].intent
