@@ -25,6 +25,7 @@ function start(data) {
   current.root.classList.add("chatID-" + current.chatID);
   current.root.innerHTML = templates.start;
   var addState = {
+    chat: current.root.querySelector('.IBMChat'),
     outerContainer: current.root.querySelector('.IBMChat-outer-container'),
     container: current.root.querySelector('.IBMChat-chat-container'),
     chatHolder: current.root.querySelector('.IBMChat-messages'),
@@ -44,7 +45,6 @@ function start(data) {
     addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
     addState.form = current.root.querySelector('.IBMChat-input-form');
     addState.loader = current.root.querySelector('.IBMChat-input-loading');
-    addState.originalInputHeight = Math.ceil(addState.input.offsetHeight);
     addState.form.addEventListener('submit', function(e) {
       e.preventDefault();
     });

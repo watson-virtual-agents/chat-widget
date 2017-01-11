@@ -68,7 +68,7 @@ var alphaMap = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
 function initialSize(width) {
   for (var i = 0; i < breakpointWidths.length; i++) {
-    if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
+    if ((i === breakpointWidths.length - 1) || breakpointWidths[i] >= width) {
       currentBreakpointKey = i;
       return;
     }
@@ -76,12 +76,13 @@ function initialSize(width) {
 }
 
 function getWidth() {
-  return state.get().rootWidth;
+  var current = state.get();
+  return current.rootWidth || current.root.clientWidth;
 }
 
 function sameSize() {
   var width = getWidth();
-  var isSameSize = (breakpointWidths[currentBreakpointKey] >= width && breakpointWidths[currentBreakpointKey + 1] < width);
+  var isSameSize = (breakpointWidths[currentBreakpointKey] >= width);
   return isSameSize;
 }
 
@@ -89,7 +90,7 @@ function sizeMap() {
   if (locationIDs.length > 0 && !sameSize()) {
     var width = getWidth();
     for (var i = 0; i < breakpointWidths.length; i++) {
-      if ((i === breakpointWidths.length - 1) || (i === 0 && width > breakpointWidths[i]) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
+      if ((i === breakpointWidths.length - 1) || (i === 0 && width >= breakpointWidths[i])) {
         currentBreakpointKey = i;
         for (var j = 0; j < locationIDs.length; j++) {
           if (showLocations[locationIDs[j]].data.length > 0)
