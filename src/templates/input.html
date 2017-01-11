@@ -1,11 +1,13 @@
 <form class="IBMChat-input-form IBMChat-input-form-theme">
-  <textarea aria-labelledby="Enter a Message" class="IBMChat-chat-textbox IBMChat-chat-textbox-theme" placeholder="${placeholder}"></textarea>
-  <div class="IBMChat-ibm-spinner-start IBMChat-input-loading IBMChat-input-loading-theme">
-    <svg class="IBMChat-ibm-spinner" width=32 height=32 viewBox="-16 -16 32 32">
-      <circle cx=0 cy=0 r=8 /></svg>
-    </svg>
-  </div>
-  <div class="IBMChat-chat-textbox-clone-holder">
-    <div class="IBMChat-chat-textbox-clone" aria-hidden="true">${placeholder}</div>
+  <div class="IBMChat-chat-textbox-container IBMChat-chat-textbox-container-theme">
+    <textarea aria-labelledby="Enter a Message" class="IBMChat-chat-textbox IBMChat-chat-textbox-theme" placeholder="${placeholder}"></textarea>
+    <div class="IBMChat-ibm-spinner-start IBMChat-input-loading IBMChat-input-loading-theme">
+      <svg class="IBMChat-ibm-spinner" width=32 height=32 viewBox="-16 -16 32 32">
+        <circle cx=0 cy=0 r=8 /></svg>
+      </svg>
+    </div>
+    <div class="IBMChat-chat-textbox-clone-holder">
+      <div class="IBMChat-chat-textbox-clone" aria-hidden="true">${placeholder}</div>
+    </div>
   </div>
 </form>
