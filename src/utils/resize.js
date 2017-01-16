@@ -72,7 +72,7 @@ var removeResizeListener = function(element, fn) {
   if (!element.__resizeListeners__.length) {
     if (document.attachEvent) {
       element.detachEvent('onresize', resizeListener);
-    } else {
+    } else if (element.__resizeTrigger__.contentDocument) {
       element.__resizeTrigger__.contentDocument.defaultView.removeEventListener('resize', resizeListener);
       element.__resizeTrigger__ = !element.removeChild(element.__resizeTrigger__);
     }
