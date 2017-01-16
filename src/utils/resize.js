@@ -36,7 +36,8 @@ function resizeListener(e) {
   win.__resizeRAF__ = requestFrame(function() {
     var trigger = win.__resizeTrigger__;
     trigger.__resizeListeners__.forEach(function(fn) {
-      fn.call(trigger, e);
+      if (fn && typeof fn === 'function')
+        fn.call(trigger, e);
     });
   });
 }
