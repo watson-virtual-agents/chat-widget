@@ -69,7 +69,6 @@ function start(data) {
         state.set({
           inputHeight: addState.originalInputHeight
         });
-        events.publish('resize');
       }
       events.publish('resize');
     });
