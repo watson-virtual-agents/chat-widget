@@ -1,7 +1,23 @@
+.IBMChat {
+  height: 100%;
+  width: 100%;
+}
+
+.IBMChat-fade {
+  left: 0;
+  height: 25%;
+  min-height:96px;
+  position:absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
 .IBMChat-outer-container {
   border: none;
   box-sizing: border-box;
   display:table;
+  table-layout: fixed;
   font-weight: normal;
   line-height: 1em;
   height: 100%;
@@ -10,6 +26,7 @@
   min-height:100px;
   min-width: 288px;
   padding:0;
+  position:relative;
   text-align: left;
   width:100%;
 }
@@ -80,13 +97,17 @@
   opacity:.7;
 }
 
+.IBMChat-messages button[disabled="true"]:focus {
+  outline: none;
+}
+
 .IBMChat-messages button::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
 
 .IBMChat-watson-intent a {
-  display:inline-block;
+  display: inline-block;
   margin: 1em 0 1em 0;
 }
 
@@ -101,6 +122,12 @@
   line-height: 1.5em;
   min-height: 1.5em;
   padding: 0 0 0 1em;
+  word-wrap: break-word;
+}
+
+.IBMChat-watson-message a {
+  display: inline-block;
+  word-break: break-all;
 }
 
 .IBMChat-watson-message-line {
@@ -118,7 +145,7 @@
 
 .IBMChat-user-message-container {
 	margin: 1em 0 1em 2em;
-	text-align:right;
+	text-align: right;
 }
 
 .IBMChat-user-message {
@@ -126,9 +153,9 @@
   display: inline-block;
   line-height: 1.5em;
   padding: 0.5em 0.75em 0.5em 0.75em;
-  text-align:left;
-  white-space: pre-wrap;
-  white-space: pre-line;
+  text-align: left;
+  max-width: 100%;
+  overflow: hidden;
   word-wrap: break-word;
 }
 
@@ -144,6 +171,9 @@
   display:table-cell;
   position:relative;
   height: 24px;
+}
+
+.IBMChat-chat-textbox-container {
   padding: 1em 2em 2em 2em;
 }
 
@@ -200,6 +230,11 @@
 	padding:0 0 2px 0;
 }
 
+/* Layout Component */
+.IBMChat-watson-layout {
+  padding:4px;
+}
+
 /* validation error message */
 .IBMChat-validation-error {
   padding: 0.5em;
@@ -238,46 +273,22 @@
   stroke-dashoffset: 1;
 }
 
-/* initial rotation and stroke animation and infinite rotation*/
+/* infinite rotation*/
 .IBMChat-init-spin {
-  animation: init-rotate 150ms linear forwards, rotate-loop 2000ms linear infinite;
-}
-
-.IBMChat-init-spin svg circle {
-  animation: init-stroke 1000ms linear;
+  animation: rotate-loop 1000ms linear infinite;
 }
 
 .IBMChat-end-spin svg circle {
   display:none;
 }
 
-/* initial rotation */
-@keyframes init-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(180deg);
-  }
-}
-
 /* looping rotation */
 @keyframes rotate-loop {
-  0% {
+  from {
     transform: rotate(0deg);
   }
-  100% {
+  to {
     transform: rotate(360deg);
-  }
-}
-
-/* initial stroke animation */
-@keyframes init-stroke {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }
 

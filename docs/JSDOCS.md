@@ -7,11 +7,14 @@
     * [.version](#IBMChat.version)
     * [.profile](#IBMChat.profile) : <code>object</code>
         * [.get(key)](#IBMChat.profile.get) ⇒ <code>Any</code>
-        * [.set(key, value)](#IBMChat.profile.set) ⇒ <code>[profile](#IBMChat.profile)</code>
+        * [.set(key, value)](#IBMChat.profile.set)
         * [.has(key)](#IBMChat.profile.has) ⇒ <code>Boolean</code>
-        * [.clear()](#IBMChat.profile.clear) ⇒ <code>[profile](#IBMChat.profile)</code>
-        * [.delete(key)](#IBMChat.profile.delete) ⇒ <code>[profile](#IBMChat.profile)</code>
-        * [.forEach(callback, this)](#IBMChat.profile.forEach) ⇒ <code>[profile](#IBMChat.profile)</code>
+        * [.clear()](#IBMChat.profile.clear)
+        * [.delete(key)](#IBMChat.profile.delete)
+        * [.forEach(callback, this)](#IBMChat.profile.forEach)
+    * [.state](#IBMChat.state) : <code>object</code>
+        * [.get()](#IBMChat.state.get) ⇒ <code>Object</code>
+        * [.set(newState)](#IBMChat.state.set) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.init(config)](#IBMChat.init) ⇒ <code>Promise</code>
     * ~~[.restart()](#IBMChat.restart) ⇒ <code>Promise</code>~~
     * [.destroy()](#IBMChat.destroy) ⇒ <code>Promise</code>
@@ -49,11 +52,11 @@ IBMChat.version
 
 * [.profile](#IBMChat.profile) : <code>object</code>
     * [.get(key)](#IBMChat.profile.get) ⇒ <code>Any</code>
-    * [.set(key, value)](#IBMChat.profile.set) ⇒ <code>[profile](#IBMChat.profile)</code>
+    * [.set(key, value)](#IBMChat.profile.set)
     * [.has(key)](#IBMChat.profile.has) ⇒ <code>Boolean</code>
-    * [.clear()](#IBMChat.profile.clear) ⇒ <code>[profile](#IBMChat.profile)</code>
-    * [.delete(key)](#IBMChat.profile.delete) ⇒ <code>[profile](#IBMChat.profile)</code>
-    * [.forEach(callback, this)](#IBMChat.profile.forEach) ⇒ <code>[profile](#IBMChat.profile)</code>
+    * [.clear()](#IBMChat.profile.clear)
+    * [.delete(key)](#IBMChat.profile.delete)
+    * [.forEach(callback, this)](#IBMChat.profile.forEach)
 
 <a name="IBMChat.profile.get"></a>
 
@@ -73,11 +76,10 @@ IBMChat.profile.get('first_name');
 ```
 <a name="IBMChat.profile.set"></a>
 
-#### profile.set(key, value) ⇒ <code>[profile](#IBMChat.profile)</code>
+#### profile.set(key, value)
 Set an item from the user profile based on key.
 
 **Kind**: static method of <code>[profile](#IBMChat.profile)</code>  
-**Returns**: <code>[profile](#IBMChat.profile)</code> - - Returns IBMChat.profile for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -106,22 +108,20 @@ IBMChat.profile.has('first_name');
 ```
 <a name="IBMChat.profile.clear"></a>
 
-#### profile.clear() ⇒ <code>[profile](#IBMChat.profile)</code>
+#### profile.clear()
 Clear the entire user profile.
 
 **Kind**: static method of <code>[profile](#IBMChat.profile)</code>  
-**Returns**: <code>[profile](#IBMChat.profile)</code> - - Returns IBMChat.profile for chaining.  
 **Example**  
 ```js
 IBMChat.profile.clear();
 ```
 <a name="IBMChat.profile.delete"></a>
 
-#### profile.delete(key) ⇒ <code>[profile](#IBMChat.profile)</code>
+#### profile.delete(key)
 Delete an item from the user profile based on key.
 
 **Kind**: static method of <code>[profile](#IBMChat.profile)</code>  
-**Returns**: <code>[profile](#IBMChat.profile)</code> - - Returns IBMChat.profile for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -133,11 +133,10 @@ IBMChat.profile.delete('first_name');
 ```
 <a name="IBMChat.profile.forEach"></a>
 
-#### profile.forEach(callback, this) ⇒ <code>[profile](#IBMChat.profile)</code>
+#### profile.forEach(callback, this)
 Iterate over the profile.
 
 **Kind**: static method of <code>[profile](#IBMChat.profile)</code>  
-**Returns**: <code>[profile](#IBMChat.profile)</code> - - Returns IBMChat.profile for chaining.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -148,6 +147,44 @@ Iterate over the profile.
 ```js
 IBMChat.profile.forEach(function(key, value) {
   console.log(key, value);
+});
+```
+<a name="IBMChat.state"></a>
+
+### IBMChat.state : <code>object</code>
+**Kind**: static namespace of <code>[IBMChat](#IBMChat)</code>  
+
+* [.state](#IBMChat.state) : <code>object</code>
+    * [.get()](#IBMChat.state.get) ⇒ <code>Object</code>
+    * [.set(newState)](#IBMChat.state.set) ⇒ <code>[IBMChat](#IBMChat)</code>
+
+<a name="IBMChat.state.get"></a>
+
+#### state.get() ⇒ <code>Object</code>
+Get an item from the user profile based on key.
+
+**Kind**: static method of <code>[state](#IBMChat.state)</code>  
+**Returns**: <code>Object</code> - Returns: the current application state.  
+**Example**  
+```js
+IBMChat.state.get();
+```
+<a name="IBMChat.state.set"></a>
+
+#### state.set(newState) ⇒ <code>[IBMChat](#IBMChat)</code>
+Set an item from the user profile based on key.
+
+**Kind**: static method of <code>[state](#IBMChat.state)</code>  
+**Returns**: <code>[IBMChat](#IBMChat)</code> - - Returns IBMChat for chaining.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| newState | <code>Object</code> | The key/value pairs put here will merge with current application state. |
+
+**Example**  
+```js
+IBMChat.state.set({
+     "first_name": "Bob"
 });
 ```
 <a name="IBMChat.init"></a>
@@ -178,7 +215,7 @@ Generate the chat widget into an element.
 | config.styles.inputBackground | <code>string</code> | <code>&quot;rgba(90,90,90,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for background color of input elements in forms |
 | config.styles.inputText | <code>string</code> | <code>&quot;rgba(247,247,247,1)&quot;</code> | optional: rgba(X, X, X, X) or hex code for color of input text in forms |
 | config.styles.accentText | <code>string</code> | <code>&quot;#ffffff&quot;</code> | optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text |
-| config.styles.accentBackground | <code>string</code> | <code>&quot;#AF6EE8&quot;</code> | optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons |
+| config.styles.accentBackground | <code>string</code> | <code>&quot;#BA8FF7&quot;</code> | optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons |
 | config.styles.errorText | <code>string</code> | <code>&quot;#ffffff&quot;</code> | optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text |
 | config.styles.errorBackground | <code>string</code> | <code>&quot;#e86e6e&quot;</code> | optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons |
 | config.styles.fontFamily | <code>string</code> | <code>&quot;HelveticaNeue,Helvetica,sans-serif&quot;</code> | optional: comma seperated list of fonts to use |

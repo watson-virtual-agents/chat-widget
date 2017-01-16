@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -26,7 +26,12 @@ function _attachStylesToDOM(styles) {
 
 function _getStyles(current) {
   var containerClass = ".chatID-" + current.chatID;
-  var styles = containerClass + " .IBMChat-outer-container {\n  font-size: " + current.styles.fontSize + ";\n line-height: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
+  var noOpacityBackgroundArray = _hexToRGBArray(normalizeToHex(current.styles.background));
+  var noOpacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0.8)";
+  var opacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0)";
+  var styles = containerClass + "{\n overflow:hidden;;\n}\n" +
+              containerClass + " .IBMChat-fade {\n  background: linear-gradient(to bottom, " + noOpacityBackground + " 0%, " + opacityBackground + " 100%);\n}\n" +
+              containerClass + " .IBMChat-outer-container {\n  font-size: " + current.styles.fontSize + ";\n line-height: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
               containerClass + " .IBMChat-outer-container textarea {\n  font-size: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
               containerClass + " .IBMChat-default-colors {\n  background-color: " + current.styles.background + ";\n  color: " + current.styles.text + ";\n}\n" +
               containerClass + " .IBMChat-secondary-colors {\n  background-color: " + current.styles.secondaryBackground + ";\n  color: " + current.styles.secondaryText + ";\n}\n" +
@@ -100,13 +105,13 @@ function convertHexToRGBA(hex, opacity) {
 
 
 function attachPlaybackStyles(chatID) {
-  var current = state.getState()[chatID];
+  var current = state.get()[chatID];
   var styles = _getStyles(current);
   _attachStylesToDOM(styles);
 }
 
 function attachStyles() {
-  var current = state.getState();
+  var current = state.get();
   var styles = _getStyles(current);
   _attachStylesToDOM(styles);
 }

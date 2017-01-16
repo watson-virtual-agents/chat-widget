@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -43,7 +43,7 @@ var IBMChat = {
    * @param {string} config.styles.inputBackground=rgba(90,90,90,1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms
    * @param {string} config.styles.inputText=rgba(247,247,247,1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms
    * @param {string} config.styles.accentText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text
-   * @param {string} config.styles.accentBackground=#AF6EE8 - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
+   * @param {string} config.styles.accentBackground=#BA8FF7 - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
    * @param {string} config.styles.errorText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text
    * @param {string} config.styles.errorBackground=#e86e6e - optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons
    * @param {string} config.styles.fontFamily=HelveticaNeue,Helvetica,sans-serif - optional: comma seperated list of fonts to use
@@ -339,7 +339,6 @@ var IBMChat = {
     * @function set
     * @param {string} key - The named key of the value you are setting.
     * @param {string} value - The value you are setting.
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @example
     * IBMChat.profile.set('first_name', 'john');
     */
@@ -358,7 +357,6 @@ var IBMChat = {
     * Clear the entire user profile.
     * @memberof IBMChat.profile
     * @function clear
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @example
     * IBMChat.profile.clear();
     */
@@ -367,7 +365,6 @@ var IBMChat = {
     * Delete an item from the user profile based on key.
     * @memberof IBMChat.profile
     * @function delete
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @param {string} key - The named key of the value you are deleting.
     * @example
     * IBMChat.profile.delete('first_name');
@@ -379,7 +376,6 @@ var IBMChat = {
     * @function forEach
     * @param {function} callback - The function you are calling on each item in the profile object. This function is passed key as the first argument and value as the second argument.
     * @param {Object} this - (optional) The context you wish to call the callback in.
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @example
     * IBMChat.profile.forEach(function(key, value) {
     *   console.log(key, value);
@@ -401,9 +397,35 @@ var IBMChat = {
   */
   playback: bootstrap.playback,
   /**
-  * @ignore
-  */
-  state: bootstrap.state,
+   * @namespace state
+   * @memberof IBMChat
+   */
+  state: {
+    /**
+    * Get an item from the user profile based on key.
+    * @memberof IBMChat.state
+    * @function get
+    * @example
+    * IBMChat.state.get();
+    * @returns {Object} Returns: the current application state.
+    */
+    get: bootstrap.state.get,
+    /**
+    * Set an item from the user profile based on key.
+    * @memberof IBMChat.state
+    * @function set
+    * @param {Object} newState - The key/value pairs put here will merge with current application state.
+    * @returns {IBMChat} - Returns IBMChat for chaining.
+    * @example
+    * IBMChat.state.set({
+    *      "first_name": "Bob"
+    * });
+    */
+    set: function(obj) {
+      bootstrap.state.set(obj);
+      return IBMChat;
+    }
+  },
 
   /**
    * Turns on a whole bunch of verbose console.log statements!

@@ -1,5 +1,5 @@
 /**
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -34,12 +34,12 @@ describe('input handler', function() {
   describe('#focusInput()', function() {
     it('should set focus to input element', function() {
       stateMock = {
-        getState: function() {
+        get: function() {
           return {
             input: inputEl
           };
         },
-        setState: function() {}
+        set: function() {}
       };
       input.__set__('state', stateMock);
 
@@ -53,36 +53,36 @@ describe('input handler', function() {
   describe('#enableInput()', function() {
     it('should enable the input box', function() {
       stateMock = {
-        getState: function() {
+        get: function() {
           return {
             disableInput: 0,
             input: inputEl
           };
         },
-        setState: function() {}
+        set: function() {}
       };
       input.__set__('state', stateMock);
-      
+
       input.enableInput();
 
       expect(inputEl.removeAttribute.calledOnce);
       expect(inputEl.removeAttribute.calledWithExactly('disabled'));
     });
   });
-  
+
   describe('#disableInput()', function() {
     it('should disable the input box', function() {
       stateMock = {
-        getState: function() {
+        get: function() {
           return {
             disableInput: 0,
             input: inputEl
           };
         },
-        setState: function() {}
+        set: function() {}
       };
       input.__set__('state', stateMock);
-      
+
       input.disableInput();
 
       expect(inputEl.setAttribute.calledOnce);

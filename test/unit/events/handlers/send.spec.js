@@ -1,5 +1,5 @@
 /**
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -40,12 +40,12 @@ describe('send handler', function() {
         }
       };
       send.__set__('BotSDK', BotSDKStub);
-      
+
       send(undefined);
       send({ });
       send({ text: '' });
       send({ text: null });
-      
+
       expect(sendStub.callCount).to.equal(0);
     });
 
@@ -74,10 +74,10 @@ describe('send handler', function() {
             default: true
           }
         },
-        getState: function() {
+        get: function() {
           return this.current;
         },
-        setState: function(updated) {
+        set: function(updated) {
           this.current = assign({}, this.current, updated);
         }
       };
@@ -86,7 +86,7 @@ describe('send handler', function() {
 
 
       send(data);
-      
+
       expect(sendPromise.callCount).to.equal(1);
       expect(sendPromise.firstCall.args).to.eql([botID, chatID, data.text]);
     });

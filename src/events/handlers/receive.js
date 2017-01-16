@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -12,6 +12,7 @@
 * the License.
 */
 
+var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var state = require('../../state');
 var events = require('../../events');
 var utils = require('../../utils');
@@ -35,9 +36,7 @@ function _actions(data, tryIt, debug) {
   }
   events.publish('disable-loading');
   events.publish('focus-input');
-  setTimeout(function() {
-    events.publish('scroll-to-bottom');
-  }, 20);
+  events.publish('scroll-to-bottom');
 }
 
 function _layouts(data, tryIt, debug) {
@@ -61,18 +60,19 @@ function _layouts(data, tryIt, debug) {
 
 function _intents(data) {
   var msg = data.message;
-  if (msg && msg.intents && msg.intents.length > 0 && msg.intents[0].intent) {
+  if (msg && msg.log_data && msg.log_data.intents && msg.log_data.intents.length > 0 && msg.log_data.intents[0].intent && msg.log_data.show_intent_link === true) {
     events.publish('try-it-get-intent-data', {
       element: data.intentElement,
-      intent: msg.intents[0].intent
+      intent: msg.log_data.intents[0].intent
     });
   }
 }
 
 function receive(data) {
   var parsed = (typeof data === 'string') ? { message: { text: data } } : data;
-  var current = state.getState();
-  state.setState({
+  parsed = BotSDK.parse(parsed);
+  var current = state.get();
+  state.set({
     messages: [].concat(current.messages || [], parsed),
     hasError: false
   });

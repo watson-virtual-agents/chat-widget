@@ -1,5 +1,5 @@
 /**
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -36,6 +36,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var RewirePlugin = require("rewire-webpack");
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 var version = require('./package.json').version;
 
 var DefinePlugin = webpack.DefinePlugin;
@@ -43,7 +44,6 @@ var NoErrorsPlugin = webpack.NoErrorsPlugin;
 var DedupePlugin = webpack.optimize.DedupePlugin;
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin;
-
 
 var MAPS_SERVER = {
   'development': 'https://dd1-i-serve-maps.mybluemix.net',
@@ -70,17 +70,17 @@ if (debug)
 if (selenium)
   paths.template = path.resolve(__dirname, 'test', 'selenium', 'index.html');
 
-var copyright = "\n* (C) Copyright IBM Corp. 2016. All Rights Reserved.\n*\n* Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except\n* in compliance with the License. You may obtain a copy of the License at\n*\n* http://www.apache.org/licenses/LICENSE-2.0\n*\n* Unless required by applicable law or agreed to in writing, software distributed under the License\n* is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n* or implied. See the License for the specific language governing permissions and limitations under\n* the License.\n";
+var copyright = "\n* (C) Copyright IBM Corp. 2017. All Rights Reserved.\n*\n* Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except\n* in compliance with the License. You may obtain a copy of the License at\n*\n* http://www.apache.org/licenses/LICENSE-2.0\n*\n* Unless required by applicable law or agreed to in writing, software distributed under the License\n* is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n* or implied. See the License for the specific language governing permissions and limitations under\n* the License.\n";
 
 function conditionalPlugins() {
   var arr = [];
   if (minify) {
     arr = [
       new OccurenceOrderPlugin(),
-      new DedupePlugin(),
       new UglifyJsPlugin({
         output: { comments: false }
       }),
+      new LodashModuleReplacementPlugin(),
       new webpack.BannerPlugin(copyright)
     ];
   } else {

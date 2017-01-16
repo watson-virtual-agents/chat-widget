@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -22,8 +22,8 @@ function start(config) {
   var current;
   var data = {};
   data[config.chatID] = config;
-  state.setState(data);
-  current = state.getState()[config.chatID];
+  state.set(data);
+  current = state.get()[config.chatID];
   utils.attachPlaybackStyles(config.chatID);
   current.root.className += " chatID-" + current.chatID;
   current.root.innerHTML = templates.start;
@@ -31,7 +31,7 @@ function start(config) {
   current.chatHolder = current.root.querySelector('.IBMChat-messages');
   current.innerContainer = current.root.querySelector('.IBMChat-inner-container');
   data[config.chatID] = current;
-  state.setState(data);
+  state.set(data);
   current.chatHolder.style.paddingBottom = '1em';
 
   window.addEventListener('resize', utils.debounce(function() {
@@ -49,10 +49,8 @@ function start(config) {
 function send(obj) {
   var chatID = obj.chatID;
   var data = obj.data;
-  console.log('obj', obj);
   if (data.text && data.text.length > 0) {
-    var current = state.getState()[chatID];
-    console.log('current', current);
+    var current = state.get()[chatID];
     var newData = assign({}, data, { uuid: utils.getUUID() });
     current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
     current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
@@ -64,7 +62,7 @@ function receive(obj) {
   var chatID = obj.chatID;
   var data = obj.data;
   var checkData = (typeof data === 'string') ? { message: { text: data } } : data;
-  var current = state.getState()[chatID];
+  var current = state.get()[chatID];
   data = assign({}, checkData, { uuid: utils.getUUID() });
   var msg = (data.message && data.message.text) ? ((Array.isArray(data.message.text)) ? data.message.text : [data.message.text]) : [''];
   if (msg.length === 0)
@@ -79,26 +77,26 @@ function receive(obj) {
 }
 
 function clear(chatID) {
-  var current = state.getState()[chatID];
+  var current = state.get()[chatID];
   current.chatHolder.innerHTML = '';
 }
 
 function destroy(chatID) {
-  var current = state.getState()[chatID];
+  var current = state.get()[chatID];
   var obj = {};
   obj[chatID] = undefined;
-  state.setState(obj);
+  state.set(obj);
   current.root.innerHTML = current.originalContent;
 }
 
 function scrollToBottom(chatID) {
-  var current = state.getState()[chatID];
+  var current = state.get()[chatID];
   current.chatHolder.scrollTop = current.chatHolder.scrollHeight;
 }
 
 function resize(chatID) {
   setTimeout(function() {
-    var current = state.getState()[chatID];
+    var current = state.get()[chatID];
     if (current.active) {
       current.chatHolder.style.maxHeight = (current.root.getBoundingClientRect().height - current.inputHolder.getBoundingClientRect().height) + 'px';
       current.chatHolder.style.maxWidth = ((current.root.getBoundingClientRect().width > 288) ? current.root.getBoundingClientRect().width : 288) + 'px';

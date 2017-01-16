@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -164,7 +164,7 @@ function registerLayout(layout, init, defaultSetup) {
 
 function send(message) {
   if (message) {
-    var current = state.getState();
+    var current = state.get();
     if (current.active) {
       events.publish('send', {
         text: message
@@ -177,7 +177,7 @@ function send(message) {
 
 function receive(message) {
   if (message) {
-    var current = state.getState();
+    var current = state.get();
     if (current.active)
       events.publish('receive', message);
   } else {
@@ -187,7 +187,7 @@ function receive(message) {
 
 function sendMock(message) {
   if (message) {
-    var current = state.getState();
+    var current = state.get();
     if (current.active) {
       events.publish('send-mock', {
         text: message
@@ -200,7 +200,7 @@ function sendMock(message) {
 
 function sendSilently(message) {
   if (message) {
-    var current = state.getState();
+    var current = state.get();
     if (current.active) {
       events.publish('send', {
         text: message,
@@ -214,7 +214,7 @@ function sendSilently(message) {
 
 function enableCustomInputHandler(config) {
   if (config && config.callback && typeof config.callback === 'function') {
-    state.setState({
+    state.set({
       handleInput: {
         default: false,
         callback: config.callback,
@@ -227,7 +227,7 @@ function enableCustomInputHandler(config) {
 }
 
 function disableCustomInputHandler() {
-  state.setState({
+  state.set({
     handleInput: {
       default: true
     }
@@ -235,32 +235,32 @@ function disableCustomInputHandler() {
 }
 
 function focusInput() {
-  var current = state.getState();
+  var current = state.get();
   if (current.active)
     events.publish('focus-input');
 }
 
 function disableInput() {
-  var current = state.getState();
+  var current = state.get();
   if (current.active)
     events.publish('disable-input');
 }
 
 function enableInput() {
-  var current = state.getState();
+  var current = state.get();
   if (current.active)
     events.publish('enable-input');
 }
 
 function debug() {
-  state.setState({
+  state.set({
     DEBUG: true
   });
 }
 
 function destroy() {
   return new Promise(function(resolve) {
-    var current = state.getState();
+    var current = state.get();
     utils.removeResizeListener(current.root, current.onResize);
     events.publish('destroy');
     events.destroy();
@@ -274,7 +274,7 @@ function destroy() {
 function restart() {
   console.warn('The IBMChat.restart method is deprecated.');
   return new Promise(function(resolve, reject) {
-    var current = state.getState();
+    var current = state.get();
     destroy().then(function() {
       setTimeout(function() {
         init({ el: current.root, botID: current.botID, baseURL: current.baseURL }).then(function() {

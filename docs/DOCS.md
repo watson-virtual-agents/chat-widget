@@ -77,6 +77,8 @@ IBMChat.init({
  }
 });
 ```
+You would then send an HTTP response to the POST from the Chat Widget with a JSON object returning the data received as is.
+
 
 ## Moving to production
 
