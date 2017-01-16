@@ -13,6 +13,7 @@
 */
 
 var state = require('../../state');
+var events = require('../../events');
 
 var debugResize = false;
 var timeout;
@@ -48,6 +49,8 @@ function _resize() {
       currentInputClone = (current.input) ? current.inputClone.innerHTML : null;
 
     var chatChanged = function() {
+      if (newState.chatHolderHeight !== undefined || newState.containerHeight !== undefined)
+        events.publish('scroll-to-bottom');
       return (newState.rootWidth !== undefined || newState.chatHolderHeight !== undefined || newState.rootHeight !== undefined || newState.isLarge !== undefined || newState.containerHeight !== undefined || newState.inputHeight !== undefined);
     };
 
@@ -109,7 +112,7 @@ function _resize() {
         newState.containerHeight = containerHeight;
       }
 
-      if (chatHolderHeight !== 'auto' && current.chatHolderHeight !== chatHolderHeight) {
+      if (current.chatHolderHeight !== chatHolderHeight) {
         if (current.DEBUG && debugResize)
           console.log('New Chat Holder Height: ' + chatHolderHeight);
         newState.chatHolderHeight = chatHolderHeight;
