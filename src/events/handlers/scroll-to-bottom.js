@@ -18,10 +18,7 @@ function scrollToBottom() {
   var current = state.get();
   setTimeout(function() {
     current.chatHolder.scrollTop = current.chatHolder.scrollHeight;
-  }, 20);
-  setTimeout(function() {
-    current.chatHolder.scrollTop = current.chatHolder.scrollHeight;
-  }, 300);
+  }, 100);
 }
 
 module.exports = scrollToBottom;
