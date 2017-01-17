@@ -261,12 +261,14 @@ function debug() {
 function destroy() {
   return new Promise(function(resolve) {
     var current = state.get();
-    utils.removeResizeListener(current.root, current.onResize);
-    events.publish('destroy');
-    events.destroy();
-    if (typeof current.originalContent !== 'undefined')
-      current.root.innerHTML = current.originalContent;
-    state.destroyState();
+    if (current.active) {
+      utils.removeResizeListener(current.root, current.onResize);
+      events.publish('destroy');
+      events.destroy();
+      if (typeof current.originalContent !== 'undefined')
+        current.root.innerHTML = current.originalContent;
+      state.destroy();
+    }
     resolve();
   });
 }

@@ -131,6 +131,7 @@ var IBMChat = {
    */
   receive: function(message) {
     bootstrap.receive(message);
+    return IBMChat;
   },
 
   /**

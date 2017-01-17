@@ -13,6 +13,7 @@
 */
 
 var state = require('../../state');
+var events = require('../../events');
 
 var debugResize = false;
 var timeout;
@@ -37,6 +38,7 @@ function _resize() {
       newState = {},
       containerHeight = 0,
       chatHolderHeight = 0,
+      chatHolderMaxHeight = 0,
       inputHolderHeight = 0,
       rootHeight = current.root.clientHeight,
       rootWidth = current.root.clientWidth,
@@ -48,6 +50,8 @@ function _resize() {
       currentInputClone = (current.input) ? current.inputClone.innerHTML : null;
 
     var chatChanged = function() {
+      if (newState.chatHolderHeight !== undefined || newState.containerHeight !== undefined)
+        events.publish('scroll-to-bottom');
       return (newState.rootWidth !== undefined || newState.chatHolderHeight !== undefined || newState.rootHeight !== undefined || newState.isLarge !== undefined || newState.containerHeight !== undefined || newState.inputHeight !== undefined);
     };
 
@@ -92,16 +96,19 @@ function _resize() {
       if (current.input)
         inputHolderHeight = _getHeight(current.inputHolder);
       chatHolderHeight = _getHeight(current.chatHolder);
+      chatHolderMaxHeight = chatHolderHeight;
       containerHeight = Math.floor(rootHeight - inputHolderHeight);
     }, 0);
 
     setTimeout(function() {
 
-      if (chatHolderHeight < containerHeight)
+      if (chatHolderHeight < containerHeight) {
         chatHolderHeight = 'auto';
-      else
+        chatHolderMaxHeight = containerHeight + 'px';
+      } else {
         chatHolderHeight = containerHeight + 'px';
-
+        chatHolderMaxHeight = chatHolderHeight;
+      }
       if (current.containerHeight !== containerHeight) {
         if (current.DEBUG && debugResize)
           console.log('New Container Height:', containerHeight);
@@ -109,11 +116,15 @@ function _resize() {
         newState.containerHeight = containerHeight;
       }
 
-      if (chatHolderHeight !== 'auto' && current.chatHolderHeight !== chatHolderHeight) {
-        if (current.DEBUG && debugResize)
+      if (current.chatHolderHeight !== chatHolderHeight || current.chatHolderMaxHeight !== chatHolderMaxHeight) {
+        if (current.DEBUG && debugResize) {
           console.log('New Chat Holder Height: ' + chatHolderHeight);
+          console.log('New Chat Holder Max Height: ' + chatHolderMaxHeight);
+        }
         newState.chatHolderHeight = chatHolderHeight;
+        newState.chatHolderMaxHeight = chatHolderMaxHeight;
         current.chatHolder.style.height = chatHolderHeight;
+        current.chatHolder.style.maxHeight = chatHolderMaxHeight;
       }
 
       if (rootWidth >= 480) {
