@@ -45,8 +45,9 @@ describe('send handler', function() {
       send({ });
       send({ text: '' });
       send({ text: null });
-
-      expect(sendStub.callCount).to.equal(0);
+      setTimeout(function() {
+        expect(sendStub.callCount).to.equal(0);
+      }, 0)
     });
 
     it('should deliver valid messages', function() {
@@ -86,9 +87,10 @@ describe('send handler', function() {
 
 
       send(data);
-
-      expect(sendPromise.callCount).to.equal(1);
-      expect(sendPromise.firstCall.args).to.eql([botID, chatID, data.text]);
+      setTimeout(function() {
+        expect(sendPromise.callCount).to.equal(1);
+        expect(sendPromise.firstCall.args).to.eql([botID, chatID, data.text]);
+      }, 0);
     });
   });
 
