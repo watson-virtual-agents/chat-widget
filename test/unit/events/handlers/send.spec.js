@@ -25,11 +25,6 @@ sinonStubPromise(sinon);
 var send = rewire('../../../../src/events/handlers/send');
 
 describe('send handler', function() {
-  var sendPromise;
-
-  beforeEach(function() {
-    sendPromise = sinon.stub().returnsPromise();
-  });
 
   describe('#send()', function() {
     it('should not deliver empty or invalid messages', function() {
@@ -51,6 +46,7 @@ describe('send handler', function() {
     });
 
     it('should deliver valid messages', function() {
+      var sendPromise = sinon.stub().returnsPromise();
       var botID = 'botID';
       var chatID = 'chatID';
       var data = { text: 'update address' };
@@ -92,9 +88,5 @@ describe('send handler', function() {
         expect(sendPromise.firstCall.args).to.eql([botID, chatID, data.text]);
       }, 0);
     });
-  });
-
-  afterEach(function() {
-    sendPromise = undefined;
   });
 });
