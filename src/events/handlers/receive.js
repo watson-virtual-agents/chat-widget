@@ -69,6 +69,12 @@ function _intents(data) {
 }
 
 function receive(data) {
+  setTimeout(function() {
+    _receive(data);
+  }, 0);
+}
+
+function _receive(data) {
   var parsed = (typeof data === 'string') ? { message: { text: data } } : data;
   parsed = BotSDK.parse(parsed);
   var current = state.get();

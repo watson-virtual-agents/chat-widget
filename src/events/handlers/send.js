@@ -20,6 +20,12 @@ var assign = require('lodash/assign');
 var templates = require('../../templates');
 
 function send(data) {
+  setTimeout(function() {
+    _send(data);
+  }, 0);
+}
+
+function _send(data) {
   if (data && data.text && data.text.length > 0) {
     var current = state.get();
     addToSendQueue(data);

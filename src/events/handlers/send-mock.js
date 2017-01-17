@@ -19,6 +19,12 @@ var assign = require('lodash/assign');
 var templates = require('../../templates');
 
 function sendMock(data) {
+  setTimeout(function() {
+    _sendMock(data);
+  }, 0);
+}
+
+function _sendMock(data) {
   if (data.text && data.text.length > 0) {
     var current = state.get();
     var newData = assign({}, data, { uuid: utils.getUUID() });
