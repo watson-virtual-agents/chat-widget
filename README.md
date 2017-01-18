@@ -1,6 +1,11 @@
 # IBM Watson Virtual Agent Chat Widget
 
-[![codecov](https://codecov.io/gh/watson-virtual-agents/chat-widget/branch/master/graph/badge.svg)](https://codecov.io/gh/watson-virtual-agents/chat-widget)
+
+| Service  | Master  | Dev |
+|----------|---------|-----|
+| CI Status | [![Build Status](https://travis-ci.org/watson-virtual-agents/chat-widget.svg?branch=master)](https://travis-ci.org/watson-virtual-agents/chat-widget) | [![Build Status](https://travis-ci.org/watson-virtual-agents/chat-widget.svg?branch=dev)](https://travis-ci.org/watson-virtual-agents/chat-widget) |
+| Code Coverage | [![codecov](https://codecov.io/gh/watson-virtual-agents/chat-widget/branch/master/graph/badge.svg)](https://codecov.io/gh/watson-virtual-agents/chat-widget)| [![codecov](https://codecov.io/gh/watson-virtual-agents/chat-widget/branch/dev/graph/badge.svg)](https://codecov.io/gh/watson-virtual-agents/chat-widget)
+
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/master/images/screencap.gif" alt="Chat Widget demo"/>

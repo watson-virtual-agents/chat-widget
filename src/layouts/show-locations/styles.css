@@ -1,10 +1,18 @@
 .IBMChat-map {
-	margin-top: 1em;
+  margin-top: 1em;
+}
+
+.IBMChat-map-data {
+  font-size:0.85em;
+}
+
+.IBMChat-map-img {
+  text-align: left;
 }
 
 .IBMChat-map-img img {
-  height:120px;
   margin: 0 0 0.5em 0;
+  height: 120px;
 }
 
 .IBMChat-map-multiple-locations {
@@ -29,8 +37,8 @@
 }
 
 .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
-  cursor: pointer;
   padding: 0.5em 0 0.5em 0;
+  white-space: normal;
 }
 
 .IBMChat-disabled-layout .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
@@ -42,36 +50,41 @@
 }
 
 .IBMChat-map-data-float-holder:after {
-	visibility: hidden;
-	display: block;
-	font-size: 0;
-	content: " ";
-	clear: both;
-	height: 0;
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 
 .IBMChat-map-locations-item {
   border-bottom:1px solid #505050;
+  text-align:left;
   padding: 1em;
 }
 
 
-.IBMChat-map-locations-item-icon {
+.IBMChat-map-locations-item-icon-holder {
   text-align:center;
   width: 40px;
+}
+
+.IBMChat-map-locations-item-icon {
+  border-radius: 24px;
+  height:24px;
+  line-height: 24px;
+  margin-right:8px;
+  width:24px;
 }
 
 .IBMChat-map-locations-item-data {
 
 }
 .IBMChat-map-locations-item-data-title {
-  font-size: 1.4em;
-	font-weight:300;
-	line-height:1.1em;
-  padding-bottom:0.5em;
-}
-.IBMChat-map-locations-item-data-items {
-  font-size: 0.9em;
+  font-size:1.3em;
+  font-weight:300;
+  line-height:1.2em;
 }
 
 .IBMChat-map-locations-item-data-section {
@@ -103,13 +116,13 @@
 button.IBMChat-map-locations-all {
   font-size:0.9em;
   line-height:1.5em;
-	margin: 1em 0 0 0;
+  margin: 1em 0 0 0;
   padding: 0 0.5em 0 0.5em;
 }
 
 
 .IBMChat-map-hours-open {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .IBMChat-map-days-hours-day, .IBMChat-map-days-hours-hours, .IBMChat-map-days-hours-closed {
@@ -118,7 +131,7 @@ button.IBMChat-map-locations-all {
 }
 
 .IBMChat-map-days-hours-day {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .IBMChat-map-hours-timezone {
@@ -127,17 +140,17 @@ button.IBMChat-map-locations-all {
 }
 
 .IBMChat-map-locations-item-data-hours {
-	margin-top:0.5em;
+  margin-top:0.5em;
 }
 
 .IBMChat-isLarge .IBMChat-map-locations-item-data {
-	float:left;
-	padding-right:5%;
-	width:45%;
+  float:left;
+  padding-right:5%;
+  width:45%;
 }
 .IBMChat-isLarge .IBMChat-map-locations-item-data-hours {
-	margin-top:0;
+  margin-top:0;
 }
 .IBMChat-isLarge .IBMChat-map-locations-item-data-more-hours {
-	margin-top:0.5em;
+  margin-top:0.5em;
 }

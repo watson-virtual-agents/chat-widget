@@ -1,5 +1,5 @@
 /**
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -18,13 +18,11 @@ var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
 var state = require('../../state');
-var getState = state.getState;
-var setState = state.setState;
 var utils = require('../../utils');
 
 var first = true;
 var displayLength = 3;
-var breakpointWidths = ['720', '680', '640', '580', '512', '480', '420', '360', '320', '288', '256'];
+var breakpointWidths = ['768', '640', '512', '480', '360'];
 var days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
 var showLocations = {};
 var locationIDs = [];
@@ -58,14 +56,11 @@ var showLocationsLayout = {
   init: function() {
     subscribe('layout:show-locations', function(data) {
       var showLocation = new ShowLocations(data);
+      if (locationIDs.length === 0)
+        subscribe('resize', sizeMap);
       locationIDs.push(data.uuid);
       showLocations[data.uuid] = showLocation;
     });
-    window.addEventListener('resize', utils.debounce(function() {
-      setTimeout(function() {
-        sizeMap();
-      }, 200);
-    }, 200));
   }
 };
 
@@ -73,24 +68,29 @@ var alphaMap = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
 function initialSize(width) {
   for (var i = 0; i < breakpointWidths.length; i++) {
-    if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
+    if ((i === breakpointWidths.length - 1) || breakpointWidths[i] >= width) {
       currentBreakpointKey = i;
       return;
     }
   }
 }
 
+function getWidth() {
+  var current = state.get();
+  return current.rootWidth || current.root.clientWidth;
+}
+
 function sameSize() {
-  var width = showLocations[locationIDs[0]].getWidth();
-  var isSameSize = (breakpointWidths[currentBreakpointKey] >= width && breakpointWidths[currentBreakpointKey + 1] < width);
+  var width = getWidth();
+  var isSameSize = (breakpointWidths[currentBreakpointKey] >= width);
   return isSameSize;
 }
 
 function sizeMap() {
-  if (locationIDs.length > 0 && showLocations[locationIDs[0]].getWidth() && !sameSize()) {
-    var width = showLocations[locationIDs[0]].getWidth();
+  if (locationIDs.length > 0 && !sameSize()) {
+    var width = getWidth();
     for (var i = 0; i < breakpointWidths.length; i++) {
-      if ((i === breakpointWidths.length - 1) || (breakpointWidths[i] >= width && breakpointWidths[i + 1] < width)) {
+      if ((i === breakpointWidths.length - 1) || (i === 0 && width >= breakpointWidths[i])) {
         currentBreakpointKey = i;
         for (var j = 0; j < locationIDs.length; j++) {
           if (showLocations[locationIDs[j]].data.length > 0)
@@ -266,7 +266,7 @@ function ShowLocations(data) {
 ShowLocations.prototype.init = function(data) {
   this.data = (data.message.data !== undefined && data.message.data.location_data !== undefined) ? data.message.data.location_data : [];
   if (this.data.length > 1) {
-    setState({
+    state.set({
       location_data: this.data
     });
   }
@@ -289,7 +289,7 @@ ShowLocations.prototype.init = function(data) {
     var text = templates.base;
     this.uuid = data.uuid;
     if (first) {
-      initialSize(this.getWidth());
+      initialSize(getWidth());
       first = false;
     }
     this.map = document.createElement('div');
@@ -300,13 +300,10 @@ ShowLocations.prototype.init = function(data) {
       this.mapElement.appendChild(this.drawLocations());
     this.dataElement.appendChild(this.addDetails());
     this.layoutElement.appendChild(this.map);
+    if (this.data.length > 1)
+      this.layoutElement.querySelectorAll('.' + ns + '-locations-item')[0].focus();
   }
   this.subscribeReceive = subscribe('receive', this.removeAllEventListeners, this);
-};
-
-ShowLocations.prototype.getWidth = function() {
-  var width = this.parentElement.querySelector('.IBMChat-watson-layout:last-child').clientWidth;
-  return width;
 };
 
 ShowLocations.prototype.reDrawMap = function() {
@@ -327,9 +324,9 @@ ShowLocations.prototype.convertColor = function(color) {
 };
 
 ShowLocations.prototype.drawLocations = function() {
-  var current = getState();
+  var current = state.get();
   var img = document.createElement('img');
-  var width = this.getWidth();
+  var width = getWidth();
   var config = {
     size: width + 'x120',
     scale: pixelRatio
@@ -346,7 +343,6 @@ ShowLocations.prototype.drawLocations = function() {
   }
   this.uri += encodeURIComponent(locations);
   this.uri += '&color=' + encodeURIComponent(this.convertColor(current.styles.accentBackground));
-  img.setAttribute('width', '100%');
   img.setAttribute('src', this.uri);
   return img;
 };
@@ -386,7 +382,7 @@ ShowLocations.prototype.removeAllEventListeners = function() {
 ShowLocations.prototype.addLocation = function() {
   var container = document.createElement('div');
   var el = document.createElement('div');
-  var locationData = getState().location_data;
+  var locationData = state.get().location_data;
   var item = this.data[0];
   var createDom = function(el) {
     var text = templates.addLocationItem;
@@ -469,22 +465,22 @@ ShowLocations.prototype.addLocation = function() {
   return container;
 };
 ShowLocations.prototype.addLocations = function() {
-  var current = getState();
+  var current = state.get();
   var createDom = function(el, i, uuid) {
     el.addEventListener('click', this.handleClick);
     el.dataset.uuid = uuid;
     el.dataset.id = i + 1;
     var text = templates.addLocationsItem;
-    el.innerHTML = utils.compile(text, { ns: ns });
+    el.innerHTML = utils.compile(text, {
+      ns: ns,
+      title: item.label || '',
+      address: item.address.address,
+      iconText: alphaMap[i],
+      accentText: current.styles.accentText,
+      accentBackground: current.styles.accentBackground,
+      distance: distance(item) || '',
+    });
     this.eventListeners.push(el);
-    return {
-      icon: el.querySelector('.' + ns + '-locations-item-icon'),
-      label: el.querySelector('.' + ns + '-locations-item-data-title'),
-      address: el.querySelector('.' + ns + '-locations-item-data-address'),
-      address1: document.createElement('span'),
-      address2: document.createElement('span'),
-      distance: el.querySelector('.' + ns + '-locations-item-distance')
-    };
   };
 
   var container = document.createElement('div');
@@ -492,14 +488,7 @@ ShowLocations.prototype.addLocations = function() {
   for (var i = 0; (i < displayLength && i < this.data.length); i++) {
     var el = document.createElement('div');
     var item = this.data[i];
-    var dom = createDom.call(this, el, i, this.uuid);
-    var box = document.createElement('div');
-    box.setAttribute('style', 'border-radius: 24px; color:' + current.styles.accentText + '; background: ' + current.styles.accentBackground + '; line-height: 24px; height:24px; width:24px; margin-left:8px;');
-    box.textContent = alphaMap[i];
-    dom.icon.appendChild(box);
-    dom.label.textContent = item.label || '';
-    dom.address.textContent = item.address.address;
-    dom.distance.textContent = distance(item) || '';
+    createDom.call(this, el, i, this.uuid);
     container.appendChild(el);
   }
   return container;

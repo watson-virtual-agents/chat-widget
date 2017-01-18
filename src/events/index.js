@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -83,7 +83,7 @@ function subscribeOnce(event, handler, context) {
 }
 
 function publish(event, data, cb) {
-  var current = state.getState();
+  var current = state.get();
   var wasSubscription = false;
   for (var i = 0; i < events.length; i++) {
     if (events[i] && events[i].event && events[i].event === event) {

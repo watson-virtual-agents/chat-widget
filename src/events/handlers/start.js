@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -24,8 +24,9 @@ function start(data) {
   utils.attachStyles();
   current.root.classList.add("chatID-" + current.chatID);
   current.root.innerHTML = templates.start;
-  var outerContainer = current.root.querySelector('.IBMChat-outer-container');
   var addState = {
+    chat: current.root.querySelector('.IBMChat'),
+    outerContainer: current.root.querySelector('.IBMChat-outer-container'),
     container: current.root.querySelector('.IBMChat-chat-container'),
     chatHolder: current.root.querySelector('.IBMChat-messages'),
     innerContainer: current.root.querySelector('.IBMChat-inner-container'),
@@ -38,20 +39,27 @@ function start(data) {
     chatBox.innerHTML = utils.compile(templates.input, {
       placeholder: 'Enter message...'
     });
-    outerContainer.appendChild(chatBox);
-    addState.inputHolder = current.root.querySelector('.IBMChat-input-container');
+    addState.outerContainer.appendChild(chatBox);
+    addState.inputHolder = current.root.querySelector('.IBMChat-input-container form');
     addState.input = current.root.querySelector('.IBMChat-chat-textbox');
     addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
     addState.form = current.root.querySelector('.IBMChat-input-form');
     addState.loader = current.root.querySelector('.IBMChat-input-loading');
-    addState.originalInputHeight = window.getComputedStyle(addState.input).getPropertyValue('height').replace('px', '');
     addState.form.addEventListener('submit', function(e) {
       e.preventDefault();
     });
     addState.onResize = function() {
       events.publish('resize');
     };
-
+    if (current.tryIt) {
+      addState.chatHolder.addEventListener('click', function(e) {
+        if (e.target.dataset && e.target.dataset.intent) {
+          var data = e.target.dataset.intent;
+          e.preventDefault();
+          events.publish('try-it-show-intent', JSON.parse(data));
+        }
+      });
+    }
     addState.input.addEventListener('keyup', function(e) {
       if (e.keyCode === 13) {
         events.publish('send-input-message');
@@ -61,7 +69,6 @@ function start(data) {
         state.set({
           inputHeight: addState.originalInputHeight
         });
-        events.publish('resize');
       }
       events.publish('resize');
     });

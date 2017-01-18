@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -16,7 +16,7 @@ var state = require('../../state');
 var events = require('../../events');
 
 function sendInputMessage() {
-  var current = state.getState();
+  var current = state.get();
   if (!current.inProgress && !current.disableInput) {
     var text = current.root.querySelector('.IBMChat-chat-textbox').value.trim().replace(/(\r\n|\n|\r)/gm,"");
     events.publish('send', {

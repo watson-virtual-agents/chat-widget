@@ -1,5 +1,5 @@
 /**
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -29,11 +29,11 @@ describe('state', function() {
   beforeEach(function() {
     consoleLogStub = sinon.stub(console, 'log');
   });
-  
+
   describe('#get()', function() {
     it('should get the current state', function() {
       state.set(stateMock1);
-          
+
       expect(state.get()).to.eql(stateMock1);
     });
   });
@@ -43,9 +43,9 @@ describe('state', function() {
       var statesMock = [];
       state.__set__('state', stateMock1);
       state.__set__('states', statesMock);
-          
+
       state.set({ active: true });
-          
+
       expect(state.get()).to.eql(stateMock2);
       expect(statesMock).to.eql([stateMock2]);
     });
@@ -56,23 +56,20 @@ describe('state', function() {
       var statesMock = [stateMock1, stateMock2];
       state.__set__('state', stateMock1);
       state.__set__('states', statesMock);
-          
+
       state.destroy();
-          
+
       expect(state.get()).to.eql({ });
       expect(statesMock).to.eql([stateMock1, stateMock2]);
     });
   });
 
-  
+
   describe('API', function() {
     it('should have the expected API', function() {
       expect(state).itself.to.respondTo('get');
       expect(state).itself.to.respondTo('set');
       expect(state).itself.to.respondTo('destroy');
-      expect(state).itself.to.respondTo('getState');
-      expect(state).itself.to.respondTo('setState');
-      expect(state).itself.to.respondTo('destroyState');
     });
   });
 

@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -36,7 +36,8 @@ function resizeListener(e) {
   win.__resizeRAF__ = requestFrame(function() {
     var trigger = win.__resizeTrigger__;
     trigger.__resizeListeners__.forEach(function(fn) {
-      fn.call(trigger, e);
+      if (fn && typeof fn === 'function')
+        fn.call(trigger, e);
     });
   });
 }
@@ -71,7 +72,7 @@ var removeResizeListener = function(element, fn) {
   if (!element.__resizeListeners__.length) {
     if (document.attachEvent) {
       element.detachEvent('onresize', resizeListener);
-    } else {
+    } else if (element.__resizeTrigger__.contentDocument) {
       element.__resizeTrigger__.contentDocument.defaultView.removeEventListener('resize', resizeListener);
       element.__resizeTrigger__ = !element.removeChild(element.__resizeTrigger__);
     }

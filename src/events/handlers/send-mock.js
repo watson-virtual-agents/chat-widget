@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -19,11 +19,18 @@ var assign = require('lodash/assign');
 var templates = require('../../templates');
 
 function sendMock(data) {
+  setTimeout(function() {
+    _sendMock(data);
+  }, 0);
+}
+
+function _sendMock(data) {
   if (data.text && data.text.length > 0) {
-    var current = state.getState();
+    var current = state.get();
     var newData = assign({}, data, { uuid: utils.getUUID() });
     current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
     current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = data.text;
+    events.publish('resize');
     events.publish('scroll-to-bottom');
   }
 }

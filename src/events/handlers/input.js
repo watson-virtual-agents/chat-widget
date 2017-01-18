@@ -1,5 +1,5 @@
 /*
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -16,33 +16,33 @@ var state = require('../../state');
 var utils = require('../../utils');
 
 function enableInput() {
-  var current = state.getState();
+  var current = state.get();
   var disableInput = (current.disableInput) ? (current.disableInput - 1) :0;
-  state.setState({ disableInput: disableInput });
+  state.set({ disableInput: disableInput });
   if (!disableInput)
     current.input.removeAttribute('disabled');
 }
 
 function disableInput() {
-  var current = state.getState();
+  var current = state.get();
   var disableInput = (current.disableInput) ? (current.disableInput + 1) : 1;
-  state.setState({ disableInput: disableInput });
+  state.set({ disableInput: disableInput });
   current.input.setAttribute('disabled', 'disabled');
 }
 
 function enableLoadingInput() {
-  var current = state.getState();
+  var current = state.get();
   var loading = (current.loading) ? (current.loading + 1) : 1;
-  state.setState({
+  state.set({
     loading: loading
   });
   utils.spinner.show(current.loader);
 }
 
 function disableLoadingInput() {
-  var current = state.getState();
+  var current = state.get();
   var loading = (current.loading) ? (current.loading - 1) : 0;
-  state.setState({
+  state.set({
     loading: loading
   });
   if (loading === 0)
@@ -50,7 +50,7 @@ function disableLoadingInput() {
 }
 
 function focusInput() {
-  var current = state.getState();
+  var current = state.get();
   current.input.focus();
 }
 
