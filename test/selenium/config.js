@@ -24,13 +24,13 @@ var sharedElements = {
     selector: '#ibm_el'
   },
   lastMessage: {
-    selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message-container .IBMChat-watson-message'
+    selector: '.IBMChat-messages .IBMChat-watson-turn:last-of-type .IBMChat-watson-message-container .IBMChat-watson-message'
   },
   lastSentMessage: {
     selector: '.IBMChat-messages div:nth-last-of-type(2) .IBMChat-user-message'
   },
   lastLayout: {
-    selector: '.IBMChat-messages div:last-of-type .IBMChat-watson-message-container .IBMChat-watson-layout'
+    selector: '.IBMChat-messages .IBMChat-watson-turn:last-of-type .IBMChat-watson-message-container .IBMChat-watson-layout'
   },
   input: {
     selector: '.IBMChat-chat-textbox'
