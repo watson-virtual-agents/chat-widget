@@ -99,7 +99,6 @@ describe('bootstrap', function() {
       expect(bootstrap).itself.to.respondTo('currentSubscriptions');
       expect(bootstrap).itself.to.respondTo('hasSubscription');
       expect(bootstrap).itself.to.respondTo('completeEvent');
-      expect(bootstrap).to.have.property('playback');
       expect(bootstrap).to.have.property('state');
     });
   });

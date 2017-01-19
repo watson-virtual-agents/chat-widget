@@ -19,7 +19,6 @@ var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var state = require('./state');
 var utils = require('./utils');
 var profile = require('./profile');
-var playback = require('./playback');
 var Promise = require('es6-promise').Promise;
 var assign = require('lodash/assign');
 var defaultStyles = require('./styles');
@@ -87,6 +86,8 @@ function init(config) {
     SDKconfig.XIBMClientSecret = config.XIBMClientSecret;
   if (config.userID)
     SDKconfig.userID = config.userID;
+  if (config.userLatLon)
+    SDKconfig.userLatLon = config.userLatLon;
 
   return new Promise(function(resolve, reject) {
     var defaultState = {
@@ -347,7 +348,6 @@ module.exports = {
   currentSubscriptions: events.currentSubscriptions,
   hasSubscription: events.hasSubscription,
   completeEvent: events.completeEvent,
-  playback: playback,
   state: state,
   clear: clear
 };

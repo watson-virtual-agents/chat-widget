@@ -54,9 +54,13 @@ function start(data) {
     if (current.tryIt) {
       addState.chatHolder.addEventListener('click', function(e) {
         if (e.target.dataset && e.target.dataset.intent) {
-          var data = e.target.dataset.intent;
+          var index = e.target.dataset.intent;
+          var current = state.get();
           e.preventDefault();
-          events.publish('try-it-show-intent', JSON.parse(data));
+          if (current.intents && current.intents[index])
+            events.publish('try-it-show-intent', current.intents[index]);
+          else
+            console.error('Intent index is undefined', current.intents, index);
         }
       });
     }

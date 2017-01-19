@@ -20,7 +20,6 @@ var sendMock = require('./send-mock');
 var sendInputMessage = require('./send-input-message');
 var input = require('./input');
 var error = require('./error');
-var playback = require('./playback');
 var scrollToBottom = require('./scroll-to-bottom');
 var tryIt = require('./try-it');
 var clear = require('./clear');
@@ -153,10 +152,6 @@ module.exports = {
   * @ignore
   */
   sendInputMessage: sendInputMessage,
-  /**
-  * @ignore
-  */
-  playback: playback,
   /**
   * @ignore
   */
