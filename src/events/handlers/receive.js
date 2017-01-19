@@ -89,6 +89,9 @@ function _receive(data) {
   var layouts = [];
   var intents = [];
   var datas = [];
+  var turnElm = document.createElement('div');
+  turnElm.classList.add('IBMChat-watson-turn');
+  current.chatHolder.appendChild(turnElm);
   for (var i = 0; i < msgText.length; i++) {
     var holder = document.createElement('div');
     var msgData = assign({}, parsed, { uuid: utils.getUUID() });
@@ -106,7 +109,7 @@ function _receive(data) {
       messages[i].classList.add('IBMChat-watson-message');
       messages[i].classList.add('IBMChat-watson-message-theme');
       utils.writeMessage(messages[i], msgText[i]);
-      current.chatHolder.appendChild(holder);
+      turnElm.appendChild(holder);
     }
     containers[i].appendChild(messages[i]);
     if (current.tryIt)
