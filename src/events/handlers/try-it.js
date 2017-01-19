@@ -13,6 +13,18 @@
 */
 
 var events = require('../../events');
+var state = require('../../state');
+
+function _addDataSet(data) {
+  var current = state.get();
+  var queue = current.intents || [];
+  var newQueue = queue.slice(0);
+  var count = newQueue.push(data);
+  state.set({
+    intents: newQueue
+  });
+  return count - 1;
+}
 
 function actionError(action) {
   events.publish('receive', {
@@ -45,7 +57,7 @@ function intent(data) {
   var link = document.createElement('a');
   link.textContent = label;
   link.setAttribute('href', 'javascript:void(0)');
-  link.setAttribute('data-intent', JSON.stringify(data));
+  link.setAttribute('data-intent', _addDataSet(data));
   element.appendChild(link);
 }
 
