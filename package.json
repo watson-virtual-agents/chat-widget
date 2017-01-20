@@ -51,7 +51,7 @@
     "url": "https://github.com/watson-virtual-agents/chat-widget/issues"
   },
   "dependencies": {
-    "@watson-virtual-agent/client-sdk": "1.1.0",
+    "@watson-virtual-agent/client-sdk": "1.2.0",
     "es6-promise": "3.2.1",
     "lodash": "4.15.0"
   },
