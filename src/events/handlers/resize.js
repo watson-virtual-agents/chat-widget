@@ -73,7 +73,7 @@ function _resize() {
     setTimeout(function() {
       if (current.input) {
         if (currentInputClone !== newInputClone) {
-          current.inputClone.innerHTML = newInputClone;
+          current.inputClone.textContent = newInputClone;
           cloneHeight = _getHeight(current.inputClone);
           /*if (current.DEBUG && debugResize)
             console.log('Clone does not match input:', 'current:', currentInputClone, 'new:', newInputClone, 'height:', cloneHeight);*/

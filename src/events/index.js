@@ -57,8 +57,9 @@ function hasSubscription(action) {
     var subscription = subscriptions[i];
     if (subscription && subscription.event === action)
       return true;
+    if (i === subscriptions.length - 1)
+      return false;
   }
-  return false;
 }
 
 function subscribe(event, handler, context, subscribeOnce) {

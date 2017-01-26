@@ -30,7 +30,6 @@ function _getStyles(current) {
   var noOpacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0.8)";
   var opacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0)";
   var styles = containerClass + "{\n overflow:hidden;;\n}\n" +
-              containerClass + " .IBMChat-fade {\n  background: linear-gradient(to bottom, " + noOpacityBackground + " 0%, " + opacityBackground + " 100%);\n}\n" +
               containerClass + " .IBMChat-outer-container {\n  font-size: " + current.styles.fontSize + ";\n line-height: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
               containerClass + " .IBMChat-outer-container textarea {\n  font-size: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
               containerClass + " .IBMChat-default-colors {\n  background-color: " + current.styles.background + ";\n  color: " + current.styles.text + ";\n}\n" +
@@ -53,6 +52,8 @@ function _getStyles(current) {
               containerClass + " ::-webkit-input-placeholder {\n  color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";\n}\n" +
               containerClass + " ::-moz-placeholder {\n  color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";\n  opacity: 1;\n}\n" +
               containerClass + " :-ms-input-placeholder {\n  color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";\n  opacity: 1;\n}\n";
+  if (!current.playback)
+    styles += containerClass + " .IBMChat-fade {\n\t left: 0;\n\theight: 10%;\n\tmax-height: 32px;\n\tposition: absolute;\n\ttop: 0;\n\twidth: 100%;\n\tz-index: 2;\n\tbackground: linear-gradient(to bottom, " + noOpacityBackground + " 0%, " + opacityBackground + " 100%);\n}\n";
   return styles;
 }
 
