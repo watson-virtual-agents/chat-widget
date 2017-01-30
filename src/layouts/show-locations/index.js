@@ -204,7 +204,7 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
       var last = (compressedHours.length > 0) ? compressedHours[compressedHours.length - 1] : false;
       current = hours[n] || { isOpen: false };
       bothClosed = last && (last.isOpen === current.isOpen && current.isOpen === false);
-      sameHours = last && (last.open === current.open && last.close === current.close);
+      sameHours = last && (last.open === current.open && last.close === current.close && last.isOpen === current.isOpen);
       if (compressedHours.length > 0 && last && (bothClosed || sameHours)) {
         last.endDay = day;
       } else {
