@@ -23,7 +23,7 @@ var error = require('./error');
 var scrollToBottom = require('./scroll-to-bottom');
 var tryIt = require('./try-it');
 var clear = require('./clear');
-var chatID = require('./chatID');
+var chatID = require('./chatid');
 
 module.exports = {
   /**
