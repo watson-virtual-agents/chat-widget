@@ -158,7 +158,14 @@ function formatAMPM(time) {
 }
 
 function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
-  if (hours && hours.length === 7) {
+  if (hours) {
+    if (hours.length < 7) {
+      for (var o = hours.length; o < 7; o++) {
+        hours.push({
+          isOpen: false
+        });
+      }
+    }
     // hours
     var today = new Date().getDay();
     var todaysHours = hours[today];
@@ -429,7 +436,7 @@ ShowLocations.prototype.addLocation = function() {
     dom.phone.parentNode.removeChild(dom.phone);
 
   // hours/timezone
-  if (item.days && item.days.length === 7) {
+  if (item.days) {
     createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
   } else {
     for (var i = 0; i < dom.hours; i++)
