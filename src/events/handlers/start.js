@@ -22,7 +22,7 @@ function start(data) {
   state.set(data);
   current = state.get();
   utils.attachStyles();
-  current.root.classList.add("chatID-" + current.chatID);
+  current.root.classList.add(current.chatStyleID);
   current.root.innerHTML = templates.start;
   var addState = {
     chat: current.root.querySelector('.IBMChat'),
