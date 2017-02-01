@@ -25,7 +25,7 @@ function _attachStylesToDOM(styles) {
 }
 
 function _getStyles(current) {
-  var containerClass = ".chatID-" + current.chatID;
+  var containerClass = "." + current.chatStyleID;
   var noOpacityBackgroundArray = _hexToRGBArray(normalizeToHex(current.styles.background));
   var noOpacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0.8)";
   var opacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0)";

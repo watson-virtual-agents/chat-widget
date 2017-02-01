@@ -27,8 +27,34 @@ var baseURL = 'https://api.ibm.com/virtualagent/run/api/v1/';
 var layoutInit = {};
 var registeredLayouts = [];
 
+function checkRoot(el) {
+  if (typeof el === 'string' && document.getElementById(el))
+    return true;
+  else if (el.nodeType && el.nodeType === 1)
+    return true;
+  else
+    return false;
+}
+
+function getSDKConfig(config) {
+  var SDKconfig = {};
+  SDKconfig.baseURL = config.baseURL || baseURL;
+  if (config.withCredentials)
+    SDKconfig.withCredentials = config.withCredentials;
+  if (config.XIBMClientID)
+    SDKconfig.XIBMClientID = config.XIBMClientID;
+  if (config.XIBMClientSecret)
+    SDKconfig.XIBMClientSecret = config.XIBMClientSecret;
+  if (config.userID)
+    SDKconfig.userID = config.userID;
+  if (config.userLatLon)
+    SDKconfig.userLatLon = config.userLatLon;
+  return SDKconfig;
+}
+
 function registerEvents(tryIt, playback) {
   events.subscribe('start', eventHandlers.start);
+  events.subscribe('chatID', eventHandlers.chatID);
   events.subscribe('resize', eventHandlers.resize);
   events.subscribe('disable-input', eventHandlers.input.disableInput);
   events.subscribe('enable-loading', eventHandlers.input.enableLoadingInput);
@@ -76,18 +102,7 @@ function init(config) {
   }
 
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
-  var SDKconfig = {};
-  SDKconfig.baseURL = config.baseURL || baseURL;
-  if (config.withCredentials)
-    SDKconfig.withCredentials = config.withCredentials;
-  if (config.XIBMClientID)
-    SDKconfig.XIBMClientID = config.XIBMClientID;
-  if (config.XIBMClientSecret)
-    SDKconfig.XIBMClientSecret = config.XIBMClientSecret;
-  if (config.userID)
-    SDKconfig.userID = config.userID;
-  if (config.userLatLon)
-    SDKconfig.userLatLon = config.userLatLon;
+  var SDKconfig = getSDKConfig(config);
 
   return new Promise(function(resolve, reject) {
     var defaultState = {
@@ -101,10 +116,11 @@ function init(config) {
       handleInput: {
         default: true
       },
+      chatStyleID: 'chatStyleID-' + utils.guid(),
       tryIt: config.tryIt || false,
       playback: config.playback || false //TODO: remove playback when Dashboard code is updated
     };
-    if (root) {
+    if (checkRoot(root)) {
       if (config.errorHandler)
         events.subscribe('error', config.errorHandler, config.errorHandlerContext);
       else
@@ -113,27 +129,27 @@ function init(config) {
       registerLayouts();
       //TODO: remove if playback when Dashboard code is updated
       if (config.playback === true) {
-        defaultState.chatID = 'playback';
         events.publish('start', defaultState);
+        setTimeout(function() {
+          events.publish('chatID', 'playback');
+        }, 0);
         setTimeout(function() {
           resolve();
         }, 0);
       } else if (config.botID) {
+        events.publish('start', defaultState);
         BotSDK
           .configure( SDKconfig )
           .start( config.botID )
           .then( function(res) {
-            defaultState.chatID = res.chatID;
-            window.sessionStorage.setItem('IBMChatChatID', res.chatID);
-            events.publish('start', defaultState);
+            events.publish('chatID', res.chatID);
             events.publish('receive', res);
+          })['catch']( function(err) {
+            events.publish('error', err);
+          }).then(function() {
             setTimeout(function() {
               resolve();
             }, 0);
-          })['catch']( function(err) {
-            console.error(err);
-            destroy();
-            reject(err);
           });
       } else {
         console.error('BotID is required!');
@@ -263,10 +279,11 @@ function destroy() {
   return new Promise(function(resolve) {
     var current = state.get();
     if (current.active) {
-      utils.removeResizeListener(current.root, current.onResize);
+      if (current.root && current.onResize)
+        utils.removeResizeListener(current.root, current.onResize);
       events.publish('destroy');
       events.destroy();
-      if (typeof current.originalContent !== 'undefined')
+      if (typeof current.originalContent !== 'undefined' && current.root)
         current.root.innerHTML = current.originalContent;
       state.destroy();
     }
@@ -293,35 +310,37 @@ function restart() {
 }
 
 function clear() {
+  return _clear(true);
+}
+
+function _clear(destroyPrevious) {
   return new Promise(function(resolve, reject) {
     var current = state.get();
-    var SDKconfig = {};
-    SDKconfig.baseURL = current.baseURL || baseURL;
-    if (current.withCredentials)
-      SDKconfig.withCredentials = current.withCredentials;
-    if (current.XIBMClientID)
-      SDKconfig.XIBMClientID = current.XIBMClientID;
-    if (current.XIBMClientSecret)
-      SDKconfig.XIBMClientSecret = current.XIBMClientSecret;
-    if (current.userID)
-      SDKconfig.userID = current.userID;
+    var SDKconfig = getSDKConfig(current);
+    if (checkRoot(current.root)) {
+      reject({
+        error: 'Element for chat does not exist!'
+      });
+    }
+    if (!current.botID) {
+      reject({
+        error: 'BotID is required!'
+      });
+    }
     BotSDK
       .configure( SDKconfig )
       .start( current.botID )
       .then( function(res) {
-        state.set({
-          chatID: res.chatID
-        });
-        window.sessionStorage.setItem('IBMChatChatID', res.chatID);
-        events.publish('clear');
+        events.publish('chatID', res.chatID);
+        if (destroyPrevious)
+          events.publish('clear');
         events.publish('receive', res);
+      })['catch']( function(err) {
+        events.publish('error', err);
+      }).then(function() {
         setTimeout(function() {
           resolve();
-        }, 0);
-      })['catch']( function(err) {
-        console.error(err);
-        destroy();
-        reject(err);
+        },0);
       });
   });
 }
