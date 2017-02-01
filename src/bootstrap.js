@@ -129,8 +129,10 @@ function init(config) {
       registerLayouts();
       //TODO: remove if playback when Dashboard code is updated
       if (config.playback === true) {
-        events.publish('chatID', 'playback');
         events.publish('start', defaultState);
+        setTimeout(function() {
+          events.publish('chatID', 'playback');
+        }, 0);
         setTimeout(function() {
           resolve();
         }, 0);
