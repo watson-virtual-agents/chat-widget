@@ -34,6 +34,7 @@ function _actions(data, tryIt, debug) {
         events.publish('try-it-action-subscription', action);
     }
   }
+  events.publish('enable-input');
   events.publish('disable-loading');
   events.publish('focus-input');
   events.publish('scroll-to-bottom');
