@@ -57,18 +57,20 @@ function retry() {
     var loaderFailureMessage = current.root.querySelector('.IBMChat-loading-failure-message-text');
     if (errorCount > 4) {
       if (!current.chatID) {
-        events.publish('reset');
-        return;
+        setTimeout(function() {
+          events.publish('reset');
+        }, 5000);
+      } else {
+        loader.classList.add('IBMChat-hidden');
+        loaderFailureMessage.innerText = 'We cannot complete your request. You can try a new request or ';
+        loaderFailure.classList.remove('IBMChat-hidden');
+        events.publish('enable-input');
+        events.publish('scroll-to-bottom');
+        state.set({
+          sendQueue: [],
+          inProgress: false
+        });
       }
-      loader.classList.add('IBMChat-hidden');
-      loaderFailureMessage.innerText = 'We cannot complete your request. You can try a new request or ';
-      loaderFailure.classList.remove('IBMChat-hidden');
-      events.publish('enable-input');
-      events.publish('scroll-to-bottom');
-      state.set({
-        sendQueue: [],
-        inProgress: false
-      });
     } else if (errorCount !== 0) {
       loaderFailure.classList.add('IBMChat-hidden');
       loaderRetryMessage.classList.remove('IBMChat-hidden');

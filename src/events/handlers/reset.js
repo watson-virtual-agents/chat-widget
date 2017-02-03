@@ -6,6 +6,7 @@ var Promise = require('es6-promise').Promise;
 
 function reset() {
   events.publish('clear-error');
+  events.publish('scroll-to-bottom');
   return new Promise(function(resolve, reject) {
     var current = state.get();
     var SDKconfig = utils.getSDKConfig(current);
