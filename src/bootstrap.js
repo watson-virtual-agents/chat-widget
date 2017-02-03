@@ -94,7 +94,7 @@ function init(config) {
       handleInput: {
         default: true
       },
-      minSeconds: (!config.minSeconds && config.minSeconds !== 0) ? 0.5 : config.minSeconds,
+      minSeconds: (!config.minSeconds && config.minSeconds !== 0) ? 0.75 : config.minSeconds,
       chatStyleID: 'chatStyleID-' + utils.getUUID(),
       tryIt: config.tryIt || false,
       playback: config.playback || false //TODO: remove playback when Dashboard code is updated
