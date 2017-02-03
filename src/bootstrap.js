@@ -23,34 +23,8 @@ var Promise = require('es6-promise').Promise;
 var assign = require('lodash/assign');
 var defaultStyles = require('./styles');
 
-var baseURL = 'https://api.ibm.com/virtualagent/run/api/v1/';
 var layoutInit = {};
 var registeredLayouts = [];
-
-function checkRoot(el) {
-  if (typeof el === 'string' && document.getElementById(el))
-    return true;
-  else if (el.nodeType && el.nodeType === 1)
-    return true;
-  else
-    return false;
-}
-
-function getSDKConfig(config) {
-  var SDKconfig = {};
-  SDKconfig.baseURL = config.baseURL || baseURL;
-  if (config.withCredentials)
-    SDKconfig.withCredentials = config.withCredentials;
-  if (config.XIBMClientID)
-    SDKconfig.XIBMClientID = config.XIBMClientID;
-  if (config.XIBMClientSecret)
-    SDKconfig.XIBMClientSecret = config.XIBMClientSecret;
-  if (config.userID)
-    SDKconfig.userID = config.userID;
-  if (config.userLatLon)
-    SDKconfig.userLatLon = config.userLatLon;
-  return SDKconfig;
-}
 
 function registerEvents(tryIt, playback) {
   events.subscribe('start', eventHandlers.start);
@@ -61,21 +35,25 @@ function registerEvents(tryIt, playback) {
   events.subscribe('disable-loading', eventHandlers.input.disableLoadingInput);
   events.subscribe('scroll-to-bottom', eventHandlers.scrollToBottom);
   events.subscribe('receive', eventHandlers.receive);
+  if (playback === true) { //TODO: remove if playback when Dashboard code is updated
+    events.subscribe('send', eventHandlers.sendMock);
+  } else {
+    events.subscribe('clear', eventHandlers.clear);
+    events.subscribe('send', eventHandlers.send.send);
+    events.subscribe('retry', eventHandlers.send.retry);
+    events.subscribe('send-input-message', eventHandlers.sendInputMessage);
+    events.subscribe('enable-retry', eventHandlers.error.retry);
+    events.subscribe('enable-input', eventHandlers.input.enableInput);
+    events.subscribe('focus-input', eventHandlers.input.focusInput);
+    events.subscribe('send-mock', eventHandlers.sendMock);
+    events.subscribe('error-clear', eventHandlers.error.clearError);
+    events.subscribe('reset', eventHandlers.reset);
+  }
   if (tryIt === true) {
     events.subscribe('try-it-error', eventHandlers.error.tryIt);
     events.subscribe('try-it-layout-subscription', eventHandlers.tryIt.layoutError);
     events.subscribe('try-it-action-subscription', eventHandlers.tryIt.actionError);
     events.subscribe('try-it-receive-intent-data', eventHandlers.tryIt.intent);
-  }
-  if (playback === true) { //TODO: remove if playback when Dashboard code is updated
-    events.subscribe('send', eventHandlers.sendMock);
-  } else {
-    events.subscribe('clear', eventHandlers.clear);
-    events.subscribe('send', eventHandlers.send);
-    events.subscribe('send-input-message', eventHandlers.sendInputMessage);
-    events.subscribe('enable-input', eventHandlers.input.enableInput);
-    events.subscribe('focus-input', eventHandlers.input.focusInput);
-    events.subscribe('send-mock', eventHandlers.sendMock);
   }
 }
 
@@ -102,7 +80,7 @@ function init(config) {
   }
 
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
-  var SDKconfig = getSDKConfig(config);
+  var SDKconfig = utils.getSDKConfig(config);
 
   return new Promise(function(resolve, reject) {
     var defaultState = {
@@ -116,15 +94,16 @@ function init(config) {
       handleInput: {
         default: true
       },
-      chatStyleID: 'chatStyleID-' + utils.guid(),
+      minSeconds: (!config.minSeconds && config.minSeconds !== 0) ? 0.5 : config.minSeconds,
+      chatStyleID: 'chatStyleID-' + utils.getUUID(),
       tryIt: config.tryIt || false,
       playback: config.playback || false //TODO: remove playback when Dashboard code is updated
     };
-    if (checkRoot(root)) {
+    if (utils.checkRoot(root)) {
       if (config.errorHandler)
-        events.subscribe('error', config.errorHandler, config.errorHandlerContext);
+        events.subscribe('httpError', config.errorHandler, config.errorHandlerContext);
       else
-        events.subscribe('error', eventHandlers.error.default);
+        events.subscribe('httpError', eventHandlers.error.httpError);
       registerEvents(config.tryIt, config.playback);
       registerLayouts();
       //TODO: remove if playback when Dashboard code is updated
@@ -138,6 +117,8 @@ function init(config) {
         }, 0);
       } else if (config.botID) {
         events.publish('start', defaultState);
+        events.publish('enable-loading');
+        events.publish('disable-input');
         BotSDK
           .configure( SDKconfig )
           .start( config.botID )
@@ -145,9 +126,10 @@ function init(config) {
             events.publish('chatID', res.chatID);
             events.publish('receive', res);
           })['catch']( function(err) {
-            events.publish('error', err);
+            events.publish('httpError', err);
           }).then(function() {
             setTimeout(function() {
+              events.publish('enable-input');
               resolve();
             }, 0);
           });
@@ -292,7 +274,7 @@ function destroy() {
 }
 
 function restart() {
-  console.warn('The IBMChat.restart method is deprecated.');
+  console.warn('The IBMChat.restart method is deprecated. Use IBMChat.clear() instead.');
   return new Promise(function(resolve, reject) {
     var current = state.get();
     destroy().then(function() {
@@ -306,42 +288,6 @@ function restart() {
     })['catch'](function(e) {
       reject(e);
     });
-  });
-}
-
-function clear() {
-  return _clear(true);
-}
-
-function _clear(destroyPrevious) {
-  return new Promise(function(resolve, reject) {
-    var current = state.get();
-    var SDKconfig = getSDKConfig(current);
-    if (checkRoot(current.root)) {
-      reject({
-        error: 'Element for chat does not exist!'
-      });
-    }
-    if (!current.botID) {
-      reject({
-        error: 'BotID is required!'
-      });
-    }
-    BotSDK
-      .configure( SDKconfig )
-      .start( current.botID )
-      .then( function(res) {
-        events.publish('chatID', res.chatID);
-        if (destroyPrevious)
-          events.publish('clear');
-        events.publish('receive', res);
-      })['catch']( function(err) {
-        events.publish('error', err);
-      }).then(function() {
-        setTimeout(function() {
-          resolve();
-        },0);
-      });
   });
 }
 
@@ -368,5 +314,7 @@ module.exports = {
   hasSubscription: events.hasSubscription,
   completeEvent: events.completeEvent,
   state: state,
-  clear: clear
+  clear: function() {
+    events.publish('restart');
+  }
 };

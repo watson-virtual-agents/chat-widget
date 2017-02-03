@@ -23,6 +23,7 @@ var error = require('./error');
 var scrollToBottom = require('./scroll-to-bottom');
 var tryIt = require('./try-it');
 var clear = require('./clear');
+var reset = require('./reset');
 var chatID = require('./chatid');
 
 module.exports = {
@@ -106,17 +107,17 @@ module.exports = {
   * });
   */
   /**
-  * Enable Loading event. Shows loading spinner.
+  * Enable Loading event. Shows loading state.
   *
   * @event enable-loading
   * @example
-  * IBMChat.publish('enable-loading');
+  * IBMChat.publish('enable-loading', 'string to display');
   * IBMChat.subscribe('enable-loading', function(){
   *
   * });
   */
   /**
-  * Disable loading event. Hide loading spinner.
+  * Disable loading event. Hides loading state.
   *
   * @event disable-loading
   * @example
@@ -160,5 +161,9 @@ module.exports = {
   /**
   * @ignore
   */
-  chatID: chatID
+  chatID: chatID,
+  /**
+  * @ignore
+  */
+  reset: reset
 };

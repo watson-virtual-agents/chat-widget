@@ -14,7 +14,7 @@
 <dd><p>Receive event.</p>
 </dd>
 <dt><a href="#event_disable-loading">"disable-loading"</a></dt>
-<dd><p>Disable loading event. Hide loading spinner.</p>
+<dd><p>Disable loading event. Hide loading state.</p>
 </dd>
 <dt><a href="#event_enable-input">"enable-input"</a></dt>
 <dd><p>Enable Input event. Allows submitting from input field when it has been disabled.</p>
@@ -23,7 +23,7 @@
 <dd><p>Disable Input event. Disallows submitting from input field.</p>
 </dd>
 <dt><a href="#event_enable-loading">"enable-loading"</a></dt>
-<dd><p>Enable Loading event. Shows loading spinner.</p>
+<dd><p>Enable Loading event. Shows loading state.</p>
 </dd>
 <dt><a href="#event_error">"error"</a></dt>
 <dd><p>Error event.</p>
@@ -108,7 +108,7 @@ IBMChat.subscribe('receive', function(message){
 <a name="event_disable-loading"></a>
 
 ## "disable-loading"
-Disable loading event. Hide loading spinner.
+Disable loading event. Hides loading state.
 
 **Kind**: event emitted  
 **Example**  
@@ -147,12 +147,12 @@ IBMChat.subscribe('disable-input', function(){
 <a name="event_enable-loading"></a>
 
 ## "enable-loading"
-Enable Loading event. Shows loading spinner.
+Enable Loading event. Shows loading state.
 
 **Kind**: event emitted  
 **Example**  
 ```js
-IBMChat.publish('enable-loading');
+IBMChat.publish('enable-loading', 'string to display');
 IBMChat.subscribe('enable-loading', function(){
 
 });

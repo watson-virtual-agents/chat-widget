@@ -17,19 +17,6 @@ var events = require('../events');
 var styles = require('./styles');
 var writeMessage = require('./writeMessage');
 var resize = require('./resize');
-function _render(el, state) {
-  if (el)
-    el.setAttribute('class', 'IBMChat-ibm-spinner IBMChat-input-loading IBMChat-' + state + '-spin');
-}
-
-var spinner = {
-  show: function(el) {
-    _render(el, 'init');
-  },
-  hide: function(el) {
-    _render(el, 'end');
-  }
-};
 
 function debounce(func, wait, immediate) {
   var timeout;
@@ -115,14 +102,30 @@ function checkVisibility() {
   }
 }
 
-function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-    s4() + '-' + s4() + s4() + s4();
+function checkRoot(el) {
+  if (typeof el === 'string' && document.getElementById(el))
+    return true;
+  else if (el.nodeType && el.nodeType === 1)
+    return true;
+  else
+    return false;
+}
+
+function getSDKConfig(config) {
+  var SDKconfig = {};
+  var baseURL = 'https://api.ibm.com/virtualagent/run/api/v1/';
+  SDKconfig.baseURL = config.baseURL || baseURL;
+  if (config.withCredentials)
+    SDKconfig.withCredentials = config.withCredentials;
+  if (config.XIBMClientID)
+    SDKconfig.XIBMClientID = config.XIBMClientID;
+  if (config.XIBMClientSecret)
+    SDKconfig.XIBMClientSecret = config.XIBMClientSecret;
+  if (config.userID)
+    SDKconfig.userID = config.userID;
+  if (config.userLatLon)
+    SDKconfig.userLatLon = config.userLatLon;
+  return SDKconfig;
 }
 
 module.exports = {
@@ -135,12 +138,12 @@ module.exports = {
   attachPlaybackStyles: styles.attachPlaybackStyles,
   convertHexToRGBA: styles.convertHexToRGBA,
   normalizeToHex: styles.normalizeToHex,
-  spinner: spinner,
   compile: compile,
   writeMessage: writeMessage,
   addResizeListener: resize.addResizeListener,
   removeResizeListener: resize.removeResizeListener,
   isVisible: isVisible,
   checkVisibility: checkVisibility,
-  guid: guid
+  checkRoot: checkRoot,
+  getSDKConfig: getSDKConfig
 };

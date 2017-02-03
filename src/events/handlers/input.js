@@ -13,40 +13,57 @@
 */
 
 var state = require('../../state');
+var events = require('../../events');
 var utils = require('../../utils');
+var templates = require('../../templates');
 
 function enableInput() {
   var current = state.get();
-  var disableInput = (current.disableInput) ? (current.disableInput - 1) :0;
-  state.set({ disableInput: disableInput });
-  if (!disableInput)
-    current.input.removeAttribute('disabled');
+  state.set({ disableInput: false });
+  current.input.removeAttribute('disabled');
 }
 
 function disableInput() {
   var current = state.get();
-  var disableInput = (current.disableInput) ? (current.disableInput + 1) : 1;
-  state.set({ disableInput: disableInput });
+  state.set({ disableInput: true });
   current.input.setAttribute('disabled', 'disabled');
 }
 
-function enableLoadingInput() {
-  var current = state.get();
-  var loading = (current.loading) ? (current.loading + 1) : 1;
-  state.set({
-    loading: loading
-  });
-  utils.spinner.show(current.loader);
+function enableLoadingInput(text) {
+  var current, loader;
+  setTimeout(function() {
+    current = state.get();
+    text = text || 'Agent is thinking...';
+    loader = current.root.querySelector('.IBMChat-loading-container');
+    if (loader)
+      current.chatHolder.removeChild(loader);
+  }, 0);
+
+  setTimeout(function() {
+    current.chatHolder.innerHTML += utils.compile(templates.loading, {
+      retryAttempt: 'Attempting to reconnect…',
+      retry: 'restart the conversation.'
+    });
+  }, 0);
+
+  setTimeout(function() {
+    loader = current.root.querySelector('.IBMChat-loading');
+    var loaderText = current.root.querySelector('.IBMChat-loading-message-text');
+    loader.classList.remove('IBMChat-hidden');
+    loaderText.textContent = text;
+    events.publish('resize');
+  }, 0);
 }
 
 function disableLoadingInput() {
-  var current = state.get();
-  var loading = (current.loading) ? (current.loading - 1) : 0;
-  state.set({
-    loading: loading
-  });
-  if (loading === 0)
-    utils.spinner.hide(current.loader);
+  setTimeout(function() {
+    var current = state.get();
+    var loader = current.root.querySelector('.IBMChat-loading-container');
+
+    if (loader)
+      current.chatHolder.removeChild(loader);
+    events.publish('resize');
+  }, 0);
 }
 
 function focusInput() {
