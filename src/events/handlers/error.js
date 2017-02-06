@@ -15,21 +15,70 @@
 var events = require('../../events');
 var state = require('../../state');
 
-function error(err) {
-  var display = (err && err.stack) ? err.stack : err;
-  console.error(display);
-  var current = state.get();
-  var text = 'I am sorry, I am having difficulties.';
-  if (current.hadError)
-    text += ' Please try again later.';
-  else
-    text += ' To speak with a human agent, type "agent".';
-  if (err.status)
-    text += ' (error: ' + err.status + ')';
-  state.set({
-    hadError: true
-  });
-  events.publish('receive', text);
+var errorMessageMap = {
+  basic: 'I am sorry, I am having difficulties.'
+};
+
+function clearError() {
+  setTimeout(function() {
+    var current = state.get();
+    var loader = current.root.querySelector('.IBMChat-loading-container');
+    if (loader)
+      current.chatHolder.removeChild(loader);
+    state.set({
+      errorCount: 0
+    });
+  }, 0);
+}
+
+function httpError(err) {
+  setTimeout(function() {
+    console.error(err);
+    var current = state.get();
+    var text = errorMessageMap.basic;
+    var errorCount = current.errorCount || 0;
+    if (err.status && errorMessageMap[err.status])
+      text = errorMessageMap[err.status];
+    events.publish('enable-loading', text);
+    state.set({
+      errorCount: errorCount + 1
+    });
+    events.publish('enable-retry');
+  }, 0);
+}
+
+function retry() {
+  setTimeout(function() {
+    var current = state.get();
+    var errorCount = current.errorCount;
+    var loaderRetryMessage = current.root.querySelector('.IBMChat-loading-retry-message');
+    var loader = current.root.querySelector('.IBMChat-loading');
+    var loaderFailure = current.root.querySelector('.IBMChat-loading-failure-message');
+    var loaderFailureMessage = current.root.querySelector('.IBMChat-loading-failure-message-text');
+    if (errorCount > 4) {
+      var loaderFailureMessageText = 'I cannot complete your request. You can try a new request or ';
+      if (!current.chatID) {
+        loaderFailureMessageText = 'I cannot complete your request. Please ';
+        events.publish('disable-input');
+      } else {
+        events.publish('enable-input');
+      }
+      loader.classList.add('IBMChat-hidden');
+      loaderFailureMessage.innerText = loaderFailureMessageText;
+      loaderFailure.classList.remove('IBMChat-hidden');
+      events.publish('scroll-to-bottom');
+      state.set({
+        sendQueue: [],
+        inProgress: false
+      });
+    } else if (errorCount !== 0) {
+      loaderFailure.classList.add('IBMChat-hidden');
+      loaderRetryMessage.classList.remove('IBMChat-hidden');
+      setTimeout(function() {
+        events.publish('retry');
+      }, 5000);
+    }
+  }, 0);
 }
 
 function tryIt(data) {
@@ -37,6 +86,8 @@ function tryIt(data) {
 }
 
 module.exports = {
-  default: error,
+  httpError: httpError,
+  retry: retry,
+  clearError: clearError,
   tryIt: tryIt
 };

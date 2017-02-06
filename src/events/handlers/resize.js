@@ -27,7 +27,7 @@ function resize() {
   timeout = setTimeout(function() {
     timeout = null;
     _resize();
-  }, 200);
+  }, 50);
 }
 
 function _resize() {

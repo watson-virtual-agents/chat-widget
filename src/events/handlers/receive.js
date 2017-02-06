@@ -34,6 +34,7 @@ function _actions(data, tryIt, debug) {
         events.publish('try-it-action-subscription', action);
     }
   }
+  events.publish('enable-input');
   events.publish('disable-loading');
   events.publish('focus-input');
   events.publish('scroll-to-bottom');
@@ -80,7 +81,7 @@ function _receive(data) {
   var current = state.get();
   state.set({
     messages: [].concat(current.messages || [], parsed),
-    hasError: false
+    errorCount: 0
   });
   var msg = parsed.message;
   var msgText = (msg && msg.text) ? ((Array.isArray(msg.text) && msg.text.length > 0) ? msg.text : [msg.text]) : [''];
@@ -107,7 +108,6 @@ function _receive(data) {
     }
     if ((msgText[i] && msgText[i].length > 0) || (msg && msg.layout && msg.layout.name && i === (msgText.length - 1))) {
       messages[i].classList.add('IBMChat-watson-message');
-      messages[i].classList.add('IBMChat-watson-message-theme');
       utils.writeMessage(messages[i], msgText[i]);
       turnElm.appendChild(holder);
     }

@@ -44,63 +44,94 @@ function addToSendQueue(data) {
   });
 }
 
-function always() {
-  events.publish('disable-loading');
+function resolve(sent, received) {
+  var current = state.get();
   state.set({
+    errorCount: 0,
+    sendQueue: current.sendQueue.slice(1, current.sendQueue.length),
+    messages: [].concat(current.messages || [], sent),
     inProgress: false
   });
+  events.publish('receive', received);
+  events.publish('error-clear');
+  events.publish('disable-loading');
+  events.publish('scroll-to-bottom');
   if (state.get().sendQueue.length > 0)
     agentSend();
 }
 
-function resolve() {
-  always();
+function reject() {
+  events.publish('httpError', arguments);
 }
 
-function reject(e) {
-  events.publish('error', arguments);
-  console.error(e.stack);
-  always();
-}
+function sendToBot(data, retry) {
 
-function sendToBot(data) {
+  function delay(cb) {
+    var newTime = Date.now();
+    var diff = newTime - starttime;
+    var minWaitTime = minSeconds * 1000;
+    var timeout = minWaitTime - diff;
+    if (timeout > 0) {
+      setTimeout(function() {
+        cb();
+      }, timeout);
+    } else {
+      cb();
+    }
+  }
+
   var current = state.get();
-  events.publish('enable-loading');
-  events.publish('scroll-to-bottom');
+  var starttime = Date.now();
+  var minSeconds = current.minSeconds;
+
+  if (!retry)
+    events.publish('enable-loading');
   events.publish('focus-input');
+
   BotSDK
     .send( current.botID, current.chatID, data.text )
     .then( function(res) {
-      events.publish('receive', res);
-      resolve();
+      delay(function() {
+        resolve(data, res);
+      });
     })
-    .catch( function(e) {
-      reject(e);
+    .catch(function(e) {
+      delay(function() {
+        reject(e);
+      });
     });
 }
 
-function agentSend() {
+function agentSend(retry) {
   var current = state.get();
   var newData = assign({}, current.sendQueue[0], { uuid: utils.getUUID() });
   var msg = newData.text || '';
   state.set({
-    inProgress: true,
-    sendQueue: current.sendQueue.slice(1, current.sendQueue.length),
-    messages: [].concat(current.messages || [], newData)
+    inProgress: true
   });
   current.root.querySelector('.IBMChat-chat-textbox').value = '';
-  if (!newData.silent) {
+  if (!newData.silent && !retry) {
     current.chatHolder.innerHTML += utils.compile(templates.send, { 'data.uuid': newData.uuid });
     current.chatHolder.querySelector('#' + newData.uuid + ' .IBMChat-user-message').textContent = msg;
     events.publish('scroll-to-bottom');
   }
-  events.publish('enable-loading');
   if (current.handleInput.default)
-    sendToBot(newData);
+    sendToBot(newData, retry);
   else if (current.handleInput.context)
     current.handleInput.callback.bind(current.handleInput.context, newData.text, resolve, reject);
   else
     current.handleInput.callback(newData.text, resolve, reject);
 }
 
-module.exports = send;
+function retry() {
+  var current = state.get();
+  if (current.sendQueue && current.sendQueue.length > 0)
+    agentSend(true);
+  else
+    events.publish('reset');
+}
+
+module.exports = {
+  send: send,
+  retry: retry
+};

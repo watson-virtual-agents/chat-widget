@@ -25,42 +25,42 @@ function _attachStylesToDOM(styles) {
 }
 
 function _getStyles(current) {
-  var containerClass = ".chatID-" + current.chatID;
+  var containerClass = "." + current.chatStyleID;
   var noOpacityBackgroundArray = _hexToRGBArray(normalizeToHex(current.styles.background));
   var noOpacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0.8)";
   var opacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0)";
-  var styles = containerClass + "{\n overflow:hidden;;\n}\n" +
-              containerClass + " .IBMChat-outer-container {\n  font-size: " + current.styles.fontSize + ";\n line-height: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
-              containerClass + " .IBMChat-outer-container textarea {\n  font-size: " + current.styles.fontSize + ";\n  font-family: " + current.styles.fontFamily + ";\n}\n" +
-              containerClass + " .IBMChat-default-colors {\n  background-color: " + current.styles.background + ";\n  color: " + current.styles.text + ";\n}\n" +
-              containerClass + " .IBMChat-secondary-colors {\n  background-color: " + current.styles.secondaryBackground + ";\n  color: " + current.styles.secondaryText + ";\n}\n" +
-              containerClass + " .IBMChat-secondary-colors-button {\n  background-color: transparent; border: 1px solid " + current.styles.secondaryBackground + ";\n color: " + current.styles.secondaryBackground + ";\n}\n" +
-              containerClass + " .IBMChat-accent-colors {\n  background-color: " + current.styles.accentBackground + ";\n  border: 1px solid " + current.styles.accentBackground + ";\n color: " + current.styles.accentText + ";\n}\n" +
-              containerClass + " .IBMChat-accent-colors-button {\n  background-color: transparent; border: 1px solid " + current.styles.accentBackground + ";\n color: " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " .IBMChat-accent-colors-button:hover {\n  background-color: " + current.styles.accentBackground + ";\n border: 1px solid " + current.styles.accentBackground + ";\n  color: " + current.styles.accentText + ";\n}\n" +
-              containerClass + " .IBMChat-accent-colors-button[disabled]:hover {\n  background-color: transparent; border: 1px solid " + current.styles.accentBackground + ";\n color: " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " .IBMChat-error-colors {\n  background-color: " + current.styles.errorBackground + ";\n  color: " + current.styles.errorText + ";\n}\n" +
-              containerClass + " .IBMChat-input-colors {\n  background-color: " + current.styles.inputBackground + ";\n  color: " + current.styles.inputText + ";\n border-bottom: 1px solid " + current.styles.inputText + ";\n}\n" +
-              containerClass + " .IBMChat-watson-message-line-theme {\n\tborder-left: 3px solid " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " a {\n\tborder: 0;\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n\ttext-decoration: none;\n\tfont-size:1em;\n}\n" +
-              containerClass + " a:hover,\n" +
-              containerClass + " a:visited,\n" +
-              containerClass + " a:active {\n\tcolor: " + current.styles.link + ";\n\tfont-weight: normal;\n\ttext-decoration: underline;\n\tfont-size:1em;\n}\n" +
-              containerClass + " .IBMChat-chat-textbox-theme {\n  border-bottom: solid 1px " + current.styles.text + ";\n}\n" +
-              containerClass + " .IBMChat-chat-textbox-theme:focus {\n  border-bottom: solid 2px " + current.styles.accentBackground + ";\n}\n" +
-              containerClass + " .IBMChat-ibm-spinner {\n\tstroke: " + current.styles.accentBackground + ";\n}" +
-              containerClass + " ::-webkit-input-placeholder {\n  color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";\n}\n" +
-              containerClass + " ::-moz-placeholder {\n  color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";\n  opacity: 1;\n}\n" +
-              containerClass + " :-ms-input-placeholder {\n  color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";\n  opacity: 1;\n}\n";
-  if (!current.playback)
-    styles += containerClass + " .IBMChat-fade {\n\t left: 0;\n\theight: 10%;\n\tmax-height: 32px;\n\tposition: absolute;\n\ttop: 0;\n\twidth: 100%;\n\tz-index: 2;\n\tbackground: linear-gradient(to bottom, " + noOpacityBackground + " 0%, " + opacityBackground + " 100%);\n}\n";
+  var styles = containerClass + "{ overflow:hidden;}";
+  styles += containerClass + " .IBMChat-outer-container {font-size: " + current.styles.fontSize + "; line-height: " + current.styles.fontSize + "; font-family: " + current.styles.fontFamily + ";}";
+  styles += containerClass + " .IBMChat-outer-container textarea {font-size: " + current.styles.fontSize + "; font-family: " + current.styles.fontFamily + ";}";
+  styles += containerClass + " .IBMChat-default-colors {background-color: " + current.styles.background + "; color: " + current.styles.text + ";}";
+  styles += containerClass + " .IBMChat-secondary-colors {background-color: " + current.styles.secondaryBackground + "; color: " + current.styles.secondaryText + ";}";
+  styles += containerClass + " .IBMChat-secondary-colors-button {background-color: transparent; border: 1px solid " + current.styles.secondaryBackground + "; color: " + current.styles.secondaryBackground + ";}";
+  styles += containerClass + " .IBMChat-accent-colors {background-color: " + current.styles.accentBackground + "; border: 1px solid " + current.styles.accentBackground + "; color: " + current.styles.accentText + ";}";
+  styles += containerClass + " .IBMChat-accent-colors-button {background-color: transparent; border: 1px solid " + current.styles.accentBackground + "; color: " + current.styles.accentBackground + ";}";
+  styles += containerClass + " .IBMChat-accent-colors-button:hover {background-color: " + current.styles.accentBackground + "; border: 1px solid " + current.styles.accentBackground + "; color: " + current.styles.accentText + ";}";
+  styles += containerClass + " .IBMChat-accent-colors-button[disabled]:hover {background-color: transparent; border: 1px solid " + current.styles.accentBackground + "; color: " + current.styles.accentBackground + ";}";
+  styles += containerClass + " .IBMChat-error-colors {background-color: " + current.styles.errorBackground + "; color: " + current.styles.errorText + ";}";
+  styles += containerClass + " .IBMChat-input-colors {background-color: " + current.styles.inputBackground + "; color: " + current.styles.inputText + "; border-bottom: 1px solid " + current.styles.inputText + ";}";
+  styles += containerClass + " .IBMChat-watson-message-line {border-left: 3px solid " + current.styles.accentBackground + ";}";
+  styles += containerClass + " a {border: 0; color: " + current.styles.link + "; font-weight: normal; text-decoration: none; font-size:1em;}";
+  styles += containerClass + " a:hover, ";
+  styles += containerClass + " a:visited, ";
+  styles += containerClass + " a:active {color: " + current.styles.link + "; font-weight: normal; text-decoration: underline; font-size:1em;}";
+  styles += containerClass + " .IBMChat-chat-textbox {border-bottom: solid 1px " + current.styles.text + ";}";
+  styles += containerClass + " .IBMChat-chat-textbox:focus {border-bottom: solid 2px " + current.styles.accentBackground + ";}";
+  styles += containerClass + " ::-webkit-input-placeholder {color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";}";
+  styles += containerClass + " ::-moz-placeholder {color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + "; opacity: 1;}";
+  styles += containerClass + " :-ms-input-placeholder {color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + "; opacity: 1;}";
+  styles += containerClass + " .IBMChat-ball {fill: " + normalizeToHex(current.styles.accentBackground) + ";}";
+  styles += containerClass + " .IBMChat-fade {left: 0; height: 10%; max-height: 32px; position: absolute; top: 0; width: 100%; z-index: 2; background: linear-gradient(to bottom, " + noOpacityBackground + " 0%, " + opacityBackground + " 100%);}";
+  styles += containerClass + " .IBMChat-loading-message {color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";}";
   return styles;
 }
 
 function _placeHolderColor(text, background) {
   var rgb_beginning = _hexToRGBArray(normalizeToHex(text)),
     rgb_end = _hexToRGBArray(normalizeToHex(background)),
-    p = 0.55,
+    p = 0.6,
     w = p * 2 - 1,
     w1 = (w + 1) / 2.0,
     w2 = 1 - w1,
@@ -77,9 +77,9 @@ function normalizeToHex(color) {
   function rgb2hex(rgb) {
     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
     return (rgb && rgb.length === 4) ?
-    ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-    ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-    ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+      ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) : '';
   }
   if (color.indexOf('#') > -1)
     return color;
@@ -89,10 +89,10 @@ function normalizeToHex(color) {
 
 function _hexToRGBArray(hex) {
   var rgb = [];
-  hex = hex.replace('#','');
-  rgb.push(parseInt(hex.substring(0,2), 16));
-  rgb.push(parseInt(hex.substring(2,4), 16));
-  rgb.push(parseInt(hex.substring(4,6), 16));
+  hex = hex.replace('#', '');
+  rgb.push(parseInt(hex.substring(0, 2), 16));
+  rgb.push(parseInt(hex.substring(2, 4), 16));
+  rgb.push(parseInt(hex.substring(4, 6), 16));
   return rgb;
 }
 
@@ -101,7 +101,7 @@ function convertHexToRGBA(hex, opacity) {
     r = rgb[0],
     g = rgb[1],
     b = rgb[2];
-  return 'rgba('+r+','+g+','+b+','+opacity/100+')';
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity / 100 + ')';
 }
 
 

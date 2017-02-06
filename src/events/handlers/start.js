@@ -22,7 +22,7 @@ function start(data) {
   state.set(data);
   current = state.get();
   utils.attachStyles();
-  current.root.classList.add("chatID-" + current.chatID);
+  current.root.classList.add(current.chatStyleID);
   current.root.innerHTML = templates.start;
   var addState = {
     chat: current.root.querySelector('.IBMChat'),
@@ -37,14 +37,14 @@ function start(data) {
     chatBox.classList.add('IBMChat-input-container');
     chatBox.classList.add('IBMChat-input-container-theme');
     chatBox.innerHTML = utils.compile(templates.input, {
-      placeholder: 'Enter message...'
+      placeholder: 'Enter message…'
     });
     addState.outerContainer.appendChild(chatBox);
     addState.inputHolder = current.root.querySelector('.IBMChat-input-container form');
+    addState.inputContainer = current.root.querySelector('.IBMChat-chat-textbox-container');
     addState.input = current.root.querySelector('.IBMChat-chat-textbox');
     addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
     addState.form = current.root.querySelector('.IBMChat-input-form');
-    addState.loader = current.root.querySelector('.IBMChat-input-loading');
     addState.form.addEventListener('submit', function(e) {
       e.preventDefault();
     });
@@ -64,15 +64,30 @@ function start(data) {
         }
       });
     }
-    addState.input.addEventListener('keyup', function(e) {
+
+    addState.chatHolder.addEventListener('click', function(e) {
+      if (e.target.dataset && e.target.dataset.retry) {
+        events.publish('error-clear');
+        setTimeout(function() {
+          events.publish('enable-loading');
+          events.publish('reset');
+        }, 0);
+      }
+    });
+
+    addState.input.addEventListener('keydown', function(e) {
+      var current = state.get();
       if (e.keyCode === 13) {
-        events.publish('send-input-message');
-        addState.inputClone.innerHTML = '';
-        addState.input.style.overflow = 'hidden';
-        addState.input.style.height = addState.originalInputHeight + "px";
-        state.set({
-          inputHeight: addState.originalInputHeight
-        });
+        e.preventDefault();
+        if (!current.inProgress) {
+          events.publish('send-input-message');
+          addState.inputClone.innerHTML = '';
+          addState.input.style.overflow = 'hidden';
+          addState.input.style.height = addState.originalInputHeight + "px";
+          state.set({
+            inputHeight: addState.originalInputHeight
+          });
+        }
       }
       events.publish('resize');
     });
@@ -88,7 +103,7 @@ function start(data) {
 
   window.addEventListener('resize', utils.debounce(function() {
     events.publish('resize');
-  }, 300));
+  }, 200));
 
   window.addEventListener('orientationchange', function() {
     events.publish('resize');

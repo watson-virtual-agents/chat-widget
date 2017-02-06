@@ -23,33 +23,37 @@ var Promise = require('es6-promise').Promise;
 var assign = require('lodash/assign');
 var defaultStyles = require('./styles');
 
-var baseURL = 'https://api.ibm.com/virtualagent/run/api/v1/';
 var layoutInit = {};
 var registeredLayouts = [];
 
 function registerEvents(tryIt, playback) {
   events.subscribe('start', eventHandlers.start);
+  events.subscribe('chatID', eventHandlers.chatID);
   events.subscribe('resize', eventHandlers.resize);
   events.subscribe('disable-input', eventHandlers.input.disableInput);
   events.subscribe('enable-loading', eventHandlers.input.enableLoadingInput);
   events.subscribe('disable-loading', eventHandlers.input.disableLoadingInput);
   events.subscribe('scroll-to-bottom', eventHandlers.scrollToBottom);
   events.subscribe('receive', eventHandlers.receive);
+  if (playback === true) { //TODO: remove if playback when Dashboard code is updated
+    events.subscribe('send', eventHandlers.sendMock);
+  } else {
+    events.subscribe('clear', eventHandlers.clear);
+    events.subscribe('send', eventHandlers.send.send);
+    events.subscribe('retry', eventHandlers.send.retry);
+    events.subscribe('send-input-message', eventHandlers.sendInputMessage);
+    events.subscribe('enable-retry', eventHandlers.error.retry);
+    events.subscribe('enable-input', eventHandlers.input.enableInput);
+    events.subscribe('focus-input', eventHandlers.input.focusInput);
+    events.subscribe('send-mock', eventHandlers.sendMock);
+    events.subscribe('error-clear', eventHandlers.error.clearError);
+    events.subscribe('reset', eventHandlers.reset);
+  }
   if (tryIt === true) {
     events.subscribe('try-it-error', eventHandlers.error.tryIt);
     events.subscribe('try-it-layout-subscription', eventHandlers.tryIt.layoutError);
     events.subscribe('try-it-action-subscription', eventHandlers.tryIt.actionError);
     events.subscribe('try-it-receive-intent-data', eventHandlers.tryIt.intent);
-  }
-  if (playback === true) { //TODO: remove if playback when Dashboard code is updated
-    events.subscribe('send', eventHandlers.sendMock);
-  } else {
-    events.subscribe('clear', eventHandlers.clear);
-    events.subscribe('send', eventHandlers.send);
-    events.subscribe('send-input-message', eventHandlers.sendInputMessage);
-    events.subscribe('enable-input', eventHandlers.input.enableInput);
-    events.subscribe('focus-input', eventHandlers.input.focusInput);
-    events.subscribe('send-mock', eventHandlers.sendMock);
   }
 }
 
@@ -76,18 +80,7 @@ function init(config) {
   }
 
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
-  var SDKconfig = {};
-  SDKconfig.baseURL = config.baseURL || baseURL;
-  if (config.withCredentials)
-    SDKconfig.withCredentials = config.withCredentials;
-  if (config.XIBMClientID)
-    SDKconfig.XIBMClientID = config.XIBMClientID;
-  if (config.XIBMClientSecret)
-    SDKconfig.XIBMClientSecret = config.XIBMClientSecret;
-  if (config.userID)
-    SDKconfig.userID = config.userID;
-  if (config.userLatLon)
-    SDKconfig.userLatLon = config.userLatLon;
+  var SDKconfig = utils.getSDKConfig(config);
 
   return new Promise(function(resolve, reject) {
     var defaultState = {
@@ -101,39 +94,44 @@ function init(config) {
       handleInput: {
         default: true
       },
+      minSeconds: (!config.minSeconds && config.minSeconds !== 0) ? 0.75 : config.minSeconds,
+      chatStyleID: 'chatStyleID-' + utils.getUUID(),
       tryIt: config.tryIt || false,
       playback: config.playback || false //TODO: remove playback when Dashboard code is updated
     };
-    if (root) {
+    if (utils.checkRoot(root)) {
       if (config.errorHandler)
-        events.subscribe('error', config.errorHandler, config.errorHandlerContext);
+        events.subscribe('httpError', config.errorHandler, config.errorHandlerContext);
       else
-        events.subscribe('error', eventHandlers.error.default);
+        events.subscribe('httpError', eventHandlers.error.httpError);
       registerEvents(config.tryIt, config.playback);
       registerLayouts();
       //TODO: remove if playback when Dashboard code is updated
       if (config.playback === true) {
-        defaultState.chatID = 'playback';
         events.publish('start', defaultState);
+        setTimeout(function() {
+          events.publish('chatID', 'playback');
+        }, 0);
         setTimeout(function() {
           resolve();
         }, 0);
       } else if (config.botID) {
+        events.publish('start', defaultState);
+        events.publish('enable-loading');
+        events.publish('disable-input');
         BotSDK
           .configure( SDKconfig )
           .start( config.botID )
           .then( function(res) {
-            defaultState.chatID = res.chatID;
-            window.sessionStorage.setItem('IBMChatChatID', res.chatID);
-            events.publish('start', defaultState);
+            events.publish('chatID', res.chatID);
             events.publish('receive', res);
+          })['catch']( function(err) {
+            events.publish('httpError', err);
+          }).then(function() {
             setTimeout(function() {
+              events.publish('enable-input');
               resolve();
             }, 0);
-          })['catch']( function(err) {
-            console.error(err);
-            destroy();
-            reject(err);
           });
       } else {
         console.error('BotID is required!');
@@ -263,10 +261,11 @@ function destroy() {
   return new Promise(function(resolve) {
     var current = state.get();
     if (current.active) {
-      utils.removeResizeListener(current.root, current.onResize);
+      if (current.root && current.onResize)
+        utils.removeResizeListener(current.root, current.onResize);
       events.publish('destroy');
       events.destroy();
-      if (typeof current.originalContent !== 'undefined')
+      if (typeof current.originalContent !== 'undefined' && current.root)
         current.root.innerHTML = current.originalContent;
       state.destroy();
     }
@@ -275,7 +274,7 @@ function destroy() {
 }
 
 function restart() {
-  console.warn('The IBMChat.restart method is deprecated.');
+  console.warn('The IBMChat.restart method is deprecated. Use IBMChat.clear() instead.');
   return new Promise(function(resolve, reject) {
     var current = state.get();
     destroy().then(function() {
@@ -289,40 +288,6 @@ function restart() {
     })['catch'](function(e) {
       reject(e);
     });
-  });
-}
-
-function clear() {
-  return new Promise(function(resolve, reject) {
-    var current = state.get();
-    var SDKconfig = {};
-    SDKconfig.baseURL = current.baseURL || baseURL;
-    if (current.withCredentials)
-      SDKconfig.withCredentials = current.withCredentials;
-    if (current.XIBMClientID)
-      SDKconfig.XIBMClientID = current.XIBMClientID;
-    if (current.XIBMClientSecret)
-      SDKconfig.XIBMClientSecret = current.XIBMClientSecret;
-    if (current.userID)
-      SDKconfig.userID = current.userID;
-    BotSDK
-      .configure( SDKconfig )
-      .start( current.botID )
-      .then( function(res) {
-        state.set({
-          chatID: res.chatID
-        });
-        window.sessionStorage.setItem('IBMChatChatID', res.chatID);
-        events.publish('clear');
-        events.publish('receive', res);
-        setTimeout(function() {
-          resolve();
-        }, 0);
-      })['catch']( function(err) {
-        console.error(err);
-        destroy();
-        reject(err);
-      });
   });
 }
 
@@ -349,5 +314,7 @@ module.exports = {
   hasSubscription: events.hasSubscription,
   completeEvent: events.completeEvent,
   state: state,
-  clear: clear
+  clear: function() {
+    events.publish('restart');
+  }
 };
