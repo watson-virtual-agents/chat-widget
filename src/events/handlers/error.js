@@ -56,9 +56,9 @@ function retry() {
     var loaderFailure = current.root.querySelector('.IBMChat-loading-failure-message');
     var loaderFailureMessage = current.root.querySelector('.IBMChat-loading-failure-message-text');
     if (errorCount > 4) {
-      var loaderFailureMessageText = 'We cannot complete your request. You can try a new request or ';
+      var loaderFailureMessageText = 'I cannot complete your request. You can try a new request or ';
       if (!current.chatID) {
-        loaderFailureMessageText = 'We cannot complete your request. Please ';
+        loaderFailureMessageText = 'I cannot complete your request. Please ';
         events.publish('disable-input');
       } else {
         events.publish('enable-input');

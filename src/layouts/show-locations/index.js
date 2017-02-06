@@ -405,7 +405,8 @@ ShowLocations.prototype.addLocation = function() {
       moreHours: el.querySelectorAll('.' + ns + '-locations-item-data-more-hours'),
       distance: el.querySelector('.' + ns + '-locations-item-distance'),
       backHolder: el.querySelector('.' + ns + '-locations-all-holder'),
-      back: el.querySelector('.' + ns + '-locations-all')
+      back: el.querySelector('.' + ns + '-locations-all'),
+      parentEl: el.querySelector('.' + ns + '-locations-item')
     };
   };
 
