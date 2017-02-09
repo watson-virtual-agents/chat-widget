@@ -97,6 +97,20 @@ var config = {
 IBMChat.init(config);
 ```
 
+Or in ES6+/TypeScript syntax...
+
+```js
+import IBMChat from '@watson-virtual-agent/chat-widget';
+const config = {
+  el: 'ibm_chat_root',
+  baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
+  botID: 'YOUR_BOT_ID',
+  XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+  XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+};
+IBMChat.init(config);
+```
+
 ## API
 
 For more details about what you can do once the widget is up and running, see:
