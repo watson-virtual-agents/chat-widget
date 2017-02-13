@@ -19,7 +19,6 @@ var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var state = require('./state');
 var utils = require('./utils');
 var profile = require('./profile');
-var Promise = require('es6-promise').Promise;
 var assign = require('lodash/assign');
 var defaultStyles = require('./styles');
 
@@ -82,7 +81,7 @@ function init(config) {
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
   var SDKconfig = utils.getSDKConfig(config);
 
-  return new Promise(function(resolve, reject) {
+  return new window.Promise(function(resolve, reject) {
     var defaultState = {
       active: true,
       root: root,
@@ -258,7 +257,7 @@ function debug() {
 }
 
 function destroy() {
-  return new Promise(function(resolve) {
+  return new window.Promise(function(resolve) {
     var current = state.get();
     if (current.active) {
       if (current.root && current.onResize)
@@ -275,7 +274,7 @@ function destroy() {
 
 function restart() {
   console.warn('The IBMChat.restart method is deprecated. Use IBMChat.clear() instead.');
-  return new Promise(function(resolve, reject) {
+  return new window.Promise(function(resolve, reject) {
     var current = state.get();
     destroy().then(function() {
       setTimeout(function() {

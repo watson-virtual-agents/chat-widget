@@ -2,12 +2,11 @@ var state = require('../../state');
 var events = require('../../events');
 var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var utils = require('../../utils');
-var Promise = require('es6-promise').Promise;
 
 function reset() {
   events.publish('clear-error');
   events.publish('scroll-to-bottom');
-  return new Promise(function(resolve, reject) {
+  return new window.Promise(function(resolve, reject) {
     var current = state.get();
     var SDKconfig = utils.getSDKConfig(current);
     if (utils.checkRoot(current.root)) {

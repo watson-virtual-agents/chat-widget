@@ -1,6 +1,6 @@
 {
   "name": "@watson-virtual-agent/chat-widget",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/chat.js",
@@ -52,7 +52,6 @@
   },
   "dependencies": {
     "@watson-virtual-agent/client-sdk": "1.2.0",
-    "es6-promise": "3.2.1",
     "lodash": "4.15.0"
   },
   "devDependencies": {

@@ -39,7 +39,7 @@ module.exports = {
     PO.setMessage(strings.clickedTextOneOf)
       .assert.elementPresent('@firstButton')
       .assert.containsText('@firstButton', strings.buttonText)
-      .click('@firstButton')
+      .delayedClick('@firstButton')
       .assert.containsText('@lastMessage', strings.clickedTextOneOf);
     client.end();
   },
@@ -59,10 +59,10 @@ module.exports = {
     PO.assert.elementPresent('@firstButtonSomeOf')
       .assert.elementPresent('@secondButtonSomeOf')
       .assert.containsText('@firstButtonSomeOf', strings.buttonText)
-      .click('@firstButtonSomeOf')
-      .click('@secondButtonSomeOf')
+      .delayedClick('@firstButtonSomeOf')
+      .delayedClick('@secondButtonSomeOf')
       .assert.elementPresent('@enterButton')
-      .click('@enterButton')
+      .delayedClick('@enterButton')
       .assert.containsText('@lastMessage', strings.clickedTextSomeOf);
     client.end();
   }

@@ -12,8 +12,6 @@
 * the License.
 */
 
-var Promise = require('es6-promise').Promise;
-
 function writeMessage(el, text) {
   new ParseContent(el, text);
 }
@@ -65,7 +63,7 @@ ParseContent.prototype.writeMessage = function(el, content) {
 };
 
 ParseContent.prototype.addLineEndings = function(content) {
-  return new Promise(function(resolve, reject) {
+  return new window.Promise(function(resolve, reject) {
     try {
       var newContent = [];
       for (var i = 0; i < content.length; i++) {
@@ -92,7 +90,7 @@ ParseContent.prototype.addLineEndings = function(content) {
 };
 
 ParseContent.prototype.addUrls = function(content) {
-  return new Promise(function(resolve, reject) {
+  return new window.Promise(function(resolve, reject) {
     try {
       var newContent = [];
       for (var i = 0; i < content.length; i++) {
@@ -135,7 +133,7 @@ ParseContent.prototype.addUrls = function(content) {
 };
 
 ParseContent.prototype.addEmails = function(content) {
-  return new Promise(function(resolve, reject) {
+  return new window.Promise(function(resolve, reject) {
     try {
       var newContent = [];
       for (var i = 0; i < content.length; i++) {
