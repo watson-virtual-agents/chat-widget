@@ -87,7 +87,7 @@ Form.prototype.drawForm = function() {
 Form.prototype.handleSubmit = function() {
   if (this.validateFields() === true) {
     for (var i = 0; i < this.fields.length; i++)
-      profile.set(this.fields[i].getAttribute('name'), this.fields[i].value);
+      profile.set(this.fields[i].getAttribute('name'), this.fields[i].value || new String(''));
     this.submitButton.classList.remove(inactiveClassName);
     this.submitButton.classList.add(activeClassName);
     publish('send', {
