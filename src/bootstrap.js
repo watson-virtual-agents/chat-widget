@@ -262,6 +262,7 @@ function destroy() {
     if (current.active) {
       if (current.root && current.onResize)
         utils.removeResizeListener(current.root, current.onResize);
+      utils.endVisibilityCheck();
       events.publish('destroy');
       events.destroy();
       if (typeof current.originalContent !== 'undefined' && current.root)

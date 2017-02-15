@@ -75,7 +75,10 @@ function appendToEach(appendTo, content) {
 }
 
 function isVisible(elem) {
-  return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+  if (elem)
+    return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+  else
+    return false;
 }
 
 var _currentVisibilityCheck;
@@ -100,6 +103,11 @@ function checkVisibility() {
     }
     _currentVisibilityCheck = setTimeout(checkVisibility, 300);
   }
+}
+
+function endVisibilityCheck() {
+  if (_currentVisibilityCheck)
+    clearTimeout(_currentVisibilityCheck);
 }
 
 function checkRoot(el) {
@@ -145,5 +153,6 @@ module.exports = {
   isVisible: isVisible,
   checkVisibility: checkVisibility,
   checkRoot: checkRoot,
-  getSDKConfig: getSDKConfig
+  getSDKConfig: getSDKConfig,
+  endVisibilityCheck: endVisibilityCheck
 };
