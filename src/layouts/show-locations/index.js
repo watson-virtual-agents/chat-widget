@@ -77,13 +77,11 @@ function initialSize(width) {
 
 function getWidth() {
   var current = state.get();
-  return current.rootWidth || current.root.clientWidth;
+  return current.chatHolder.querySelector('div:first-child').clientWidth;
 }
 
 function sameSize() {
-  var width = getWidth();
-  var isSameSize = (breakpointWidths[currentBreakpointKey] >= width);
-  return isSameSize;
+  return (breakpointWidths[currentBreakpointKey] >= getWidth());
 }
 
 function sizeMap() {
@@ -335,7 +333,7 @@ ShowLocations.prototype.drawLocations = function() {
   var img = document.createElement('img');
   var width = getWidth();
   var config = {
-    size: width + 'x120',
+    size: (width - 8) + 'x120',
     scale: pixelRatio
   };
   if (this.data.length === 1)

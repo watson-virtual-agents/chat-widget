@@ -1,10 +1,11 @@
 {
   "name": "@watson-virtual-agent/chat-widget",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
-  "main": "dist/chat.js",
+  "main": "src/index.js",
   "unpkg": "dist/chat.min.js",
+  "types": "chat.d.ts",
   "scripts": {
     "build": "webpack -production && webpack -minify -production -p --json > stats.json && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
     "codecov": "npm run test && (codecov || true)",
