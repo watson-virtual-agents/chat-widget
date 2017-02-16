@@ -12,8 +12,6 @@
 * the License.
 */
 
-require('./styles.css');
-
 var events = require('../../events');
 var profile = require('../../profile');
 var subscribe = events.subscribe;

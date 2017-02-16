@@ -103,6 +103,11 @@ module.exports = {
   cache: debug,
   devtool: (debug && !minify) ? 'inline-sourcemap' : null,
   stats: { colors: true },
+  resolveLoader: {
+    alias: {
+      "minify-string": path.join(__dirname, "./minify-string")
+    }
+  },
   resolve: {
     extensions: ['', '.js', '.json'],
     alias: {
@@ -134,10 +139,10 @@ module.exports = {
       loader: 'istanbul-instrumenter'
     }],
     loaders: [{
-      loader: 'raw',
+      loaders: ['raw', 'minify-string'],
       test: /\.html$/
     }, {
-      loaders: ['style', 'raw'],
+      loaders: ['raw', 'minify-string'],
       test: /\.css$/
     }, {
       loader: 'json',

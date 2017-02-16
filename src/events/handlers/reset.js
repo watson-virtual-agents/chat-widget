@@ -9,7 +9,7 @@ function reset() {
   return new window.Promise(function(resolve, reject) {
     var current = state.get();
     var SDKconfig = utils.getSDKConfig(current);
-    if (utils.checkRoot(current.root)) {
+    if (!utils.checkRoot(current.root)) {
       reject({
         error: 'Element for chat does not exist!'
       });

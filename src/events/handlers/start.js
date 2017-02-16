@@ -14,6 +14,7 @@
 
 var state = require('../../state');
 var utils = require('../../utils');
+var styles = require('../../styles');
 var events = require('../../events');
 var templates = require('../../templates');
 
@@ -21,7 +22,7 @@ function start(data) {
   var current;
   state.set(data);
   current = state.get();
-  utils.attachStyles();
+  styles.attachStyles();
   current.root.classList.add(current.chatStyleID);
   current.root.innerHTML = templates.start;
   var addState = {

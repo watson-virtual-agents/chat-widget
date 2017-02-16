@@ -12,8 +12,6 @@
 * the License.
 */
 
-require('./styles.css');
-
 var events = require('../../events');
 var errors = [];
 var ns = 'IBMChat-error';

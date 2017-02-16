@@ -14,7 +14,6 @@
 
 var state = require('../state');
 var events = require('../events');
-var styles = require('./styles');
 var writeMessage = require('./writeMessage');
 var resize = require('./resize');
 
@@ -142,10 +141,6 @@ module.exports = {
   serialize: serialize,
   hasClass: hasClass,
   getUUID: getUUID,
-  attachStyles: styles.attachStyles,
-  attachPlaybackStyles: styles.attachPlaybackStyles,
-  convertHexToRGBA: styles.convertHexToRGBA,
-  normalizeToHex: styles.normalizeToHex,
   compile: compile,
   writeMessage: writeMessage,
   addResizeListener: resize.addResizeListener,

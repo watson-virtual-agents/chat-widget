@@ -20,7 +20,9 @@ var state = require('./state');
 var utils = require('./utils');
 var profile = require('./profile');
 var assign = require('lodash/assign');
-var defaultStyles = require('./styles');
+var styles = require('./styles');
+var defaultStyles = styles.defaultStyles;
+
 
 var layoutInit = {};
 var registeredLayouts = [];
@@ -263,6 +265,7 @@ function destroy() {
       if (current.root && current.onResize)
         utils.removeResizeListener(current.root, current.onResize);
       utils.endVisibilityCheck();
+      styles.removeStyles();
       events.publish('destroy');
       events.destroy();
       if (typeof current.originalContent !== 'undefined' && current.root)

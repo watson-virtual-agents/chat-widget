@@ -9,7 +9,6 @@ function chatID(chatID) {
   state.set({
     chatID: chatID
   });
-  window.sessionStorage.setItem('IBMChatChatID', chatID);
   current.root.className = classes.join(' ').trim();
   current.root.classList.add(prefix + chatID);
 }
