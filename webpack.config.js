@@ -99,7 +99,7 @@ module.exports = {
   stats: { colors: true },
   resolveLoader: {
     alias: {
-      "minify-string": path.join(__dirname, "./minify-string")
+      "minify-string": path.join(__dirname, "./tools/loaders/minify-string")
     }
   },
   resolve: {

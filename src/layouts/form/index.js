@@ -60,13 +60,14 @@ Form.prototype.drawForm = function() {
     cancel: this.label.cancel || 'Cancel'
   });
   formFields = base.querySelector('.IBMChat-form-fields');
-  this.data.forEach(function(datum) {
+  this.data.forEach(function(datum, index) {
     var field = document.createElement('div');
     field.innerHTML = utils.compile(templates.field, {
       label: datum.label || '',
       name: datum.name,
       uuid: utils.getUUID(),
       type: datum.type || 'text',
+      index: index,
       value: ''
     });
     field.className = ns + '-fields-row';
@@ -144,6 +145,7 @@ Form.prototype.validateField = function(field, datum) {
 
 Form.prototype.addError = function(name, msg) {
   var field = this.layoutElement.querySelector('[name="' + name + '"]');
+  field.dataset.valid = false;
   var errorEl = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
   field.setAttribute('aria-invalid', true);
   errorEl.dataset.valid = false;
@@ -153,6 +155,7 @@ Form.prototype.addError = function(name, msg) {
 
 Form.prototype.removeError = function(name) {
   var field = this.layoutElement.querySelector('[name="' + name + '"]');
+  field.dataset.valid = true;
   var errorEl = this.layoutElement.querySelector('[data-validation-for="' + name + '"]');
   field.removeAttribute('aria-invalid');
   errorEl.dataset.valid = true;
@@ -166,14 +169,16 @@ Form.prototype.removeAllErrors = function() {
     this.removeError(els[i].attr('data-validation-for'));
 };
 
-Form.prototype.handleEnter = function(e) {
-  if (e.keyCode === 13)
+Form.prototype.handleKeyup = function(e) {
+  var index = e.target.dataset.index;
+  if (e.keyCode === 13) {
+    e.preventDefault();
     this.handleSubmit();
-};
-
-Form.prototype.handleInput = function(e) {
-  var name = e.target.name;
-  this.removeError(name);
+  } else if (e.target.dataset.valid === 'false') {
+    var valid = this.validateField(this.fields[index], this.data[index]);
+    if (valid)
+      this.removeError(e.target.getAttribute('name'));
+  }
 };
 
 Form.prototype.handleCancel = function() {
@@ -191,8 +196,7 @@ Form.prototype.addEventListeners = function() {
   this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
   for (var i = 0; i < this.fields.length; i++) {
     var field = this.fields[i];
-    field.addEventListener('keypress', this.handleEnter.bind(this));
-    field.addEventListener('input', this.handleInput.bind(this));
+    field.addEventListener('keyup', this.handleKeyup.bind(this));
   }
 };
 
@@ -203,8 +207,7 @@ Form.prototype.removeEventListeners = function() {
   this.submitButton.setAttribute('disabled', true);
   for (var i = 0; i < this.fields.length; i++) {
     var field = this.fields[i];
-    field.removeEventListener('keypress', this.handleEnter.bind(this));
-    field.removeEventListener('input', this.handleInput.bind(this));
+    field.removeEventListener('keyup', this.handleKeyup.bind(this));
     field.setAttribute('disabled', true);
   }
 
