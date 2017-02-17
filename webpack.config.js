@@ -45,15 +45,9 @@ var DedupePlugin = webpack.optimize.DedupePlugin;
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var OccurenceOrderPlugin = webpack.optimize.OccurenceOrderPlugin;
 
-var MAPS_SERVER = {
-  'development': 'https://dd1-i-serve-maps.mybluemix.net',
-  'staging': 'https://ds1-i-serve-maps.mybluemix.net',
-  'production': 'https://dp1-i-serve-maps.mybluemix.net'
-};
-
 var env = checkEnvFlags() || process.env.NODE_ENV || 'development';
 var minify = (process.argv.indexOf('-minify') > -1) ? true : false;
-var mapsServer = MAPS_SERVER[env] || 'https://dd1-i-serve-maps.mybluemix.net';
+var mapsServer = 'https://dp1-i-serve-maps.mybluemix.net';
 var filename = (minify) ? 'chat.min.js' : 'chat.js';
 var debug = env === 'development';
 var selenium = (process.argv.indexOf('-selenium') > -1) ? true : false;
@@ -152,11 +146,16 @@ module.exports = {
       /node_modules\/sinon\//,
     ]
   },
-  plugins: [ new NoErrorsPlugin(), new DedupePlugin(), new RewirePlugin(), new DefinePlugin({
-    'process.env.DEBUG': JSON.stringify(debug),
-    'process.env.MAPS_SERVER': JSON.stringify(mapsServer),
-    'process.env.CHAT_VERSION': JSON.stringify(version)
-  })].concat(conditionalPlugins()),
+  plugins: [
+    new NoErrorsPlugin(),
+    new DedupePlugin(),
+    new RewirePlugin(),
+    new DefinePlugin({
+      'process.env.DEBUG': JSON.stringify(debug),
+      'process.env.MAPS_SERVER': JSON.stringify(mapsServer),
+      'process.env.CHAT_VERSION': JSON.stringify(version)
+    })
+  ].concat(conditionalPlugins()),
   devServer: {
     port: process.env.PORT || 3100,
     historyApiFallback: true
