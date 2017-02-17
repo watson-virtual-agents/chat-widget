@@ -7,7 +7,7 @@
 }
 
 .IBMChat-map-img {
-  text-align: left;
+  overflow: hidden;
 }
 
 .IBMChat-map-img img {
