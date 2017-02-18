@@ -12,13 +12,12 @@
 * the License.
 */
 
-require('./styles.css');
-
 var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
 var state = require('../../state');
 var utils = require('../../utils');
+var styles = require('../../styles');
 
 var first = true;
 var displayLength = 3;
@@ -325,7 +324,7 @@ ShowLocations.prototype.addDetails = function() {
 };
 
 ShowLocations.prototype.convertColor = function(color) {
-  return utils.normalizeToHex(color).replace('#', '');
+  return styles.normalizeToHex(color).replace('#', '');
 };
 
 ShowLocations.prototype.drawLocations = function() {

@@ -97,7 +97,7 @@ var config = {
 IBMChat.init(config);
 ```
 
-Or in ES6+/TypeScript syntax...
+Or in ES6+ syntax...
 
 ```js
 import IBMChat from '@watson-virtual-agent/chat-widget';

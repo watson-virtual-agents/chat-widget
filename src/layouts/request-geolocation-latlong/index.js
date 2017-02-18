@@ -18,7 +18,7 @@ var publish = events.publish;
 
 var requestGeolocationLatlongs = [];
 
-var LOCATION_TIMEOUT = 20 * 1000;
+var LOCATION_TIMEOUT = 30 * 1000;
 
 var requestGeolocationLatlongLayout = {
   init: function() {
@@ -48,10 +48,16 @@ RequestGeolocationLatlong.prototype = {
     publish('enable-loading');
     publish('disable-input');
     try {
-      var msgElement = this.msgElement;
       navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
-        if (result.state === 'granted')
-          msgElement.textContent = 'Finding your current location.';
+        if (result.state === 'prompt') {
+          data.msgElement.textContent = 'Please share your current location.';
+          publish('enable-loading', 'Your browser is asking you to share your location…');
+        } else if (result.state === 'granted') {
+          data.msgElement.textContent = 'You have allowed your browser to share your current location.';
+          publish('enable-loading', 'Looking up your current location…');
+        } else if (result.state === 'denied') {
+          data.msgElement.textContent = 'You have denied sharing your location on this website.';
+        }
       });
     } catch (e) {
       console.log('navigator.permissions not supported.');
@@ -78,9 +84,10 @@ RequestGeolocationLatlong.prototype = {
     });
   },
   handleLocationNotShared: function() {
+    var string = 'Please enable location sharing or continue with your Zip Code.';
     publish('enable-input');
     publish('disable-loading');
-    publish('receive', "You haven't shared your location on this website.");
+    publish('receive', string);
     publish('send', {
       text: 'find nearest locations',
       silent: true

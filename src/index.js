@@ -12,8 +12,6 @@
 * the License.
 */
 
-require('./styles.css');
-
 var bootstrap = require('./bootstrap');
 
 /**

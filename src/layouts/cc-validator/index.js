@@ -12,8 +12,6 @@
 * the License.
 */
 
-require('./styles.css');
-
 var events = require('../../events');
 var profile = require('../../profile');
 var subscribe = events.subscribe;
@@ -48,6 +46,7 @@ CreditCard.prototype.init = function(data) {
   this.parentElement = data.element;
   this.layoutElement = data.layoutElement;
   this.msgElement = data.msgElement;
+  this.formData = {};
   this.drawForm();
   this.subscribeSend = subscribe('send', this.removeAllEventListeners.bind(this));
   publish('disable-input');
@@ -77,21 +76,19 @@ CreditCard.prototype.drawForm = function() {
   this.addListeners();
 };
 
-CreditCard.prototype.addListeners = function() {
-  this.cancelButton.addEventListener('click', this.handleCancel.bind(this));
-  this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
-};
-
 CreditCard.prototype.addError = function(name, msg) {
   var field, errorElement;
   if (name === 'cc_exp_date') {
-    field = this.el.querySelector('[name="cc_exp_date_month"]');
+    field = this.formElements["cc_exp_date_month"];
     field.setAttribute('aria-invalid', true);
-    field = this.el.querySelector('[name="cc_exp_date_year"]');
+    field.dataset.valid = false;
+    field = this.formElements["cc_exp_date_year"];
     field.setAttribute('aria-invalid', true);
+    field.dataset.valid = false;
   } else {
-    field = this.el.querySelector('[name="' + name + '"]');
+    field = this.formElements[name];
     field.setAttribute('aria-invalid', true);
+    field.dataset.valid = false;
   }
   errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
   errorElement.style.display = 'block';
@@ -102,13 +99,16 @@ CreditCard.prototype.addError = function(name, msg) {
 CreditCard.prototype.removeError = function(name) {
   var field, errorElement;
   if (name === 'cc_exp_date') {
-    field = this.el.querySelector('[name="cc_exp_date_month"]');
+    field = this.formElements["cc_exp_date_month"];
     field.removeAttribute('aria-invalid');
-    field = this.el.querySelector('[name="cc_exp_date_year"]');
+    field.dataset.valid = true;
+    field = this.formElements["cc_exp_date_year"];
     field.removeAttribute('aria-invalid');
+    field.dataset.valid = true;
   } else {
-    field = this.el.querySelector('[name="' + name + '"]');
+    field = this.formElements[name];
     field.removeAttribute('aria-invalid');
+    field.dataset.valid = true;
   }
   errorElement = this.el.querySelector('[data-validation-for="' + name + '"]');
   errorElement.style.display = 'none';
@@ -116,9 +116,8 @@ CreditCard.prototype.removeError = function(name) {
   errorElement.textContent = '';
 };
 
-CreditCard.prototype.validate = function() {
-  var valid = true;
-
+CreditCard.prototype.validate_cc_full_name = function(valid) {
+  console.log('this.formData', this.formData);
   if (this.formData.cc_full_name.trim().length === 0) {
     this.addError('cc_full_name', 'This field is required.');
     if (valid) this.formElements['cc_full_name'].focus();
@@ -126,7 +125,10 @@ CreditCard.prototype.validate = function() {
   } else {
     this.removeError('cc_full_name');
   }
+  return valid;
+};
 
+CreditCard.prototype.validate_cc_number = function(valid) {
   var cc = validation.validateCard(this.data.acceptedCards, this.formData.cc_number, this.formElements.cc_number);
   if (!cc.valid) {
     this.addError('cc_number', cc.message);
@@ -135,7 +137,10 @@ CreditCard.prototype.validate = function() {
   } else {
     this.removeError('cc_number');
   }
+  return valid;
+};
 
+CreditCard.prototype.validate_cc_exp_date = function(valid) {
   var exp = validation.validateExp(this.formData.cc_exp_date_month, this.formData.cc_exp_date_year);
   if (!exp.valid) {
     this.addError('cc_exp_date', exp.message);
@@ -144,7 +149,10 @@ CreditCard.prototype.validate = function() {
   } else {
     this.removeError('cc_exp_date');
   }
+  return valid;
+};
 
+CreditCard.prototype.validate_cc_code = function(valid) {
   var cvv = validation.validateCVV(this.formData.cc_code);
   if (!cvv.valid) {
     this.addError('cc_code', cvv.message);
@@ -153,6 +161,15 @@ CreditCard.prototype.validate = function() {
   } else {
     this.removeError('cc_code');
   }
+  return valid;
+};
+
+CreditCard.prototype.validate = function() {
+  var valid = true;
+  valid = this.validate_cc_full_name(valid);
+  valid = this.validate_cc_number(valid);
+  valid = this.validate_cc_exp_date(valid);
+  valid = this.validate_cc_code(valid);
   return valid;
 };
 
@@ -165,6 +182,25 @@ CreditCard.prototype.preprocessFormData = function() {
     if (name === 'cc_exp_date_month' && /^[1-9]$/.test(field.value))
       field.value = '0' + field.value;
     this.formData[name] = field.value;
+  }
+};
+
+CreditCard.prototype.handleKeyup = function(e) {
+  var el = e.target;
+  var validation = {
+    'cc_full_name': this.validate_cc_full_name,
+    'cc_number': this.validate_cc_number,
+    'cc_exp_date_month': this.validate_cc_exp_date,
+    'cc_exp_date_year': this.validate_cc_exp_date,
+    'cc_code': this.validate.cc_code
+  };
+
+  if (e.keyCode === 13) {
+    e.preventDefault();
+    this.handleSubmit();
+  } else if (el.dataset.valid == 'false' && typeof validation[el.getAttribute('name')] === 'function') {
+    this.formData[el.getAttribute('name')] = el.value;
+    validation[el.getAttribute('name')].call(this, false);
   }
 };
 
@@ -197,14 +233,23 @@ CreditCard.prototype.handleCancel = function() {
   });
 };
 
+CreditCard.prototype.addListeners = function() {
+  this.cancelButton.addEventListener('click', this.handleCancel.bind(this));
+  this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
+  for (var i = 0; i < this.fields.length; i++)
+    this.fields[i].addEventListener('keyup', this.handleKeyup.bind(this));
+};
+
 CreditCard.prototype.removeAllEventListeners = function() {
   this.cancelButton.removeEventListener('click', this.handleCancel.bind(this));
   this.cancelButton.setAttribute('disabled', true);
   this.submitButton.removeEventListener('click', this.handleSubmit.bind(this));
   this.submitButton.setAttribute('disabled', true);
-  for (var j = 0; j < this.fields.length; j++)
-    this.fields[j].setAttribute('disabled', true);
-
+  for (var j = 0; j < this.fields.length; j++) {
+    var field = this.fields[j];
+    field.removeEventListener('keyup', this.handleKeyup.bind(this));
+    field.setAttribute('disabled', true);
+  }
   this.subscribeSend.remove();
 };
 
