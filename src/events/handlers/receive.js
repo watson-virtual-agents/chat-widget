@@ -36,8 +36,9 @@ function _actions(data, tryIt, debug) {
   }
   events.publish('enable-input');
   events.publish('disable-loading');
-  events.publish('focus-input');
   events.publish('scroll-to-bottom');
+  if (utils.isVisible())
+    events.publish('focus-input');
 }
 
 function _layouts(data, tryIt, debug) {
