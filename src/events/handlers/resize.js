@@ -14,6 +14,7 @@
 
 var state = require('../../state');
 var events = require('../../events');
+var utils = require('../../utils');
 
 var debugResize = false;
 var timeout;
@@ -26,7 +27,8 @@ function resize() {
   clearTimeout(timeout);
   timeout = setTimeout(function() {
     timeout = null;
-    _resize();
+    if (utils.isVisible())
+      _resize();
   }, 150);
 }
 
