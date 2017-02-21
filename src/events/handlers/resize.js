@@ -19,7 +19,7 @@ var debugResize = false;
 var timeout;
 
 function _getHeight(element) {
-  return window.getComputedStyle(element).getPropertyValue('height').replace('px', '');
+  return Math.floor(window.getComputedStyle(element).getPropertyValue('height').replace('px', ''));
 }
 
 function resize() {
@@ -57,12 +57,12 @@ function _resize() {
 
     setTimeout(function() {
       if (current.rootHeight !== rootHeight) {
-        if (current.DEBUG && debugResize)
+        if (debugResize)
           console.log('New Root Height:', rootHeight);
         newState.rootHeight = rootHeight;
       }
       if (current.rootWidth !== rootWidth) {
-        if (current.DEBUG && debugResize)
+        if (debugResize)
           console.log('New Root Width:', rootWidth);
         newState.rootWidth = rootWidth;
         current.chat.style.width = rootWidth + 'px';
@@ -75,32 +75,34 @@ function _resize() {
         if (currentInputClone !== newInputClone) {
           current.inputClone.textContent = newInputClone;
           cloneHeight = _getHeight(current.inputClone);
-          /*if (current.DEBUG && debugResize)
+          /*if (debugResize)
             console.log('Clone does not match input:', 'current:', currentInputClone, 'new:', newInputClone, 'height:', cloneHeight);*/
         }
 
         if (current.inputHeight !== cloneHeight) {
-          if (current.DEBUG && debugResize)
+          if (debugResize)
             console.log('Input height does not match:', current.inputHeight, inputHeight);
           inputHeight = (calculatedMaxInputHeight > cloneHeight) ? cloneHeight : calculatedMaxInputHeight;
         }
 
         if (current.inputHeight !== inputHeight) {
-          if (current.DEBUG && debugResize)
+          if (debugResize)
             console.log('New Input Height:', current.inputHeight, inputHeight);
           current.input.style.height = inputHeight + "px";
           newState.inputHeight = inputHeight;
         }
       }
-
-      if (current.input)
-        inputHolderHeight = _getHeight(current.inputHolder);
-      chatHolderHeight = _getHeight(current.chatHolder);
-      chatHolderMaxHeight = chatHolderHeight;
-      containerHeight = Math.floor(rootHeight - inputHolderHeight);
     }, 0);
 
     setTimeout(function() {
+
+      if (current.input)
+        inputHolderHeight = _getHeight(current.inputContainer);
+      chatHolderHeight = _getHeight(current.chatHolder);
+      chatHolderMaxHeight = chatHolderHeight;
+      if (debugResize)
+        console.log('chatHolderHeight', chatHolderHeight, 'rootHeight', rootHeight, 'inputHolderHeight', inputHolderHeight);
+      containerHeight = Math.floor(rootHeight - inputHolderHeight);
 
       if (chatHolderHeight < containerHeight) {
         chatHolderHeight = 'auto';
@@ -110,14 +112,14 @@ function _resize() {
         chatHolderMaxHeight = chatHolderHeight;
       }
       if (current.containerHeight !== containerHeight) {
-        if (current.DEBUG && debugResize)
+        if (debugResize)
           console.log('New Container Height:', containerHeight);
         current.innerContainer.style.height = containerHeight + "px";
         newState.containerHeight = containerHeight;
       }
 
       if (current.chatHolderHeight !== chatHolderHeight || current.chatHolderMaxHeight !== chatHolderMaxHeight) {
-        if (current.DEBUG && debugResize) {
+        if (debugResize) {
           console.log('New Chat Holder Height: ' + chatHolderHeight);
           console.log('New Chat Holder Max Height: ' + chatHolderMaxHeight);
         }

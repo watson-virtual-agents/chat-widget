@@ -102,9 +102,9 @@ function start(data) {
     });
   }
 
-  window.addEventListener('resize', utils.debounce(function() {
+  window.addEventListener('resize', function() {
     events.publish('resize');
-  }, 200));
+  });
 
   window.addEventListener('orientationchange', function() {
     events.publish('resize');
