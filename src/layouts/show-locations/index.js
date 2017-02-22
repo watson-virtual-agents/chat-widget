@@ -428,13 +428,13 @@ ShowLocations.prototype.addLocation = function() {
     dom.email.parentNode.removeChild(dom.email);
 
   // phones
-  if (item.phones && item.phones.length > 0)
+  if (item.phones && item.phones.length > 0 && item.hasPhones !== false)
     createPhoneArray(dom.phone, item.phones);
   else
     dom.phone.parentNode.removeChild(dom.phone);
 
   // hours/timezone
-  if (item.days) {
+  if (item.days && item.hasDays !== false) {
     createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
   } else {
     for (var i = 0; i < dom.hours; i++)
