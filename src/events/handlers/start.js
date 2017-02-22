@@ -42,7 +42,7 @@ function start(data) {
     });
     addState.outerContainer.appendChild(chatBox);
     addState.inputHolder = current.root.querySelector('.IBMChat-input-container form');
-    addState.inputContainer = current.root.querySelector('.IBMChat-chat-textbox-container');
+    addState.inputContainer = current.root.querySelector('.IBMChat-chat-text-container');
     addState.input = current.root.querySelector('.IBMChat-chat-textbox');
     addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
     addState.form = current.root.querySelector('.IBMChat-input-form');
