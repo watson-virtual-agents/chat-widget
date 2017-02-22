@@ -117,7 +117,6 @@ CreditCard.prototype.removeError = function(name) {
 };
 
 CreditCard.prototype.validate_cc_full_name = function(valid) {
-  console.log('this.formData', this.formData);
   if (this.formData.cc_full_name.trim().length === 0) {
     this.addError('cc_full_name', 'This field is required.');
     if (valid) this.formElements['cc_full_name'].focus();
@@ -192,15 +191,15 @@ CreditCard.prototype.handleKeyup = function(e) {
     'cc_number': this.validate_cc_number,
     'cc_exp_date_month': this.validate_cc_exp_date,
     'cc_exp_date_year': this.validate_cc_exp_date,
-    'cc_code': this.validate.cc_code
+    'cc_code': this.validate_cc_code
   };
-
+  var name = el.getAttribute('name');
   if (e.keyCode === 13) {
     e.preventDefault();
     this.handleSubmit();
-  } else if (el.dataset.valid == 'false' && typeof validation[el.getAttribute('name')] === 'function') {
-    this.formData[el.getAttribute('name')] = el.value;
-    validation[el.getAttribute('name')].call(this, false);
+  } else if (el.dataset.valid == 'false' && typeof validation[name] === 'function') {
+    this.formData[name] = el.value;
+    validation[name].call(this, false);
   }
 };
 
