@@ -34,7 +34,7 @@ var defaultStyles = {
 function _attachStylesToDOM(styles, current) {
   var css = document.createElement('style');
   css.type = "text/css";
-  css.id = current.chatStyleID; //TODO also remove by this ID.
+  css.classList.add('styles-' + current.chatStyleID);
   if (css.styleSheet)
     css.styleSheet.cssText = styles;
   else
@@ -47,7 +47,7 @@ function _getStyles(current) {
   var noOpacityBackgroundArray = _hexToRGBArray(normalizeToHex(current.styles.background));
   var noOpacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0.8)";
   var opacityBackground = "rgba(" + noOpacityBackgroundArray[0] + "," + noOpacityBackgroundArray[1] + "," + noOpacityBackgroundArray[2] + ",0)";
-  var styles = css;
+  var styles = '';
   styles += containerClass + "{ overflow:hidden;}";
   styles += containerClass + " .IBMChat-outer-container {font-size: " + current.styles.fontSize + "; line-height: " + current.styles.fontSize + "; font-family: " + current.styles.fontFamily + ";}";
   styles += containerClass + " .IBMChat-outer-container textarea {font-size: " + current.styles.fontSize + "; font-family: " + current.styles.fontFamily + ";}";
@@ -133,14 +133,16 @@ function attachPlaybackStyles(chatID) {
 function attachStyles() {
   var current = state.get();
   var styles = _getStyles(current);
+  _attachStylesToDOM(css, current);
   _attachStylesToDOM(styles, current);
 }
 
 function removeStyles() {
   var current = state.get();
-  var id = current.chatStyleID;
-  var element = document.getElementById(id);
-  element.parentNode.removeChild(element);
+  var elements = document.querySelectorAll('.styles-' + current.chatStyleID);
+  elements.forEach(function(element) {
+    element.parentNode.removeChild(element);
+  });
   current.root.classList.remove('IBMChat-isLarge', 'IBMChat-relative', current.chatStyleID, 'chatID-' + current.chatID);
 }
 
