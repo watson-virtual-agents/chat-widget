@@ -13,7 +13,6 @@
 */
 
 var IBMChat = require('@watson-virtual-agent/chat-widget');
-require('./styles.css');
 
 // initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
 // with the corresponding values.

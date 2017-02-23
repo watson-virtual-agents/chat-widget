@@ -47,3 +47,5 @@ selenium/errorShots
 bin
 reports
 stats.json
+bundle.js
+bundle.js.map
