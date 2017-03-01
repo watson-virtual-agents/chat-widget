@@ -53,7 +53,7 @@ IBMChat.init(config);
 
 To extend the basic setup, you can manipulate the theme and securely hide your XIBMClientID and XIBMClientSecret values.
 
-In the following code example, the baseURL adds the `X-IBM-Client-Id` and `X-IBM-Client-Secret` to the request headers before the request is passed to the bot, and the theme colors are lightened.
+In the following code example, the baseURL adds the `X-IBM-Client-Id` and `X-IBM-Client-Secret` to the request headers before the request is passed to the bot ([./PROXY.md](./PROXY.md)), and the theme colors are lightened.
 
 For a full breakdown of the options for the init function, see [./JSDOCS.md](./JSDOCS.md);
 
@@ -82,7 +82,7 @@ You would then send an HTTP response to the POST from the Chat Widget with a JSO
 
 ## Moving to production
 
-In your production environment, you should replace the baseURL with a server of your own. This server should add the `X-IBM-Client-Id` and `X-IBM-Client-Secret` headers to the request and forward them on to https://api.ibm.com/virtualagent/run/api/v1. `X-IBM-Client-Id` and `X-IBM-Client-Secret` are used for billing, so it is of utmost importance you keep them secret.
+In your production environment, you should replace the baseURL with a server of your own. This server should add the `X-IBM-Client-Id` and `X-IBM-Client-Secret` headers to the request and forward them on to https://api.ibm.com/virtualagent/run/api/v1. `X-IBM-Client-Id` and `X-IBM-Client-Secret` are used for billing, so it is of utmost importance you keep them secret.[./PROXY.md](./PROXY.md).
 
 ## Events
 
