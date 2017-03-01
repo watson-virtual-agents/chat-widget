@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -minify -production",
     "start": "webpack-dev-server --port 3030"
   },
   "license": "Apache-2.0",
@@ -20,12 +21,10 @@
     }
   ],
   "devDependencies": {
-    "css-loader": "0.25.0",
-    "style-loader": "0.13.1",
     "webpack": "1.13.1",
     "webpack-dev-server": "1.14.1"
   },
   "dependencies": {
-    "@watson-virtual-agent/chat-widget": "1.2.11"
+    "@watson-virtual-agent/chat-widget": "1.4.0"
   }
 }

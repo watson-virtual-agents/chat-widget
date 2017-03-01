@@ -12,13 +12,12 @@
 * the License.
 */
 
-require('./styles.css');
-
 var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
 var state = require('../../state');
 var utils = require('../../utils');
+var styles = require('../../styles');
 
 var first = true;
 var displayLength = 3;
@@ -77,13 +76,11 @@ function initialSize(width) {
 
 function getWidth() {
   var current = state.get();
-  return current.rootWidth || current.root.clientWidth;
+  return current.chatHolder.querySelector('div:first-child').clientWidth;
 }
 
 function sameSize() {
-  var width = getWidth();
-  var isSameSize = (breakpointWidths[currentBreakpointKey] >= width);
-  return isSameSize;
+  return (breakpointWidths[currentBreakpointKey] >= getWidth());
 }
 
 function sizeMap() {
@@ -158,7 +155,14 @@ function formatAMPM(time) {
 }
 
 function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
-  if (hours && hours.length === 7) {
+  if (hours) {
+    if (hours.length < 7) {
+      for (var o = hours.length; o < 7; o++) {
+        hours.push({
+          isOpen: false
+        });
+      }
+    }
     // hours
     var today = new Date().getDay();
     var todaysHours = hours[today];
@@ -320,7 +324,7 @@ ShowLocations.prototype.addDetails = function() {
 };
 
 ShowLocations.prototype.convertColor = function(color) {
-  return utils.normalizeToHex(color).replace('#', '');
+  return styles.normalizeToHex(color).replace('#', '');
 };
 
 ShowLocations.prototype.drawLocations = function() {
@@ -328,7 +332,7 @@ ShowLocations.prototype.drawLocations = function() {
   var img = document.createElement('img');
   var width = getWidth();
   var config = {
-    size: width + 'x120',
+    size: (width - 8) + 'x120',
     scale: pixelRatio
   };
   if (this.data.length === 1)
@@ -398,7 +402,8 @@ ShowLocations.prototype.addLocation = function() {
       moreHours: el.querySelectorAll('.' + ns + '-locations-item-data-more-hours'),
       distance: el.querySelector('.' + ns + '-locations-item-distance'),
       backHolder: el.querySelector('.' + ns + '-locations-all-holder'),
-      back: el.querySelector('.' + ns + '-locations-all')
+      back: el.querySelector('.' + ns + '-locations-all'),
+      parentEl: el.querySelector('.' + ns + '-locations-item')
     };
   };
 
@@ -423,13 +428,13 @@ ShowLocations.prototype.addLocation = function() {
     dom.email.parentNode.removeChild(dom.email);
 
   // phones
-  if (item.phones && item.phones.length > 0)
+  if (item.phones && item.phones.length > 0 && item.hasPhones !== false)
     createPhoneArray(dom.phone, item.phones);
   else
     dom.phone.parentNode.removeChild(dom.phone);
 
   // hours/timezone
-  if (item.days && item.days.length === 7) {
+  if (item.days && item.hasDays !== false) {
     createHours(dom.hours, dom.moreHours, item.days, item.address.timezone, dom.timezone);
   } else {
     for (var i = 0; i < dom.hours; i++)

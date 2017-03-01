@@ -12,8 +12,6 @@
 * the License.
 */
 
-var Promise = require('es6-promise').Promise;
-
 function writeMessage(el, text) {
   new ParseContent(el, text);
 }
@@ -27,6 +25,16 @@ function validLink(link) {
     return link;
   else
     return 'http://' + link;
+}
+
+function isValidURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  return pattern.test(str);
 }
 
 ParseContent.prototype.init = function(el, text) {
@@ -65,7 +73,7 @@ ParseContent.prototype.writeMessage = function(el, content) {
 };
 
 ParseContent.prototype.addLineEndings = function(content) {
-  return new Promise(function(resolve, reject) {
+  return new window.Promise(function(resolve, reject) {
     try {
       var newContent = [];
       for (var i = 0; i < content.length; i++) {
@@ -92,40 +100,34 @@ ParseContent.prototype.addLineEndings = function(content) {
 };
 
 ParseContent.prototype.addUrls = function(content) {
-  return new Promise(function(resolve, reject) {
+  return new window.Promise(function(resolve, reject) {
     try {
       var newContent = [];
       for (var i = 0; i < content.length; i++) {
-        if (content[i].content) {
-          var exp = /(((https?:\/\/)|(www\.))[^\s]+)/gi;
-          var linked = content[i].content.replace(exp,'|||$1|||');
-          var arr = linked.split('|||');
-          arr.map(function(value) {
-            var newtext = value.replace(exp, '<a href="$1" target="_blank">$1</a>');
-            if (newtext === value) {
-              newContent.push({
-                content: value,
-                type: content[i].type,
-                attributes: content[i].attributes
-              });
-            } else {
-              newContent.push({
-                content: value,
-                type: 'a',
-                attributes: {
-                  href: validLink(value),
-                  target: '_blank'
-                }
-              });
-            }
-          });
-        } else {
-          newContent.push({
-            type: content[i].type,
-            content: content[i].content,
-            attributes: content[i].attributes
-          });
-        }
+        content[i].content = content[i].content || '';
+        var exp = /(\b((https?:\/\/)|(www\.))[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        var splitter = '|^|%|^|';
+        var linked = content[i].content.replace(exp, splitter + '$1' + splitter);
+        var arr = linked.split(splitter);
+        arr.map(function(value) {
+          if (value.search(exp) != -1 && isValidURL(value)) {
+            var link = validLink(value);
+            newContent.push({
+              content: value,
+              type: 'a',
+              attributes: {
+                href: link,
+                target: '_blank'
+              }
+            });
+          } else {
+            newContent.push({
+              content: value,
+              type: content[i].type,
+              attributes: content[i].attributes
+            });
+          }
+        });
       }
       resolve(newContent);
     } catch (e) {
@@ -135,7 +137,7 @@ ParseContent.prototype.addUrls = function(content) {
 };
 
 ParseContent.prototype.addEmails = function(content) {
-  return new Promise(function(resolve, reject) {
+  return new window.Promise(function(resolve, reject) {
     try {
       var newContent = [];
       for (var i = 0; i < content.length; i++) {

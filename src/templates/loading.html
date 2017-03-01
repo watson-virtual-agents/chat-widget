@@ -1,0 +1,24 @@
+<section class="IBMChat-loading-container">
+  <div class="IBMChat-loading IBMChat-hidden">
+    <div class="IBMChat-loading-icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <circle class="IBMChat-ball IBMChat-bouncing" cx="5px" cy="10px" r="2.5"/>
+        <circle class="IBMChat-ball IBMChat-bouncing" cx="5px" cy="20px" r="2.5"/>
+        <circle class="IBMChat-ball" cx="5px" cy="15px" r="2.5"/>
+      </svg>
+    </div>
+    <div class="IBMChat-loading-message">
+      <span class="IBMChat-loading-message-text"></span>
+      <span class="IBMChat-loading-message-retry">
+        <span class="IBMChat-loading-retry-message IBMChat-hidden">${retryAttempt}</span>
+      </span>
+    </div>
+  </div>
+  <div class="IBMChat-loading-failure-message IBMChat-watson-message-container IBMChat-hidden">
+    <div class="IBMChat-watson-message-line"></div>
+    <div class="IBMChat-watson-message">
+      <span class="IBMChat-loading-failure-message-text"></span>
+      <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">${retry}</a>
+    </div>
+  </div>
+</section>

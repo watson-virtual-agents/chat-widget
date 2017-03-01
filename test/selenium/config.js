@@ -73,6 +73,12 @@ var sharedCommands = {
       this.assert.equal(key + ':' + result.value, key + ':' + value);
     });
     return this;
+  },
+  delayedClick: function(element) {
+    this.api.pause(1000);
+    this.click(element);
+    this.api.pause(1000);
+    return this;
   }
 };
 

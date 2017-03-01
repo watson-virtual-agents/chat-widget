@@ -3,6 +3,16 @@
   width: 100%;
 }
 
+/* utils */
+
+.IBMChat-hidden {
+  display: none;
+}
+
+.IBMChat-relative {
+  position: relative;
+}
+
 .IBMChat-outer-container {
   border: none;
   box-sizing: border-box;
@@ -160,10 +170,11 @@
 .IBMChat-input-form {
   display: table-cell;
   position: relative;
-  height: 24px;
+  min-height: 30px;
 }
 
 .IBMChat-chat-textbox-container {
+  min-height: 30px;
   padding: 1em 2em 2em 2em;
 }
 
@@ -177,7 +188,7 @@
   font-weight: normal;
   line-height: 1.5em;
   margin: 0;
-  min-height: 1.5em;
+  min-height: 26px;
   padding: 0;
   position: relative;
   white-space: pre-wrap;
@@ -196,11 +207,12 @@
   height: 1.5em;
   line-height: 1.5em;
   margin: 0;
-  min-height: 1.5em;
+  min-height: 26px;
   overflow: hidden;
   padding: 0 0 3px 0;
   resize: none;
   text-wrap: unrestricted;
+  vertical-align: bottom;
   width: 100%;
   white-space: pre-wrap;
   white-space: pre-line;
@@ -241,44 +253,72 @@
 	position: absolute !important;
 }
 
-/* Spinner */
-.IBMChat-input-loading {
-  z-index: 2;
+/* Loading */
+
+.IBMChat-loading-container {
+  margin-bottom: 1em;
+}
+
+.IBMChat-loading {
+  min-height: 30px;
+  position: relative;
+}
+
+.IBMChat-loading-icon {
+  height: 30px;
   position: absolute;
-  right: 2em;
-  top: 8px;
-  height: 32px;
-  width: 32px;
+  top: 0;
+  left: -4px;
+  width: 10px;
 }
 
-.IBMChat-ibm-spinner-start {
-  opacity: 0;
+.IBMChat-loading-icon svg {
+  height: 30px;
+  width: 10px;
 }
 
-.IBMChat-ibm-spinner {
-  fill: transparent;
-  stroke-width: 3;
-  stroke-linecap: "butt";
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
+.IBMChat-loading-message {
+  display: inline-block;
+  min-height: 30px;
+  line-height: 1.2em;
+  padding: 5px 1em 0 1em;
 }
 
-/* infinite rotation*/
-.IBMChat-init-spin {
-  animation: rotate-loop 1000ms linear infinite;
+.IBMChat-bouncing {
+  animation: bounceBack 420ms infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  animation-timing-function: cubic-bezier(.42,0,1,1);
 }
 
-.IBMChat-end-spin svg circle {
-  display: none;
+.IBMChat-bouncing:nth-child(2) {
+  animation: bounce 420ms infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  animation-timing-function: cubic-bezier(.42,0,1,1);
 }
 
-/* looping rotation */
-@keyframes rotate-loop {
-  from {
-    transform: rotate(0deg);
+@keyframes bounce {
+  0% {
+    transform: translateY(5px);
   }
-  to {
-    transform: rotate(360deg);
+  72% {
+    transform: translateY(-5px);
+  }
+  72%,100%{
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes bounceBack {
+  0% {
+    transform: translateY(-5px);
+  }
+  72% {
+    transform: translateY(5px);
+  }
+  72%,100%{
+    transform: translateY(5px);
   }
 }
 
@@ -297,4 +337,288 @@
 }
 .IBMChat-isLarge .IBMChat-small-hide {
   display: unset;
+}
+
+/* cc-validator */
+
+.IBMChat-creditcard-container {
+  margin-top: 1em;
+  padding: 1em 1.5em 1em 1.5em;
+  width: 240px;
+}
+
+.IBMChat-creditcard-container fieldset {
+  border:none;
+  margin:0;
+  padding:0;
+}
+
+.IBMChat-creditcard-row {
+  padding-bottom: 1em;
+}
+
+.IBMChat-creditcard-row input[name="cc_full_name"], .IBMChat-creditcard-row input[name="cc_number"] {
+  width: 100%;
+}
+
+.IBMChat-creditcard-row input[name="cc_exp_date_month"] {
+  max-width: 32px;
+}
+
+.IBMChat-creditcard-row input[name="cc_exp_date_year"], .IBMChat-creditcard-row input[name="cc_code"]  {
+  max-width: 64px;
+}
+
+.IBMChat-creditcard-col {
+  display: inline-block;
+}
+
+.IBMChat-creditcard-col:nth-child(2) {
+  padding-left:1.5em;
+}
+
+.IBMChat-creditcard-buttons:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.IBMChat-creditcard-buttons button {
+  width: 95px;
+  float: left;
+  text-overflow: clip;
+}
+
+.IBMChat-creditcard-buttons button:last-child {
+  float: right;
+  text-overflow: clip;
+}
+
+/* choose */
+
+.IBMChat-choose-container > div {
+	margin-top: 1em;
+}
+
+/* choose location type */
+
+.IBMChat-islocationapi-container > div {
+	margin-top: 1em;
+}
+
+/* error */
+
+.IBMChat-error {
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+/* form */
+
+.IBMChat-form-container {
+  margin-top: 1em;
+  padding: 1em 1.5em 1em 1.5em;
+  width: 240px;
+}
+
+.IBMChat-form-container fieldset {
+  border:none;
+  margin:0;
+  padding:0;
+}
+
+.IBMChat-form-fields {
+  width:100%;
+}
+
+.IBMChat-form-fields-row {
+  padding-bottom:1.5em;
+}
+
+.IBMChat-form-fields-row input {
+  width: 100%;
+}
+
+.IBMChat-form-buttons {
+  text-align:center;
+  width: 100%;
+}
+
+.IBMChat-form-buttons:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.IBMChat-form-cancel {
+  float:left;
+  max-width: 50%;
+}
+.IBMChat-form-submit {
+  float:right;
+  max-width: 50%;
+}
+
+/* locations */
+
+.IBMChat-map {
+  margin-top: 1em;
+}
+
+.IBMChat-map-data {
+  font-size:0.85em;
+}
+
+.IBMChat-map-img {
+  overflow: hidden;
+}
+
+.IBMChat-map-img img {
+  margin: 0 0 0.5em 0;
+  height: 120px;
+}
+
+.IBMChat-map-multiple-locations {
+  cursor: default;
+  display: table;
+  width: 100%;
+}
+
+.IBMChat-map-multiple-locations .IBMChat-map-locations-row {
+  display:table-row;
+  width: 100%;
+}
+
+.IBMChat-map-multiple-locations .IBMChat-map-locations-cell {
+  display: table-cell;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.IBMChat-map-location-active .IBMChat-map-multiple-locations {
+  opacity: 1;
+}
+
+.IBMChat-map-locations-item.IBMChat-map-multiple-locations {
+  padding: 0.5em 0 0.5em 0;
+  white-space: normal;
+}
+
+.IBMChat-disabled-layout .IBMChat-map-locations-item.IBMChat-map-multiple-locations {
+  cursor: default;
+}
+
+.IBMChat-map-data-section {
+  margin-top:0.5em;
+}
+
+.IBMChat-map-data-float-holder:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.IBMChat-map-locations-item {
+  border-bottom:1px solid #505050;
+  text-align:left;
+  padding: 1em;
+}
+
+
+.IBMChat-map-locations-item-icon-holder {
+  text-align:center;
+  width: 40px;
+}
+
+.IBMChat-map-locations-item-icon {
+  border-radius: 24px;
+  height:24px;
+  line-height: 24px;
+  margin-right:8px;
+  width:24px;
+}
+
+.IBMChat-map-locations-item-data {
+
+}
+.IBMChat-map-locations-item-data-title {
+  font-size:1.3em;
+  font-weight:300;
+  line-height:1.2em;
+}
+
+.IBMChat-map-locations-item-data-section {
+  padding-bottom:0.5em;
+}
+
+.IBMChat-map-locations-item-data-email {
+  padding-bottom:0;
+}
+
+.IBMChat-map-locations-item-data-phone {
+  display: table;
+  max-width:400px;
+  width: 100%;
+}
+.IBMChat-map-contact-row {
+  padding-bottom:0.5em;
+}
+
+.IBMChat-map-contact-type {
+  font-size:0.9em;
+}
+
+.IBMChat-map-locations-item-distance {
+  font-size:0.9em;
+  width:64px;
+}
+
+button.IBMChat-map-locations-all {
+  font-size:0.9em;
+  line-height:1.5em;
+  margin: 1em 0 0 0;
+  padding: 0 0.5em 0 0.5em;
+}
+
+
+.IBMChat-map-hours-open {
+  font-weight: bold;
+}
+
+.IBMChat-map-days-hours-day, .IBMChat-map-days-hours-hours, .IBMChat-map-days-hours-closed {
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.IBMChat-map-days-hours-day {
+  font-weight: bold;
+}
+
+.IBMChat-map-hours-timezone {
+  font-size: 0.8em;
+  padding-bottom: 0.5em;
+}
+
+.IBMChat-map-locations-item-data-hours {
+  margin-top:0.5em;
+}
+
+.IBMChat-isLarge .IBMChat-map-locations-item-data {
+  float:left;
+  padding-right:5%;
+  width:45%;
+}
+.IBMChat-isLarge .IBMChat-map-locations-item-data-hours {
+  margin-top:0;
+}
+.IBMChat-isLarge .IBMChat-map-locations-item-data-more-hours {
+  margin-top:0.5em;
 }

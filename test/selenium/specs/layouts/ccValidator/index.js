@@ -42,50 +42,50 @@ module.exports = {
   },
   'it should show an error with no name': function (client) {
     var PO = client.page.ccValidator();
-    PO.click('@submitButton')
+    PO.delayedClick('@submitButton')
       .assert.containsText('@nameValidation', strings.required);
   },
   'it should remove name error with name': function (client) {
     var PO = client.page.ccValidator();
     PO.setValue('@nameInput', strings.name)
-      .click('@submitButton')
+      .delayedClick('@submitButton')
       .waitForElementNotVisible('@nameValidation')
       .assert.containsText('@nameValidation', '');
   },
   'it should show an error with no credit card': function (client) {
     var PO = client.page.ccValidator();
-    PO.click('@submitButton')
+    PO.delayedClick('@submitButton')
       .assert.containsText('@ccValidation', strings.required);
   },
   'it should remove credit card error with credit card': function (client) {
     var PO = client.page.ccValidator();
     PO.setValue('@ccInput', strings.cc)
-      .click('@submitButton')
+      .delayedClick('@submitButton')
       .waitForElementNotVisible('@ccValidation')
       .assert.containsText('@ccValidation', '');
   },
   'it should show an error with no expiration date': function (client) {
     var PO = client.page.ccValidator();
-    PO.click('@submitButton')
+    PO.delayedClick('@submitButton')
       .assert.containsText('@expValidation', strings.expDateError);
   },
   'it should remove expiration date error with expiration date': function (client) {
     var PO = client.page.ccValidator();
     PO.setValue('@monthInput', strings.month)
       .setValue('@yearInput', strings.year)
-      .click('@submitButton')
+      .delayedClick('@submitButton')
       .waitForElementNotVisible('@expValidation')
       .assert.containsText('@expValidation', '');
   },
   'it should show an error with no cvv': function (client) {
     var PO = client.page.ccValidator();
-    PO.click('@submitButton')
+    PO.delayedClick('@submitButton')
       .assert.containsText('@cvvValidation', strings.cvvError);
   },
   'it should remove cvv error with cvv and submit the form': function (client) {
     var PO = client.page.ccValidator();
     PO.setValue('@cvvInput', strings.cvv)
-      .click('@submitButton')
+      .delayedClick('@submitButton')
       .assert.containsText('@lastMessage', strings.success);
   },
   'it should update user profile with credit card information': function (client) {
@@ -105,7 +105,7 @@ module.exports = {
       .setMessage(mocks.responses.getCCLayout)
       .typeMessage(strings.showLayout)
       .assert.containsText('@lastMessage', strings.pleasePay)
-      .click('@cancelButton')
+      .delayedClick('@cancelButton')
       .assert.containsText('@lastMessage', strings.cancel);
     client.end();
   }

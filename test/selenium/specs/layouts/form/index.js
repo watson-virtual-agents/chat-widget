@@ -41,56 +41,56 @@ module.exports = {
   },
   'it should show an error with no address': function (client) {
     var PO = client.page.form();
-    PO.click('@submitButton')
+    PO.delayedClick('@submitButton')
       .assert.containsText('@addressValidation', strings.required);
   },
   'it should remove address error with address': function (client) {
     var PO = client.page.form();
     PO.setValue('@addressInput', strings.address)
-      .click('@submitButton')
+      .delayedClick('@submitButton')
       .waitForElementNotVisible('@addressValidation')
       .assert.containsText('@addressValidation', '');
   },
   'it should show an error with no city': function (client) {
     var PO = client.page.form();
-    PO.click('@submitButton')
+    PO.delayedClick('@submitButton')
       .assert.containsText('@cityValidation', strings.required);
   },
   'it should remove city error with city': function (client) {
     var PO = client.page.form();
     PO.setValue('@cityInput', strings.city)
-      .click('@submitButton')
+      .delayedClick('@submitButton')
       .waitForElementNotVisible('@cityValidation')
       .assert.containsText('@cityValidation', '');
   },
   'it should show an error with no state': function (client) {
     var PO = client.page.form();
-    PO.click('@submitButton')
+    PO.delayedClick('@submitButton')
       .assert.containsText('@stateValidation', strings.required);
   },
   'it should remove state error with state': function (client) {
     var PO = client.page.form();
     PO.setValue('@stateInput', strings.state)
-      .click('@submitButton')
+      .delayedClick('@submitButton')
       .waitForElementNotVisible('@stateValidation')
       .assert.containsText('@stateValidation', '');
   },
   'it should show an error with no zip': function (client) {
     var PO = client.page.form();
-    PO.click('@submitButton')
+    PO.delayedClick('@submitButton')
       .assert.containsText('@zipValidation', strings.required);
   },
   'it should show an error with bad zip': function (client) {
     var PO = client.page.form();
     PO.setValue('@zipInput', strings.badZipcode)
-      .click('@submitButton')
+      .delayedClick('@submitButton')
       .assert.containsText('@zipValidation', strings.badZipMessage);
   },
   'it should remove zip error with zip and submit the form': function (client) {
     var PO = client.page.form();
     PO.clearValue('@zipInput')
       .setValue('@zipInput', strings.goodZipcode)
-      .click('@submitButton')
+      .delayedClick('@submitButton')
       .assert.containsText('@lastMessage', strings.success);
   },
   'it should update user profile with correct address': function (client) {
@@ -111,7 +111,7 @@ module.exports = {
       .setMessage(mocks.responses.getFormLayout)
       .typeMessage(strings.showLayout)
       .assert.containsText('@lastMessage', strings.enterAddress)
-      .click('@cancelButton')
+      .delayedClick('@cancelButton')
       .assert.containsText('@lastMessage', strings.cancel);
     client.end();
   }
