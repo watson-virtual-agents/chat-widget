@@ -53,7 +53,7 @@ IBMChat.init(config);
 
 To extend the basic setup, you can manipulate the theme and securely hide your XIBMClientID and XIBMClientSecret values.
 
-In the following code example, the baseURL adds the `X-IBM-Client-Id` and `X-IBM-Client-Secret` to the request headers before the request is passed to the bot, and the theme colors are lightened.
+In the following code example, the baseURL adds the `X-IBM-Client-Id` and `X-IBM-Client-Secret` to the request headers before the request is passed to the bot ([./PROXY.md](./PROXY.md)), and the theme colors are lightened.
 
 For a full breakdown of the options for the init function, see [./JSDOCS.md](./JSDOCS.md);
 
