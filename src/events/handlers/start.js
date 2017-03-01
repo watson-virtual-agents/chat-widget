@@ -14,6 +14,7 @@
 
 var state = require('../../state');
 var utils = require('../../utils');
+var styles = require('../../styles');
 var events = require('../../events');
 var templates = require('../../templates');
 
@@ -21,7 +22,7 @@ function start(data) {
   var current;
   state.set(data);
   current = state.get();
-  utils.attachStyles();
+  styles.attachStyles();
   current.root.classList.add(current.chatStyleID);
   current.root.innerHTML = templates.start;
   var addState = {
@@ -41,7 +42,7 @@ function start(data) {
     });
     addState.outerContainer.appendChild(chatBox);
     addState.inputHolder = current.root.querySelector('.IBMChat-input-container form');
-    addState.inputContainer = current.root.querySelector('.IBMChat-chat-textbox-container');
+    addState.inputContainer = current.root.querySelector('.IBMChat-chat-text-container');
     addState.input = current.root.querySelector('.IBMChat-chat-textbox');
     addState.inputClone = current.root.querySelector('.IBMChat-chat-textbox-clone');
     addState.form = current.root.querySelector('.IBMChat-input-form');
@@ -101,9 +102,9 @@ function start(data) {
     });
   }
 
-  window.addEventListener('resize', utils.debounce(function() {
+  window.addEventListener('resize', function() {
     events.publish('resize');
-  }, 200));
+  });
 
   window.addEventListener('orientationchange', function() {
     events.publish('resize');

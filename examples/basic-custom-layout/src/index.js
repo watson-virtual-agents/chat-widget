@@ -13,7 +13,6 @@
 */
 
 var IBMChat = require('@watson-virtual-agent/chat-widget');
-require('./styles.css');
 
 /**
  * This example shows how to create a custom layout to replace the chat widget's

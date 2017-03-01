@@ -18,5 +18,12 @@ This example shows how to use "actions" as part of your flow in the chat widget.
   3. `npm start`
   4.  open `http://localhost:3030`
 
+## Building and Running on a Server
+
+  1. Complete step 1 above.
+  2. Complete step 2 above.
+  3. `npm run build`
+  4. Upload `index.html` and `bundle.js`
+
 ## Additional Documentation
 Please see [our actions documentation](https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/DOCS.md#actions) for additional information.

@@ -36,8 +36,9 @@ function _actions(data, tryIt, debug) {
   }
   events.publish('enable-input');
   events.publish('disable-loading');
-  events.publish('focus-input');
   events.publish('scroll-to-bottom');
+  if (utils.isVisible())
+    events.publish('focus-input');
 }
 
 function _layouts(data, tryIt, debug) {
@@ -61,10 +62,21 @@ function _layouts(data, tryIt, debug) {
 
 function _intents(data) {
   var msg = data.message;
-  if (msg && msg.log_data && msg.log_data.intents && msg.log_data.intents.length > 0 && msg.log_data.intents[0].intent && msg.log_data.show_intent_link === true) {
+  var getIntentField = function(msg) {
+    if (!msg || !msg.log_data)
+      return false;
+    if (msg.log_data.wva_top_intent)
+      return msg.log_data.wva_top_intent;
+    else if (msg.log_data.intents && msg.log_data.intents.length > 0 && msg.log_data.intents[0].intent)
+      return msg.log_data.intents[0].intent;
+    else
+      return false;
+  };
+  var intent = getIntentField(msg);
+  if (msg && msg.log_data && msg.log_data.show_intent_link === true && intent) {
     events.publish('try-it-get-intent-data', {
       element: data.intentElement,
-      intent: msg.log_data.intents[0].intent
+      intent: intent
     });
   }
 }
