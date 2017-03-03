@@ -14,10 +14,40 @@
 
 var state = require('../../state');
 
+var smoothStep = function(start, end, point) {
+  if (point <= start) return 0;
+  if (point >= end) return 1;
+  var x = (point - start) / (end - start);
+  return x*x*(3 - 2*x);
+};
+
 function scrollToBottom() {
-  var current = state.get();
   setTimeout(function() {
-    current.chatHolder.scrollTop = current.chatHolder.scrollHeight;
+    var duration = 300;
+    var startTime = Date.now();
+    var endTime = startTime + duration;
+    var current = state.get();
+    var startTop = current.chatHolder.scrollTop;
+    var previousTop = startTop;
+    var distance = current.chatHolder.scrollHeight - startTop;
+    var scrolling = setInterval(function() {
+      var now = Date.now();
+      if (current.chatHolder.scrollTop != previousTop) {
+        clearInterval(scrolling);
+        return;
+      } else if (now >= endTime) {
+        clearInterval(scrolling);
+        current.chatHolder.scrollTop = current.chatHolder.scrollHeight;
+        return;
+      } else if (current.chatHolder.scrollTop == current.chatHolder.scrollHeight) {
+        clearInterval(scrolling);
+        return;
+      }
+      var point = smoothStep(startTime, endTime, now);
+      var frameTop = Math.round(startTop + (distance * point));
+      current.chatHolder.scrollTop = frameTop;
+      previousTop = current.chatHolder.scrollTop;
+    }, 0);
   }, 100);
 }
 

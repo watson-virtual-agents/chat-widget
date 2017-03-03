@@ -398,7 +398,6 @@ var IBMChat = {
    */
   state: {
     /**
-    * Get an item from the user profile based on key.
     * @memberof IBMChat.state
     * @function get
     * @example
@@ -407,7 +406,6 @@ var IBMChat = {
     */
     get: bootstrap.state.get,
     /**
-    * Set an item from the user profile based on key.
     * @memberof IBMChat.state
     * @function set
     * @param {Object} newState - The key/value pairs put here will merge with current application state.
@@ -419,6 +417,35 @@ var IBMChat = {
     */
     set: function(obj) {
       bootstrap.state.set(obj);
+      return IBMChat;
+    }
+  },
+  /**
+   * @namespace context
+   * @memberof IBMChat
+   */
+  context: {
+    /**
+    * For [use with Custom Workspaces](https://www.ibm.com/watson/developercloud/doc/conversation/dialog-build.html#context-variables)
+    * @memberof IBMChat.context
+    * @function get
+    * @example
+    * IBMChat.context.get();
+    * @returns {Object} Returns: the current content.
+    */
+    get: bootstrap.context.get,
+    /**
+    * @memberof IBMChat.context
+    * @function set
+    * @param {Object} newContext - The key/value pairs put here will merge with current context variables.
+    * @returns {IBMChat} - Returns IBMChat for chaining.
+    * @example
+    * IBMChat.context.set({
+    *      "first_name": "Bob"
+    * });
+    */
+    set: function(obj) {
+      bootstrap.context.set(obj);
       return IBMChat;
     }
   },

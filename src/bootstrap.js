@@ -17,6 +17,7 @@ var events = require('./events');
 var eventHandlers = require('./events/handlers');
 var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
 var state = require('./state');
+var context = require('./context');
 var utils = require('./utils');
 var profile = require('./profile');
 var assign = require('lodash/assign');
@@ -317,6 +318,7 @@ module.exports = {
   hasSubscription: events.hasSubscription,
   completeEvent: events.completeEvent,
   state: state,
+  context: context,
   clear: function() {
     events.publish('restart');
   }

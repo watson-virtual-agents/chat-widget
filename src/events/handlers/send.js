@@ -89,7 +89,7 @@ function sendToBot(data, retry) {
   events.publish('focus-input');
 
   BotSDK
-    .send( current.botID, current.chatID, data.text )
+    .send( current.botID, current.chatID, data.text, current.context )
     .then( function(res) {
       delay(function() {
         resolve(data, res);
