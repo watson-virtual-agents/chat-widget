@@ -77,7 +77,7 @@ function init(config) {
   if (current.active === true) {
     return destroy()
       .then(function() {
-        init(config);
+        return init(config);
       });
   }
 
@@ -263,14 +263,15 @@ function destroy() {
   return new window.Promise(function(resolve) {
     var current = state.get();
     if (current.active) {
-      if (current.root && current.onResize)
+      styles.removeStyles(current.root, current.chatStyleID, current.chatID);
+      if (current.root && current.onResize) {
         utils.removeResizeListener(current.root, current.onResize);
-      utils.endVisibilityCheck();
-      styles.removeStyles();
+        utils.endVisibilityCheck();
+        if (typeof current.originalContent !== 'undefined' && current.root)
+          current.root.innerHTML = current.originalContent;
+      }
       events.publish('destroy');
       events.destroy();
-      if (typeof current.originalContent !== 'undefined' && current.root)
-        current.root.innerHTML = current.originalContent;
       state.destroy();
     }
     resolve();

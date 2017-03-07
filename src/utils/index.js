@@ -42,7 +42,7 @@ function serialize(obj) {
 }
 
 function compile(str, options) {
-  if (options && Object.keys(options).length > 0) {
+  if (options && Array.isArray(Object.keys(options)) && Object.keys(options).length > 0) {
     Object.keys(options).forEach(function(key) {
       str = str.split('${' + key + '}').join(options[key]);
     });
