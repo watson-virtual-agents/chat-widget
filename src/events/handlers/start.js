@@ -38,7 +38,7 @@ function start(data) {
     chatBox.classList.add('IBMChat-input-container');
     chatBox.classList.add('IBMChat-input-container-theme');
     chatBox.innerHTML = utils.compile(templates.input, {
-      placeholder: 'Enter message…'
+      placeholder: 'Enter message...'
     });
     addState.outerContainer.appendChild(chatBox);
     addState.inputHolder = current.root.querySelector('.IBMChat-input-container form');

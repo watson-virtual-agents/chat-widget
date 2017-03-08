@@ -51,10 +51,10 @@ RequestGeolocationLatlong.prototype = {
       navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
         if (result.state === 'prompt') {
           data.msgElement.textContent = 'Please share your current location.';
-          publish('enable-loading', 'Your browser is asking you to share your location…');
+          publish('enable-loading', 'Your browser is asking you to share your location...');
         } else if (result.state === 'granted') {
           data.msgElement.textContent = 'You have allowed your browser to share your current location.';
-          publish('enable-loading', 'Looking up your current location…');
+          publish('enable-loading', 'Looking up your current location...');
         } else if (result.state === 'denied') {
           data.msgElement.textContent = 'You have denied sharing your location on this website.';
         }

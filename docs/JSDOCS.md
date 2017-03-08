@@ -15,6 +15,9 @@
     * [.state](#IBMChat.state) : <code>object</code>
         * [.get()](#IBMChat.state.get) ⇒ <code>Object</code>
         * [.set(newState)](#IBMChat.state.set) ⇒ <code>[IBMChat](#IBMChat)</code>
+    * [.context](#IBMChat.context) : <code>object</code>
+        * [.get()](#IBMChat.context.get) ⇒ <code>Object</code>
+        * [.set(newContext)](#IBMChat.context.set) ⇒ <code>[IBMChat](#IBMChat)</code>
     * [.init(config)](#IBMChat.init) ⇒ <code>Promise</code>
     * ~~[.restart()](#IBMChat.restart) ⇒ <code>Promise</code>~~
     * [.destroy()](#IBMChat.destroy) ⇒ <code>Promise</code>
@@ -161,8 +164,6 @@ IBMChat.profile.forEach(function(key, value) {
 <a name="IBMChat.state.get"></a>
 
 #### state.get() ⇒ <code>Object</code>
-Get an item from the user profile based on key.
-
 **Kind**: static method of <code>[state](#IBMChat.state)</code>  
 **Returns**: <code>Object</code> - Returns: the current application state.  
 **Example**  
@@ -172,8 +173,6 @@ IBMChat.state.get();
 <a name="IBMChat.state.set"></a>
 
 #### state.set(newState) ⇒ <code>[IBMChat](#IBMChat)</code>
-Set an item from the user profile based on key.
-
 **Kind**: static method of <code>[state](#IBMChat.state)</code>  
 **Returns**: <code>[IBMChat](#IBMChat)</code> - - Returns IBMChat for chaining.  
 
@@ -184,6 +183,42 @@ Set an item from the user profile based on key.
 **Example**  
 ```js
 IBMChat.state.set({
+     "first_name": "Bob"
+});
+```
+<a name="IBMChat.context"></a>
+
+### IBMChat.context : <code>object</code>
+**Kind**: static namespace of <code>[IBMChat](#IBMChat)</code>  
+
+* [.context](#IBMChat.context) : <code>object</code>
+    * [.get()](#IBMChat.context.get) ⇒ <code>Object</code>
+    * [.set(newContext)](#IBMChat.context.set) ⇒ <code>[IBMChat](#IBMChat)</code>
+
+<a name="IBMChat.context.get"></a>
+
+#### context.get() ⇒ <code>Object</code>
+For [use with Custom Workspaces](https://www.ibm.com/watson/developercloud/doc/conversation/dialog-build.html#context-variables)
+
+**Kind**: static method of <code>[context](#IBMChat.context)</code>  
+**Returns**: <code>Object</code> - Returns: the current content.  
+**Example**  
+```js
+IBMChat.context.get();
+```
+<a name="IBMChat.context.set"></a>
+
+#### context.set(newContext) ⇒ <code>[IBMChat](#IBMChat)</code>
+**Kind**: static method of <code>[context](#IBMChat.context)</code>  
+**Returns**: <code>[IBMChat](#IBMChat)</code> - - Returns IBMChat for chaining.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| newContext | <code>Object</code> | The key/value pairs put here will merge with current context variables. |
+
+**Example**  
+```js
+IBMChat.context.set({
      "first_name": "Bob"
 });
 ```

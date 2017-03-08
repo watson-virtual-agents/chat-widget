@@ -65,8 +65,8 @@ function _intents(data) {
   var getIntentField = function(msg) {
     if (!msg || !msg.log_data)
       return false;
-    if (msg.log_data.wva_top_intent)
-      return msg.log_data.wva_top_intent;
+    if (msg.log_data.wva_top_intent && typeof msg.log_data.wva_top_intent === 'object' && msg.log_data.wva_top_intent.intent)
+      return msg.log_data.wva_top_intent.intent;
     else if (msg.log_data.intents && msg.log_data.intents.length > 0 && msg.log_data.intents[0].intent)
       return msg.log_data.intents[0].intent;
     else

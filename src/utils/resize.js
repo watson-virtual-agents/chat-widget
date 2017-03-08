@@ -34,11 +34,13 @@ function resizeListener(e) {
   if (win.__resizeRAF__)
     cancelFrame(win.__resizeRAF__);
   win.__resizeRAF__ = requestFrame(function() {
-    var trigger = win.__resizeTrigger__;
-    trigger.__resizeListeners__.forEach(function(fn) {
-      if (fn && typeof fn === 'function')
-        fn.call(trigger, e);
-    });
+    var trigger = win.__resizeTrigger__ || {};
+    if (trigger.__resizeListeners__ && trigger.__resizeListeners__.length > 0) {
+      trigger.__resizeListeners__.forEach(function(fn) {
+        if (fn && typeof fn === 'function')
+          fn.call(trigger, e);
+      });
+    }
   });
 }
 
@@ -48,33 +50,37 @@ function objectLoad() {
 }
 
 var addResizeListener = function(element, fn) {
-  if (!element.__resizeListeners__) {
-    element.__resizeListeners__ = [];
-    if (document.attachEvent) {
-      element.__resizeTrigger__ = element;
-      element.attachEvent('onresize', resizeListener);
-    } else {
-      var obj = element.__resizeTrigger__ = document.createElement('object');
-      if (getComputedStyle(element).position == 'static')
-        element.classList.add('IBMChat-relative');
-      obj.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;');
-      obj.__resizeElement__ = element;
-      obj.onload = objectLoad;
-      obj.type = 'text/html';
-      element.appendChild(obj);
+  if (element) {
+    if (!element.__resizeListeners__) {
+      element.__resizeListeners__ = [];
+      if (document.attachEvent) {
+        element.__resizeTrigger__ = element;
+        element.attachEvent('onresize', resizeListener);
+      } else {
+        var obj = element.__resizeTrigger__ = document.createElement('object');
+        if (getComputedStyle(element).position == 'static')
+          element.classList.add('IBMChat-relative');
+        obj.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;');
+        obj.__resizeElement__ = element;
+        obj.onload = objectLoad;
+        obj.type = 'text/html';
+        element.appendChild(obj);
+      }
     }
+    element.__resizeListeners__.push(fn);
   }
-  element.__resizeListeners__.push(fn);
 };
 
 var removeResizeListener = function(element, fn) {
-  element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
-  if (!element.__resizeListeners__.length) {
-    if (document.attachEvent) {
-      element.detachEvent('onresize', resizeListener);
-    } else if (element.__resizeTrigger__.contentDocument) {
-      element.__resizeTrigger__.contentDocument.defaultView.removeEventListener('resize', resizeListener);
-      element.__resizeTrigger__ = !element.removeChild(element.__resizeTrigger__);
+  if (element && (element.__resizeListeners__ || element.__resizeTrigger__)) {
+    element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
+    if (!element.__resizeListeners__.length) {
+      if (document.attachEvent) {
+        element.detachEvent('onresize', resizeListener);
+      } else if (element.__resizeTrigger__.contentDocument) {
+        element.__resizeTrigger__.contentDocument.defaultView.removeEventListener('resize', resizeListener);
+        element.__resizeTrigger__ = !element.removeChild(element.__resizeTrigger__);
+      }
     }
   }
 };

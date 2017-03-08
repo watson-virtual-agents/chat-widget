@@ -137,13 +137,14 @@ function attachStyles() {
   _attachStylesToDOM(styles, current);
 }
 
-function removeStyles() {
-  var current = state.get();
-  var elements = document.querySelectorAll('.styles-' + current.chatStyleID);
-  elements.forEach(function(element) {
-    element.parentNode.removeChild(element);
-  });
-  current.root.classList.remove('IBMChat-isLarge', 'IBMChat-relative', current.chatStyleID, 'chatID-' + current.chatID);
+function removeStyles(root, chatStyleID, chatID) {
+  var elements = document.querySelectorAll('.styles-' + chatStyleID);
+  if (elements && elements.length > 0) {
+    for (var i = 0; elements.length > i; i++)
+      elements[i].parentNode.removeChild(elements[i]);
+  }
+  if (root)
+    root.classList.remove('IBMChat-isLarge', 'IBMChat-relative', chatStyleID, 'chatID-' + chatID);
 }
 
 module.exports = {
