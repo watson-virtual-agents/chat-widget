@@ -11,6 +11,7 @@
 * or implied. See the License for the specific language governing permissions and limitations under
 * the License.
 */
+/*
 var config = require('../../../config');
 var mocks = require('../../../mocks/layout/choose');
 var strings = {
@@ -67,3 +68,4 @@ module.exports = {
     client.end();
   }
 };
+*/
