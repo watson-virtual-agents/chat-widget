@@ -91,7 +91,7 @@ function init(config) {
       mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
       botID: config.botID,
       styles: assign({}, defaultStyles, config.styles),
-      baseURL: SDKconfig.baseURL,
+      baseURL: SDKconfig.baseURL || 'https://api.ibm.com/virtualagent/run/api/v3/',
       originalContent: root.innerHTML,
       handleInput: {
         default: true
