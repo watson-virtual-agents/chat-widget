@@ -54,14 +54,19 @@ function start(data) {
     };
     if (current.tryIt) {
       addState.chatHolder.addEventListener('click', function(e) {
-        if (e.target.dataset && e.target.dataset.intent) {
-          var index = e.target.dataset.intent;
-          var current = state.get();
-          e.preventDefault();
-          if (current.intents && current.intents[index])
-            events.publish('try-it-show-intent', current.intents[index]);
-          else
-            console.error('Intent index is undefined', current.intents, index);
+        if (e.target.dataset) {
+          var data = e.target.dataset;
+          if (data.intent) {
+            var index = data.intent;
+            var current = state.get();
+            e.preventDefault();
+            if (current.intents && current.intents[index])
+              events.publish('try-it-show-intent', current.intents[index]);
+            else
+              console.error('Intent index is undefined', current.intents, index);
+          } else if (data.private) {
+            events.publish('try-it-show-private', data.private);
+          }
         }
       });
     }
