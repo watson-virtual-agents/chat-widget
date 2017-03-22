@@ -51,9 +51,14 @@ function layoutError(layout) {
 function intent(data) {
   var element = data.element;
   var link = document.createElement('a');
-  link.textContent = '#' + data.intent;
   link.setAttribute('href', 'javascript:void(0)');
-  (data.private) ? link.setAttribute('data-private', data.intent) : link.setAttribute('data-intent', _addDataSet(data));
+  if (data.private) {
+    link.textContent = '#' + data.intent;
+    link.setAttribute('data-private', data.intent);
+  } else {
+    link.textContent = data.blueprint.label;
+    link.setAttribute('data-intent', _addDataSet(data));
+  }
   element.appendChild(link);
 }
 
