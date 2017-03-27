@@ -114,7 +114,7 @@ function _receive(data) {
     messages.push(document.createElement('div'));
     layouts.push(document.createElement('div'));
     layouts[i].classList.add('IBMChat-watson-layout');
-    if (current.tryIt) {
+    if (current.tryIt && i === (msgText.length - 1)) {
       intents.push(document.createElement('div'));
       intents[i].classList.add('IBMChat-watson-intent');
     }
@@ -124,19 +124,19 @@ function _receive(data) {
       turnElm.appendChild(holder);
     }
     containers[i].appendChild(messages[i]);
-    if (current.tryIt)
+    if (current.tryIt && i === (msgText.length - 1))
       containers[i].appendChild(intents[i]);
     containers[i].appendChild(layouts[i]);
     msgData.element = containers[i];
     msgData.layoutElement = layouts[i];
     msgData.msgElement = messages[i];
-    if (current.tryIt)
+    if (current.tryIt && i === (msgText.length - 1))
       msgData.intentElement = intents[i];
     datas.push(msgData);
-    if (i === 0 && current.tryIt)
-      _intents(datas[i]);
     if (msg && msg.layout && ((msg.layout.index !== undefined && msg.layout.index == i) ||(msg.layout.index === undefined && i == (msgText.length - 1))))
       _layouts(datas[i], current.tryIt, current.DEBUG);
+    if (current.tryIt && i === (msgText.length - 1))
+      _intents(datas[i]);
     if (i === (msgText.length - 1))
       _actions(datas[i], current.tryIt, current.DEBUG);
 
