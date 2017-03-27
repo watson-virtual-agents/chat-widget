@@ -24,7 +24,7 @@ In your production environment, we recommend locking down your widget version.
 <script>
   var config = {
     el: 'ibm_chat_root',
-    baseURL: 'https://api.ibm.com/virtualagent/run/api/v3',
+    baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
     botID: 'YOUR_BOT_ID',
     XIBMClientID: 'YOUR_IBM_CLIENT_ID',
     XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
@@ -41,7 +41,7 @@ You can also install this package from npm with `npm install @watson-virtual-age
 var IBMChat = require('@watson-virtual-agent/chat-widget');
 var config = {
   el: 'ibm_chat_root',
-  baseURL: 'https://api.ibm.com/virtualagent/run/api/v3',
+  baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
   botID: 'YOUR_BOT_ID',
   XIBMClientID: 'YOUR_IBM_CLIENT_ID',
   XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
@@ -82,7 +82,7 @@ You would then send an HTTP response to the POST from the Chat Widget with a JSO
 
 ## Moving to production
 
-In your production environment, you should replace the baseURL with a server of your own. This server should add the `X-IBM-Client-Id` and `X-IBM-Client-Secret` headers to the request and forward them on to https://api.ibm.com/virtualagent/run/api/v3. `X-IBM-Client-Id` and `X-IBM-Client-Secret` are used for billing, so it is of utmost importance you keep them secret.[./PROXY.md](./PROXY.md).
+In your production environment, you should replace the baseURL with a server of your own. This server should add the `X-IBM-Client-Id` and `X-IBM-Client-Secret` headers to the request and forward them on to https://api.ibm.com/virtualagent/run/api/v1. `X-IBM-Client-Id` and `X-IBM-Client-Secret` are used for billing, so it is of utmost importance you keep them secret.[./PROXY.md](./PROXY.md).
 
 ## Events
 

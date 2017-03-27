@@ -33,7 +33,7 @@ var options = {
 };
 
 app.all('/wva/*', function(req, res) {
-    options.url = 'https://api.ibm.com/virtualagent/run/api/v3' + req.url.replace('/wva', '');
+    options.url = 'https://api.ibm.com/virtualagent/run/api/v1' + req.url.replace('/wva', '');
     req.pipe(request.post(options)).pipe(res);
 });
 
