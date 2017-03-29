@@ -103,7 +103,7 @@ function _receive(data) {
   var intents = [];
   var datas = [];
   var turnElm = document.createElement('div');
-  
+
   turnElm.classList.add('IBMChat-watson-turn');
   current.chatHolder.appendChild(turnElm);
 
@@ -120,10 +120,14 @@ function _receive(data) {
     intents[i].classList.add('IBMChat-watson-intent');
 
     if ((msgText[i] && msgText[i].length > 0) || (msg && msg.layout && msg.layout.name && i === (msgText.length - 1))) {
+      var line = document.createElement('div');
+      line.classList.add('IBMChat-watson-message-line');
+      containers[i].appendChild(line);
       messages[i].classList.add('IBMChat-watson-message');
       utils.writeMessage(messages[i], msgText[i]);
-      turnElm.appendChild(holder);
     }
+
+    turnElm.appendChild(holder);
 
     containers[i].appendChild(messages[i]);
     containers[i].appendChild(intents[i]);
