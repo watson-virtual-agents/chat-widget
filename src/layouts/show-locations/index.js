@@ -76,7 +76,8 @@ function initialSize(width) {
 
 function getWidth() {
   var current = state.get();
-  return current.chatHolder.querySelector('div:first-child').clientWidth;
+  var el = current.chatHolder.querySelector('div:first-child');
+  return (el) ? el.clientWidth : 0;
 }
 
 function sameSize() {
@@ -369,18 +370,20 @@ ShowLocations.prototype.handleClick = function() {
 
 ShowLocations.prototype.removeAllEventListeners = function() {
   var layout = document.querySelector('.' + this.uuid + ' .IBMChat-watson-layout');
-  layout.classList.add('IBMChat-disabled-layout');
-  var inputs = layout.querySelectorAll('input, button');
-  for (var i = 0; i < inputs.length; i++)
-    inputs[i].setAttribute('disabled', true);
-  for (var x = 0; x < this.eventListeners.length; x++)
-    this.eventListeners[x].removeEventListener('click', this.handleClick);
-  if (this.hoursFunction)
-    this.hoursButton.removeEventListener('click', this.hoursFunction);
-  if (this.locationsFunction)
-    this.locationsButton.removeEventListener('click', this.locationsFunction);
-  this.eventListeners = [];
-  this.subscribeReceive.remove();
+  if (layout) {
+    layout.classList.add('IBMChat-disabled-layout');
+    var inputs = layout.querySelectorAll('input, button');
+    for (var i = 0; i < inputs.length; i++)
+      inputs[i].setAttribute('disabled', true);
+    for (var x = 0; x < this.eventListeners.length; x++)
+      this.eventListeners[x].removeEventListener('click', this.handleClick);
+    if (this.hoursFunction)
+      this.hoursButton.removeEventListener('click', this.hoursFunction);
+    if (this.locationsFunction)
+      this.locationsButton.removeEventListener('click', this.locationsFunction);
+    this.eventListeners = [];
+    this.subscribeReceive.remove();
+  }
 };
 
 ShowLocations.prototype.addLocation = function() {

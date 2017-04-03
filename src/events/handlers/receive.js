@@ -103,8 +103,10 @@ function _receive(data) {
   var intents = [];
   var datas = [];
   var turnElm = document.createElement('div');
+
   turnElm.classList.add('IBMChat-watson-turn');
   current.chatHolder.appendChild(turnElm);
+
   for (var i = 0; i < msgText.length; i++) {
     var holder = document.createElement('div');
     var msgData = assign({}, parsed, { uuid: utils.getUUID() });
@@ -114,32 +116,35 @@ function _receive(data) {
     messages.push(document.createElement('div'));
     layouts.push(document.createElement('div'));
     layouts[i].classList.add('IBMChat-watson-layout');
-    if (current.tryIt) {
-      intents.push(document.createElement('div'));
-      intents[i].classList.add('IBMChat-watson-intent');
-    }
+    intents.push(document.createElement('div'));
+    intents[i].classList.add('IBMChat-watson-intent');
+
     if ((msgText[i] && msgText[i].length > 0) || (msg && msg.layout && msg.layout.name && i === (msgText.length - 1))) {
+      var line = document.createElement('div');
+      line.classList.add('IBMChat-watson-message-line');
+      containers[i].appendChild(line);
       messages[i].classList.add('IBMChat-watson-message');
       utils.writeMessage(messages[i], msgText[i]);
-      turnElm.appendChild(holder);
     }
+
+    turnElm.appendChild(holder);
+
     containers[i].appendChild(messages[i]);
-    if (current.tryIt)
-      containers[i].appendChild(intents[i]);
+    containers[i].appendChild(intents[i]);
     containers[i].appendChild(layouts[i]);
+
     msgData.element = containers[i];
     msgData.layoutElement = layouts[i];
     msgData.msgElement = messages[i];
-    if (current.tryIt)
-      msgData.intentElement = intents[i];
+    msgData.intentElement = intents[i];
     datas.push(msgData);
-    if (i === 0 && current.tryIt)
+
+    if (current.tryIt && i === (msgText.length - 1))
       _intents(datas[i]);
     if (msg && msg.layout && ((msg.layout.index !== undefined && msg.layout.index == i) ||(msg.layout.index === undefined && i == (msgText.length - 1))))
       _layouts(datas[i], current.tryIt, current.DEBUG);
     if (i === (msgText.length - 1))
       _actions(datas[i], current.tryIt, current.DEBUG);
-
   }
 
 }

@@ -50,14 +50,15 @@ function layoutError(layout) {
 
 function intent(data) {
   var element = data.element;
-  var label = data.blueprint.label;
-  /* TODO: add switch
-  var enabled = data.enabled;
-  */
   var link = document.createElement('a');
-  link.textContent = label;
   link.setAttribute('href', 'javascript:void(0)');
-  link.setAttribute('data-intent', _addDataSet(data));
+  if (data.private) {
+    link.textContent = '#' + data.intent;
+    link.setAttribute('data-private', data.intent);
+  } else {
+    link.textContent = data.blueprint.label;
+    link.setAttribute('data-intent', _addDataSet(data));
+  }
   element.appendChild(link);
 }
 
