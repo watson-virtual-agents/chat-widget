@@ -26,8 +26,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
-* (C) Copyright IBM Corp. 2016. All Rights Reserved.
+            <pre class="prettyprint source linenums"><code>/*
+* (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
 * in compliance with the License. You may obtain a copy of the License at
@@ -39,8 +39,6 @@
 * or implied. See the License for the specific language governing permissions and limitations under
 * the License.
 */
-
-require('./styles.css');
 
 var bootstrap = require('./bootstrap');
 
@@ -56,7 +54,8 @@ var IBMChat = {
    * @param {Object} config
    * @param {string} config.el - Takes a string representing the ID of an html element to be rendered to OR a selected element
    * @param {string} config.botID - The unique identifier of your Virtual Agent.
-   * @param {string} config.userID - A hashed non-identifiable (e.g. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard.
+   * @param {string} config.userID - optional: A one-way hashed non-identifiable (e.g. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard.
+   * @param {string} config.userLatLon -  optional: A lat,lon string (e.g. 28.3852,-81.5639) used for tracking in the Engagement Metrics dashboard.
    * @param {string} config.baseURL=https://api.ibm.com/virtualagent/run/api/v1/ - optional: specifies a different bot hosting server. The most common use-case for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request.
    * @param {string} config.XIBMClientID - optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request.
    * @param {string} config.XIBMClientSecret - optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request.
@@ -71,7 +70,7 @@ var IBMChat = {
    * @param {string} config.styles.inputBackground=rgba(90,90,90,1) - optional: rgba(X, X, X, X) or hex code for background color of input elements in forms
    * @param {string} config.styles.inputText=rgba(247,247,247,1) - optional: rgba(X, X, X, X) or hex code for color of input text in forms
    * @param {string} config.styles.accentText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with accentBackground e.g. button text
-   * @param {string} config.styles.accentBackground=#AF6EE8 - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
+   * @param {string} config.styles.accentBackground=#BA8FF7 - optional: rgba(X, X, X, X) or hex code for accent colors used by the chat application e.g. buttons
    * @param {string} config.styles.errorText=#ffffff - optional: rgba(X, X, X, X) or hex code for text colors to be used in conjunction with errorBackground e.g. button text
    * @param {string} config.styles.errorBackground=#e86e6e - optional: rgba(X, X, X, X) or hex code for error colors used by the chat application e.g. validation buttons
    * @param {string} config.styles.fontFamily=HelveticaNeue,Helvetica,sans-serif - optional: comma seperated list of fonts to use
@@ -159,6 +158,7 @@ var IBMChat = {
    */
   receive: function(message) {
     bootstrap.receive(message);
+    return IBMChat;
   },
 
   /**
@@ -367,7 +367,6 @@ var IBMChat = {
     * @function set
     * @param {string} key - The named key of the value you are setting.
     * @param {string} value - The value you are setting.
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @example
     * IBMChat.profile.set('first_name', 'john');
     */
@@ -386,7 +385,6 @@ var IBMChat = {
     * Clear the entire user profile.
     * @memberof IBMChat.profile
     * @function clear
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @example
     * IBMChat.profile.clear();
     */
@@ -395,7 +393,6 @@ var IBMChat = {
     * Delete an item from the user profile based on key.
     * @memberof IBMChat.profile
     * @function delete
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @param {string} key - The named key of the value you are deleting.
     * @example
     * IBMChat.profile.delete('first_name');
@@ -407,7 +404,6 @@ var IBMChat = {
     * @function forEach
     * @param {function} callback - The function you are calling on each item in the profile object. This function is passed key as the first argument and value as the second argument.
     * @param {Object} this - (optional) The context you wish to call the callback in.
-    * @returns {IBMChat.profile} - Returns IBMChat.profile for chaining.
     * @example
     * IBMChat.profile.forEach(function(key, value) {
     *   console.log(key, value);
@@ -425,13 +421,62 @@ var IBMChat = {
    */
   currentSubscriptions: bootstrap.currentSubscriptions,
   /**
-  * @ignore
-  */
-  playback: bootstrap.playback,
+   * @namespace state
+   * @memberof IBMChat
+   */
+  state: {
+    /**
+    * @memberof IBMChat.state
+    * @function get
+    * @example
+    * IBMChat.state.get();
+    * @returns {Object} Returns: the current application state.
+    */
+    get: bootstrap.state.get,
+    /**
+    * @memberof IBMChat.state
+    * @function set
+    * @param {Object} newState - The key/value pairs put here will merge with current application state.
+    * @returns {IBMChat} - Returns IBMChat for chaining.
+    * @example
+    * IBMChat.state.set({
+    *      "first_name": "Bob"
+    * });
+    */
+    set: function(obj) {
+      bootstrap.state.set(obj);
+      return IBMChat;
+    }
+  },
   /**
-  * @ignore
-  */
-  state: bootstrap.state,
+   * @namespace context
+   * @memberof IBMChat
+   */
+  context: {
+    /**
+    * For [use with Custom Workspaces](https://www.ibm.com/watson/developercloud/doc/conversation/dialog-build.html#context-variables)
+    * @memberof IBMChat.context
+    * @function get
+    * @example
+    * IBMChat.context.get();
+    * @returns {Object} Returns: the current content.
+    */
+    get: bootstrap.context.get,
+    /**
+    * @memberof IBMChat.context
+    * @function set
+    * @param {Object} newContext - The key/value pairs put here will merge with current context variables.
+    * @returns {IBMChat} - Returns IBMChat for chaining.
+    * @example
+    * IBMChat.context.set({
+    *      "first_name": "Bob"
+    * });
+    */
+    set: function(obj) {
+      bootstrap.context.set(obj);
+      return IBMChat;
+    }
+  },
 
   /**
    * Turns on a whole bunch of verbose console.log statements!
@@ -468,13 +513,13 @@ module.exports = IBMChat;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="IBMChat.html">IBMChat</a></li><li><a href="IBMChat.profile.html">profile</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="IBMChat.html">IBMChat</a></li><li><a href="IBMChat.context.html">context</a></li><li><a href="IBMChat.profile.html">profile</a></li><li><a href="IBMChat.state.html">state</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Dec 04 2016 13:52:54 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed May 03 2017 19:29:36 GMT+0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
