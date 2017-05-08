@@ -40,8 +40,7 @@ function CreditCard(data) {
 }
 
 CreditCard.prototype.init = function(data) {
-  this.data = data.message.layout.data || {};
-  this.data.acceptedCards = this.data.types;
+  this.acceptedCards = data.message.data;
   this.uuid = data.uuid;
   this.parentElement = data.element;
   this.layoutElement = data.layoutElement;
@@ -128,7 +127,7 @@ CreditCard.prototype.validate_cc_full_name = function(valid) {
 };
 
 CreditCard.prototype.validate_cc_number = function(valid) {
-  var cc = validation.validateCard(this.data.acceptedCards, this.formData.cc_number, this.formElements.cc_number);
+  var cc = validation.validateCard(this.acceptedCards, this.formData.cc_number, this.formElements.cc_number);
   if (!cc.valid) {
     this.addError('cc_number', cc.message);
     if (valid) this.formElements['cc_number'].focus();
