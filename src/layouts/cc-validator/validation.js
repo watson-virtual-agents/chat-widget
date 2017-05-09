@@ -14,6 +14,8 @@
 
 //https://en.wikipedia.org/wiki/Payment_card_number
 
+var i18n = require('../../utils/i18n');
+
 var state = {
   acceptedCards: [],
   cardNumber: '',
@@ -21,26 +23,28 @@ var state = {
 };
 
 var messages = {
-  required: 'This field is required.',
+  required: i18n('required_field'),
   acceptedCard: function() {
     var cards = state.acceptedCards;
     var length = cards.length;
-    var text = 'We accept ';
+    // TODO fix string generation here, so it can be properly translated
+    var text = i18n('cc_accept');
     if (length === 1) {
       text += cardData[cards[0]].human;
     } else {
       var middle = cards.slice(1, length - 1);
       text += cardData[cards[0]].human;
       for (var i = 0; i < middle.length; i++)
-        text += ', ' + cardData[middle[i]].human;
-      text += ' and ' + cardData[cards[length - 1]].human;
+        text += i18n('list_sep') + cardData[middle[i]].human;
+      text += i18n('list_and') + cardData[cards[length - 1]].human;
     }
-    text += '. Please use a valid card.';
+    text += '. ';
+    text += i18n('cc_use_valid');
     return text;
   },
-  invalid: 'Your credit card number is invalid.',
-  invalidExpiration: 'Your credit card expiration date is invalid.',
-  invalidCvv: 'Your CVV is invalid.'
+  invalid: i18n('cc_invalid'),
+  invalidExpiration: i18n('cc_invalid_exp'),
+  invalidCvv: i18n('cc_invalid_code')
 };
 
 var cardData = {

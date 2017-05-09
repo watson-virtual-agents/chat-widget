@@ -16,6 +16,7 @@ var state = require('../../state');
 var events = require('../../events');
 var utils = require('../../utils');
 var templates = require('../../templates');
+var i18n = require('../../utils/i18n');
 
 function enableInput() {
   var current = state.get();
@@ -33,7 +34,7 @@ function enableLoadingInput(text) {
   var current, loader;
   setTimeout(function() {
     current = state.get();
-    text = text || 'Agent is thinking...';
+    text = text || i18n('thinking');
     loader = current.root.querySelector('.IBMChat-loading-container');
     if (loader)
       current.chatHolder.removeChild(loader);
@@ -41,7 +42,7 @@ function enableLoadingInput(text) {
 
   setTimeout(function() {
     current.chatHolder.innerHTML += utils.compile(templates.loading, {
-      retryAttempt: 'Attempting to reconnect...',
+      retryAttempt: i18n('reconnect'),
       retry: 'restart the conversation.'
     });
   }, 0);

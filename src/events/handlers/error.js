@@ -14,9 +14,10 @@
 
 var events = require('../../events');
 var state = require('../../state');
+var i18n = require('../../utils/i18n');
 
 var errorMessageMap = {
-  basic: 'I am sorry, I am having difficulties.'
+  basic: i18n('basic_err')
 };
 
 function clearError() {
@@ -56,9 +57,9 @@ function retry() {
     var loaderFailure = current.root.querySelector('.IBMChat-loading-failure-message');
     var loaderFailureMessage = current.root.querySelector('.IBMChat-loading-failure-message-text');
     if (errorCount > 4) {
-      var loaderFailureMessageText = 'I cannot complete your request. You can try a new request or ';
+      var loaderFailureMessageText = i18n('loading_failure1');
       if (!current.chatID) {
-        loaderFailureMessageText = 'I cannot complete your request. Please ';
+        loaderFailureMessageText = i18n('loading_failure2');
         events.publish('disable-input');
       } else {
         events.publish('enable-input');

@@ -84,6 +84,17 @@ function init(config) {
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
   var SDKconfig = utils.getSDKConfig(config);
 
+  // i18n
+  if (config.lang) {
+    if (typeof config.lang === 'object') {
+      state.set({
+        lang: config.lang
+      });
+    } else if (typeof config.lang === 'string') {
+      // TODO retrieve language JSON from URL
+    }
+  }
+
   return new window.Promise(function(resolve, reject) {
     var defaultState = {
       active: true,

@@ -236,6 +236,7 @@ Generate the chat widget into an element.
 | config.el | <code>string</code> |  | Takes a string representing the ID of an html element to be rendered to OR a selected element |
 | config.botID | <code>string</code> |  | The unique identifier of your Virtual Agent. |
 | config.userID | <code>string</code> |  | optional: A one-way hashed non-identifiable (e.g. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard. |
+| config.lang | <code>string</code> |  |  |
 | config.userLatLon | <code>string</code> |  | optional: A lat,lon string (e.g. 28.3852,-81.5639) used for tracking in the Engagement Metrics dashboard. |
 | config.baseURL | <code>string</code> | <code>&quot;https://api.ibm.com/virtualagent/run/api/v1/&quot;</code> | optional: specifies a different bot hosting server. The most common use-case for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request. |
 | config.XIBMClientID | <code>string</code> |  | optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request. |

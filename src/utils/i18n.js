@@ -12,21 +12,21 @@
 * the License.
 */
 
-var state = require('../../state');
-var events = require('../../events');
-var i18n = require('../../utils/i18n');
+var state = require('../state');
+var fallbacks = require('json!yaml!../lang/en.yaml');
 
-function clear() {
-  var current = state.get();
-  state.set({
-    messages: []
-  });
-  current.root.classList.add("chatID-" + current.chatID);
-  current.input.value = '';
-  current.inputClone.innerHTML = i18n('prompt');
-  current.chatHolder.innerHTML = '';
-  events.publish('resize-input');
-  events.publish('resize');
+function translate(id, fallback) {
+  var t = state.get().lang;
+  if (t && t[id]) {
+    return t[id];
+  }
+  if (fallback) {
+    return fallback;
+  }
+  if (fallbacks[t]) {
+    return fallback[t];
+  }
+  return null;
 }
 
-module.exports = clear;
+module.exports = translate;
