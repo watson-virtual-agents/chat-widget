@@ -18,6 +18,7 @@ var publish = events.publish;
 var state = require('../../state');
 var utils = require('../../utils');
 var styles = require('../../styles');
+var i18n = require('../../utils/i18n');
 
 var first = true;
 var displayLength = 3;
@@ -45,9 +46,9 @@ var templates = {
 
 var strings = {
   locations: {
-    none: 'We could not find any locations close to you.',
-    single: 'Here are the details for this location:',
-    list: 'Here are the locations I found close to you:'
+    none: i18n('loc_nearby_none'),
+    single: i18n('loc_nearby_single'),
+    list: i18n('loc_nearby_list')
   }
 };
 
@@ -174,17 +175,20 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
       if (open && close) {
         el.innerHTML = utils.compile(templates.hoursTodayOpen, {
           ns: ns,
+          loc_open_today_more: i18n('loc_open_today_more'),
           open: open,
           close: close
         });
       } else {
         el.innerHTML = utils.compile(templates.hoursTodayUnknown, {
-          ns: ns
+          ns: ns,
+          loc_open_today: i18n('loc_open_today')
         });
       }
     } else {
       el.innerHTML = utils.compile(templates.hoursTodayClosed, {
-        ns: ns
+        ns: ns,
+        loc_close_today: i18n('loc_close_today')
       });
     }
     utils.appendToEach(hoursEl, el);
@@ -240,12 +244,14 @@ function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
         } else {
           childEl.innerHTML = utils.compile(templates.hoursUnknown, {
             ns: ns,
+            loc_hours_unknown: i18n('loc_hours_unknown'),
             day: currentDay
           });
         }
       } else {
         childEl.innerHTML = utils.compile(templates.hoursClosed, {
           ns: ns,
+          loc_closed: i18n('loc_closed'),
           day: (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay
         });
       }
@@ -420,7 +426,7 @@ ShowLocations.prototype.addLocation = function() {
 
   // addresses
   dom.address.textContent = item.address.address;
-  dom.link.setAttribute('href', 'https://maps.google.com/?q=' + encodeURIComponent(item.address.address));
+  dom.link.setAttribute('href', i18n('google_maps_url') + '?q=' + encodeURIComponent(item.address.address));
   dom.link.setAttribute('target', '_blank');
   dom.distance.textContent = distance(item) || '';
 
@@ -454,7 +460,7 @@ ShowLocations.prototype.addLocation = function() {
       e.preventDefault();
       publish('receive', {
         message: {
-          text: [strings.locations.list, 'Is there anything else I can help you with?'],
+          text: [strings.locations.list, i18n('anything_else')],
           layout: {
             name: 'show-locations',
             index: 0
@@ -481,6 +487,7 @@ ShowLocations.prototype.addLocations = function() {
     var text = templates.addLocationsItem;
     el.innerHTML = utils.compile(text, {
       ns: ns,
+      loc_all: i18n('loc_all'),
       title: item.label || '',
       address: item.address.address,
       iconText: alphaMap[i],

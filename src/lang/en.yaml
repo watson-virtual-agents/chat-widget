@@ -2,6 +2,7 @@
 prompt: 'Enter message...'
 thinking: 'Agent is thinking...'
 reconnect: 'Attempting to reconnect...'
+anything_else: 'Is there anything else I can help you with?'
 
 # general
 # TODO partial string
@@ -37,3 +38,25 @@ cc_use_valid: 'Please use a valid card.'
 cc_invalid: 'Your credit card number is invalid.'
 cc_invalid_exp: 'Your credit card expiration date is invalid.'
 cc_invalid_code: 'Your CVV is invalid.'
+
+# geo
+loc_curr: 'Current Location'
+postal_code: 'Zip Code'
+loc_prompt: 'Please share your current location.'
+loc_share: 'Your browser is asking you to share your location...'
+loc_share_granted: 'You have allowed your browser to share your current location.'
+loc_looking: 'Looking up your current location...'
+loc_share_denied: 'You have denied sharing your location on this website.'
+loc_not_shared_prompt: 'Please enable location sharing or continue with your Zip Code.'
+
+# locations
+loc_all: 'All Locations'
+loc_closed: 'Closed'
+loc_closed_today: 'Closed today.'
+loc_open_today: 'Open today'
+loc_open_today_more: 'Open today:'
+loc_hours_unknown: 'Hours unknown'
+loc_nearby_none: 'We could not find any locations close to you.'
+loc_nearby_single: 'Here are the details for this location:'
+loc_nearby_list: 'Here are the locations I found close to you:'
+google_maps_url: 'https://maps.google.com/'

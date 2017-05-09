@@ -13,6 +13,8 @@
 */
 
 var events = require('../../events');
+var i18n = require('../../utils/i18n');
+
 var subscribe = events.subscribe;
 var publish = events.publish;
 
@@ -50,13 +52,13 @@ RequestGeolocationLatlong.prototype = {
     try {
       navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
         if (result.state === 'prompt') {
-          data.msgElement.textContent = 'Please share your current location.';
-          publish('enable-loading', 'Your browser is asking you to share your location...');
+          data.msgElement.textContent = i18n('loc_prompt');
+          publish('enable-loading', i18n('loc_share'));
         } else if (result.state === 'granted') {
-          data.msgElement.textContent = 'You have allowed your browser to share your current location.';
-          publish('enable-loading', 'Looking up your current location...');
+          data.msgElement.textContent = i18n('loc_share_granted');
+          publish('enable-loading', i18n('loc_looking'));
         } else if (result.state === 'denied') {
-          data.msgElement.textContent = 'You have denied sharing your location on this website.';
+          data.msgElement.textContent = i18n('loc_share_denied');
         }
       });
     } catch (e) {
@@ -84,7 +86,7 @@ RequestGeolocationLatlong.prototype = {
     });
   },
   handleLocationNotShared: function() {
-    var string = 'Please enable location sharing or continue with your Zip Code.';
+    var string = i18n('loc_not_shared_prompt');
     publish('enable-input');
     publish('disable-loading');
     publish('receive', string);
