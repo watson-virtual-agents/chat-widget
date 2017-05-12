@@ -85,12 +85,24 @@ function init(config) {
   var SDKconfig = utils.getSDKConfig(config);
 
   // i18n
-  if (config.lang) {
-    if (typeof config.lang === 'object') {
+  var locale = config.locale || 'en';  // default to english
+  state.set({
+    locale: locale
+  });
+  if (config.langBundle) {
+    if (typeof config.langBundle === 'object') {
+      // store language bundle that matches locale
+      var bundle = config.langBundle[locale];
+      if (!bundle) {
+        // couldn't find a bundle associated with locale, default to english
+        locale = 'en';
+        bundle = config.langBundle.en;
+      }
       state.set({
-        lang: config.lang
+        locale: locale,
+        langBundle: bundle
       });
-    } else if (typeof config.lang === 'string') {
+    } else if (typeof config.langBundle === 'string') {
       // TODO retrieve language JSON from URL
     }
   }

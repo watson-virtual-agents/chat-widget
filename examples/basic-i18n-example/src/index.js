@@ -19,7 +19,8 @@ var esLang = require('json-loader!@watson-virtual-agent/chat-widget/dist/lang/es
 // with the corresponding values.
 IBMChat.init({
   el: 'ibm_el',
-  lang: esLang,
+  locale: 'es',
+  langBundle: esLang,
   baseURL: 'https://api.ibm.com/virtualagent/run/api/v1/',
   botID: '',              // replace with Bot ID
   XIBMClientID: '',       // replace with Client ID

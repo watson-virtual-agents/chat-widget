@@ -12,21 +12,55 @@
 * the License.
 */
 
+var IntlMessageFormat = require('intl-messageformat');
+var fallbacks = require('json!yaml!../lang/en.yaml').en;
 var state = require('../state');
-var fallbacks = require('json!yaml!../lang/en.yaml');
 
-function translate(id, fallback) {
-  var t = state.get().lang;
+function getString(id, fallback) {
+  var t = state.get().langBundle;
   if (t && t[id]) {
     return t[id];
   }
   if (fallback) {
     return fallback;
   }
-  if (fallbacks[t]) {
-    return fallback[t];
+  if (fallbacks[id]) {
+    return fallbacks[id];
   }
   return null;
 }
 
-module.exports = translate;
+var intlMsgOptions = {
+  date: {
+    // outputs 'Sat', 'Sun'
+    weekday_short: {
+      weekday: 'short'
+    }
+  }
+};
+
+function getMessage(id, _useFallbacks) {
+  var msg;
+  var t = !_useFallbacks ? state.get().langBundle : fallbacks;
+  if (t && t[id]) {
+    msg = t[id];
+    if (typeof msg === 'string') {
+      // create a message object and store it
+      var locale = state.get().locale;
+      msg = new IntlMessageFormat(msg, locale, intlMsgOptions);
+      t[id] = msg;
+    }
+  } else {
+    msg = getMessage(id, true);
+  }
+
+  return msg;
+}
+
+function format(id, values) {
+  var msg = getMessage(id);
+  return msg.format(values);
+}
+
+module.exports = getString;
+module.exports.format = format;

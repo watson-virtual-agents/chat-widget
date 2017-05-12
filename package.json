@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@watson-virtual-agent/client-sdk": "1.3.0",
+    "intl-messageformat": "^1.3.0",
     "lodash": "4.15.0"
   },
   "devDependencies": {

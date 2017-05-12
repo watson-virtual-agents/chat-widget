@@ -23,7 +23,6 @@ var i18n = require('../../utils/i18n');
 var first = true;
 var displayLength = 3;
 var breakpointWidths = ['768', '640', '512', '480', '360'];
-var days = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
 var showLocations = {};
 var locationIDs = [];
 var currentBreakpointKey = 0;
@@ -35,10 +34,10 @@ var templates = {
   createDomArray: require('./templates/create-dom-array.html'),
   addLocationsItem: require('./templates/add-locations-item.html'),
   addLocationItem: require('./templates/add-location-item.html'),
-  hoursClosed: require('./templates/hours-closed.html'),
-  hoursOpen: require('./templates/hours-open.html'),
-  hoursUnknown: require('./templates/hours-unknown.html'),
-  hoursTodayOpen: require('./templates/hours-today-open.html'),
+  // hoursClosed: require('./templates/hours-closed.html'),
+  // hoursOpen: require('./templates/hours-open.html'),
+  // hoursUnknown: require('./templates/hours-unknown.html'),
+  // hoursTodayOpen: require('./templates/hours-today-open.html'),
   hoursTodayClosed: require('./templates/hours-today-closed.html'),
   hoursTodayUnknown: require('./templates/hours-today-unknown.html'),
   hoursTimezone: require('./templates/hours-timezone.html')
@@ -141,133 +140,144 @@ function createPhoneArray(el, items) {
   }
 }
 
-function formatAMPM(time) {
-  try {
-    var split = time.split(':');
-    var hours = split[0];
-    var minutes = split[1];
-    var ampm = hours >= 12 ? 'pm' : 'am';
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    return hours + ':' + minutes + ' ' + ampm;
-  }
-  catch (e) {
-    return false;
-  }
-}
-
 function createHours(hoursEl, moreHoursEl, hours, timezone, timezoneEl) {
-  if (hours) {
-    if (hours.length < 7) {
-      for (var o = hours.length; o < 7; o++) {
-        hours.push({
-          isOpen: false
-        });
-      }
-    }
-    // hours
-    var today = new Date().getDay();
-    var todaysHours = hours[today];
-    var el = document.createElement('div');
-    if (todaysHours && todaysHours.isOpen) {
-      var open = formatAMPM(todaysHours.open);
-      var close = formatAMPM(todaysHours.close);
-      if (open && close) {
-        el.innerHTML = utils.compile(templates.hoursTodayOpen, {
-          ns: ns,
-          loc_open_today_more: i18n('loc_open_today_more'),
-          open: open,
-          close: close
-        });
-      } else {
-        el.innerHTML = utils.compile(templates.hoursTodayUnknown, {
-          ns: ns,
-          loc_open_today: i18n('loc_open_today')
-        });
-      }
-    } else {
-      el.innerHTML = utils.compile(templates.hoursTodayClosed, {
+  if (!hours) return;
+
+  // today's hours
+  var now = new Date();
+  var nowDate = now.toDateString();
+  var dayIdx = now.getDay();
+  var todaysHours = hours[dayIdx];
+  var el = document.createElement('div');
+  if (todaysHours && todaysHours.isOpen) {
+    var open = new Date(nowDate + ' ' + todaysHours.open);
+    var close = new Date(nowDate + ' ' + todaysHours.close);
+    if (open && close) {
+      el.innerHTML = i18n.format('loc_open_today_more', {
         ns: ns,
-        loc_close_today: i18n('loc_close_today')
+        open: open,
+        close: close
+      });
+    } else {
+      el.innerHTML = utils.compile(templates.hoursTodayUnknown, {
+        ns: ns,
+        loc_open_today: i18n('loc_open_today')
       });
     }
-    utils.appendToEach(hoursEl, el);
-    // timezone
-    if (timezone) {
-      var tzChildEl = document.createElement('div');
-      tzChildEl.innerHTML = utils.compile(templates.hoursTimezone, {
-        ns: ns,
-        timezone: timezone
-      });
-      utils.appendToEach(timezoneEl, tzChildEl);
-    } else {
-      for (var j = 0; j < timezoneEl.length; j++)
-        timezoneEl[j].parentNode.removeChild(timezoneEl[j]);
-    }
-    // more hours
-    var compressedHours = [];
-    var current = {};
-    for (var n = 0; n < hours.length; n++) {
-      var bothClosed, sameHours;
-      var day = days[n];
-      var last = (compressedHours.length > 0) ? compressedHours[compressedHours.length - 1] : false;
-      current = hours[n] || { isOpen: false };
-      bothClosed = last && (last.isOpen === current.isOpen && current.isOpen === false);
-      sameHours = last && (last.open === current.open && last.close === current.close && last.isOpen === current.isOpen);
-      if (compressedHours.length > 0 && last && (bothClosed || sameHours)) {
-        last.endDay = day;
-      } else {
-        compressedHours.push({
-          startDay: day,
-          endDay: day,
-          isOpen: current.isOpen,
+  } else {
+    el.innerHTML = utils.compile(templates.hoursTodayClosed, {
+      ns: ns,
+      loc_closed_today: i18n('loc_closed_today')
+    });
+  }
+  utils.appendToEach(hoursEl, el);
+  // timezone
+  if (timezone) {
+    var tzChildEl = document.createElement('div');
+    tzChildEl.innerHTML = utils.compile(templates.hoursTimezone, {
+      ns: ns,
+      timezone: timezone
+    });
+    utils.appendToEach(timezoneEl, tzChildEl);
+  } else {
+    for (var j = 0; j < timezoneEl.length; j++)
+      timezoneEl[j].parentNode.removeChild(timezoneEl[j]);
+  }
+
+  // weekly hours
+  var compressedHours = compressHours(hours);
+  for (var i = 0; i < compressedHours.length; i++) {
+    var childEl = document.createElement('span');
+    childEl.setAttribute('class', ns + '-days-hours');
+    var current = compressedHours[i];
+    if (current && current.isOpen) {
+      var openDay = current.startDay;
+      var closeDay = current.endDay;
+      if (openDay && closeDay) {
+        var tmpl = openDay.getDate() === closeDay.getDate() ?
+            'loc_hours_open' : 'loc_hours_open_multiday';
+        childEl.innerHTML = i18n.format(tmpl, {
+          ns: ns,
+          openDay: openDay,
+          closeDay: closeDay,
           open: current.open,
           close: current.close
         });
-      }
-    }
-    for (var i = 0; i < compressedHours.length; i++) {
-      var childEl = document.createElement('span');
-      childEl.setAttribute('class', ns + '-days-hours');
-      current = compressedHours[i];
-      if (current && current.isOpen) {
-        var openDay = formatAMPM(current.open);
-        var closeDay = formatAMPM(current.close);
-        var currentDay = (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay;
-        if (openDay && closeDay) {
-          childEl.innerHTML = utils.compile(templates.hoursOpen, {
-            ns: ns,
-            day: currentDay,
-            open: openDay,
-            close: closeDay
-          });
-        } else {
-          childEl.innerHTML = utils.compile(templates.hoursUnknown, {
-            ns: ns,
-            loc_hours_unknown: i18n('loc_hours_unknown'),
-            day: currentDay
-          });
-        }
       } else {
-        childEl.innerHTML = utils.compile(templates.hoursClosed, {
+        childEl.innerHTML = i18n.format('loc_hours_unknown', {
           ns: ns,
-          loc_closed: i18n('loc_closed'),
-          day: (current.startDay === current.endDay) ? current.startDay : current.startDay + '&ndash;' + current.endDay
+          day: openDay
         });
       }
-      if (i < (compressedHours.length - 1))
-        childEl.querySelector('.' + ns + '-days-hours-hours').innerHTML += '<br />';
-      utils.appendToEach(moreHoursEl, childEl);
+    } else {
+      childEl.innerHTML = i18n.format('loc_hours_closed', {
+        ns: ns,
+        day: current.startDay
+      });
+    }
+    if (i < (compressedHours.length - 1))
+      childEl.querySelector('.' + ns + '-days-hours-hours').innerHTML += '<br />';
+    utils.appendToEach(moreHoursEl, childEl);
+  }
+}
+
+function compressHours(hours) {
+  var compressedHours = [];
+  var current = {};
+  for (var n = 0; n < hours.length; n++) {
+    var bothClosed, sameHours;
+    var last = (compressedHours.length > 0) ? compressedHours[compressedHours.length - 1] : false;
+    current = hours[n] || { isOpen: false };
+    bothClosed = last && (last.isOpen === current.isOpen && current.isOpen === false);
+    sameHours = last && (last.open === current.open && last.close === current.close && last.isOpen === current.isOpen);
+    if (compressedHours.length > 0 && last && (bothClosed || sameHours)) {
+      last.endDay = n;
+    } else {
+      compressedHours.push({
+        isOpen: current.isOpen,
+        startDay: n,
+        endDay: n,
+        open: current.open,
+        close: current.close
+      });
     }
   }
+
+  // convert to Date objects
+  var today = new Date();
+  today.setHours(12);
+  for (n = 0; n < compressedHours.length; n++) {
+    current = compressedHours[n];
+    current.startDay = getDate(today, current.startDay);
+    if (current.isOpen) {
+      current.endDay = getDate(today, current.endDay);
+      current.open = getTime(current.startDay, current.open);
+      current.close = getTime(current.startDay, current.close);
+    }
+  }
+
+  return compressedHours;
+}
+
+function getDate(today, idx) {
+  var offset = today.getDay() - idx;
+  var date = new Date(today); // clone
+  date.setDate(date.getDate() - offset);
+  return date;
+}
+
+function getTime(today, time) {
+  return new Date(today.toDateString() + ' ' + time);
 }
 
 function distance(item) {
   if (!item.distance)
     return;
   var distanceLength = (item.distance.toFixed(1) === 0.0) ? 0.1 : item.distance.toFixed(1);
-  var distanceLengthMeasure = (item.distanceMeasure === 'miles') ? 'm' : 'km';
-  return distanceLength + distanceLengthMeasure;
+  var tmpl = item.distanceMeasure === 'miles' ? 'dist_miles' : 'dist_km';
+  return i18n.format(tmpl, {
+    distance: distanceLength
+  });
 }
 
 function ShowLocations(data) {
