@@ -13,10 +13,8 @@ en:
 
     # errors
     basic_err: 'I am sorry, I am having difficulties.'
-    # TODO partial string
-    loading_failure1: 'I cannot complete your request. You can try a new request or '
-    # TODO partial string
-    loading_failure2: 'I cannot complete your request. Please '
+    loading_failure1: '<span class="IBMChat-loading-failure-message-text">I cannot complete your request. You can try a new request or <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">restart the conversation.</a></span>'
+    loading_failure2: '<span class="IBMChat-loading-failure-message-text">I cannot complete your request. Please <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">restart the conversation.</a></span>'
 
     # forms
     submit: 'Submit'

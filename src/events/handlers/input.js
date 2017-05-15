@@ -42,8 +42,7 @@ function enableLoadingInput(text) {
 
   setTimeout(function() {
     current.chatHolder.innerHTML += utils.compile(templates.loading, {
-      retryAttempt: i18n('reconnect'),
-      retry: 'restart the conversation.'
+      retryAttempt: i18n('reconnect')
     });
   }, 0);
 
