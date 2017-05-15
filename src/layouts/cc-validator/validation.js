@@ -25,21 +25,10 @@ var state = {
 var messages = {
   required: i18n('required_field'),
   acceptedCard: function() {
-    var cards = state.acceptedCards;
-    var length = cards.length;
-    // TODO fix string generation here, so it can be properly translated
-    var text = i18n('cc_accept');
-    if (length === 1) {
-      text += cardData[cards[0]].human;
-    } else {
-      var middle = cards.slice(1, length - 1);
-      text += cardData[cards[0]].human;
-      for (var i = 0; i < middle.length; i++)
-        text += i18n('list_sep') + cardData[middle[i]].human;
-      text += i18n('list_and') + cardData[cards[length - 1]].human;
-    }
-    text += '. ';
-    text += i18n('cc_use_valid');
+    var text = i18n('cc_use_valid');
+    text += state.acceptedCards.map(function(cardId) {
+      return cardData[cardId].human;
+    }).join(i18n('list_sep'));
     return text;
   },
   invalid: i18n('cc_invalid'),

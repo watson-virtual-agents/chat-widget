@@ -6,10 +6,7 @@ en:
     anything_else: 'Is there anything else I can help you with?'
 
     # general
-    # TODO partial string
     list_sep: ', '
-    # TODO partial string
-    list_and: ' and '
 
     # errors
     basic_err: 'I am sorry, I am having difficulties.'
@@ -31,9 +28,8 @@ en:
     cc_exp_mon: 'Expiration Date Month'
     cc_exp_year: 'Expiration Date Year'
     cc_code: 'CVV'
-    # TODO partial string
-    cc_accept: 'We accept '
-    cc_use_valid: 'Please use a valid card.'
+    # cc_use_valid: displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items
+    cc_use_valid: 'Please use a valid card. We accept the following: '
     cc_invalid: 'Your credit card number is invalid.'
     cc_invalid_exp: 'Your credit card expiration date is invalid.'
     cc_invalid_code: 'Your CVV is invalid.'

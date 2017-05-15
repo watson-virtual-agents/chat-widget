@@ -6,10 +6,7 @@ es:
     anything_else: '¿Hay algo mas con que te puedo ayudar?'
 
     # general
-    # TODO partial string
     list_sep: ', '
-    # TODO partial string
-    list_and: ' y '
 
     # errors
     basic_err: 'Lo siento, hay un problema.'
@@ -27,13 +24,12 @@ es:
 
     # credit cards
     cc_name: 'Nombre'
-    cc_num: 'Numbero de Tarjeta de Credito'
+    cc_num: 'Numero de Tarjeta de Credito'
     cc_exp_mon: 'Fecha de Expiración - Mes'
     cc_exp_year: 'Fecha de Expiración - Año'
     cc_code: 'CVV'
-    # TODO partial string
-    cc_accept: 'Aceptamos '
-    cc_use_valid: 'Por favor use una tarjeta valida.'
+    # cc_use_valid: displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items
+    cc_use_valid: 'Por favor use una tarjeta valida. Aceptamos: '
     cc_invalid: 'El numero de tarjeta de credito no es valido.'
     cc_invalid_exp: 'La fecha de expiración no es valida.'
     cc_invalid_code: 'El CVV no es valido.'
