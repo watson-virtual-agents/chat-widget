@@ -12,11 +12,22 @@
 * the License.
 */
 
+/**
+ * This example is similar to 'basic-actions-example', but it shows you how to
+ * load and make use of translated string bundles.
+ */
+
 var IBMChat = require('@watson-virtual-agent/chat-widget');
+// load a single or multi-language bundle of translated strings
 var esLang = require('json-loader!@watson-virtual-agent/chat-widget/dist/lang/es.json');
 
-// initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
+// Initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
 // with the corresponding values.
+//
+// I18N: By default, the chat widget will use English strings. To display a
+// different language to your users, pass in the appropriate 'locale' (i.e. 'es',
+// 'pt-BR', ...) and a language bundle ('langBundle') which contains strings
+// for the given locale.
 IBMChat.init({
   el: 'ibm_el',
   locale: 'es',

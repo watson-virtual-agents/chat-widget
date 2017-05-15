@@ -23,7 +23,7 @@ var state = {
 };
 
 var messages = {
-  required: i18n('required_field'),
+  required: function() { return i18n('required_field'); },
   acceptedCard: function() {
     var text = i18n('cc_use_valid');
     text += state.acceptedCards.map(function(cardId) {
@@ -31,9 +31,9 @@ var messages = {
     }).join(i18n('list_sep'));
     return text;
   },
-  invalid: i18n('cc_invalid'),
-  invalidExpiration: i18n('cc_invalid_exp'),
-  invalidCvv: i18n('cc_invalid_code')
+  invalid: function() { return i18n('cc_invalid'); },
+  invalidExpiration: function() { return i18n('cc_invalid_exp'); },
+  invalidCvv: function() { return i18n('cc_invalid_code'); }
 };
 
 var cardData = {
@@ -132,20 +132,20 @@ function validateCard(acceptedCards, cardNumber, cardElement) {
   state.cardNumber = cardNumber.replace(/\D/g,'');
 
   if (cardNumber.length === 0)
-    return _invalid(messages.required);
+    return _invalid(messages.required());
 
   if (state.cardNumber.length === 0)
-    return _invalid(messages.invalid);
+    return _invalid(messages.invalid());
 
   if (_detectCard()) {
     if (cardData[state.cardType].lengths.indexOf(state.cardNumber.length) === -1)
-      return _invalid(messages.invalid);
+      return _invalid(messages.invalid());
     if (_checkLuhn() === false)
-      return _invalid(messages.invalid);
+      return _invalid(messages.invalid());
   } else {
     if (state.acceptedCards.indexOf(state.cardType) === -1)
       return _invalid(messages.acceptedCard());
-    return _invalid(messages.invalid);
+    return _invalid(messages.invalid());
   }
 
   var valid =  _valid();
@@ -162,7 +162,7 @@ function validateExp(userM, userY) {
   var year = d.getFullYear();
 
   if (userM.length === 0 || userY.length === 0)
-    return _invalid(messages.invalidExpiration);
+    return _invalid(messages.invalidExpiration());
 
   var invalidDigits = !userM.match(monthRegexp) || !userY.match(yearRegexp);
   userM = parseInt(userM, 10);
@@ -170,7 +170,7 @@ function validateExp(userM, userY) {
   var yearNotInRange = (userY > year + 20) || (userY < year);
   var beforeCurrentMonth = (userY === year && userM < month);
   if (invalidDigits || yearNotInRange || beforeCurrentMonth)
-    return _invalid(messages.invalidExpiration);
+    return _invalid(messages.invalidExpiration());
 
   return _valid();
 }
@@ -179,10 +179,10 @@ function validateCVV(CVV) {
   // 3 or 4 digits
   var CVVRegex = /^[0-9]{3,4}$/;
   if (CVV.length === 0)
-    return _invalid(messages.invalidCvv);
+    return _invalid(messages.invalidCvv());
 
   if (!CVV.match(CVVRegex))
-    return _invalid(messages.invalidCvv);
+    return _invalid(messages.invalidCvv());
 
   return _valid();
 }

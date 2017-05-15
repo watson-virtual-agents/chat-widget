@@ -45,9 +45,9 @@ var templates = {
 
 var strings = {
   locations: {
-    none: i18n('loc_nearby_none'),
-    single: i18n('loc_nearby_single'),
-    list: i18n('loc_nearby_list')
+    none: function() { return i18n('loc_nearby_none'); },
+    single: function() { return i18n('loc_nearby_single'); },
+    list: function() { return i18n('loc_nearby_list'); }
   }
 };
 
@@ -297,13 +297,13 @@ ShowLocations.prototype.init = function(data) {
   this.msgElement = data.msgElement;
   switch (this.data.length) {
   case 0:
-    this.msgElement.textContent = strings.locations.none;
+    this.msgElement.textContent = strings.locations.none();
     break;
   case 1:
-    this.msgElement.textContent = strings.locations.single;
+    this.msgElement.textContent = strings.locations.single();
     break;
   default:
-    this.msgElement.textContent = strings.locations.list;
+    this.msgElement.textContent = strings.locations.list();
   }
 
   if (this.data.length > 0) {
@@ -372,7 +372,8 @@ ShowLocations.prototype.handleClick = function() {
   this.className = ns + '-location-active';
   publish('receive', {
     message: {
-      text: [utils.compile(strings.locations.single, { location: showLocations[this.dataset.uuid].data[this.dataset.id - 1].address.address }), 'Is there anything else I can help you with?'],
+      text: [utils.compile(strings.locations.single(), { location: showLocations[this.dataset.uuid].data[this.dataset.id - 1].address.address }),
+             i18n('anything_else')],
       layout: {
         name: 'show-locations',
         index: 0
@@ -408,8 +409,10 @@ ShowLocations.prototype.addLocation = function() {
   var locationData = state.get().location_data;
   var item = this.data[0];
   var createDom = function(el) {
-    var text = templates.addLocationItem;
-    el.innerHTML = utils.compile(text, { ns: ns });
+    el.innerHTML = utils.compile(templates.addLocationItem, {
+      ns: ns,
+      loc_all: i18n('loc_all')
+    });
     return {
       link: el.querySelector('.' + ns + '-locations-item-data-address-link'),
       label: el.querySelector('.' + ns + '-locations-item-data-title'),
@@ -470,7 +473,7 @@ ShowLocations.prototype.addLocation = function() {
       e.preventDefault();
       publish('receive', {
         message: {
-          text: [strings.locations.list, i18n('anything_else')],
+          text: [strings.locations.list(), i18n('anything_else')],
           layout: {
             name: 'show-locations',
             index: 0
@@ -494,10 +497,8 @@ ShowLocations.prototype.addLocations = function() {
     el.addEventListener('click', this.handleClick);
     el.dataset.uuid = uuid;
     el.dataset.id = i + 1;
-    var text = templates.addLocationsItem;
-    el.innerHTML = utils.compile(text, {
+    el.innerHTML = utils.compile(templates.addLocationsItem, {
       ns: ns,
-      loc_all: i18n('loc_all'),
       title: item.label || '',
       address: item.address.address,
       iconText: alphaMap[i],

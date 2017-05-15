@@ -95,6 +95,8 @@ function init(config) {
       var bundle = config.langBundle[locale];
       if (!bundle) {
         // couldn't find a bundle associated with locale, default to english
+        console.error('Could not find language bundle for ' + locale + '. ' +
+                      'Defaulting to English.');
         locale = 'en';
         bundle = config.langBundle.en;
       }
@@ -102,8 +104,6 @@ function init(config) {
         locale: locale,
         langBundle: bundle
       });
-    } else if (typeof config.langBundle === 'string') {
-      // TODO retrieve language JSON from URL
     }
   }
 
