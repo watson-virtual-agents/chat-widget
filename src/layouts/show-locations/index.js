@@ -270,16 +270,6 @@ function getTime(today, time) {
   return new Date(today.toDateString() + ' ' + time);
 }
 
-function distance(item) {
-  if (!item.distance)
-    return;
-  var distanceLength = (item.distance.toFixed(1) === 0.0) ? 0.1 : item.distance.toFixed(1);
-  var tmpl = item.distanceMeasure === 'miles' ? 'dist_miles' : 'dist_km';
-  return i18n.format(tmpl, {
-    distance: distanceLength
-  });
-}
-
 function ShowLocations(data) {
   this.init(data);
 }
@@ -422,7 +412,6 @@ ShowLocations.prototype.addLocation = function() {
       hours: el.querySelectorAll('.' + ns + '-locations-item-data-hours'),
       timezone: el.querySelectorAll('.' + ns + '-locations-item-data-timezone'),
       moreHours: el.querySelectorAll('.' + ns + '-locations-item-data-more-hours'),
-      distance: el.querySelector('.' + ns + '-locations-item-distance'),
       backHolder: el.querySelector('.' + ns + '-locations-all-holder'),
       back: el.querySelector('.' + ns + '-locations-all'),
       parentEl: el.querySelector('.' + ns + '-locations-item')
@@ -441,7 +430,6 @@ ShowLocations.prototype.addLocation = function() {
   dom.address.textContent = item.address.address;
   dom.link.setAttribute('href', i18n('google_maps_url') + '?q=' + encodeURIComponent(item.address.address));
   dom.link.setAttribute('target', '_blank');
-  dom.distance.textContent = distance(item) || '';
 
   // email
   if (item.email)
@@ -504,7 +492,6 @@ ShowLocations.prototype.addLocations = function() {
       iconText: alphaMap[i],
       accentText: current.styles.accentText,
       accentBackground: current.styles.accentBackground,
-      distance: distance(item) || '',
     });
     this.eventListeners.push(el);
   };

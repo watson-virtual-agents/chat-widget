@@ -57,7 +57,3 @@ es:
     loc_nearby_single: 'ES Here are the details for this location:'
     loc_nearby_list: 'ES Here are the locations I found close to you:'
     google_maps_url: 'https://maps.google.es/'
-
-    # distance
-    dist_miles: '{distance}mi'
-    dist_km: '{distance}km'
