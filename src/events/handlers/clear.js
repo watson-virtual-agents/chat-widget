@@ -23,7 +23,7 @@ function clear() {
   });
   current.root.classList.add("chatID-" + current.chatID);
   current.input.value = '';
-  current.inputClone.innerHTML = i18n('prompt');
+  current.inputClone.textContent = i18n('prompt');
   current.chatHolder.innerHTML = '';
   events.publish('resize-input');
   events.publish('resize');

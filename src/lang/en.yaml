@@ -56,4 +56,5 @@ en:
     loc_nearby_none: 'We could not find any locations close to you.'
     loc_nearby_single: 'Here are the details for this location:'
     loc_nearby_list: 'Here are the locations I found close to you:'
+    # Used to generate a URL of form: https://maps.google.com/?q=store%20location
     google_maps_url: 'https://maps.google.com/'

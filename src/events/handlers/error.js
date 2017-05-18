@@ -22,14 +22,6 @@ var errorMessageMap = {
   basic: function() { return i18n('basic_err'); }
 };
 
-function getErrorMsg(id) {
-  var msg = errorMessageMap[id];
-  if (msg && typeof msg === 'function') {
-    return msg();
-  }
-  return msg;
-}
-
 function clearError() {
   setTimeout(function() {
     var current = state.get();
@@ -46,7 +38,12 @@ function httpError(err) {
   setTimeout(function() {
     console.error(err);
     var current = state.get();
-    var text = (err.status ? getErrorMsg(err.status) : null) || getErrorMsg('basic');
+    var text;
+    if (err.status && errorMessageMap[err.status]) {
+      text = errorMessageMap[err.status]();
+    } else {
+      text = errorMessageMap['basic']();
+    }
     var errorCount = current.errorCount || 0;
     events.publish('enable-loading', text);
     state.set({

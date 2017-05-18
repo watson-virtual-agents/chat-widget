@@ -71,8 +71,6 @@ for (i = 644; i <= 649; i++)
   cardData.discover.prefixes.push(i);
 
 function _detectCard() {
-  if (state.acceptedCards.length === 0)
-    return true;
   for (var i = 0; i < state.acceptedCards.length; i++) {
     var data = cardData[state.acceptedCards[i]];
     for (var j = 0; j < data.prefixes.length; j++) {
