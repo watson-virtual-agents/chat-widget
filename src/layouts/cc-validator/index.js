@@ -25,6 +25,7 @@ var widgets = [];
 var templates = {
   base: require('./templates/base.html')
 };
+var i18n = require('../../utils/i18n');
 
 var creditCardLayout = {
   init: function() {
@@ -56,7 +57,16 @@ CreditCard.prototype.drawForm = function() {
   this.el = document.createElement('div');
   text = utils.compile(templates.base, {
     ns: ns,
-    uuid: utils.getUUID()
+    uuid: utils.getUUID(),
+    cc_name: i18n('cc_name'),
+    cc_num: i18n('cc_num'),
+    cc_exp_mon: i18n('cc_exp_mon'),
+    cc_exp_year: i18n('cc_exp_year'),
+    cc_code: i18n('cc_code'),
+    placeholder_mon: i18n('placeholder_mon'),
+    placeholder_year: i18n('placeholder_year'),
+    cancel: i18n('cancel'),
+    submit: i18n('submit')
   });
   this.el.innerHTML = text;
   this.layoutElement.appendChild(this.el);
@@ -117,7 +127,7 @@ CreditCard.prototype.removeError = function(name) {
 
 CreditCard.prototype.validate_cc_full_name = function(valid) {
   if (this.formData.cc_full_name.trim().length === 0) {
-    this.addError('cc_full_name', 'This field is required.');
+    this.addError('cc_full_name', i18n('required_field'));
     if (valid) this.formElements['cc_full_name'].focus();
     valid = false;
   } else {

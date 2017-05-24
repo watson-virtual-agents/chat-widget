@@ -18,6 +18,7 @@ var publish = events.publish;
 var activeClassName = 'IBMChat-accent-colors';
 var inactiveClassName = 'IBMChat-accent-colors-button';
 var utils = require('../../utils');
+var i18n = require('../../utils/i18n');
 
 var ns = 'IBMChat-islocationapi';
 var chooseLocationTypes = [];
@@ -56,7 +57,9 @@ ChooseLocationType.prototype = {
       this.el.innerHTML = utils.compile(templates.base, {
         ns: ns,
         'values.geolocation': values.geolocation,
-        'values.postalcode': values.postalcode
+        'values.postalcode': values.postalcode,
+        loc_curr: i18n('loc_curr'),
+        postal_code: i18n('postal_code')
       });
       this.layoutElement.appendChild(this.el);
       this.buttons = this.layoutElement.querySelectorAll('button');

@@ -84,6 +84,29 @@ function init(config) {
   var root = (typeof config.el === 'string') ? document.getElementById(config.el) : config.el;
   var SDKconfig = utils.getSDKConfig(config);
 
+  // i18n
+  var locale = config.locale || 'en';  // default to english
+  state.set({
+    locale: locale
+  });
+  if (config.langBundle) {
+    if (typeof config.langBundle === 'object') {
+      // store language bundle that matches locale
+      var bundle = config.langBundle[locale];
+      if (!bundle) {
+        // couldn't find a bundle associated with locale, default to english
+        console.warn('Could not find language bundle for ' + locale + '. ' +
+                      'Defaulting to English.');
+        locale = 'en';
+        bundle = config.langBundle.en;
+      }
+      state.set({
+        locale: locale,
+        langBundle: bundle
+      });
+    }
+  }
+
   return new window.Promise(function(resolve, reject) {
     var defaultState = {
       active: true,

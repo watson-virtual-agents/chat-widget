@@ -14,6 +14,8 @@
 
 //https://en.wikipedia.org/wiki/Payment_card_number
 
+var i18n = require('../../utils/i18n');
+
 var state = {
   acceptedCards: [],
   cardNumber: '',
@@ -21,26 +23,17 @@ var state = {
 };
 
 var messages = {
-  required: 'This field is required.',
+  required: function() { return i18n('required_field'); },
   acceptedCard: function() {
-    var cards = state.acceptedCards;
-    var length = cards.length;
-    var text = 'We accept ';
-    if (length === 1) {
-      text += cardData[cards[0]].human;
-    } else {
-      var middle = cards.slice(1, length - 1);
-      text += cardData[cards[0]].human;
-      for (var i = 0; i < middle.length; i++)
-        text += ', ' + cardData[middle[i]].human;
-      text += ' and ' + cardData[cards[length - 1]].human;
-    }
-    text += '. Please use a valid card.';
+    var text = i18n('cc_use_valid');
+    text += state.acceptedCards.map(function(cardId) {
+      return cardData[cardId].human;
+    }).join(i18n('list_sep'));
     return text;
   },
-  invalid: 'Your credit card number is invalid.',
-  invalidExpiration: 'Your credit card expiration date is invalid.',
-  invalidCvv: 'Your CVV is invalid.'
+  invalid: function() { return i18n('cc_invalid'); },
+  invalidExpiration: function() { return i18n('cc_invalid_exp'); },
+  invalidCvv: function() { return i18n('cc_invalid_code'); }
 };
 
 var cardData = {
@@ -78,8 +71,6 @@ for (i = 644; i <= 649; i++)
   cardData.discover.prefixes.push(i);
 
 function _detectCard() {
-  if (state.acceptedCards.length === 0)
-    return true;
   for (var i = 0; i < state.acceptedCards.length; i++) {
     var data = cardData[state.acceptedCards[i]];
     for (var j = 0; j < data.prefixes.length; j++) {
@@ -139,20 +130,20 @@ function validateCard(acceptedCards, cardNumber, cardElement) {
   state.cardNumber = cardNumber.replace(/\D/g,'');
 
   if (cardNumber.length === 0)
-    return _invalid(messages.required);
+    return _invalid(messages.required());
 
   if (state.cardNumber.length === 0)
-    return _invalid(messages.invalid);
+    return _invalid(messages.invalid());
 
   if (_detectCard()) {
     if (cardData[state.cardType].lengths.indexOf(state.cardNumber.length) === -1)
-      return _invalid(messages.invalid);
+      return _invalid(messages.invalid());
     if (_checkLuhn() === false)
-      return _invalid(messages.invalid);
+      return _invalid(messages.invalid());
   } else {
     if (state.acceptedCards.indexOf(state.cardType) === -1)
       return _invalid(messages.acceptedCard());
-    return _invalid(messages.invalid);
+    return _invalid(messages.invalid());
   }
 
   var valid =  _valid();
@@ -169,7 +160,7 @@ function validateExp(userM, userY) {
   var year = d.getFullYear();
 
   if (userM.length === 0 || userY.length === 0)
-    return _invalid(messages.invalidExpiration);
+    return _invalid(messages.invalidExpiration());
 
   var invalidDigits = !userM.match(monthRegexp) || !userY.match(yearRegexp);
   userM = parseInt(userM, 10);
@@ -177,7 +168,7 @@ function validateExp(userM, userY) {
   var yearNotInRange = (userY > year + 20) || (userY < year);
   var beforeCurrentMonth = (userY === year && userM < month);
   if (invalidDigits || yearNotInRange || beforeCurrentMonth)
-    return _invalid(messages.invalidExpiration);
+    return _invalid(messages.invalidExpiration());
 
   return _valid();
 }
@@ -186,10 +177,10 @@ function validateCVV(CVV) {
   // 3 or 4 digits
   var CVVRegex = /^[0-9]{3,4}$/;
   if (CVV.length === 0)
-    return _invalid(messages.invalidCvv);
+    return _invalid(messages.invalidCvv());
 
   if (!CVV.match(CVVRegex))
-    return _invalid(messages.invalidCvv);
+    return _invalid(messages.invalidCvv());
 
   return _valid();
 }
