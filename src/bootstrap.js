@@ -95,7 +95,7 @@ function init(config) {
       var bundle = config.langBundle[locale];
       if (!bundle) {
         // couldn't find a bundle associated with locale, default to english
-        console.error('Could not find language bundle for ' + locale + '. ' +
+        console.warn('Could not find language bundle for ' + locale + '. ' +
                       'Defaulting to English.');
         locale = 'en';
         bundle = config.langBundle.en;

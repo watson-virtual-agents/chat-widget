@@ -17,7 +17,7 @@ This example shows how initialize the chat widget so it will display text in dif
   2. Set the `locale` and `langBundle`, a JSON object containing the translated strings, indexed by locale.
 
   ```javascript
-        var langs = require('json-loader!..../langs.json');
+        var langs = ... // load language bundle JSON
         IBMChat.init({
             el: 'ibm_el',
             locale: 'es',
