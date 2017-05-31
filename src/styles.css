@@ -94,7 +94,7 @@
 
 .IBMChat-messages button[disabled="true"] {
   cursor: default;
-  opacity: .7;
+  opacity: .5;
 }
 
 .IBMChat-messages button[disabled="true"]:focus {

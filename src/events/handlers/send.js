@@ -105,7 +105,7 @@ function sendToBot(data, retry) {
 function agentSend(retry) {
   var current = state.get();
   var newData = assign({}, current.sendQueue[0], { uuid: utils.getUUID() });
-  var msg = newData.text || '';
+  var msg = newData.label || newData.text || '';
   state.set({
     inProgress: true
   });
