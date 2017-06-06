@@ -18,8 +18,8 @@
 
 var IBMChat = require('@watson-virtual-agent/chat-widget');
 // load a single or multi-language bundle of translated strings
-var langs = require('json-loader!@watson-virtual-agent/chat-widget/dist/lang/en.json');
-var locale = 'en';
+var langs = require('json-loader!@watson-virtual-agent/chat-widget/dist/lang/es.json');
+var locale = 'es';
 
 // Initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
 // with the corresponding values.
