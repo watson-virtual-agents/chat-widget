@@ -65,7 +65,7 @@ en:
     ## test: The following are used to show the results of 'list locations' command. What is shown depends on the data the user entered in WVA admin, under the 'store location' capability.
     loc_all: 'All Locations'
     loc_closed_today: 'Closed today.'
-    loc_open_today: 'Open today'
+    loc_open_today: 'Open today.'
     loc_open_today_more: '<span class="{ns}-hours-open">Open today:</span><span class="{ns}-hours-today"> {open, time, short} &ndash; {close, time, short}</span>'
     loc_hours_open: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
     loc_hours_open_multiday: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}&ndash;{closeDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
