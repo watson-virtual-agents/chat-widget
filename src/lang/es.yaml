@@ -3,7 +3,7 @@ es:
     prompt: 'Escribir mensaje...'
     thinking: 'El agente está pensando...'
     reconnect: 'Tratando de reconectar...'
-    anything_else: '¿Hay algo más en lo que te puedo ayudar?'
+    anything_else: '¿Hay algo más en lo que te pueda ayudar?'
 
     # general
     list_sep: ', '
@@ -30,24 +30,24 @@ es:
     cc_code: 'CVV'
     # cc_use_valid: displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items
     cc_use_valid: 'Por favor use una tarjeta válida. Aceptamos: '
-    cc_invalid: 'El número de su tarjeta de crédito no es válido.'
+    cc_invalid: 'Su número de tarjeta de crédito no es válido.'
     cc_invalid_exp: 'La fecha de vencimiento no es válida.'
     cc_invalid_code: 'El CVV no es válido.'
 
     # geo
     loc_curr: 'Ubicación actual'
     postal_code: 'Código postal'
-    loc_prompt: 'Comparte tu ubicación actaul.'
+    loc_prompt: 'Comparta su ubicación actual.'
     loc_share: 'El navegador le pide que comparta su ubicación...'
-    loc_share_granted: 'Has permitido que tu navegador comparta tu ubicación actual.'
-    loc_looking: 'Buscando tu ubicación actual...'
-    loc_share_denied: 'Has rechazado compartir tu ubicación en este sitio.'
-    loc_not_shared_prompt: 'Por favor, permita el uso de tu ubicación o continúe con su código postal.'
+    loc_share_granted: 'Ha permitido que su navegador comparta su ubicación actual.'
+    loc_looking: 'Buscando su ubicación actual...'
+    loc_share_denied: 'Ha rechazado compartir su ubicación en este sitio.'
+    loc_not_shared_prompt: 'Por favor, permita el uso de su ubicación o continúe con su código postal.'
 
     # locations
     loc_all: 'Todos los sitios'
     loc_closed_today: 'Cerrado hoy.'
-    loc_open_today: 'Abierto hoy'
+    loc_open_today: 'Abierto hoy.'
     loc_open_today_more: '<span class="{ns}-hours-open">Abierto hoy:</span><span class="{ns}-hours-today"> {open, time, short} &ndash; {close, time, short}</span>'
     loc_hours_open: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
     loc_hours_open_multiday: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}&ndash;{closeDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
