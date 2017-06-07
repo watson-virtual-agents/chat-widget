@@ -18,6 +18,7 @@ var subscribe = events.subscribe;
 var publish = events.publish;
 var utils = require('../../utils');
 var validation = require('./validation');
+var i18n = require('../../utils/i18n');
 var activeClassName = 'IBMChat-accent-colors';
 var inactiveClassName = 'IBMChat-accent-colors-button';
 var ns = 'IBMChat-creditcard';
@@ -25,7 +26,6 @@ var widgets = [];
 var templates = {
   base: require('./templates/base.html')
 };
-var i18n = require('../../utils/i18n');
 
 var creditCardLayout = {
   init: function() {

@@ -15,8 +15,6 @@
 var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
-var activeClassName = 'IBMChat-accent-colors';
-var inactiveClassName = 'IBMChat-accent-colors-button';
 var utils = require('../../utils');
 var i18n = require('../../utils/i18n');
 
@@ -73,20 +71,18 @@ ChooseLocationType.prototype = {
         this.subscribeSend = subscribe('send', this.removeAllEventListeners.bind(this));
     } else {
       publish('send', {
+        silent: true,
         text: values.postalcode,
-        silent: true
+        label: i18n('postal_code')
       });
     }
   },
   handleClick: function() {
-    var data = {
-      silent: true,
-      text: null
-    };
-    data.text = this.dataset.input;
-    this.classList.add(activeClassName);
-    this.classList.remove(inactiveClassName);
-    publish('send', data);
+    publish('send', {
+      silent: false,
+      text: this.dataset.input,
+      label: this.textContent
+    });
     publish('focus-input');
   },
   removeAllEventListeners: function() {

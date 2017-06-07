@@ -16,6 +16,7 @@ var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
 var utils = require('../../utils');
+var i18n = require('../../utils/i18n');
 var ns = 'IBMChat-choose';
 var activeClassName = 'IBMChat-accent-colors';
 var inactiveClassName = 'IBMChat-accent-colors-button';
@@ -80,7 +81,7 @@ Choose.prototype.drawButtons = function() {
   if (this.allowMultiple) {
     var submit = document.createElement('div');
     var submitBtn = utils.compile(templates.submit, {
-      text: 'Submit'
+      text: i18n('submit')
     });
     submit.classList.add(ns + '-submit');
     submit.innerHTML = submitBtn;
@@ -95,26 +96,26 @@ Choose.prototype.drawButtons = function() {
   this.layoutElement.querySelectorAll('button')[0].focus();
 };
 
-Choose.prototype.handleClick = function() {
-  var data = {
-    silent: true,
-    text: null
-  };
-  data.text = this.dataset.input;
-  this.classList.add(activeClassName);
-  this.classList.add('IBMChat-accent-colors');
-  publish('send', data);
+Choose.prototype.handleClick = function(evt) {
+  var target = evt.target;
+  target.classList.add(activeClassName);
+  target.classList.add('IBMChat-accent-colors');
+  publish('send', {
+    silent: false,
+    text: target.dataset.input
+  });
 };
 
-Choose.prototype.handleMultiClick = function() {
+Choose.prototype.handleMultiClick = function(evt) {
+  var target = evt.target;
   var buttons;
-  var instance = widgets[this.dataset.uuid];
-  if (utils.hasClass(this, activeClassName)) {
-    this.classList.add(inactiveClassName);
-    this.classList.remove(activeClassName);
+  var instance = widgets[target.dataset.uuid];
+  if (utils.hasClass(target, activeClassName)) {
+    target.classList.add(inactiveClassName);
+    target.classList.remove(activeClassName);
   } else {
-    this.classList.add(activeClassName);
-    this.classList.remove(inactiveClassName);
+    target.classList.add(activeClassName);
+    target.classList.remove(inactiveClassName);
   }
   buttons = instance.el.querySelectorAll('.' + ns + '-option .' + activeClassName);
   if (buttons.length > 0)
@@ -134,23 +135,24 @@ Choose.prototype.handleSubmit = function() {
 };
 
 Choose.prototype.addListener = function(el) {
-  if (this.allowMultiple)
-    el.addEventListener('click', this.handleMultiClick);
-  else
-    el.addEventListener('click', this.handleClick);
-  this.eventListeners.push({ el: el, cb: (this.allowMultiple) ? this.handleMultiClick: this.handleClick });
+  var handler = this.allowMultiple ? this.handleMultiClick: this.handleClick;
+  el.addEventListener('click', handler.bind(this));
+  this.eventListeners.push({ el: el, cb: handler });
 };
 
 Choose.prototype.addSubmitListener = function(el) {
-  el.addEventListener('click', this.handleSubmit.bind(this));
-  this.eventListeners.push({ el: el, cb: this.handleSubmit.bind(this) });
+  var handler = this.handleSubmit.bind(this);
+  el.addEventListener('click', handler);
+  this.eventListeners.push({ el: el, cb: handler });
 };
 
 Choose.prototype.removeAllEventListeners = function() {
-  if (this.eventListeners.length > 0) {
-    for (var i = 0; i < this.eventListeners.length; i++) {
-      this.eventListeners[i].el.removeEventListener('click', this.eventListeners[i].cb);
-      this.eventListeners[i].el.setAttribute('disabled', true);
+  var listeners = this.eventListeners;
+  if (listeners.length > 0) {
+    for (var i = 0; i < listeners.length; i++) {
+      var listener = listeners[i];
+      listener.el.removeEventListener('click', listener.cb);
+      listener.el.setAttribute('disabled', true);
     }
     this.eventListeners = [];
     this.subscribeSend.remove();
