@@ -1,4 +1,6 @@
 en:
+    # NLS_ENCODING=UTF-8
+
     # agent
     ## test: The next 2 appear when first starting the chat widget.
     prompt: 'Enter message...'
