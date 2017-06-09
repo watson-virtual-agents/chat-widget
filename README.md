@@ -68,7 +68,8 @@ You can copy this HTML code block into a file, give it an .html extension, and v
 <iframe style="width:100%; height:100%" src="http://www.ibm.com/en-us"></iframe>
 <!--
 https://unpkg.com/@watson-virtual-agent/chat-widget@X.X.X/dist/chat.min.js for a specific version, where X.X.X is the semantic version of the chat widget.
-In your production environment, we recommend locking down your widget version.
+NOTE: unpkg.com is not affiliated with IBM and not recommended for production.
+NOTE: In your production environment, we recommend locking down your widget version.
 -->
 <script src='https://unpkg.com/@watson-virtual-agent/chat-widget/dist/chat.min.js'></script>
 <script>
