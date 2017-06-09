@@ -2,9 +2,9 @@ fr:
     # agent
     ## test: The next 2 appear when first starting the chat widget.
     prompt: 'Écrire un message ...'
-    thinking: 'L’agent réfléchit…'
+    thinking: "L’agent réfléchit…"
     ## test: This is shown after invoking 'list locations' and only getting a single entry in the list (2+ entries show text from the dialog).
-    anything_else: ’Puis-je faire quelque chose d’autre pour vous aider?'
+    anything_else: "Puis-je faire quelque chose d’autre pour vous aider?"
 
     # general
     ## test: Currently only used when generating a list of credit cards (see `cc_use_valid`).
@@ -14,8 +14,7 @@ fr:
     ## test: Init IBMChat with an invalid `baseURL` to see the following.
     reconnect: 'Tentative de reconnexion..'
     basic_err: 'Je suis désolé, il y a un problème.'
-    loading_failure1: '<span class="IBMChat-loading-failure-message-text">Je ne peux pas compléter votre demande. Vous pouvez essayer une nouvelle demande ou
- <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">recommencer la conversation.</a></span>'
+    loading_failure1: '<span class="IBMChat-loading-failure-message-text">Je ne peux pas compléter votre demande. Vous pouvez essayer une nouvelle demande ou <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">recommencer la conversation.</a></span>'
     loading_failure2: '<span class="IBMChat-loading-failure-message-text">Je ne peux pas compléter votre demande. Merci de <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">recommencer la conversation.</a></span>'
 
     # forms
@@ -33,18 +32,18 @@ fr:
     ## test: To load credit card form: 1. enter 'pay' 2. enter 'success' 3. click on 'pay now' 4. click on 'credit card'.
     cc_name: 'Nom du titulaire'
     cc_num: 'Numéro de la carte'
-    cc_exp_mon: 'Mois d'expiration'
-    cc_exp_year: 'Année d'expiration'
+    cc_exp_mon: "Mois d’expiration"
+    cc_exp_year: "Année d’expiration"
     cc_code: 'Cryptogramme'
     # cc_use_valid: Displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items.
     ## test: Enter '1234' for the credit card number and submit.
     cc_use_valid: 'Merci de fournir un numéro de carte valide. Nous acceptons: '
     ## test: Enter '4111111111111112' for the credit card number and submit.
-    cc_invalid: 'Ce numéro de carte n'est pas valide.'
+    cc_invalid: "Ce numéro de carte n’est pas valide."
     ## test: Enter '06' and '1999' for the month/year and submit.
-    cc_invalid_exp: 'La date d’expiration de carte n'est pas valide.'
+    cc_invalid_exp: "La date d’expiration de carte n'est pas valide."
     ## test: Enter 'abc' for the CVV and submit.
-    cc_invalid_code: 'Le cryptogramme n'est pas valide.'
+    cc_invalid_code: "Le cryptogramme n’est pas valide."
 
     # geo
     ## test: Enter 'list locations' to see the next 2 labels.
@@ -52,20 +51,20 @@ fr:
     postal_code: 'Code postal'
     ## test: Click on 'current location' button to see the next 2 strings.
     loc_prompt: 'Partagez votre géolocalisation actuelle.'
-    loc_share: 'Votre Navigateur souhaite avoir accès à votre géolocalisation…'
+    loc_share: 'Votre navigateur souhaite avoir accès à votre géolocalisation…'
     ## test: Allow location sharing in the browser.
     loc_share_granted: 'Vous avez autorisé le navigateur à accéder votre géolocalisation.'
     ## test: Rerun the 'list locations' path. This time when selecting 'current location', the user will see this string since browser location access has already been granted.
     loc_looking: 'Géolocalisation en cours…'
     ## test: In a new browser incognito session, rerun 'list locations', select 'current location', but disallow browser location sharing.
     loc_share_denied: 'Vous avez désactivé la géolocalisation pour ce site.'
-    loc_not_shared_prompt: 'Veuillez autoriser la géolocalisation ou entrez votre code postal.'
+    loc_not_shared_prompt: 'Veuillez autoriser la géolocalisation ou entrer votre code postal.'
 
     # locations
     ## test: The following are used to show the results of 'list locations' command. What is shown depends on the data the user entered in WVA admin, under the 'store location' capability.
     loc_all: 'Tous les sites'
-    loc_closed_today: 'Fermé aujourd’hui.'
-    loc_open_today: 'Ouvert aujourd’hui.'
+    loc_closed_today: "Fermé aujourd’hui."
+    loc_open_today: "Ouvert aujourd’hui."
     loc_open_today_more: '<span class="{ns}-hours-open">Ouvert aujourd’hui:</span><span class="{ns}-hours-today"> {open, time, short} &ndash; {close, time, short}</span>'
     loc_hours_open: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
     loc_hours_open_multiday: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}&ndash;{closeDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
