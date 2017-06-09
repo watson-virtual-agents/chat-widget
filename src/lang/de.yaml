@@ -1,4 +1,4 @@
-en:
+de:
     # agent
     ## test: The next 2 appear when first starting the chat widget.
     prompt: 'Schreiben Sie eine Nachricht...'
@@ -76,7 +76,7 @@ en:
     ## test: Only one location added to 'store location' capability.
     loc_nearby_single: 'Hier sind die Angaben des Standorts:'
     ## test: More than one location added to 'store location' capability.
-    loc_nearby_list: 'Hier sind die Standorte in ihrer Nähe::'
+    loc_nearby_list: 'Hier sind die Standorte in ihrer Nähe:'
     # Used to generate a URL of form: https://maps.google.com/?q=store%20location
     ## test: Click on address link for location details.
-    google_maps_url: 'https://maps.google.com/'
+    google_maps_url: 'https://maps.google.de/'
