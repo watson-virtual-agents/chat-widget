@@ -1,0 +1,82 @@
+it:
+    # agent
+    ## test: The next 2 appear when first starting the chat widget.
+    prompt: 'Inserire un messggio...'
+    thinking: 'L''Agente sta pensando...'
+    ## test: This is shown after invoking 'list locations' and only getting a single entry in the list (2+ entries show text from the dialog).
+    anything_else: 'Posso esserti utile per qualcos''altro?'
+
+    # general
+    ## test: Currently only used when generating a list of credit cards (see `cc_use_valid`).
+    list_sep: ', '
+
+    # errors
+    ## test: Init IBMChat with an invalid `baseURL` to see the following.
+    reconnect: 'Sto provando a riconnettermi...'
+    basic_err: 'Mi dispiace, sono in difficoltà.'
+    loading_failure1: '<span class="IBMChat-loading-failure-message-text">Non posso completare la richiesta. Puoi provare una nuova richiesta oppure <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">ricomincia la conversazione.</a></span>'
+    loading_failure2: '<span class="IBMChat-loading-failure-message-text">Non posso completare la richiesta. Per piacere <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">ricomincia la conversazione.</a></span>'
+
+    # forms
+    ## test: Enter 'update address' and select one of the options. Will display form whose buttons have the submit/cancel text.
+    submit: 'Invia'
+    cancel: 'Cancella'
+    ## test: For same process as above, click the submit button without entering any information. Will see 'required' error.
+    required_field: 'Questo campo è obligatorio.'
+
+    # dates
+    ## test: These are visible in the credit card form (see the "credit cards" section).
+    placeholder_mon: 'MM'
+    placeholder_year: 'AAAA'
+
+    # credit cards
+    ## test: To load credit card form: 1. enter 'pay' 2. enter 'success' 3. click on 'pay now' 4. click on 'credit card'.
+    cc_name: 'Nome sulla carta di credito'
+    cc_num: 'Numero della carta di credito'
+    cc_exp_mon: 'Mese di scadenza'
+    cc_exp_year: 'Anno di scadenza'
+    cc_code: 'CVV (codice di sicurezza)'
+    # cc_use_valid: Displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items.
+    ## test: Enter '1234' for the credit card number and submit.
+    cc_use_valid: 'Si prega di utilizzare una carta di credito valida. Accettiamo le seguenti carte di credito: '
+    ## test: Enter '4111111111111112' for the credit card number and submit.
+    cc_invalid: 'Il numero della carta di credito non è valido.'
+    ## test: Enter '06' and '1999' for the month/year and submit.
+    cc_invalid_exp: 'La data di scadenza della carta di credito non è valida.'
+    ## test: Enter 'abc' for the CVV and submit.
+    cc_invalid_code: 'Il CVV (codice di sicurezza) non è valido.'
+
+    # geo
+    ## test: Enter 'list locations' to see the next 2 labels.
+    loc_curr: 'Attuale locazione geografica'
+    postal_code: 'Codice di avviamento postale'
+    ## test: Click on 'current location' button to see the next 2 strings.
+    loc_prompt: 'Per piacere consenti l''accesso alla tua locazione.'
+    loc_share: 'Il tuo browser sta richiedendo l''accesso alla tua locazione...'
+    ## test: Allow location sharing in the browser.
+    loc_share_granted: 'Hai consentito al browser di condividere l''accesso alla tua locazione.'
+    ## test: Rerun the 'list locations' path. This time when selecting 'current location', the user will see this string since browser location access has already been granted.
+    loc_looking: 'Sto controllando la tua posizione attuale...'
+    ## test: In a new browser incognito session, rerun 'list locations', select 'current location', but disallow browser location sharing.
+    loc_share_denied: 'Non hai dato il permesso a questo sito web di accedere alla tua locazione.'
+    loc_not_shared_prompt: 'Abilita l''accesso alla tua locazione oppure inserisci il tuo codice di avviamento postale.'
+
+    # locations
+    ## test: The following are used to show the results of 'list locations' command. What is shown depends on the data the user entered in WVA admin, under the 'store location' capability.
+    loc_all: 'Tutte le filiali'
+    loc_closed_today: 'Oggi chiuso.'
+    loc_open_today: 'Aperto.'
+    loc_open_today_more: '<span class="{ns}-hours-open">Orari di apertura:</span><span class="{ns}-hours-today"> {open, time, short} &ndash; {close, time, short}</span>'
+    loc_hours_open: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
+    loc_hours_open_multiday: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}&ndash;{closeDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
+    loc_hours_unknown: '<span class="{ns}-days-hours-day">{day, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">Orario di apertura non noto</span>'
+    loc_hours_closed: '<span class="{ns}-days-hours-day">{day, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">Chiuso</span>'
+    ## test: No locations added to 'store location' capability.
+    loc_nearby_none: 'Non siamo riusciti ad individuare nessuna filiale nelle vicinanze.'
+    ## test: Only one location added to 'store location' capability.
+    loc_nearby_single: 'Ecco i dettagli di questa filiale:'
+    ## test: More than one location added to 'store location' capability.
+    loc_nearby_list: 'Ecco le filiali che ho trovato nelle vicinanze:'
+    # Used to generate a URL of form: https://maps.google.com/?q=store%20location
+    ## test: Click on address link for location details.
+    google_maps_url: 'https://maps.google.it/'
