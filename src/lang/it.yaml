@@ -2,7 +2,7 @@ it:
     # agent
     ## test: The next 2 appear when first starting the chat widget.
     prompt: 'Inserire un messggio...'
-    thinking: 'L'Agente sta pensando...'
+    thinking: 'L''Agente sta pensando...'
     ## test: This is shown after invoking 'list locations' and only getting a single entry in the list (2+ entries show text from the dialog).
     anything_else: 'Posso esserti utile per qualcos''altro?'
 
