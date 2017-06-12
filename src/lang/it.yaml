@@ -79,4 +79,4 @@ it:
     loc_nearby_list: 'Ecco le filiali che ho trovato nelle vicinanze:'
     # Used to generate a URL of form: https://maps.google.com/?q=store%20location
     ## test: Click on address link for location details.
-    google_maps_url: 'https://maps.google.com/'
+    google_maps_url: 'https://maps.google.it/'
