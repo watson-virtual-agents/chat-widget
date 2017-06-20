@@ -17,10 +17,10 @@ var css = require('./styles.css');
 
 var defaultStyles = {
   background: 'rgba(61, 61, 61, 1)',
-  accentBackground: '#00baa1',
+  accentBackground: '#BA8FF7',
   accentText: '#ffffff',
   text: '#ffffff',
-  link: '#008673',
+  link: '#AF6EE8',
   secondaryBackground: 'rgba(90, 90, 90, 1)',
   secondaryText: 'rgba(247, 247, 247, 1)',
   inputBackground: 'rgba(90, 90, 90, 1)',
