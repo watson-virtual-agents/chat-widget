@@ -17,7 +17,7 @@ var css = require('./styles.css');
 
 var defaultStyles = {
   background: 'rgba(61, 61, 61, 1)',
-  accentBackground: '#008673',
+  accentBackground: '#00baa1',
   accentText: '#ffffff',
   text: '#ffffff',
   link: '#008673',
