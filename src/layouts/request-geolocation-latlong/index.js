@@ -91,7 +91,7 @@ RequestGeolocationLatlong.prototype = {
     publish('disable-loading');
     publish('receive', string);
     publish('send', {
-      text: 'find nearest locations',
+      text: 'failure',
       silent: true
     });
   }
