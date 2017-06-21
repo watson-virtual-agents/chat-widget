@@ -45,6 +45,7 @@ Form.prototype.init = function(data) {
   this.data = data.message.store || [];
   this.action = data.message.action || '';
   this.label = data.message.layout.label || {};
+  this.repopulate = !!data.message.layout.repopulate;
   this.uuid = data.uuid;
   this.parentElement = data.element;
   this.layoutElement = data.layoutElement;
@@ -70,11 +71,11 @@ Form.prototype.drawForm = function() {
       uuid: utils.getUUID(),
       type: datum.type || 'text',
       index: index,
-      value: ''
+      value: this.repopulate ? (profile.get(datum.name) || '') : ''
     });
     field.className = ns + '-fields-row';
     formFields.appendChild(field);
-  });
+  }, this);
   this.fields = formFields.querySelectorAll('input');
   this.submitButton = base.querySelector('.' + ns + '-submit');
   this.cancelButton = base.querySelector('.' + ns + '-cancel');
