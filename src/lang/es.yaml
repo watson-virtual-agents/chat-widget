@@ -28,6 +28,7 @@ es:
     cc_exp_mon: 'Fecha de vencimiento - Mes'
     cc_exp_year: 'Fecha de vencimiento - Año'
     cc_code: 'CVV'
+    cc_code_alt: ''
     # cc_use_valid: displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items
     cc_use_valid: 'Por favor use una tarjeta válida. Aceptamos: '
     cc_invalid: 'Su número de tarjeta de crédito no es válido.'

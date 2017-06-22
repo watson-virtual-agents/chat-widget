@@ -63,6 +63,7 @@ CreditCard.prototype.drawForm = function() {
     cc_exp_mon: i18n('cc_exp_mon'),
     cc_exp_year: i18n('cc_exp_year'),
     cc_code: i18n('cc_code'),
+    cc_code_alt: i18n('cc_code_alt') || i18n('cc_code'),
     placeholder_mon: i18n('placeholder_mon'),
     placeholder_year: i18n('placeholder_year'),
     cancel: i18n('cancel'),

@@ -37,7 +37,10 @@ en:
     cc_num: 'Credit Card Number'
     cc_exp_mon: 'Expiration Date Month'
     cc_exp_year: 'Expiration Date Year'
+    # cc_code: should be short
     cc_code: 'CVV'
+    # cc_code_alt: Description of `cc_code`; may appear as tooltip. If empty, value is treated as that of `cc_code`
+    cc_code_alt: ''
     # cc_use_valid: Displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items.
     ## test: Enter '1234' for the credit card number and submit.
     cc_use_valid: 'Please use a valid card. We accept the following: '
