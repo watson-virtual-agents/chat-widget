@@ -344,6 +344,6 @@ module.exports = {
   state: state,
   context: context,
   clear: function() {
-    events.publish('restart');
+    events.publish('reset');
   }
 };
