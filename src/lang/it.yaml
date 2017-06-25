@@ -35,7 +35,8 @@ it:
     cc_num: 'Numero della carta di credito'
     cc_exp_mon: 'Mese di scadenza'
     cc_exp_year: 'Anno di scadenza'
-    cc_code: 'CVV (codice di sicurezza)'
+    cc_code: 'CVV'
+    cc_code_alt: 'Codice di sicurezza'
     # cc_use_valid: Displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items.
     ## test: Enter '1234' for the credit card number and submit.
     cc_use_valid: 'Si prega di utilizzare una carta di credito valida. Accettiamo le seguenti carte di credito: '

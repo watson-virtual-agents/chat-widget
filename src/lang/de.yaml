@@ -36,6 +36,7 @@ de:
     cc_exp_mon: 'Monat des Ablaufs'
     cc_exp_year: 'Jahr des Ablaufs'
     cc_code: 'CVV'
+    cc_code_alt: ''
     # cc_use_valid: Displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items.
     ## test: Enter '1234' for the credit card number and submit.
     cc_use_valid: 'Bitte nutzen Sie eine gültige Karte. Wir akzeptieren das Folgendes: '

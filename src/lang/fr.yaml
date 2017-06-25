@@ -34,7 +34,8 @@ fr:
     cc_num: 'Numéro de la carte'
     cc_exp_mon: "Mois d’expiration"
     cc_exp_year: "Année d’expiration"
-    cc_code: 'Cryptogramme'
+    cc_code: 'Crypto'
+    cc_code_alt: 'Code de sécurité'
     # cc_use_valid: Displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items.
     ## test: Enter '1234' for the credit card number and submit.
     cc_use_valid: 'Merci de fournir un numéro de carte valide. Nous acceptons: '
