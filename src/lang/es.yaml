@@ -1,61 +1,87 @@
-es:
+# NLS_ENCODING=UTF-8
+es:   
+
     # agent
-    prompt: 'Escribir mensaje...'
+    ## test: The next 2 appear when first starting the chat widget.
+    prompt: 'Introduzca el mensaje...'
     thinking: 'El agente está pensando...'
-    reconnect: 'Tratando de reconectar...'
-    anything_else: '¿Hay algo más en lo que te pueda ayudar?'
+    ## test: This is shown after invoking 'list locations' and only getting a single entry in the list (2+ entries show text from the dialog).
+    anything_else: '¿Hay algo más en lo que pueda ayudarle?'
 
     # general
+    ## test: Currently only used when generating a list of credit cards (see `cc_use_valid`).
     list_sep: ', '
 
     # errors
-    basic_err: 'Lo siento, hay un problema.'
-    loading_failure1: '<span class="IBMChat-loading-failure-message-text">No lo puedo completar. Puede probar otra ves o <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">reiniciar la conversación.</a></span>'
-    loading_failure2: '<span class="IBMChat-loading-failure-message-text">No lo puedo completar. Por favor <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">reiniciar la conversación.</a></span>'
+    ## test: Init IBMChat with an invalid `baseURL` to see the following.
+    reconnect: 'Intentando volver a conectar...'
+    basic_err: 'Lo siento, parece que hay un problema.'
+    loading_failure1: '<span class="IBMChat-loading-failure-message-text">No puedo completar su solicitud. Puede probar con una nueva solicitud o <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">reiniciar la conversación.</a></span>'
+    loading_failure2: '<span class="IBMChat-loading-failure-message-text">No puedo completar su solicitud. Por favor, <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">reinicie la conversación.</a></span>'
 
     # forms
+    ## test: Enter 'update address' and select one of the options. Will display form whose buttons have the submit/cancel text.
     submit: 'Enviar'
     cancel: 'Cancelar'
-    required_field: 'Obligatorio.'
+    ## test: For same process as above, click the submit button without entering any information. Will see 'required' error.
+    required_field: 'Este campo es necesario.'
 
     # dates
+    ## test: These are visible in the credit card form (see the "credit cards" section).
     placeholder_mon: 'MM'
     placeholder_year: 'AAAA'
 
     # credit cards
-    cc_name: 'Nombre'
+    ## test: To load credit card form: 1. enter 'pay' 2. enter 'success' 3. click on 'pay now' 4. click on 'credit card'.
+    cc_name: 'Titular de la tarjeta'
     cc_num: 'Número de tarjeta de crédito'
-    cc_exp_mon: 'Fecha de vencimiento - Mes'
-    cc_exp_year: 'Fecha de vencimiento - Año'
+    cc_exp_mon: 'Mes de caducidad'
+    cc_exp_year: 'Año de caducidad'
+    # cc_code: should be short
     cc_code: 'CVV'
-    cc_code_alt: ''
-    # cc_use_valid: displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items
-    cc_use_valid: 'Por favor use una tarjeta válida. Aceptamos: '
+    # cc_code_alt: Description of `cc_code`; may appear as tooltip. If empty, value is treated as that of `cc_code`
+    cc_code_alt: 'Código valor de verificación'
+    # cc_use_valid: Displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items.
+    ## test: Enter '1234' for the credit card number and submit.
+    cc_use_valid: 'Utilice una tarjeta válida. Aceptamos las siguientes: '
+    ## test: Enter '4111111111111112' for the credit card number and submit.
     cc_invalid: 'Su número de tarjeta de crédito no es válido.'
-    cc_invalid_exp: 'La fecha de vencimiento no es válida.'
-    cc_invalid_code: 'El CVV no es válido.'
+    ## test: Enter '06' and '1999' for the month/year and submit.
+    cc_invalid_exp: 'La fecha de caducidad de su tarjeta de crédito no es válida.'
+    ## test: Enter 'abc' for the CVV and submit.
+    cc_invalid_code: 'Su código CVV no es válido.'
 
     # geo
+    ## test: Enter 'list locations' to see the next 2 labels.
     loc_curr: 'Ubicación actual'
     postal_code: 'Código postal'
-    loc_prompt: 'Comparta su ubicación actual.'
-    loc_share: 'El navegador le pide que comparta su ubicación...'
-    loc_share_granted: 'Ha permitido que su navegador comparta su ubicación actual.'
+    ## test: Click on 'current location' button to see the next 2 strings.
+    loc_prompt: 'Por favor, comparta su ubicación actual.'
+    loc_share: 'Su navegador solicita que comparta su ubicación...'
+    ## test: Allow location sharing in the browser.
+    loc_share_granted: 'Ha permitido al navegador compartir su ubicación.'
+    ## test: Rerun the 'list locations' path. This time when selecting 'current location', the user will see this string since browser location access has already been granted.
     loc_looking: 'Buscando su ubicación actual...'
-    loc_share_denied: 'Ha rechazado compartir su ubicación en este sitio.'
-    loc_not_shared_prompt: 'Por favor, permita el uso de su ubicación o continúe con su código postal.'
+    ## test: In a new browser incognito session, rerun 'list locations', select 'current location', but disallow browser location sharing.
+    loc_share_denied: 'Ha denegado compartir su ubicación en este sitio web.'
+    loc_not_shared_prompt: 'Permita compartir la ubicación o continúe con su Código postal.'
 
     # locations
-    loc_all: 'Todos los sitios'
-    loc_closed_today: 'Cerrado hoy.'
-    loc_open_today: 'Abierto hoy.'
-    loc_open_today_more: '<span class="{ns}-hours-open">Abierto hoy:</span><span class="{ns}-hours-today"> {open, time, short} &ndash; {close, time, short}</span>'
+    ## test: The following are used to show the results of 'list locations' command. What is shown depends on the data the user entered in WVA admin, under the 'store location' capability.
+    loc_all: 'Todas las ubicaciones'
+    loc_closed_today: 'Está cerrado hoy.'
+    loc_open_today: 'Está abierto hoy.'
+    loc_open_today_more: '<span class="{ns}-hours-open">Está abierto hoy:</span><span class="{ns}-hours-today"> {open, time, short} &ndash; {close, time, short}</span>'
     loc_hours_open: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
     loc_hours_open_multiday: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}&ndash;{closeDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
     loc_hours_unknown: '<span class="{ns}-days-hours-day">{day, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">Horario desconocido</span>'
     loc_hours_closed: '<span class="{ns}-days-hours-day">{day, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">Cerrado</span>'
-    loc_nearby_none: 'No hemos podido encontrar lugares cerca de usted.'
+    ## test: No locations added to 'store location' capability.
+    loc_nearby_none: 'No se han podido encontrar ubicaciones cercanas.'
+    ## test: Only one location added to 'store location' capability.
     loc_nearby_single: 'Estos son los detalles de esta ubicación:'
-    loc_nearby_list: 'Estos son los lugares que he encontrado cerca de usted:'
+    ## test: More than one location added to 'store location' capability.
+    loc_nearby_list: 'Estas son las ubicaciones cercanas que he encontrado:'
     # Used to generate a URL of form: https://maps.google.com/?q=store%20location
+    ## test: Click on address link for location details.
     google_maps_url: 'https://maps.google.es/'
