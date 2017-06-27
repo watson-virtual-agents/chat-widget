@@ -1,54 +1,87 @@
-pt-br:
-     # agent
-     prompt: 'Digite a mensagem...'
-     thinking: 'O agente está processando...'
-     reconnect: 'Tentando reconectar...'
-     anything_else: 'Há algo mais em que eu possa ajudar?'
-     # general
-     list_sep: ', '
-     # errors
-     basic_err: 'Lamento, encontrei um problema.'
-     loading_failure1: '<span class="IBMChat-loading-failure-message-text">Não posso completar a sua requisição. Você pode tentar uma nova requisição <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">reiniciar a conversa.</a></span>'
-     loading_failure2: '<span class="IBMChat-loading-failure-message-text">Não posso completar a sua requisição. Por favor <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">reinicie a conversa.</a></span>'
-     # forms
-     submit: 'Enviar'
-     cancel: 'Cancelar'
-     required_field: 'Obrigatório.'
-     # dates
-     placeholder_mon: 'MM'
-     placeholder_year: 'AAAA'
-     # credit cards
-     cc_name: 'Nome'
-     cc_num: 'Número do cartão de crédito'
-     cc_exp_mon: 'Data de vencimento – Mês'
-     cc_exp_year: 'Data de vencimento - Ano'
-     cc_code: 'Código'
-     cc_code_alt: 'Código de Segurança'
-     # cc_use_valid: displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items
-     cc_use_valid: 'Por favor use um cartão de crédito válido. Aceitamos: '
-     cc_invalid: 'O número do seu cartão de crédito não é válido.'
-     cc_invalid_exp: 'A data de vencimento no é válida.'
-     cc_invalid_code: 'O CVV não é válido.'
-     # geo
-     loc_curr: 'Localidade atual'
-     postal_code: 'CEP'
-     loc_prompt: 'Por favor, compartilhe a sua localização atual.'
-     loc_share: 'O navegador está solicitando o compartilhamento da sua localização...'
-     loc_share_granted: 'Você permitiu que o seu navegador compartilhe a sua localização atual.'
-     loc_looking: 'Determinando a sua localização atual...'
-     loc_share_denied: 'Você negou o compartilhamento da sua localização atual neste site.'
-     loc_not_shared_prompt: 'Por favor, permita o compartilhamento da sua localização atual, ou prossiga informando apenas o seu CEP.'
-     # locations
-     loc_all: 'Todos os sites'
-     loc_closed_today: 'Fechado hoje.'
-     loc_open_today: 'Aberto hoje.'
-     loc_open_today_more: '<span class="{ns}-hours-open">Aberto hoje:</span><span class="{ns}-hours-today"> {open, time, short} &ndash; {close, time, short}</span>'
-     loc_hours_open: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
-     loc_hours_open_multiday: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}&ndash;{closeDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
-     loc_hours_unknown: '<span class="{ns}-days-hours-day">{day, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">Horário desconhecido</span>'
-     loc_hours_closed: '<span class="{ns}-days-hours-day">{day, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">Fechado</span>'
-     loc_nearby_none: 'Não conseguimos encontrar locais próximos de você.'
-     loc_nearby_single: 'Estes são os detalhes deste local:'
-     loc_nearby_list: 'Estes são os lugares que encontramos próximos a você:'
-     # Used to generate a URL of form: https://maps.google.com/?q=store%20location
-     google_maps_url: 'https://maps.google.com.br/'
+# NLS_ENCODING=UTF-8
+pt-br:   
+
+    # agent
+    ## test: The next 2 appear when first starting the chat widget.
+    prompt: 'Escreva uma mensagem...'
+    thinking: 'O agente está pensando...'
+    ## test: This is shown after invoking 'list locations' and only getting a single entry in the list (2+ entries show text from the dialog).
+    anything_else: 'Posso ajudá-lo com mais alguma coisa?'
+
+    # general
+    ## test: Currently only used when generating a list of credit cards (see `cc_use_valid`).
+    list_sep: ', '
+
+    # errors
+    ## test: Init IBMChat with an invalid `baseURL` to see the following.
+    reconnect: 'Tentando reconectar...'
+    basic_err: 'Lamentamos, estamos com problemas.'
+    loading_failure1: '<span class="IBMChat-loading-failure-message-text">Não é possível concluir sua solicitação. Tente inserir uma nova solicitação <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">reiniciar a conversa.</a></span>'
+    loading_failure2: '<span class="IBMChat-loading-failure-message-text">Não é possível concluir sua solicitação. <a class="IBMChat-loading-retry-link" data-retry="true" href="javascript:void(false);">Reinicie a conversa.</a></span>'
+
+    # forms
+    ## test: Enter 'update address' and select one of the options. Will display form whose buttons have the submit/cancel text.
+    submit: 'Enviar'
+    cancel: 'Cancelar'
+    ## test: For same process as above, click the submit button without entering any information. Will see 'required' error.
+    required_field: 'Esse campo é obrigatório.'
+
+    # dates
+    ## test: These are visible in the credit card form (see the "credit cards" section).
+    placeholder_mon: 'MM'
+    placeholder_year: 'AAAA'
+
+    # credit cards
+    ## test: To load credit card form: 1. enter 'pay' 2. enter 'success' 3. click on 'pay now' 4. click on 'credit card'.
+    cc_name: 'Nome no cartão'
+    cc_num: 'Número do cartão de crédito'
+    cc_exp_mon: 'Més de vencimento'
+    cc_exp_year: 'Ano de vencimento'
+    # cc_code: should be short
+    cc_code: 'CVV'
+    # cc_code_alt: Description of `cc_code`; may appear as tooltip. If empty, value is treated as that of `cc_code`
+    cc_code_alt: 'Código de Segurança'
+    # cc_use_valid: Displayed as 'Please use a valid card. We accept the following: American Express, Mastercard, Visa', using `list_sep` to separate list items.
+    ## test: Enter '1234' for the credit card number and submit.
+    cc_use_valid: 'Use um cartão válido. Aceitamos os seguintes cartões: '
+    ## test: Enter '4111111111111112' for the credit card number and submit.
+    cc_invalid: 'O número do seu cartão de crédito é inválido.'
+    ## test: Enter '06' and '1999' for the month/year and submit.
+    cc_invalid_exp: 'A data de vencimento do seu cartão de crédito é inválida.'
+    ## test: Enter 'abc' for the CVV and submit.
+    cc_invalid_code: 'Seu código de segurança é inválido.'
+
+    # geo
+    ## test: Enter 'list locations' to see the next 2 labels.
+    loc_curr: 'Localização atual'
+    postal_code: 'CEP'
+    ## test: Click on 'current location' button to see the next 2 strings.
+    loc_prompt: 'Compartilhe sua localização atual.'
+    loc_share: 'Seu navegador está perguntando se você deseja compartilhar sua localização...'
+    ## test: Allow location sharing in the browser.
+    loc_share_granted: 'Você deu permissão ao seu navegador para compartilhar sua localização atual.'
+    ## test: Rerun the 'list locations' path. This time when selecting 'current location', the user will see this string since browser location access has already been granted.
+    loc_looking: 'Procurando sua localização atual...'
+    ## test: In a new browser incognito session, rerun 'list locations', select 'current location', but disallow browser location sharing.
+    loc_share_denied: 'Você não permitiu o compartilhamento de sua localização para este website.'
+    loc_not_shared_prompt: 'Ative o compartilhamento de localização ou insira seu CEP.'
+
+    # locations
+    ## test: The following are used to show the results of 'list locations' command. What is shown depends on the data the user entered in WVA admin, under the 'store location' capability.
+    loc_all: 'Todas as localizações'
+    loc_closed_today: 'Fechado hoje.'
+    loc_open_today: 'Aberto hoje.'
+    loc_open_today_more: '<span class="{ns}-hours-open">Aberto hoje:</span><span class="{ns}-hours-today"> {open, time, short} &ndash; {close, time, short}</span>'
+    loc_hours_open: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
+    loc_hours_open_multiday: '<span class="{ns}-days-hours-day">{openDay, date, weekday_short}&ndash;{closeDay, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">{open, time, short} &ndash; {close, time, short}</span>'
+    loc_hours_unknown: '<span class="{ns}-days-hours-day">{day, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">Horário desconhecido</span>'
+    loc_hours_closed: '<span class="{ns}-days-hours-day">{day, date, weekday_short}:</span>&nbsp;<span class="{ns}-days-hours-hours">Fechado</span>'
+    ## test: No locations added to 'store location' capability.
+    loc_nearby_none: 'Não foi possível encontrar localizações perto de você.'
+    ## test: Only one location added to 'store location' capability.
+    loc_nearby_single: 'Estes são os detalhes para esta localização:'
+    ## test: More than one location added to 'store location' capability.
+    loc_nearby_list: 'Estas são as localizações encontradas perto de você:'
+    # Used to generate a URL of form: https://maps.google.com/?q=store%20location
+    ## test: Click on address link for location details.
+    google_maps_url: 'https://maps.google.com.br/'
