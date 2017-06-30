@@ -118,7 +118,6 @@ function start(data) {
 
   state.setState(addState);
   utils.checkVisibility();
-  utils.addResizeListener(current.root, addState.onResize);
   events.publish('resize');
 }
 

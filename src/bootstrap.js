@@ -288,7 +288,6 @@ function destroy() {
     if (current.active) {
       styles.removeStyles(current.root, current.chatStyleID, current.chatID);
       if (current.root && current.onResize) {
-        utils.removeResizeListener(current.root, current.onResize);
         utils.endVisibilityCheck();
         if (typeof current.originalContent !== 'undefined' && current.root)
           current.root.innerHTML = current.originalContent;
