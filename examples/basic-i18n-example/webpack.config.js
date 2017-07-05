@@ -1,4 +1,4 @@
-/*
+/**
 * (C) Copyright IBM Corp. 2017. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -12,21 +12,12 @@
 * the License.
 */
 
-var state = require('../../state');
-var events = require('../../events');
-var i18n = require('../../utils/i18n');
+var path = require('path');
 
-function clear() {
-  var current = state.get();
-  state.set({
-    messages: []
-  });
-  current.root.classList.add("chatID-" + current.chatID);
-  current.input.value = '';
-  current.inputClone.textContent = i18n('prompt');
-  current.chatHolder.innerHTML = '';
-  events.publish('resize-input');
-  events.publish('resize');
-}
-
-module.exports = clear;
+module.exports = {
+  entry: path.resolve(__dirname, 'src', 'index.js'),
+  output: {
+    path: path.resolve(__dirname, ''),
+    filename: "bundle.js"
+  }
+};

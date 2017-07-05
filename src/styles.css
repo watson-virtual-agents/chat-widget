@@ -94,7 +94,7 @@
 
 .IBMChat-messages button[disabled="true"] {
   cursor: default;
-  opacity: .7;
+  opacity: .5;
 }
 
 .IBMChat-messages button[disabled="true"]:focus {
@@ -574,11 +574,6 @@
 
 .IBMChat-map-contact-type {
   font-size:0.9em;
-}
-
-.IBMChat-map-locations-item-distance {
-  font-size:0.9em;
-  width:64px;
 }
 
 button.IBMChat-map-locations-all {

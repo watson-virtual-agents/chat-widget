@@ -15,7 +15,6 @@
 var state = require('../state');
 var events = require('../events');
 var writeMessage = require('./writeMessage');
-var resize = require('./resize');
 
 function debounce(func, wait, immediate) {
   var timeout;
@@ -143,8 +142,6 @@ module.exports = {
   getUUID: getUUID,
   compile: compile,
   writeMessage: writeMessage,
-  addResizeListener: resize.addResizeListener,
-  removeResizeListener: resize.removeResizeListener,
   isVisible: isVisible,
   checkVisibility: checkVisibility,
   checkRoot: checkRoot,

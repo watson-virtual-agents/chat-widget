@@ -1,0 +1,34 @@
+{
+  "name": "basic-i18n-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -minify -production",
+    "start": "webpack-dev-server --port 3030"
+  },
+  "license": "Apache-2.0",
+  "author": "IBM Corp",
+  "contributors": [
+    {
+      "name": "Javier Pedemonte",
+      "email": "pedemont@us.ibm.com"
+    },
+    {
+      "name": "Ethan Winters",
+      "email": "ewinters@us.ibm.com"
+    },
+    {
+      "name": "Pablo Najimovich",
+      "email": "najimovi@ar.ibm.com"
+    }
+  ],
+  "devDependencies": {
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
+  },
+  "dependencies": {
+    "@watson-virtual-agent/chat-widget": "1.4.0"
+  }
+}

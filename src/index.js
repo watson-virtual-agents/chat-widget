@@ -27,6 +27,8 @@ var IBMChat = {
    * @param {string} config.el - Takes a string representing the ID of an html element to be rendered to OR a selected element
    * @param {string} config.botID - The unique identifier of your Virtual Agent.
    * @param {string} config.userID - optional: A one-way hashed non-identifiable (e.g. not a users email address or public user id) unique ID used for tracking in the Engagement Metrics dashboard.
+   * @param {string} config.locale=en - optional: Locale string to use for localization and translated text.
+   * @param {Object} config.langBundle - optional: Object containing one or more translation bundles, indexed by locale.
    * @param {string} config.userLatLon -  optional: A lat,lon string (e.g. 28.3852,-81.5639) used for tracking in the Engagement Metrics dashboard.
    * @param {string} config.baseURL=https://api.ibm.com/virtualagent/run/api/v1/ - optional: specifies a different bot hosting server. The most common use-case for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request.
    * @param {string} config.XIBMClientID - optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request.

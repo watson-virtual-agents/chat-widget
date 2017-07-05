@@ -15,6 +15,8 @@
 var events = require('../../events');
 var profile = require('../../profile');
 var utils = require('../../utils');
+var i18n = require('../../utils/i18n');
+
 var subscribe = events.subscribe;
 var publish = events.publish;
 var ns = 'IBMChat-form';
@@ -43,6 +45,7 @@ Form.prototype.init = function(data) {
   this.data = data.message.store || [];
   this.action = data.message.action || '';
   this.label = data.message.layout.label || {};
+  this.repopulate = !!data.message.layout.repopulate;
   this.uuid = data.uuid;
   this.parentElement = data.element;
   this.layoutElement = data.layoutElement;
@@ -56,8 +59,8 @@ Form.prototype.drawForm = function() {
   var base = document.createElement('div');
   var formFields;
   base.innerHTML = utils.compile(templates.base, {
-    submit: this.label.submit || 'Submit',
-    cancel: this.label.cancel || 'Cancel'
+    submit: this.label.submit || i18n('submit'),
+    cancel: this.label.cancel || i18n('cancel')
   });
   formFields = base.querySelector('.IBMChat-form-fields');
   this.data.forEach(function(datum, index) {
@@ -68,11 +71,11 @@ Form.prototype.drawForm = function() {
       uuid: utils.getUUID(),
       type: datum.type || 'text',
       index: index,
-      value: ''
+      value: this.repopulate ? (profile.get(datum.name) || '') : ''
     });
     field.className = ns + '-fields-row';
     formFields.appendChild(field);
-  });
+  }, this);
   this.fields = formFields.querySelectorAll('input');
   this.submitButton = base.querySelector('.' + ns + '-submit');
   this.cancelButton = base.querySelector('.' + ns + '-cancel');
@@ -122,7 +125,7 @@ Form.prototype.validateFields = function() {
 Form.prototype.validateField = function(field, datum) {
   var valid = true;
   if ((!field.value || field.value.trim().length === 0) && datum.required == 'true') {
-    this.addError(field.getAttribute('name'), 'This field is required.');
+    this.addError(field.getAttribute('name'), i18n('required_field'));
     valid = false;
   }
   if (valid === true && datum.validations && datum.validations.length !== 0) {

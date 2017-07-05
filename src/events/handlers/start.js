@@ -17,6 +17,7 @@ var utils = require('../../utils');
 var styles = require('../../styles');
 var events = require('../../events');
 var templates = require('../../templates');
+var i18n = require('../../utils/i18n');
 
 function start(data) {
   var current;
@@ -38,7 +39,7 @@ function start(data) {
     chatBox.classList.add('IBMChat-input-container');
     chatBox.classList.add('IBMChat-input-container-theme');
     chatBox.innerHTML = utils.compile(templates.input, {
-      placeholder: 'Enter message...'
+      placeholder: i18n('prompt')
     });
     addState.outerContainer.appendChild(chatBox);
     addState.inputHolder = current.root.querySelector('.IBMChat-input-container form');
@@ -117,7 +118,6 @@ function start(data) {
 
   state.setState(addState);
   utils.checkVisibility();
-  utils.addResizeListener(current.root, addState.onResize);
   events.publish('resize');
 }
 

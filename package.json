@@ -1,12 +1,12 @@
 {
   "name": "@watson-virtual-agent/chat-widget",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "Watson Virtual Agent Chat Widget",
   "homepage": "https://github.com/watson-virtual-agents/chat-widget",
   "main": "dist/chat.js",
   "unpkg": "dist/chat.min.js",
   "scripts": {
-    "build": "webpack -production && webpack -minify -production -p --json > stats.json && jsdoc2md \"src/index.js\" > docs/JSDOCS.md",
+    "build": "webpack -production && webpack -minify -production -p --json > stats.json && jsdoc2md \"src/index.js\" > docs/JSDOCS.md && yaml2json -sr src/lang/ && mkdir -p dist/lang && mv src/lang/*.json dist/lang",
     "codecov": "npm run test && (codecov || true)",
     "changelog": "./tools/release/update_changelog.sh",
     "eslint": "eslint .",
@@ -36,6 +36,9 @@
     "Watson Virtual Agent"
   ],
   "license": "Apache-2.0",
+  "publishConfig":{
+    "registry": "https://registry.npmjs.org"
+  },
   "author": "IBM Corp",
   "contributors": [
     {
@@ -52,6 +55,7 @@
   },
   "dependencies": {
     "@watson-virtual-agent/client-sdk": "1.3.0",
+    "intl-messageformat": "1.3.0",
     "lodash": "4.15.0"
   },
   "devDependencies": {
@@ -94,7 +98,9 @@
     "style-loader": "0.13.1",
     "svg-inline-loader": "0.4.1",
     "webpack": "1.13.1",
-    "webpack-dev-server": "1.14.1"
+    "webpack-dev-server": "1.14.1",
+    "yaml-loader": "0.4.0",
+    "yamljs": "0.2.10"
   },
   "directories": {
     "doc": "./docs"

@@ -14,9 +14,12 @@
 
 var events = require('../../events');
 var state = require('../../state');
+var i18n = require('../../utils/i18n');
 
+// error messages need to be wrapped in function call so that i18n is properly
+// setup (based on params to IBMChat.init)
 var errorMessageMap = {
-  basic: 'I am sorry, I am having difficulties.'
+  basic: function() { return i18n('basic_err'); }
 };
 
 function clearError() {
@@ -35,10 +38,13 @@ function httpError(err) {
   setTimeout(function() {
     console.error(err);
     var current = state.get();
-    var text = errorMessageMap.basic;
+    var text;
+    if (err.status && errorMessageMap[err.status]) {
+      text = errorMessageMap[err.status]();
+    } else {
+      text = errorMessageMap['basic']();
+    }
     var errorCount = current.errorCount || 0;
-    if (err.status && errorMessageMap[err.status])
-      text = errorMessageMap[err.status];
     events.publish('enable-loading', text);
     state.set({
       errorCount: errorCount + 1
@@ -54,17 +60,17 @@ function retry() {
     var loaderRetryMessage = current.root.querySelector('.IBMChat-loading-retry-message');
     var loader = current.root.querySelector('.IBMChat-loading');
     var loaderFailure = current.root.querySelector('.IBMChat-loading-failure-message');
-    var loaderFailureMessage = current.root.querySelector('.IBMChat-loading-failure-message-text');
+    var loaderFailureMessage = loaderFailure.querySelector('.IBMChat-watson-message');
     if (errorCount > 4) {
-      var loaderFailureMessageText = 'I cannot complete your request. You can try a new request or ';
+      var loaderFailureMessageTmpl = i18n('loading_failure1');
       if (!current.chatID) {
-        loaderFailureMessageText = 'I cannot complete your request. Please ';
+        loaderFailureMessageTmpl = i18n('loading_failure2');
         events.publish('disable-input');
       } else {
         events.publish('enable-input');
       }
       loader.classList.add('IBMChat-hidden');
-      loaderFailureMessage.innerText = loaderFailureMessageText;
+      loaderFailureMessage.innerHTML = loaderFailureMessageTmpl;
       loaderFailure.classList.remove('IBMChat-hidden');
       events.publish('scroll-to-bottom');
       state.set({

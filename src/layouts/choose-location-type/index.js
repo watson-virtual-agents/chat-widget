@@ -15,9 +15,8 @@
 var events = require('../../events');
 var subscribe = events.subscribe;
 var publish = events.publish;
-var activeClassName = 'IBMChat-accent-colors';
-var inactiveClassName = 'IBMChat-accent-colors-button';
 var utils = require('../../utils');
+var i18n = require('../../utils/i18n');
 
 var ns = 'IBMChat-islocationapi';
 var chooseLocationTypes = [];
@@ -29,11 +28,6 @@ var chooseLocationTypeLayout = {
       chooseLocationTypes[data.uuid] = chooseLocationType;
     });
   }
-};
-
-var values = {
-  postalcode: 'zipcode',
-  geolocation: 'latlong'
 };
 
 var templates = {
@@ -48,6 +42,8 @@ ChooseLocationType.prototype = {
   init: function(data) {
     this.data = data.data;
     this.uuid = data.uuid;
+    var postalCodeLabel = this.getButtonLabel(data.message, 'postalcode');
+
     if ('navigator' in window && 'geolocation' in navigator) {
       this.eventListeners = [];
       this.parentElement = data.element;
@@ -55,8 +51,8 @@ ChooseLocationType.prototype = {
       this.el = document.createElement('div');
       this.el.innerHTML = utils.compile(templates.base, {
         ns: ns,
-        'values.geolocation': values.geolocation,
-        'values.postalcode': values.postalcode
+        loc_curr: this.getButtonLabel(data.message, 'latlong'),
+        postal_code: postalCodeLabel
       });
       this.layoutElement.appendChild(this.el);
       this.buttons = this.layoutElement.querySelectorAll('button');
@@ -70,22 +66,34 @@ ChooseLocationType.prototype = {
         this.subscribeSend = subscribe('send', this.removeAllEventListeners.bind(this));
     } else {
       publish('send', {
-        text: values.postalcode,
-        silent: true
+        silent: true,
+        text: postalCodeLabel
       });
     }
   },
+
+  getButtonLabel: function(msg, type) {
+    if (typeof msg.layout.latlongIdx !== 'undefined') {
+      var idx = msg.layout.latlongIdx;
+      if (type !== 'latlong') {
+        // type === 'zipcode'/'postalcode'
+        idx = idx === 0 ? 1 : 0; // the other index
+      }
+      return msg.inputvalidation.oneOf[idx];
+    } else {
+      // legacy code
+      return type === 'latlong' ? i18n('loc_curr') : i18n('postal_code');
+    }
+  },
+
   handleClick: function() {
-    var data = {
-      silent: true,
-      text: null
-    };
-    data.text = this.dataset.input;
-    this.classList.add(activeClassName);
-    this.classList.remove(inactiveClassName);
-    publish('send', data);
+    publish('send', {
+      silent: false,
+      text: this.dataset.input
+    });
     publish('focus-input');
   },
+
   removeAllEventListeners: function() {
     if (this.eventListeners.length > 0) {
       for (var i = 0; i < this.eventListeners.length; i++) {

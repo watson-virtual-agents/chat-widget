@@ -128,10 +128,10 @@ describe('cc-validator layout', function() {
     });
 
     it('should validate non supported cards', function() {
-      var unsupportedCardOutput = { message: 'We accept Visa and MasterCard. Please use a valid card.', valid: false };
+      var unsupportedCardOutput = { message: 'Please use a valid card. We accept the following: Visa, MasterCard', valid: false };
       var validAmex = '378282246310005';
       expect(validateCard(['visa','mastercard'], validAmex)).to.eql(unsupportedCardOutput);
-      unsupportedCardOutput = { message: 'We accept Visa, MasterCard and Discover. Please use a valid card.', valid: false };
+      unsupportedCardOutput = { message: 'Please use a valid card. We accept the following: Visa, MasterCard, Discover', valid: false };
       expect(validateCard(['visa','mastercard','discover'], validAmex)).to.eql(unsupportedCardOutput);
     });
 
