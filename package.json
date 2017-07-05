@@ -36,6 +36,9 @@
     "Watson Virtual Agent"
   ],
   "license": "Apache-2.0",
+  "publishConfig":{
+    "registry": "https://registry.npmjs.org"
+  },
   "author": "IBM Corp",
   "contributors": [
     {
