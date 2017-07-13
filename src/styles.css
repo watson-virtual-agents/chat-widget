@@ -119,6 +119,8 @@
   flex: 1 1 auto;
   font-weight: normal;
   color: #eaeaea; /* gray 1 */
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 /* WatsonMessage Component */
