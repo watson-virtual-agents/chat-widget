@@ -13,6 +13,7 @@
 */
 
 var events = require('../../events');
+var i18n = require('../../utils/i18n');
 var state = require('../../state');
 
 function _addDataSet(data) {
@@ -50,15 +51,18 @@ function layoutError(layout) {
 
 function intent(data) {
   var element = data.element;
+  var label = document.createElement('label');
   var link = document.createElement('a');
   link.setAttribute('href', 'javascript:void(0)');
+  link.textContent = i18n('edit');
   if (data.private) {
-    link.textContent = '#' + data.intent;
+    label.textContent = '#' + data.intent;
     link.setAttribute('data-private', data.intent);
   } else {
-    link.textContent = data.blueprint.label;
+    label.textContent = data.blueprint.label;
     link.setAttribute('data-intent', _addDataSet(data));
   }
+  element.appendChild(label);
   element.appendChild(link);
 }
 
