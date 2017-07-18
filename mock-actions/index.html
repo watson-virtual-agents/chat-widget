@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>IBM Watson Virtual Agent Chat Widget</h1><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Master</th>
+<th>Dev</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CI Status</td>
+<td><a href="https://travis-ci.org/watson-virtual-agents/chat-widget"><img src="https://travis-ci.org/watson-virtual-agents/chat-widget.svg?branch=master" alt="Build Status"></a></td>
+<td><a href="https://travis-ci.org/watson-virtual-agents/chat-widget"><img src="https://travis-ci.org/watson-virtual-agents/chat-widget.svg?branch=dev" alt="Build Status"></a></td>
+</tr>
+<tr>
+<td>Code Coverage</td>
+<td><a href="https://codecov.io/gh/watson-virtual-agents/chat-widget"><img src="https://codecov.io/gh/watson-virtual-agents/chat-widget/branch/master/graph/badge.svg" alt="codecov"></a></td>
+<td><a href="https://codecov.io/gh/watson-virtual-agents/chat-widget"><img src="https://codecov.io/gh/watson-virtual-agents/chat-widget/branch/dev/graph/badge.svg" alt="codecov"></a></td>
+</tr>
+</tbody>
+</table>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/master/images/screencap.gif" alt="Chat Widget demo"/>
+</p>
+
+<p>Lightweight chat widget for <a href="https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/">Watson Virtual Agent</a>. The widget is built on top of the <a href="https://github.com/watson-virtual-agents/client-sdk">Client Bot SDK</a>, which manages communications with a Watson Virtual Agent bot.</p>
+<p>It contains a configurable user interface and can be used as-is or customized. Alternatively, to have ultimate control you can use the <a href="https://github.com/watson-virtual-agents/client-sdk">Client Bot SDK</a> to build a chat widget of your own.</p>
+<h2>Getting Started</h2><h3>Get API keys</h3><ol>
+<li><p>(if you don't already have one) Get a set of Watson Virtual Agent API keys:</p>
+<ol>
+<li>Sign in for a Free Trial in https://www.ibm.com/marketplace/cloud/cognitive-customer-engagement/</li>
+<li>Log in to <a href="https://developer.ibm.com/api/">/api explorer</a> with the same IBM ID that you used to sign up for the trial subscription</li>
+<li>Click the <strong>My APIs</strong> link in the top right, and look for the IBM Watson Virtual Agent tile. Click the key icon, and select the default key.<p align="center">
+<img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/dev/images/api_keys_a.png" width="75%" height="auto" />
+</p></li>
+<li>Hover over the key fields, and then click <strong>SHOW</strong> to view the values. You must add these key values into the script later, so save them in a text file for now. The value from the first field is the client ID key. The value from the second field is the client secret token.<p align="center">
+<img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/dev/images/api_keys_b.png" width="75%" height="auto" />
+</p>
+</li>
+</ol>
+</li>
+<li><p>Get your bot ID.</p>
+<p> Your bot ID is assigned when you create the Watson Virtual Agent instance, and is provided in the bot ID parameter of the code snippet that is displayed in the Publish page. You can use the value that is provided there as-is.
+ If, for some reason, you want to retrieve the bot ID yourself, follow these steps. The order is important.</p>
+<ol>
+<li>Back in the <a href="https://developer.ibm.com/api/">/api explorer</a>, click on the title for the Watson Virtual Agent tile (not the key icon, as above). This will take you to the introduction page.</li>
+<li>Click on <strong>Documentation</strong> on the left hand side. It should automatically select the <strong>Runtime API &gt; New Dialog</strong> page.</li>
+<li>In the section on the right, click on the <strong>USE</strong> button (will change to &quot;VIEW&quot;) and scroll down to the <strong>Retrieve Bot</strong> section (or click &quot;Retrieve Bot&quot; on the right hand side).</li>
+<li>From the dropdown labels <strong>Keys</strong>, select <strong>#1 - Key1</strong>.
+<p align="center">
+<img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/dev/images/api_keys_c2.png" width="70%" height="auto" />
+</p>
+The key you selected is now displayed.</li>
+<li>Click the <code>TEST</code> button. Your bot ID will be listed in the <strong>Response body</strong>.<p align="center">
+<img src="https://raw.githubusercontent.com/watson-virtual-agents/chat-widget/dev/images/api_keys_d.png" width="50%" height="auto" />
+</p>
+
+</li>
+</ol>
+</li>
+</ol>
+<h3>Using the WVA Chat Widget on Your Site</h3><p>You can copy this HTML code block into a file, give it an .html extension, and view it in a browser to see a quick and basic example. Replace the values of the botID, XIBMClientID, and XIBMClientSecret parameters.</p>
+<pre class="prettyprint source lang-html"><code>&lt;html>
+&lt;head>
+&lt;title>IBM Watson Virtual Agent Chat Widget Sample&lt;/title>
+&lt;meta charset=&quot;UTF-8&quot;>
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0&quot; />
+&lt;style>
+  html, body, iframe { width: 100%; height:100%; padding:0; margin:0; }
+  #ibm_chat_root { position:fixed; bottom:0; right: 20px; height: 80%; min-height:400px; width:300px; background:#000; }
+&lt;/style>
+&lt;/head>
+&lt;body>
+&lt;div id=&quot;ibm_chat_root&quot;>&lt;/div>
+&lt;iframe style=&quot;width:100%; height:100%&quot; src=&quot;http://www.ibm.com/en-us&quot;>&lt;/iframe>
+&lt;!--
+https://unpkg.com/@watson-virtual-agent/chat-widget@X.X.X/dist/chat.min.js for a specific version, where X.X.X is the semantic version of the chat widget.
+NOTE: unpkg.com is not affiliated with IBM and not recommended for production.
+NOTE: In your production environment, we recommend locking down your widget version.
+-->
+&lt;script src='https://unpkg.com/@watson-virtual-agent/chat-widget/dist/chat.min.js'>&lt;/script>
+&lt;script>
+  var config = {
+    el: 'ibm_chat_root',
+    baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
+    botID: 'YOUR_BOT_ID',
+    XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+    XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+  };
+  window.IBMChat.init(config);
+&lt;/script>
+&lt;/body>
+&lt;/html></code></pre><p>You can also install this package from npm with <code>npm install @watson-virtual-agent/chat-widget</code> and include it as part of your own scripts and build process.</p>
+<pre class="prettyprint source lang-js"><code>var IBMChat = require('@watson-virtual-agent/chat-widget');
+var config = {
+  el: 'ibm_chat_root',
+  baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
+  botID: 'YOUR_BOT_ID',
+  XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+  XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+};
+IBMChat.init(config);</code></pre><p>Or in ES6+ syntax...</p>
+<pre class="prettyprint source lang-js"><code>import IBMChat from '@watson-virtual-agent/chat-widget';
+const config = {
+  el: 'ibm_chat_root',
+  baseURL: 'https://api.ibm.com/virtualagent/run/api/v1',
+  botID: 'YOUR_BOT_ID',
+  XIBMClientID: 'YOUR_IBM_CLIENT_ID',
+  XIBMClientSecret: 'YOUR_IBM_CLIENT_SECRET'
+};
+IBMChat.init(config);</code></pre><h2>API</h2><p>For more details about what you can do once the widget is up and running, see:</p>
+<ul>
+<li><a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/DOCS.md">DOCS.md</a></li>
+<li><a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/JSDOCS.md">JSDOCS.md</a></li>
+<li><a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/docs/EVENTS.md">EVENTS.md</a></li>
+</ul>
+<h2>Watson Virtual Agent Documentation</h2><p>Additional documentation related to Watson Virtual Agent can be found in <a href="https://www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml">www.ibm.com/watson/developercloud/doc/virtual-agent/wva_overview.shtml</a>.</p>
+<h2>Questions and issues</h2><p>Report bugs or feature requests to our <a href="https://github.com/watson-virtual-agents/chat-widget/issues">github issue tracker</a>.
+For questions please refer to <a href="http://stackoverflow.com/questions/tagged/watson-virtual-agent">StackOverflow</a> under tag <code>watson-virtual-agent</code> or <a href="https://developer.ibm.com/answers/topics/watson-virtual-agent">DeveloperWorks Answers</a>.</p>
+<h2>Contributing</h2><p>See <a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<h2>License</h2><p>This code is licensed under Apache 2.0. Full license text is available in <a href="https://github.com/watson-virtual-agents/chat-widget/blob/master/LICENSE">LICENSE</a>.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="IBMChat.html">IBMChat</a></li><li><a href="IBMChat.context.html">context</a></li><li><a href="IBMChat.profile.html">profile</a></li><li><a href="IBMChat.state.html">state</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Jul 18 2017 20:51:52 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
