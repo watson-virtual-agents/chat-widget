@@ -1,6 +1,6 @@
 # Basic Custom Actions Example
 
-This example shows how to use "actions" as part of your flow in the chat widget. We will be using actions to update a users address.
+This example shows how to use "actions" as part of your flow in the chat widget. We will be using actions to update a users address. Simply type "update address" in the example and follow the prompts.
 
 ## Installing and Running Locally
   1. set the `botID`, `XIBMClientID` and `XIBMClientSecret` parameters in [src/index.js](./src/index.js) (see [Getting Started](https://github.com/watson-virtual-agents/chat-widget/blob/master/README.md#getting-started) for further details on this):

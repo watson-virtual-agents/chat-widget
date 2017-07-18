@@ -17,6 +17,7 @@
  */
 
 var IBMChat = require('@watson-virtual-agent/chat-widget');
+var mockActions = require('../../_mock_actions/main.js');
 // load a single or multi-language bundle of translated strings
 var langs = require('json-loader!@watson-virtual-agent/chat-widget/dist/lang/es.json');
 var locale = 'es';
@@ -36,4 +37,7 @@ IBMChat.init({
   botID: '',              // replace with Bot ID
   XIBMClientID: '',       // replace with Client ID
   XIBMClientSecret: ''    // replace with Client Secret
+}).then(function() {
+  // mock some actions in order to make the example for useful
+  mockActions.registerActions(IBMChat, locale);
 });

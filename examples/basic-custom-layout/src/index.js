@@ -13,6 +13,7 @@
 */
 
 var IBMChat = require('@watson-virtual-agent/chat-widget');
+var mockActions = require('../../_mock_actions/main.js');
 
 /**
  * This example shows how to create a custom layout to replace the chat widget's
@@ -157,4 +158,7 @@ IBMChat.init({
   botID: '',              // replace with Bot ID
   XIBMClientID: '',       // replace with Client ID
   XIBMClientSecret: ''    // replace with Client Secret
+}).then(function() {
+  // mock some actions in order to make the example for useful
+  mockActions.registerActions(IBMChat);
 });
