@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -minify -production",
-    "start": "webpack-dev-server --port 3030"
+    "start": "webpack-dev-server --host 0.0.0.0 --port 3030"
   },
   "license": "Apache-2.0",
   "author": "IBM Corp",
