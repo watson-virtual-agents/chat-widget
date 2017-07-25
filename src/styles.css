@@ -287,15 +287,28 @@
 
 .IBMChat-loading-icon {
   height: 30px;
+  width: 10px;
   position: absolute;
   top: 0;
   left: -4px;
-  width: 10px;
 }
 
-.IBMChat-loading-icon svg {
-  height: 30px;
-  width: 10px;
+.IBMChat-ball {
+  position: absolute;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.IBMChat-ball:nth-child(1) {
+  top: 7.5px;
+}
+.IBMChat-ball:nth-child(2) {
+  top: 17.5px;
+}
+.IBMChat-ball:nth-child(3) {
+  top: 12.5px;
 }
 
 .IBMChat-loading-message {
