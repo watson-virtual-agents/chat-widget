@@ -32,7 +32,7 @@ function run(conf) {
   if (!devServers[conf.index]) {
     const compiler = webpack( config );
 
-    let https = false;
+    var https = false;
     if (conf.https) {
       console.log('Generating SSL Certificate');
       const attrs = [
