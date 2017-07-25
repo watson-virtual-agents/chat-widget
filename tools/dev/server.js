@@ -18,11 +18,9 @@ const selfsigned = require('selfsigned');
 const config = require('../../webpack.config.js');
 const devServers = {};
 
-const {
-  HOST = '0.0.0.0',
-  HOSTNAME = 'www.local.dev',
-  PORT = 3100
-} = process.env;
+const HOST = process.env.HOST || '0.0.0.0';
+const HOSTNAME = process.env.HOSTNAME || 'www.local.dev';
+const PORT = process.env.PORT || 3100;
 
 function run(conf) {
   conf = conf || {};
