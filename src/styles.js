@@ -79,7 +79,7 @@ function _getStyles(current) {
   styles += containerClass + " ::-webkit-input-placeholder {color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";}";
   styles += containerClass + " ::-moz-placeholder {color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + "; opacity: 1;}";
   styles += containerClass + " :-ms-input-placeholder {color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + "; opacity: 1;}";
-  styles += containerClass + " .IBMChat-ball {fill: " + normalizeToHex(current.styles.accentBackground) + ";}";
+  styles += containerClass + " .IBMChat-ball {background-color: " + normalizeToHex(current.styles.accentBackground) + ";}";
   styles += containerClass + " .IBMChat-fade {left: 0; height: 10%; max-height: 32px; position: absolute; top: 0; width: 100%; z-index: 2; background: linear-gradient(to bottom, " + noOpacityBackground + " 0%, " + opacityBackground + " 100%);}";
   styles += containerClass + " .IBMChat-loading-message {color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";}";
   return styles;
