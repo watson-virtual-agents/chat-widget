@@ -65,6 +65,15 @@ function _getStyles(current) {
   styles += containerClass + " a:hover, ";
   styles += containerClass + " a:visited, ";
   styles += containerClass + " a:active {color: " + current.styles.link + "; font-weight: normal; text-decoration: underline; font-size:1em;}";
+  styles += containerClass + " .IBMChat-watson-intent a," +
+                             " .IBMChat-watson-intent a:hover," +
+                             " .IBMChat-watson-intent a:visited," +
+                             " .IBMChat-watson-intent a:active {" +
+                             "   font-weight: bold; text-decoration: underline;";
+  if (current.styles.intentLink) {
+    styles +=                "   color: " + current.styles.intentLink + ";";
+  }
+  styles +=                  " }";
   styles += containerClass + " .IBMChat-chat-textbox {border-bottom: solid 1px " + current.styles.text + ";}";
   styles += containerClass + " .IBMChat-chat-textbox:focus {border-bottom: solid 2px " + current.styles.accentBackground + ";}";
   styles += containerClass + " ::-webkit-input-placeholder {color: " + _placeHolderColor(current.styles.inputText, current.styles.inputBackground) + ";}";

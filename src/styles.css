@@ -106,9 +106,21 @@
   padding: 0;
 }
 
-.IBMChat-watson-intent a {
-  display: inline-block;
-  margin: 1em 0 1em 0;
+.IBMChat-watson-intent:not(:empty) {
+  display: flex;
+  margin: 1em;
+  padding: 0.5em 0.75em 0.5em 0.75em;
+  background-color: #595859; /* gray 60 */
+  border: 1px solid #777677; /* gray 50 */
+  border-radius: 4px;
+}
+
+.IBMChat-watson-intent label {
+  flex: 1 1 auto;
+  font-weight: normal;
+  color: #eaeaea; /* gray 1 */
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 /* WatsonMessage Component */
