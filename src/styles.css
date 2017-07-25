@@ -108,19 +108,28 @@
 
 .IBMChat-watson-intent:not(:empty) {
   display: flex;
+  align-items: baseline;
   margin: 1em;
   padding: 0.5em 0.75em 0.5em 0.75em;
   background-color: #595859; /* gray 60 */
   border: 1px solid #777677; /* gray 50 */
   border-radius: 4px;
+
+  line-height: 1.1em; /* required due to `overflow` in `label` below */
 }
 
 .IBMChat-watson-intent label {
   flex: 1 1 auto;
   font-weight: normal;
   color: #eaeaea; /* gray 1 */
-  overflow: hidden;
-  word-wrap: break-word;
+
+  overflow: auto;
+  word-wrap: break-word;      /* old prop name; required by IE */
+  overflow-wrap: break-word;  /* standard prop name */
+}
+
+.IBMChat-watson-intent a {
+  margin-left: 0.5em;
 }
 
 /* WatsonMessage Component */
