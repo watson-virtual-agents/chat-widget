@@ -5,7 +5,9 @@ var utils = require('../../utils');
 
 function reset() {
   events.publish('clear-error');
+  events.publish('clear');
   events.publish('scroll-to-bottom');
+  events.publish('enable-loading');
   return new window.Promise(function(resolve, reject) {
     var current = state.get();
     var SDKconfig = utils.getSDKConfig(current);
@@ -23,7 +25,6 @@ function reset() {
       .configure( SDKconfig )
       .start( current.botID )
       .then( function(res) {
-        events.publish('clear');
         events.publish('chatID', res.chatID);
         events.publish('receive', res);
       })['catch']( function(err) {

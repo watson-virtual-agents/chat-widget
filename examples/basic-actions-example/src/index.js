@@ -13,6 +13,7 @@
 */
 
 var IBMChat = require('@watson-virtual-agent/chat-widget');
+var mockActions = require('../../_mock_actions/main.js');
 
 // initialize chat widget. Set botID, XIBMClientID and XIBMClientSecret
 // with the corresponding values.
@@ -22,35 +23,39 @@ IBMChat.init({
   botID: '',              // replace with Bot ID
   XIBMClientID: '',       // replace with Client ID
   XIBMClientSecret: ''    // replace with Client Secret
-});
+})
+.then(function() {
+  // mock some actions in order to make the example for useful (but skip `updateAddress` -- see below)
+  mockActions.registerActions(IBMChat, null, ['updateAddress']);
 
-IBMChat.subscribe('action:updateAddress', function(data){
-  var addressType = data.message.action.args.address_type;
-  var address = {
-    type: data.message.action.args.address_type, //e.g. billing or home. The user selected this by clicking a button
-    /*
-      when WVA called the form layout, it also included a "store" array to populate the form.
-      when the form is submitted, the form data by the keys in the store array and added to
-      IBMChat.profile. You can recall them from IBMChat.profile as below.
-    */
-    address1: IBMChat.profile.get('user_street_address1'),
-    address2: IBMChat.profile.get('user_street_address2'),
-    city: IBMChat.profile.get('user_locality'),
-    region: IBMChat.profile.get('user_state_or_province'),
-    postalCode: IBMChat.profile.get('user_zipcode')
-  }
-  function error() {
-    //IBMChat.sendSilently will send a message to WVA, but not show up in the chat console.
-    // when there is an error, WVA expects you to respond with "failure". "success" and "cancel" are other potential options here.
-    IBMChat.sendSilently('failure');
-  }
-  function success() {
-    //IBMChat.sendSilently will send a message to WVA, but not show up in the chat console.
-    // when everything goes as planned, WVA expects you to respond with "success". "failure" and "cancel" are other potential options here.
-    IBMChat.sendSilently('success');
-  }
-  //send your data to your own datastore.
-  myFakePostCommand(address, error, success);
+  // add a custom action handle for `updateAddress`
+  IBMChat.subscribe('action:updateAddress', function(data) {
+    var address = {
+      type: data.message.action.args.address_type, //e.g. billing or home. The user selected this by clicking a button
+      /*
+        when WVA called the form layout, it also included a "store" array to populate the form.
+        when the form is submitted, the form data by the keys in the store array and added to
+        IBMChat.profile. You can recall them from IBMChat.profile as below.
+      */
+      address1: IBMChat.profile.get('user_street_address1'),
+      address2: IBMChat.profile.get('user_street_address2'),
+      city: IBMChat.profile.get('user_locality'),
+      region: IBMChat.profile.get('user_state_or_province'),
+      postalCode: IBMChat.profile.get('user_zipcode')
+    };
+    function error() {
+      //IBMChat.sendSilently will send a message to WVA, but not show up in the chat console.
+      // when there is an error, WVA expects you to respond with "failure". "success" and "cancel" are other potential options here.
+      IBMChat.sendSilently('failure');
+    }
+    function success() {
+      //IBMChat.sendSilently will send a message to WVA, but not show up in the chat console.
+      // when everything goes as planned, WVA expects you to respond with "success". "failure" and "cancel" are other potential options here.
+      IBMChat.sendSilently('success');
+    }
+    //send your data to your own datastore.
+    myFakePostCommand(address, error, success);
+  });
 });
 
 function myFakePostCommand(data, errorCallback, successCallback) {
@@ -60,8 +65,15 @@ function myFakePostCommand(data, errorCallback, successCallback) {
       return true;
     return false;
   }
-  if (isNotEmpty(data.type) && isNotEmpty(data.address1) && isNotEmpty(data.city) && isNotEmpty(data.region) && isNotEmpty(data.postalCode))
+  if (isNotEmpty(data.type) &&
+      isNotEmpty(data.address1) &&
+      isNotEmpty(data.city) &&
+      isNotEmpty(data.region) &&
+      isNotEmpty(data.postalCode)) {
+    console.log('Successfully updated user\'s address:', data);
     successCallback(); //let the WVA know everything went well
-  else
+  } else {
+    console.error('There was an error updating user\'s address. Missing info.')
     errorCallback(); // let the WVA know that the attempt to save failed
+  }
 }
