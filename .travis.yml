@@ -25,7 +25,7 @@ notifications:
   email:
     recipients:
       - ewinters@us.ibm.com
-      - najimovi@ar.ibm.com
+      - pedemont@us.ibm.com
     on_success: always    # default is change, update if this gets too annoying
     on_failure: always    # default: always
 addons:

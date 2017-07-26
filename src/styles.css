@@ -106,9 +106,31 @@
   padding: 0;
 }
 
+.IBMChat-watson-intent:not(:empty) {
+  display: flex;
+  align-items: baseline;
+  margin: 1em;
+  padding: 0.5em 0.75em 0.5em 0.75em;
+  background-color: #595859; /* gray 60 */
+  border: 1px solid #777677; /* gray 50 */
+  border-radius: 4px;
+
+  line-height: 1.1em; /* required due to `overflow` in `label` below */
+}
+
+.IBMChat-watson-intent label {
+  flex: 1 1 auto;
+  font-weight: normal;
+  color: #eaeaea; /* gray 1 */
+  text-transform: none;
+
+  overflow: hidden;
+  word-wrap: break-word;      /* old prop name; required by IE */
+  overflow-wrap: break-word;  /* standard prop name */
+}
+
 .IBMChat-watson-intent a {
-  display: inline-block;
-  margin: 1em 0 1em 0;
+  margin-left: 0.5em;
 }
 
 /* WatsonMessage Component */
@@ -266,15 +288,28 @@
 
 .IBMChat-loading-icon {
   height: 30px;
+  width: 10px;
   position: absolute;
   top: 0;
   left: -4px;
-  width: 10px;
 }
 
-.IBMChat-loading-icon svg {
-  height: 30px;
-  width: 10px;
+.IBMChat-ball {
+  position: absolute;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.IBMChat-ball:nth-child(1) {
+  top: 7.5px;
+}
+.IBMChat-ball:nth-child(2) {
+  top: 17.5px;
+}
+.IBMChat-ball:nth-child(3) {
+  top: 12.5px;
 }
 
 .IBMChat-loading-message {
