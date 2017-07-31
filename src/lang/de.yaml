@@ -9,6 +9,7 @@ de:
     anything_else: 'Kann ich Ihnen noch weiter behilflich sein?'
 
     # general
+    edit: 'Bearbeiten'
     ## test: Currently only used when generating a list of credit cards (see `cc_use_valid`).
     list_sep: ', '
 
