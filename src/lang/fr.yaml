@@ -9,6 +9,7 @@ fr:
     anything_else: 'Avez-vous besoin d''aide pour autre chose ?'
 
     # general
+    edit: 'éditer'
     ## test: Currently only used when generating a list of credit cards (see `cc_use_valid`).
     list_sep: ', '
 
