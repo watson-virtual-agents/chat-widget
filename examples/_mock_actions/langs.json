@@ -1,36 +1,29 @@
 {
     "de": {
-        "authorized_users": "Max Mustermann und Erika Musterfrau",
         "agent": "Auf Ihrer eigenen Site würden Sie nun den Code ausführen, um sich mit einem Agenten zu verbinden.",
         "account_settings": "Auf Ihrer eigenen Site würden Sie nun den Code ausführen, um die Seite 'Kontoeinstellungen' zu öffnen."
     },
     "en": {
-        "authorized_users": "Bob Everyman and Jane Doe",
         "agent": "On your own site you would run code to connect to an agent now.",
         "account_settings": "On your own site you would run code to open the Account Settings page now."
     },
     "es": {
-        "authorized_users": "Bob Everyman y Jane Doe",
         "agent": "En su propio sitio ejecutaría código para conectarse a un agente ahora.",
         "account_settings": "En su propio sitio ejecutaría código para abrir la página Valores de cuenta ahora."
     },
     "fr": {
-        "authorized_users": "Bob Everyman et Jane Doe",
         "agent": "Sur votre propre site, vous exécuteriez maintenant un code pour vous connecter à un agent.",
         "account_settings": "Sur votre propre site, vous exécuteriez maintenant un code pour ouvrir la page des paramètres du compte."
     },
     "it": {
-        "authorized_users": "Bob Everyman e Jane Doe",
         "agent": "Dalla vostra posizione eseguite il codice per connettervi ad un agent ora.",
         "account_settings": "Dalla vostra posizione eseguite il codice per aprire la pagina Impostazioni Account ora."
     },
     "ja": {
-        "authorized_users": "Bob Everyman、Jane Doe",
         "agent": "自身のサイトでコードを実行して、今すぐエージェントに接続してください。",
         "account_settings": "自身のサイトでコードを実行して、今すぐ「アカウントの設定」ページを開いてください。"
     },
     "pt-br": {
-        "authorized_users": "João da Silva e Maria da Silva",
         "agent": "Em seu próprio site você executaria o código para se conectar a um agente agora.",
         "account_settings": "Em seu próprio site você executaria o código para abrir a página Configurações da Conta agora."
     }
