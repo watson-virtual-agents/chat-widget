@@ -1,32 +1,30 @@
 {
     "de": {
-      "authorized_users": "Erika Mustermann und Max Mustermann",
-      "agent": "Auf Ihrer Website würden Sie Code ausführen um jetzt mit einem Agent zu verbinden.",
-      "account_settings": "Auf Ihrer Website würden Sie Code ausführen um jetzt die Kontoeinstellungen-Seite zu öffnen."
+        "agent": "Auf Ihrer eigenen Site würden Sie nun den Code ausführen, um sich mit einem Agenten zu verbinden.",
+        "account_settings": "Auf Ihrer eigenen Site würden Sie nun den Code ausführen, um die Seite 'Kontoeinstellungen' zu öffnen."
     },
     "en": {
-        "authorized_users": "Bob Everyman and Jane Doe",
         "agent": "On your own site you would run code to connect to an agent now.",
         "account_settings": "On your own site you would run code to open the Account Settings page now."
     },
     "es": {
-        "authorized_users": "Ana Sanchez y Juan Pérez",
-        "agent": "En su sitio ejecutaría código para hablar con un agente.",
-        "account_settings": "En su sitio ejecutaría código para abrir la pagina de Configuración de Cuentas."
+        "agent": "En su propio sitio ejecutaría código para conectarse a un agente ahora.",
+        "account_settings": "En su propio sitio ejecutaría código para abrir la página Valores de cuenta ahora."
     },
     "fr": {
-      "authorized_users": "Jacques Martin et Marie Martin",
-      "agent": "Sur votre site, vous exécuteriez le code pour vous connecter à un agent .",
-      "account_settings": "Sur votre site, vous exécuteriez le code pour accéder à la page des paramètres du compte."
+        "agent": "Sur votre propre site, vous exécuteriez maintenant un code pour vous connecter à un agent.",
+        "account_settings": "Sur votre propre site, vous exécuteriez maintenant un code pour ouvrir la page des paramètres du compte."
     },
     "it": {
-        "authorized_users": "Mario Rossi e Maria Bianchi",
-        "agent": "Sul tuo sito, normalmente ora eseguiresti codice che ti connette ad un agente",
-        "account_settings": "Sul tuo sito, normalmente ora eseguiresti codice per mostrare i settaggi dell'account"
+        "agent": "Dalla vostra posizione eseguite il codice per connettervi ad un agent ora.",
+        "account_settings": "Dalla vostra posizione eseguite il codice per aprire la pagina Impostazioni Account ora."
+    },
+    "ja": {
+        "agent": "自身のサイトでコードを実行して、今すぐエージェントに接続してください。",
+        "account_settings": "自身のサイトでコードを実行して、今すぐ「アカウントの設定」ページを開いてください。"
     },
     "pt-br": {
-        "authorized_users": "João Silva e Maria Amélia",
-        "agent": "No seu próprio site, você executaria código para conectar a um agente neste ponto",
-        "account_settings": "No seu próprio site, você executaria código para exibir a página de Configurações de Conta neste ponto."
+        "agent": "Em seu próprio site você executaria o código para se conectar a um agente agora.",
+        "account_settings": "Em seu próprio site você executaria o código para abrir a página Configurações da Conta agora."
     }
 }

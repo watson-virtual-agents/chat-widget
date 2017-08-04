@@ -9,8 +9,7 @@ function generateUserProfileVariablesMap() {
     'payment_due_date': (function() {
       const currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       return currentDate.toLocaleDateString(config.locale);
-    })(),
-    'authorized_users': config.strings.authorized_users
+    })()
   };
 }
 
