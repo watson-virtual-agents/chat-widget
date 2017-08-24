@@ -12,6 +12,7 @@
 * the License.
 */
 
+const path = require('path');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const selfsigned = require('selfsigned');
@@ -52,14 +53,18 @@ function run(conf) {
 
     const devServerConfig = {
       publicPath: '/',
+      contentBase: path.join(__dirname, '../../dist'),
       historyApiFallback: true,
       noInfo: true,
       hot: conf.hot || true,
       host: host,
       https: https,
       public: `${hostname}:${port}`,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      }
     };
-    devServers[conf.index] = (new WebpackDevServer( compiler, devServerConfig));
+    devServers[conf.index] = (new WebpackDevServer(compiler, devServerConfig));
 
     devServers[conf.index].listen( port, host, err => {
       if ( err ) console.log( err );
