@@ -49,10 +49,11 @@ function resolve(sent, received) {
   state.set({
     errorCount: 0,
     sendQueue: current.sendQueue.slice(1, current.sendQueue.length),
-    messages: [].concat(current.messages || [], sent),
+    messages: (sent) ? [].concat(current.messages || [], sent) : current.messages,
     inProgress: false
   });
-  events.publish('receive', received);
+  if(received)
+    events.publish('receive', received);
   events.publish('error-clear');
   events.publish('disable-loading');
   events.publish('scroll-to-bottom');
