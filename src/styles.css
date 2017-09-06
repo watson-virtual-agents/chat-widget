@@ -499,9 +499,10 @@ button.IBMChat-form-submit {
 button.IBMChat-form-cancel, button.IBMChat-form-cancel.IBMChat-accent-colors {
   border: 0 !important;
   border-radius:0;
+  font-size: 0.8em;
+  line-height:1em;
   padding: 2px 4px 2px 4px;
   text-align:center;
-  line-height:1em;
 }
 
 /* locations */
