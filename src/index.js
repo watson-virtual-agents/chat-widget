@@ -30,6 +30,7 @@ var IBMChat = {
    * @param {string} config.locale=en - optional: Locale string to use for localization and translated text.
    * @param {Object} config.langBundle - optional: Object containing one or more translation bundles, indexed by locale.
    * @param {string} config.userLatLon -  optional: A lat,lon string (e.g. 28.3852,-81.5639) used for tracking in the Engagement Metrics dashboard.
+   * @param {string} config.defaultCountry -  optional: Takes a string of a country name (e.g. United Kingdom) to use to help postal code calculation using `request-geolocation-zipcode` layout in context with "Find nearest store" flows.
    * @param {string} config.baseURL=https://api.ibm.com/virtualagent/run/api/v1/ - optional: specifies a different bot hosting server. The most common use-case for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request.
    * @param {string} config.XIBMClientID - optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request.
    * @param {string} config.XIBMClientSecret - optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request.

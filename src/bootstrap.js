@@ -89,6 +89,11 @@ function init(config) {
   state.set({
     locale: locale
   });
+  if (config.defaultCountry) {
+    state.set({
+      defaultCountry: config.defaultCountry
+    });
+  }
   if (config.langBundle) {
     if (typeof config.langBundle === 'object') {
       // store language bundle that matches locale
