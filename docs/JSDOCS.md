@@ -239,7 +239,7 @@ Generate the chat widget into an element.
 | config.locale | <code>string</code> | <code>&quot;en&quot;</code> | optional: Locale string to use for localization and translated text. |
 | config.langBundle | <code>Object</code> |  | optional: Object containing one or more translation bundles, indexed by locale. |
 | config.userLatLon | <code>string</code> |  | optional: A lat,lon string (e.g. 28.3852,-81.5639) used for tracking in the Engagement Metrics dashboard. |
-| config.defaultCountry | <code>string</code> |  | optional: Takes a string of a country name to use to help postal code calculation using `request-geolocation-zipcode` layout in context with "Find nearest store" flows. |
+| config.defaultCountry | <code>string</code> |  | optional: Takes a string of a country name (e.g. United Kingdom) to use to help postal code calculation using `request-geolocation-zipcode` layout in context with "Find nearest store" flows. |
 | config.baseURL | <code>string</code> | <code>&quot;https://api.ibm.com/virtualagent/run/api/v1/&quot;</code> | optional: specifies a different bot hosting server. The most common use-case for this param is to point the widget to a server that will add X-IBM-Client-Id and X-IBM-Client-Secret headers to the request. |
 | config.XIBMClientID | <code>string</code> |  | optional: Your IBMClientID... this should not be made public in a public environment. Including this will add X-IBM-Client-Id as a header to your request. |
 | config.XIBMClientSecret | <code>string</code> |  | optional: Your IBMClientSecret... this should not be made public in a public environment. Including this will add X-IBM-Client-Secret as a header to your request. |
