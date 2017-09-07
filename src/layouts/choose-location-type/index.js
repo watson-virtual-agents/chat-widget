@@ -88,7 +88,7 @@ ChooseLocationType.prototype = {
 
   handleClick: function() {
     publish('send', {
-      silent: false,
+      silent: true,
       text: this.dataset.input
     });
     publish('focus-input');

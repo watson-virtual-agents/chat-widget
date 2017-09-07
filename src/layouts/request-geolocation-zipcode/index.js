@@ -13,10 +13,45 @@
 */
 
 var events = require('../../events');
+var state = require('../../state');
 var subscribe = events.subscribe;
+var publish = events.publish;
+var requestGeolocationZips = [];
 var requestGeolocationZipcodeLayout = {
   init: function() {
-    subscribe('layout:request-geolocation-zipcode', function() {});
+    subscribe('layout:request-geolocation-zipcode', function(data) {
+      var requestGeolocationZip = new RequestGeolocationZip(data);
+      requestGeolocationZips[data.uuid] = requestGeolocationZip;
+    });
+  }
+};
+
+function RequestGeolocationZip(data) {
+  this.init(data);
+}
+
+RequestGeolocationZip.prototype.init = function(data) {
+  var current = state.get();
+  if(current.defaultCountry) {
+    state.set({
+      handleInput: {
+        default: false,
+        callback: function(msg, resolve, reject) {
+          var current = state.get();
+          resolve();
+          state.set({
+            handleInput: {
+              default: true,
+              callback: undefined
+            }
+          });
+          publish('send', {
+            text: msg + ', ' + current.defaultCountry,
+            silent: true
+          });
+        }
+      }
+    });
   }
 };
 

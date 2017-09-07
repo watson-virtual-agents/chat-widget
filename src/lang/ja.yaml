@@ -65,7 +65,7 @@ ja:
     loc_looking: '現在のロケーションを調べています...'
     ## test: In a new browser incognito session, rerun 'list locations', select 'current location', but disallow browser location sharing.
     loc_share_denied: 'この Web サイトでのロケーションの共有を拒否しました。'
-    loc_not_shared_prompt: 'ロケーションの共有を有効にするか、郵便番号を指定して続けてください。'
+    loc_not_shared_prompt: 'ロケーションの共有を有効にするか、郵便番号を指定して続行してください。'
 
     # locations
     ## test: The following are used to show the results of 'list locations' command. What is shown depends on the data the user entered in WVA admin, under the 'store location' capability.
