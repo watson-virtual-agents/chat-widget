@@ -83,6 +83,7 @@
   line-height: 1.5em;
   margin: 0;
   padding: 0.25em 1em 0.25em 1em;
+  text-align: left;
   -webkit-appearance: button; /* for input */
   -webkit-user-select: none; /* for button */
   -moz-user-select: none;
