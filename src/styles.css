@@ -82,10 +82,7 @@
   font: inherit;
   line-height: 1.5em;
   margin: 0;
-  overflow: hidden;
   padding: 0.25em 1em 0.25em 1em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   -webkit-appearance: button; /* for input */
   -webkit-user-select: none; /* for button */
   -moz-user-select: none;
