@@ -71,8 +71,8 @@ CreditCard.prototype.drawForm = function() {
   });
   this.el.innerHTML = text;
   this.layoutElement.appendChild(this.el);
-  this.cancelButton = this.el.querySelector('.' + ns + '-cancel');
-  this.submitButton = this.el.querySelector('.' + ns + '-submit');
+  this.cancelButton = this.el.querySelector('.IBMChat-form-cancel');
+  this.submitButton = this.el.querySelector('.IBMChat-form-submit');
   this.cancelButton.classList.add(inactiveClassName);
   this.submitButton.classList.add(inactiveClassName);
   this.formElements = {};
