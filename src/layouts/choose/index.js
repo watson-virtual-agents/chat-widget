@@ -101,7 +101,7 @@ Choose.prototype.handleClick = function(evt) {
   target.classList.add(activeClassName);
   target.classList.add('IBMChat-accent-colors');
   publish('send', {
-    silent: false,
+    silent: true,
     text: target.dataset.input
   });
 };
