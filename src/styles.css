@@ -62,7 +62,6 @@
 .IBMChat-messages label {
   display: block;
   font-weight: bold;
-  text-transform: capitalize;
 }
 
 .IBMChat-messages input {
