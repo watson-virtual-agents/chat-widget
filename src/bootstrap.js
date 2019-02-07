@@ -12,10 +12,9 @@
 * the License.
 */
 
-var layouts = require('./layouts');
 var events = require('./events');
 var eventHandlers = require('./events/handlers');
-var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
+var BotSDK = require('./sdk');
 var state = require('./state');
 var context = require('./context');
 var utils = require('./utils');
@@ -24,52 +23,25 @@ var assign = require('lodash/assign');
 var styles = require('./styles');
 var defaultStyles = styles.defaultStyles;
 
-
-var layoutInit = {};
-var registeredLayouts = [];
-
 function registerEvents(tryIt, playback) {
   events.subscribe('start', eventHandlers.start);
-  events.subscribe('chatID', eventHandlers.chatID);
+  events.subscribe('sessionID', eventHandlers.sessionID);
   events.subscribe('resize', eventHandlers.resize);
   events.subscribe('disable-input', eventHandlers.input.disableInput);
   events.subscribe('enable-loading', eventHandlers.input.enableLoadingInput);
   events.subscribe('disable-loading', eventHandlers.input.disableLoadingInput);
   events.subscribe('scroll-to-bottom', eventHandlers.scrollToBottom);
   events.subscribe('receive', eventHandlers.receive);
-  if (playback === true) { //TODO: remove if playback when Dashboard code is updated
-    events.subscribe('send', eventHandlers.sendMock);
-  } else {
-    events.subscribe('clear', eventHandlers.clear);
-    events.subscribe('send', eventHandlers.send.send);
-    events.subscribe('retry', eventHandlers.send.retry);
-    events.subscribe('send-input-message', eventHandlers.sendInputMessage);
-    events.subscribe('enable-retry', eventHandlers.error.retry);
-    events.subscribe('enable-input', eventHandlers.input.enableInput);
-    events.subscribe('focus-input', eventHandlers.input.focusInput);
-    events.subscribe('send-mock', eventHandlers.sendMock);
-    events.subscribe('error-clear', eventHandlers.error.clearError);
-    events.subscribe('reset', eventHandlers.reset);
-  }
-  if (tryIt === true) {
-    events.subscribe('try-it-error', eventHandlers.error.tryIt);
-    events.subscribe('try-it-layout-subscription', eventHandlers.tryIt.layoutError);
-    events.subscribe('try-it-action-subscription', eventHandlers.tryIt.actionError);
-    events.subscribe('try-it-receive-intent-data', eventHandlers.tryIt.intent);
-  }
-}
-
-function registerLayouts() {
-  registerLayout('show-locations', layouts.showLocations.init, true);
-  registerLayout('choose-location-type', layouts.chooseLocationType.init, true);
-  registerLayout('request-geolocation-latlong', layouts.requestGeolocationLatlong.init, true);
-  registerLayout('request-geolocation-zipcode', layouts.requestGeolocationZipcode.init, true);
-  registerLayout('choose', layouts.choose.init, true);
-  registerLayout('form', layouts.form.init, true);
-  registerLayout('cc-validator', layouts.creditCard.init, true);
-  registerLayout('error', layouts.error.init, true);
-  for (var i = 0; i < registeredLayouts.length; i++)
-    layoutInit[registeredLayouts[i]]();
+  events.subscribe('clear', eventHandlers.clear);
+  events.subscribe('send', eventHandlers.send.send);
+  events.subscribe('retry', eventHandlers.send.retry);
+  events.subscribe('send-input-message', eventHandlers.sendInputMessage);
+  events.subscribe('enable-retry', eventHandlers.error.retry);
+  events.subscribe('enable-input', eventHandlers.input.enableInput);
+  events.subscribe('focus-input', eventHandlers.input.focusInput);
+  events.subscribe('send-mock', eventHandlers.sendMock);
+  events.subscribe('error-clear', eventHandlers.error.clearError);
+  events.subscribe('reset', eventHandlers.reset);
 }
 
 function init(config) {
@@ -116,18 +88,17 @@ function init(config) {
     var defaultState = {
       active: true,
       root: root,
-      mapsServer: process.env.MAPS_SERVER || 'https://dp1-i-serve-maps.mybluemix.net/',
-      botID: config.botID,
       styles: assign({}, defaultStyles, config.styles),
-      baseURL: SDKconfig.baseURL || 'https://api.ibm.com/virtualagent/run/api/v1/',
+      baseURL: SDKconfig.baseURL,
+      apiKey: SDKconfig.apiKey,
       originalContent: root.innerHTML,
       handleInput: {
         default: true
       },
       minSeconds: (!config.minSeconds && config.minSeconds !== 0) ? 0.75 : config.minSeconds,
       chatStyleID: 'chatStyleID-' + utils.getUUID(),
-      tryIt: config.tryIt || false,
-      playback: config.playback || false //TODO: remove playback when Dashboard code is updated
+      tryIt: false,
+      playback: false
     };
     if (utils.checkRoot(root)) {
       if (config.errorHandler)
@@ -135,41 +106,28 @@ function init(config) {
       else
         events.subscribe('httpError', eventHandlers.error.httpError);
       registerEvents(config.tryIt, config.playback);
-      registerLayouts();
-      //TODO: remove if playback when Dashboard code is updated
-      if (config.playback === true) {
-        events.publish('start', defaultState);
-        setTimeout(function() {
-          events.publish('chatID', 'playback');
-        }, 0);
-        setTimeout(function() {
-          resolve();
-        }, 0);
-      } else if (config.botID) {
-        events.publish('start', defaultState);
-        events.publish('enable-loading');
-        events.publish('disable-input');
-        BotSDK
-          .configure( SDKconfig )
-          .start( config.botID )
-          .then( function(res) {
-            events.publish('chatID', res.chatID);
-            events.publish('receive', res);
-          })['catch']( function(err) {
-            events.publish('httpError', err);
-          }).then(function() {
-            setTimeout(function() {
-              events.publish('enable-input');
-              resolve();
-            }, 0);
+      events.publish('start', defaultState);
+      events.publish('disable-input');
+      BotSDK
+        .configure( SDKconfig )
+        .start()
+        .then( function(data) {
+          events.publish('sessionID', data.session_id);
+          return data.session_id;
+        })
+        .then(function() {
+          events.publish('send', {
+            silent: true,
+            text: ''
           });
-      } else {
-        console.error('BotID is required!');
-        destroy();
-        reject({
-          error: 'BotID is required!'
+        })['catch']( function(err) {
+          events.publish('httpError', err);
+        }).then(function() {
+          setTimeout(function() {
+            events.publish('enable-input');
+            resolve();
+          }, 0);
         });
-      }
     } else {
       console.error('Element for chat does not exist!');
       destroy();
@@ -180,19 +138,8 @@ function init(config) {
   });
 }
 
-function registerLayout(layout, init, defaultSetup) {
-  if (layout && init && typeof init === 'function') {
-    if (registeredLayouts.indexOf(layout) === -1 || !defaultSetup) {
-      registeredLayouts.push(layout);
-      layoutInit[layout] = init;
-    }
-  } else {
-    console.error('registerLayout was configured incorrectly.');
-  }
-}
-
-function send(message) {
-  if (message) {
+function send(message, emptyOK) {
+  if (message || emptyOK) {
     var current = state.get();
     if (current.active) {
       events.publish('send', {
@@ -227,8 +174,8 @@ function sendMock(message) {
   }
 }
 
-function sendSilently(message) {
-  if (message) {
+function sendSilently(message, emptyOK) {
+  if (message || emptyOK) {
     var current = state.get();
     if (current.active) {
       events.publish('send', {
@@ -291,7 +238,7 @@ function destroy() {
   return new window.Promise(function(resolve) {
     var current = state.get();
     if (current.active) {
-      styles.removeStyles(current.root, current.chatStyleID, current.chatID);
+      styles.removeStyles(current.root, current.chatStyleID, current.sessionID);
       if (current.root && current.onResize) {
         utils.endVisibilityCheck();
         if (typeof current.originalContent !== 'undefined' && current.root)
@@ -326,7 +273,6 @@ function restart() {
 module.exports = {
   profile: profile,
   init: init,
-  registerLayout: registerLayout,
   send: send,
   receive: receive,
   sendMock: sendMock,

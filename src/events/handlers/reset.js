@@ -1,6 +1,6 @@
 var state = require('../../state');
 var events = require('../../events');
-var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
+var BotSDK = require('../../sdk');
 var utils = require('../../utils');
 
 function reset() {
@@ -16,16 +16,11 @@ function reset() {
         error: 'Element for chat does not exist!'
       });
     }
-    if (!current.botID) {
-      reject({
-        error: 'BotID is required!'
-      });
-    }
     BotSDK
       .configure( SDKconfig )
-      .start( current.botID )
+      .start()
       .then( function(res) {
-        events.publish('chatID', res.chatID);
+        events.publish('sessionID', res.sessionID);
         events.publish('receive', res);
       })['catch']( function(err) {
         events.publish('httpError', err);

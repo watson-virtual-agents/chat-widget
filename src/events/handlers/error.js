@@ -63,7 +63,7 @@ function retry() {
     var loaderFailureMessage = loaderFailure.querySelector('.IBMChat-watson-message');
     if (errorCount > 4) {
       var loaderFailureMessageTmpl = i18n('loading_failure1');
-      if (!current.chatID) {
+      if (!current.sessionID) {
         loaderFailureMessageTmpl = i18n('loading_failure2');
         events.publish('disable-input');
       } else {

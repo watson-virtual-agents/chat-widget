@@ -14,7 +14,7 @@
 
 var state = require('../../state');
 var events = require('../../events');
-var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
+var BotSDK = require('../../sdk');
 var utils = require('../../utils');
 var assign = require('lodash/assign');
 var templates = require('../../templates');
@@ -88,9 +88,8 @@ function sendToBot(data, retry) {
   if (!retry)
     events.publish('enable-loading');
   events.publish('focus-input');
-
   BotSDK
-    .send( current.botID, current.chatID, data.text, current.context )
+    .send( current.sessionID, data.text, current.context )
     .then( function(res) {
       delay(function() {
         resolve(data, res);

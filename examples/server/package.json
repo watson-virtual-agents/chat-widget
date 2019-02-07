@@ -1,0 +1,31 @@
+{
+  "name": "sample-virtual-agent-chat-widget-to-assistant-server",
+  "version": "0.0.1",
+  "description": "Watson Virtual Agent Chat Widget",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "keywords": [
+    "IBM",
+    "Watson",
+    "Watson Virtual Agent"
+  ],
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "author": "IBM Corp",
+  "contributors": [
+    {
+      "name": "Ethan Winters",
+      "email": "ewinters@us.ibm.com"
+    }
+  ],
+  "dependencies": {
+    "express": "^4.16.4",
+    "watson-developer-cloud": "^3.17.0"
+  }
+}

@@ -24,7 +24,7 @@ var scrollToBottom = require('./scroll-to-bottom');
 var tryIt = require('./try-it');
 var clear = require('./clear');
 var reset = require('./reset');
-var chatID = require('./chatid');
+var sessionID = require('./sessionid');
 
 module.exports = {
   /**
@@ -161,7 +161,7 @@ module.exports = {
   /**
   * @ignore
   */
-  chatID: chatID,
+  sessionID: sessionID,
   /**
   * @ignore
   */

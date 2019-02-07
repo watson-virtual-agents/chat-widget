@@ -13,22 +13,11 @@
     "jsdoc": "jsdoc -c ./tools/jsdoc/config.json",
     "release": "./tools/release/tag_release_publish.sh",
     "server:embed": "node ./tools/dev/embed-server.js -minify",
-    "server:selenium": "node ./tools/dev/selenium-server.js -selenium",
     "server:watch": "node ./tools/dev/dev-server.js",
-    "test": "node ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
-    "test:codecov": "npm run test && codecov",
-    "test:debug": "node ./node_modules/karma/bin/karma start --browsers Chrome",
-    "test:selenium": "node ./test/selenium/download.js && concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --suiteRetries 3\"",
-    "test:selenium:travis-chrome": "node ./test/selenium/download.js && concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --env travis-chrome --suiteRetries 3\"",
-    "test:selenium:travis-firefox": "concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --env travis-firefox --suiteRetries 3\"",
-    "test:selenium:travis-ie11": "concurrently -k -s first \"node ./test/selenium/mocks/server.js\" \"npm run server:selenium\" \"nightwatch --config nightwatch.conf.js --env travis-ie11 --suiteRetries 3\"",
-    "test:selenium:travis-all-platforms": "npm run test:selenium:travis-chrome && npm run test:selenium:travis-firefox && npm run test:selenium:travis-ie11",
-    "test:selenium:watch": "node ./test/selenium/download.js && npm-watch",
-    "test:watch": "node ./node_modules/karma/bin/karma start --browsers PhantomJS",
     "watch": "npm run server:watch"
   },
   "engines": {
-    "node": ">=4.2.1"
+    "node": ">=8.14"
   },
   "keywords": [
     "IBM",
@@ -56,10 +45,11 @@
   "dependencies": {
     "@watson-virtual-agent/client-sdk": "1.3.0",
     "intl-messageformat": "1.3.0",
-    "lodash": "4.15.0"
+    "lodash": "^4.17.11",
+    "lodash.assign": "^4.2.0"
   },
   "devDependencies": {
-    "axios": "0.12.0",
+    "axios": "^0.12.0",
     "chai": "3.5.0",
     "chai-as-promised": "6.0.0",
     "codecov": "1.0.1",
@@ -76,16 +66,16 @@
     "json-loader": "0.5.4",
     "karma": "1.3.0",
     "karma-chrome-launcher": "2.0.0",
-    "karma-coverage": "1.1.1",
+    "karma-coverage": "^1.1.2",
     "karma-mocha": "1.1.1",
-    "karma-phantomjs-launcher": "1.0.2",
+    "karma-phantomjs-launcher": "^1.0.4",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "1.8.0",
     "lodash-webpack-plugin": "0.10.6",
     "mocha": "3.0.2",
     "nightwatch": "0.9.9",
     "npm-watch": "0.1.6",
-    "phantomjs-prebuilt": "2.1.12",
+    "phantomjs-prebuilt": "^2.1.16",
     "raw-loader": "0.5.1",
     "rewire": "2.5.2",
     "rewire-webpack": "1.0.1",
@@ -105,8 +95,5 @@
   },
   "directories": {
     "doc": "./docs"
-  },
-  "watch": {
-    "test:selenium": "test/selenium/**/*.js"
   }
 }

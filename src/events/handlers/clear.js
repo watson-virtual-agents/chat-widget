@@ -21,7 +21,7 @@ function clear() {
   state.set({
     messages: []
   });
-  current.root.classList.add("chatID-" + current.chatID);
+  current.root.classList.add("sessionID-" + current.sessionID);
   current.input.value = '';
   current.inputClone.textContent = i18n('prompt');
   current.chatHolder.innerHTML = '';

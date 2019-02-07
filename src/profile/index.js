@@ -12,7 +12,7 @@
 * the License.
 */
 
-var BotSDK = require('@watson-virtual-agent/client-sdk/lib/web');
+var BotSDK = require('../sdk');
 var profile = BotSDK.profile;
 
 module.exports = profile;

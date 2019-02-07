@@ -133,8 +133,8 @@ function convertHexToRGBA(hex, opacity) {
 }
 
 
-function attachPlaybackStyles(chatID) {
-  var current = state.get()[chatID];
+function attachPlaybackStyles(sessionID) {
+  var current = state.get()[sessionID];
   var styles = _getStyles(current);
   _attachStylesToDOM(styles);
 }
@@ -146,14 +146,14 @@ function attachStyles() {
   _attachStylesToDOM(styles, current);
 }
 
-function removeStyles(root, chatStyleID, chatID) {
+function removeStyles(root, chatStyleID, sessionID) {
   var elements = document.querySelectorAll('.styles-' + chatStyleID);
   if (elements && elements.length > 0) {
     for (var i = 0; elements.length > i; i++)
       elements[i].parentNode.removeChild(elements[i]);
   }
   if (root)
-    root.classList.remove('IBMChat-isLarge', 'IBMChat-relative', chatStyleID, 'chatID-' + chatID);
+    root.classList.remove('IBMChat-isLarge', 'IBMChat-relative', chatStyleID, 'sessionID-' + sessionID);
 }
 
 module.exports = {
