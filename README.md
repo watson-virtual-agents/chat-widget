@@ -1,4 +1,6 @@
-# IBM Watson Virtual Agent Chat Widget
+# IBM Watson Virtual Agent Chat Widget (DEPRECATED)
+
+** This project has been deprecated.**
 
 
 | Service  | Master  | Dev |
